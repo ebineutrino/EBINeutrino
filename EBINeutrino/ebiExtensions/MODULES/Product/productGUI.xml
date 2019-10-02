@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<visualpanel name="Product" title="EBI_LANG_C_TAB_PRODUCT" Location="0,0" Size="1320,1050" visualproperties="true" assignable="false" checkable="true" bean="ebiCRM.gui.panels.EBICRMProduct" >
+ <panel name="ProductData" title="EBI_LANG_C_TAB_PRODUCT" Location="14,12" Size="1291,391">
+		<label name="ProductNr" title="EBI_LANG_PRODUCT_NUMBER" Location="10,20" Size="105,25"/>
+		<textfield name="ProductNrTex" tabindex="1" Location="120,20" Size="245,25"/>
+		<label name="ProductName" title="EBI_LANG_NAME" Location="10,50" Size="105,25"/>
+		<textfield name="ProductNameText" tabindex="2" Location="120,50" Size="245,25"/>
+		<label name="ProductCategory" title="EBI_LANG_CATEGORY" Location="10,80" Size="105,25"/>
+		<combobox name="ProductCategoryText" tabindex="3" Location="120,80" bind="COMPANYPRODUCTCATEGORY" Size="245,25"/>
+	 	<label name="ProductType" title="EBI_LANG_TYPE" Location="10,110" Size="104,25"/>
+	 	<combobox name="ProductTypeText" tabindex="4" Location="120,110" bind="COMPANYPRODUCTTYPE" Size="245,25"/>
+<panel name="taxPanel" title="EBI_LANG_PRICE" Location="386,10" Size="442,150">
+		<label name="productTaxType" title="EBI_LANG_TAX_TYPE" Location="10,20" Size="113,27"/>
+		<combobox name="productTaxTypeTex" tabindex="5" Location="125,20" Size="245,25"/>
+		<label name="productGross" title="EBI_LANG_PRE_TAX_PRICE" Location="10,50" Size="113,25"/>
+		<formattedtextfield name="productGrossText" tabindex="6" Location="125,50" Size="245,25"/>
+
+	<button name="calcClear" Location="375,80" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMProduct.calcClear" icon="move_up.png"/>
+
+		<label name="productNetamout" title="EBI_LANG_CLEAR_PRICE" Location="10,80" Size="113,25"/>
+		<formattedtextfield name="productNetamoutText" tabindex="7" Location="125,80" Size="245,25"/>
+
+	<button name="calcGross" Location="375,50" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMProduct.calcGross" icon="move_down.png"/>
+
+		<label name="salePrice" title="EBI_LANG_SALE_PRICE" Location="10,110" Size="112,25"/>
+		<formattedtextfield name="salePriceText" tabindex="8" Location="125,110" Size="245,25"/>
+</panel>
+		<textarea name="productDescription" tabindex="9" Location="11,182" Size="818,161"/>
+<panel name="picturePanel" title="PICTURE" Location="851,28" Size="418,315">
+		<label name="productPictureLabel" title="EBI_LANG_PICTURE" Location="11,15" Size="398,292"/>
+</panel>
+
+		<button name="productShowImage" title="EBI_LANG_VIEW" Location="990,348" Size="165,32" actionListener="ebiCRM.gui.panels.EBICRMProduct.showDocs"/>
+
+</panel>
+<panel name="avProduct" title="EBI_LANG_C_AVAILABLE_PRODUCT" resizewidth="true" resizeheight="true" Location="16,618" Size="1288,424">
+		<table name="companyProductTable" resizewidth="true" resizeheight="true" Location="9,55" Size="1271,355"/>
+
+	<button name="newProduct" i18ntooltip="EBI_LANG_C_TOOL_TIP_RESET_FORM" Location="10,20" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMProduct.newProduct" icon="new.png"/>
+	<button name="editProduct" i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="45,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMProduct.editProduct" icon="edit.png"/>
+	<button name="copyProduct" i18ntooltip="EBI_LANG_C_TOOL_TIP_COPY_RECORD" Location="80,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMProduct.copyProduct" icon="editcopy.png"/>
+	<button name="deleteProduct" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="125,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMProduct.deleteProduct" icon="delete.png"/>
+	<button name="reportProduct" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_REPORT" Location="165,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMProduct.showProductReport" icon="chart.png"/>
+	<button name="historyProduct" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="205,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMProduct.historyProduct" icon="historysearch.png"/>
+
+		<label name="filterTable" title="EBI_LANG_FILTER" Location="280,20" Size="77,25"/>
+		<textfield name="filterTableText" Location="376,20" Size="300,25"/>
+</panel>
+<panel name="avProp" title="EBI_LANG_C_TOOL_TIP_NEW_PROPERTIES" Location="14,409" Size="1291,209">
+
+	<button name="newProperties" i18ntooltip="EBI_LANG_C_TOOL_TIP_NEW_PROPERTIES" Location="10,21" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMProduct.newDimension" icon="find.png"/>
+	<button name="editProperties" i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="45,22" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMProduct.editDimension" icon="edit.png"/>
+	<button name="deleteProperties" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="82,23" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMProduct.deleteDimension" icon="delete.png"/>
+
+		<table name="ProductPropertiesTable" Location="9,58" Size="349,136"/>
+		<label name="productPropertiesLabel" title="EBI_LANG_PROPERTIES" Location="125,30" Size="113,20"/>
+
+	<button name="newRelation" i18ntooltip="EBI_LANG_C_TOOL_TIP_NEW_RELATION" Location="378,23" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMProduct.newDependency" icon="find.png"/>
+	<button name="deleteRelation" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="416,23" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMProduct.deleteDependency" icon="delete.png"/>
+
+		<table name="ProductRelationTable" Location="376,57" Size="455,140"/>
+		<label name="productRelationLabel" title="EBI_LANG_PRODUCT_DEPENDENCY" Location="455,30" Size="113,20"/>
+		<table name="productTableDoc" Location="852,58" Size="417,140"/>
+
+	<button name="newProductDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_ADD_NEW_DOC" Location="854,23" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMProduct.newDocs" icon="new.png"/>
+	<button name="showProductDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_DOC" Location="928,23" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMProduct.showDocs" icon="move_up.png"/>
+	<button name="deleteProductDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_DOC" Location="890,23" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMProduct.deleteDocs" icon="delete.png"/>
+
+</panel>
+</visualpanel>

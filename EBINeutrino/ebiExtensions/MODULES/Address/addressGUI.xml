@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<visualpanel name="Address" title="EBI_LANG_C_ADRESS" Location="0,0" Size="1100,850" visualproperties="true" assignable="false" bean="ebiCRM.gui.panels.EBICRMAddressPane">
+ <panel name="generalAddress"  title="EBI_LANG_C_GERNERAL_DATA" Location="6,11" Size="440,220">
+		<label name="addressType"  title="EBI_LANG_C_ADRESS_TYPE" Location="10,20" Size="103,25"/>
+		<combobox name="addressTypeText"  tabindex="1" bind="CRMADDRESSTYPE" Location="120,20" Size="290,25"/>
+		<label name="street"  title="EBI_LANG_C_STREET_NR" Location="10,50" Size="103,25"/>
+		<textfield name="streetText"  tabindex="2" Location="120,50" Size="290,25"/>
+		<label name="zipLocation"  title="EBI_LANG_C_ZIP_LOCATION" Location="10,80" Size="103,25"/>
+		<textfield name="zipText"  tabindex="3" Location="120,80" Size="77,25"/>
+		<textfield name="LocationText"  tabindex="4" Location="205,80" Size="205,25"/>
+		<label name="postcode"  title="EBI_LANG_C_POST_CODE" Location="10,110" Size="103,25"/>
+		<textfield name="postcodeText"  tabindex="5" Location="120,110" Size="290,25"/>
+		<label name="country"  title="EBI_LANG_C_COUNTRY" Location="10,140" Size="103,25"/>
+		<textfield name="countryText"  tabindex="6" Location="120,140" Size="290,25"/>
+</panel>
+<panel name="avAddress"  title="EBI_LANG_C_AVAILABLE_ADRESS" resizewidth="true" resizeheight="true" Location="7,242" Size="1079,569">
+		<table name="companyAddess"  resizewidth="true" resizeheight="true" Location="10,60" Size="601,151"/>
+		<button name="newAddress"  i18ntooltip="EBI_LANG_C_TOOL_TIP_RESET_FORM" Location="8,23" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMAddressPane.newAddress" icon="new.png"/>
+		<button name="editAddress"  i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="42,23" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMAddressPane.editAddress" icon="edit.png" />
+		<button name="copyAddress"  i18ntooltip="EBI_LANG_C_TOOL_TIP_COPY_RECORD" Location="77,23" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMAddressPane.copyAddress" icon="editcopy.png"/>
+		<button name="deleteAddress"  i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="113,23" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMAddressPane.deleteAddress" icon="delete.png"/>
+		<button name="historyAddress"  i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="151,23" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMAddressPane.historyAddress" icon="historysearch.png"/>
+		<label name="filterTable"  title="EBI_LANG_FILTER" Location="220,23" Size="77,24"/>
+		<textfield name="filterTableText"  Location="320,23" Size="250,24"/>
+</panel>
+</visualpanel>

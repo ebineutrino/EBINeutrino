@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dialog name="timerDialog" title="Timer Dialog" icon="../images/mieten.png" Location="100,100" Size="570,320" visualproperties="false" assignable="false" modal="false" >
+ 		<button name="closeDialog" tabindex="3" title="OK" Location="406,276" Size="150,25"/>
+		<label name="pictureAlert" Location="24,13" Size="155,164"/>
+		<checkbox name="setAsDone" title="EBI_LANG_DONE" background="#00ff00" Location="206,227" Size="142,20"/>
+		<textarea name="messageViewText" Location="180,13" Size="378,190"/>
+		<button name="openTask" title="EBI_LANG_OPEN_TASK" Location="374,225" Size="159,28"/>
+</dialog>

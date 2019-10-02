@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="prosolReport" pageWidth="742" pageHeight="595" orientation="Landscape" columnWidth="702" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.000000000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="117"/>
+	<style name="Title" forecolor="#FFFFFF" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="ID" class="java.lang.Integer"/>
+	<parameter name="EBI_LANG" class="java.util.Properties" isForPrompting="false"/>
+	<parameter name="COMPANY_LOGO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_NAME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_STR_NR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_ZIP" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_LOCATION" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_TELEPHONE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_FAX" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_EMAIL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_WEB" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_NAME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_ACCOUNT_NR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_BSB" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_BIC" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_IBAN" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_COUNTRY" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_TAX_INFORMATION" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_VATVAL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_NAME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_SURNAME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_EMAIL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_TELEPHONE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_FAX" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_POSITION" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_NAME1" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT cpr.PICTURE, psol.PROSOLID,psol.SERVICENR,psol.NAME as PROSOLNAME,psol.CLASSIFICATION,psol.CATEGORY,psol.TYPE,psol.STATUS,psol.DESCRIPTION,pro.PRODUCTID,pro.SOLUTIONID,pro.PRODUCTNR,pro.PRODUCTNAME,pro.CATEGORY as PROCAT,
+pro.TYPE as PROTYPE, pro.NETAMOUNT FROM CRMPROBLEMSOLUTIONS as psol, CRMPROBLEMSOLPOSITION as pro, CRMPRODUCT as cpr where
+psol.PROSOLID = $P{ID} and pro.SOLUTIONID = psol.PROSOLID and cpr.PRODUCTID = pro.PRODUCTID]]>
+	</queryString>
+	<field name="PICTURE" class="java.io.InputStream"/>
+	<field name="PROSOLID" class="java.lang.Integer"/>
+	<field name="SERVICENR" class="java.lang.String"/>
+	<field name="PROSOLNAME" class="java.lang.String"/>
+	<field name="CLASSIFICATION" class="java.lang.String"/>
+	<field name="CATEGORY" class="java.lang.String"/>
+	<field name="TYPE" class="java.lang.String"/>
+	<field name="STATUS" class="java.lang.String"/>
+	<field name="DESCRIPTION" class="java.lang.String"/>
+	<field name="PRODUCTID" class="java.lang.Integer"/>
+	<field name="SOLUTIONID" class="java.lang.Integer"/>
+	<field name="PRODUCTNR" class="java.lang.String"/>
+	<field name="PRODUCTNAME" class="java.lang.String"/>
+	<field name="PROCAT" class="java.lang.String"/>
+	<field name="PROTYPE" class="java.lang.String"/>
+	<field name="NETAMOUNT" class="java.lang.Double"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
+	</group>
+	<title>
+		<band height="77" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="471" y="0" width="207" height="36"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMPANY_NAME}+"\n"+$P{COMPANY_NAME1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="471" y="36" width="207" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMPANY_STR_NR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="471" y="51" width="207" height="18"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMPANY_ZIP}+" "+$P{COMPANY_LOCATION}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize">
+				<reportElement key="image-1" isPrintRepeatedValues="false" x="13" y="0" width="297" height="69"/>
+				<imageExpression class="java.lang.String"><![CDATA[System.getProperty("user.dir")+"/images/logo.gif"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="13" y="72" width="677" height="1" forecolor="#CCCCCC"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="312">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+			<textField pattern="">
+				<reportElement x="23" y="10" width="385" height="20"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_PROSOL")]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize">
+				<reportElement x="417" y="10" width="273" height="170" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{PICTURE}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="110" y="41" width="204" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SERVICENR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="110" y="61" width="298" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROSOLNAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="110" y="81" width="222" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CATEGORY}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="110" y="101" width="222" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TYPE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="110" y="121" width="222" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{STATUS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="23" y="41" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_PROSOL_NUMBER")+ ": "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="23" y="61" width="89" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_NAME")+ ": "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="23" y="81" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_CATEGORY")+ ": "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="23" y="101" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_TYPE")+ ": "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="23" y="121" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_STATUS")+ ": "]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="112" y="141" width="222" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CLASSIFICATION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="25" y="141" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_CLASSIFICATION")+ ": "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="25" y="192" width="677" height="87" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" backcolor="#F1F0F0"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="25" y="292" width="677" height="20" backcolor="#FFFFCC"/>
+			</rectangle>
+			<textField>
+				<reportElement x="37" y="292" width="111" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_PRODUCT_NUMBER")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="292" width="89" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_NAME")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="308" y="292" width="89" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_CATEGORY")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="292" width="109" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_TYPE")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="565" y="292" width="127" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_SALE_PRICE")]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="37" y="7" width="111" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PRODUCTNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="162" y="7" width="146" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PRODUCTNAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="565" y="7" width="114" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{NETAMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="308" y="7" width="123" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROCAT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="431" y="7" width="109" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROTYPE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="13" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="690" height="4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="690" height="25" forecolor="#D0B48E" backcolor="#F0F0F0"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="650" y="3" width="40" height="20" forecolor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy h.mm a">
+					<reportElement x="11" y="3" width="216" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dialog name="creditDebitDialog" title="EBI_LANG_CREDIT_DEBIT_DIALOG" icon="/home/warnwall/git/ebineutrinoCRM_ERP/..\images\write.png" Location="100,100" Size="570,220" visualproperties="false" assignable="false" modal="true" >
+ 		<label name="number" title="EBI_LANG_NUMBER" Location="10,50" Size="98,25"/>
+		<textfield name="numberText" tabindex="2" Location="110,50" Size="93,25"/>
+		<button name="saveValue" tabindex="5" title="EBI_LANG_SAVE" Location="282,170" Size="131,27"/>
+		<button name="closeDialog" tabindex="6" title="EBI_LANG_CLOSE" Location="416,170" Size="124,27"/>
+		<label name="name" title="EBI_LANG_NAME" Location="207,50" Size="77,25"/>
+		<textfield name="nameText" tabindex="3" Location="287,50" Size="247,25"/>
+		<label name="taxType" title="EBI_LANG_TAX" Location="10,90" Size="97,25"/>
+		<combobox name="taxTypeText" tabindex="4" Location="110,90" Size="198,25"/>
+		<label name="taxValue" tabindex="4" title="0.0%" background="#f1fef1" Location="319,90" Size="126,25"/>
+		<label name="creditType" title="EBI_LANG_TYPE" Location="10,10" Size="98,25"/>
+		<combobox name="creditDebitTypeText" tabindex="1" Location="110,10" Size="198,25"/>
+		<label name="vale" visible="false" title="EBI_LANG_VALUE" Location="9,130" Size="98,25"/>
+		<formattedtextfield name="valueText" visible="false" Location="111,130" Size="197,25"/>
+</dialog>

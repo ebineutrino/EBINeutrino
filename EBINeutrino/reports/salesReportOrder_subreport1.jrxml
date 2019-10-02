@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesReportOrder_subreport1" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DATE_FROM" class="java.util.Date"/>
+	<parameter name="DATE_TO" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT ord.ORDERID,ord.ORDERNR,ord.NAME,ord.STATUS,ord.CREATEDDATE,
+pos.ORDERID,pos.PRODUCTNR, pos.DEDUCTION,pos.NETAMOUNT,pos.QUANTITY,pos.TAXTYPE, tax.NAME, tax.TAXVALUE
+FROM (COMPANYORDER as ord LEFT JOIN COMPANYORDERPOSITIONS as pos ON pos.ORDERID = ord.ORDERID) LEFT JOIN COMPANYPRODUCTTAX tax ON pos.TAXTYPE = tax.NAME WHERE ord.CREATEDDATE BETWEEN $P{DATE_FROM} AND $P{DATE_TO}]]>
+	</queryString>
+	<field name="ORDERID" class="java.lang.Integer"/>
+	<field name="ORDERNR" class="java.lang.String"/>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="STATUS" class="java.lang.String"/>
+	<field name="CREATEDDATE" class="java.sql.Date"/>
+	<field name="PRODUCTNR" class="java.lang.String"/>
+	<field name="DEDUCTION" class="java.lang.String"/>
+	<field name="NETAMOUNT" class="java.lang.Double"/>
+	<field name="QUANTITY" class="java.lang.Long"/>
+	<field name="TAXTYPE" class="java.lang.String"/>
+	<field name="TAXVALUE" class="java.lang.Double"/>
+	<variable name="NETAMOUNTCOUNT" class="java.lang.Double">
+		<variableExpression><![CDATA[!$F{DEDUCTION}.equals("") ?
+$F{NETAMOUNT} * $F{QUANTITY} -((($F{NETAMOUNT} * $F{QUANTITY})* Integer.parseInt($F{DEDUCTION})) / 100) :
+$F{NETAMOUNT} * $F{QUANTITY}]]></variableExpression>
+	</variable>
+	<variable name="NETAMOUNT_GROSS" class="java.lang.Double">
+		<variableExpression><![CDATA[!$F{DEDUCTION}.equals("") ?
+(($F{NETAMOUNT} * $F{QUANTITY} - ($F{NETAMOUNT} * $F{QUANTITY}) * Integer.parseInt($F{DEDUCTION})) / 100) + (($F{NETAMOUNT} * $F{QUANTITY} -((($F{NETAMOUNT} * $F{QUANTITY}) * Integer.parseInt($F{DEDUCTION})) / 100) * $F{TAXVALUE}) / 100) :
+($F{NETAMOUNT} * $F{QUANTITY}) + ((($F{NETAMOUNT} * $F{QUANTITY}) * $F{TAXVALUE}) / 100)]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="3" splitType="Stretch"/>
+	</detail>
+	<summary>
+		<band height="263" splitType="Stretch">
+			<bar3DChart>
+				<chart>
+					<reportElement x="0" y="7" width="360" height="256"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{NAME}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{STATUS}]]></categoryExpression>
+						<valueExpression><![CDATA[$V{NETAMOUNTCOUNT}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF"/>
+					<categoryAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+			<lineChart>
+				<chart>
+					<reportElement x="370" y="7" width="432" height="256"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{NAME}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{STATUS}]]></categoryExpression>
+						<valueExpression><![CDATA[$V{NETAMOUNT_GROSS}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+					<categoryAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dialog name="addNewReceiverDialog" title="EBI_LANG_C_CRM_ADD_CONTACT_SEND_TYPE" icon="/Users/francesco/IdeaProjects/ebineutrinoCRM_ERP/../images/people.png" Location="100,100" Size="400,500" visualproperties="false" assignable="false" modal="true" >
+ 		<button name="closeButton" tabindex="16" title="EBI_LANG_CLOSE" Location="271,450" Size="107,30"/>
+		<button name="applyButton" tabindex="15" title="EBI_LANG_INSERT" Location="128,450" Size="132,30"/>
+		<label name="gender" title="EBI_LANG_C_GENDER" Location="20,50" Size="100,25"/>
+		<label name="position" title="EBI_LANG_C_POSITION" Location="20,140" Size="100,25"/>
+		<label name="name" title="EBI_LANG_C_NAME" Location="20,170" Size="100,25"/>
+		<label name="surname" title="EBI_LANG_SURNAME" Location="20,200" Size="100,25"/>
+		<label name="fax" title="EBI_LANG_C_FAX" Location="20,350" Size="100,25"/>
+		<label name="email" title="EBI_LANG_EMAIL" Location="20,380" Size="100,25"/>
+		<combobox name="genderText" tabindex="4" Location="124,50" Size="116,25"/>
+		<textfield name="positionText" tabindex="5" Location="124,140" Size="255,25"/>
+		<textfield name="nameText" tabindex="6" Location="124,170" Size="255,25"/>
+		<textfield name="surnameText" tabindex="7" Location="124,200" Size="255,25"/>
+		<textfield name="faxText" tabindex="13" Location="124,350" Size="255,25"/>
+		<textfield name="emailText" tabindex="14" Location="124,380" Size="255,25"/>
+		<label name="typeDispatch" title="EBI_LANG_C_SEND_TYPE" Location="20,20" Size="100,25"/>
+		<combobox name="typeDispatchText" tabindex="1" Location="124,20" Size="189,25"/>
+		<label name="street" title="EBI_LANG_C_STREET_NR" Location="20,230" Size="100,25"/>
+		<textfield name="streetText" tabindex="8" Location="124,230" Size="255,25"/>
+		<label name="zipLocation" title="EBI_LANG_C_LOCATION" Location="20,260" Size="100,25"/>
+		<textfield name="zipText" tabindex="9" Location="124,260" Size="100,25"/>
+		<textfield name="locationText" tabindex="10" Location="228,260" Size="151,25"/>
+		<label name="postCode" title="EBI_LANG_C_POST_CODE" Location="20,290" Size="100,25"/>
+		<textfield name="postcodeText" tabindex="11" Location="124,290" Size="255,25"/>
+		<label name="country" title="EBI_LANG_C_COUNTRY" Location="20,320" Size="100,25"/>
+		<textfield name="countryText" tabindex="12" Location="124,320" Size="255,25"/>
+		<button name="newReciever" tabindex="2" Location="315,20" Size="31,25"/>
+		<button name="searchReciever" tabindex="3" Location="349,20" Size="31,25"/>
+		<label name="companyNumber" title="EBI_LANG_COMPANY_NUMBER" Location="20,80" Size="100,25"/>
+		<textfield name="companyNrText" Location="124,80" Size="255,25"/>
+		<label name="companyName" title="EBI_LANG_COMPANY_NUMBER" Location="20,110" Size="100,25"/>
+		<textfield name="companyNameText" Location="124,110" Size="255,25"/>
+		<checkbox name="mainContact" title="EBI_LANG_MAIN_CONTACT" Location="127,417" Size="194,21"/>
+</dialog>

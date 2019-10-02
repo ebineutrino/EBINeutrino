@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dialog name="taxAdminDialog" title="Tax Administration" icon="../images/write.png" Location="100,100" Size="575,415" visualproperties="false" assignable="false" modal="true" >
+ 		<label name="tax" title="tax" Location="9,25" Size="70,25"/>
+		<button name="saveValue" tabindex="3" title="Save" Location="452,65" Size="105,30"/>
+		<table name="taxValueTable" Location="10,120" Size="548,275"/>
+		<button name="newBnt" Location="9,71" Size="30,27"/>
+		<button name="deleteBnt" Location="75,71" Size="30,27"/>
+		<button name="editBnt" Location="41,71" Size="30,27"/>
+		<combobox name="taxCombo" tabindex="1" Location="80,25" Size="180,25"/>
+		<label name="value" title="Value" Location="320,25" Size="70,25"/>
+		<textfield name="taxValue" tabindex="2" Location="390,25" Size="160,25"/>
+</dialog>

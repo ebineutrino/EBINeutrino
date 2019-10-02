@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dialog name="dataImportDialog" title="EBI_LANG_IMPORT_DIALOG" icon="..\images\write.png" Location="100,100" Size="400,300" visualproperties="false" assignable="false" modal="true" >
+ 		<label name="importPath" title="EBI_LANG_IMPORT_EXPORT_PATH" Location="28,23" Size="175,20"/>
+		<textfield name="importPathText" tabindex="1" Location="30,51" Size="272,20"/>
+		<button name="browsButton" tabindex="2" title="..." Location="310,50" Size="43,22"/>
+		<progressbar name="importProgress" Location="18,196" Size="356,20"/>
+		<button name="importButton" tabindex="4" title="EBI_LANG_READ" Location="112,138" Size="140,22"/>
+		<button name="closeImportDialog" tabindex="4" title="EBI_LANG_CLOSE" Location="267,243" Size="106,25"/>
+		<label name="delimiter" title="EBI_LANG_EXPORT_DELIMITER" Location="31,83" Size="100,20"/>
+		<textfield name="delimiterText" tabindex="3" title=";" Location="137,84" Size="62,20"/>
+</dialog>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dialog name="insertCSVDialog" title="EBI_LANG_IMPORT_DIALOG" icon="..\images\write.png" Location="100,100" Size="400,200" visualproperties="false" assignable="false" modal="false" >
+ 		<label name="importPath" Location="17,38" Size="357,37"/>
+		<progressbar name="importProgress" Location="15,89" Size="356,20"/>
+</dialog>

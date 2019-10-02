@@ -1,0 +1,98 @@
+2019-10-02 18:18:19,994 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: 
+2019-10-02 18:18:21,542 ERROR [main] ebiNeutrinoSDK.EBISystem: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+ Cause :null
+
+org.hibernate.AnnotationException: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+	at ebiNeutrinoSDK.EBISystem.printStackTrace(EBISystem.java:683)
+	at ebiNeutrino.core.EBINeutrinoSystemInit.Init(EBINeutrinoSystemInit.java:179)
+	at ebiNeutrino.core.EBINeutrinoSystemInit.<init>(EBINeutrinoSystemInit.java:47)
+	at ebiNeutrino.core.EBIMain.<init>(EBIMain.java:175)
+	at ebiNeutrino.core.EBIMain.main(EBIMain.java:73)
+2019-10-02 18:18:21,544 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+ Cause :null
+
+2019-10-02 18:18:31,192 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: No database connection possible
+Would you like to configure a connection?
+
+2019-10-02 18:19:46,478 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: 
+2019-10-02 18:19:47,801 ERROR [main] ebiNeutrinoSDK.EBISystem: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+ Cause :null
+
+org.hibernate.AnnotationException: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+	at ebiNeutrinoSDK.EBISystem.printStackTrace(EBISystem.java:683)
+	at ebiNeutrino.core.EBINeutrinoSystemInit.Init(EBINeutrinoSystemInit.java:179)
+	at ebiNeutrino.core.EBINeutrinoSystemInit.<init>(EBINeutrinoSystemInit.java:47)
+	at ebiNeutrino.core.EBIMain.<init>(EBIMain.java:175)
+	at ebiNeutrino.core.EBIMain.main(EBIMain.java:73)
+2019-10-02 18:19:47,802 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+ Cause :null
+
+2019-10-02 18:19:53,344 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: No database connection possible
+Would you like to configure a connection?
+
+2019-10-02 18:20:20,702 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: 
+2019-10-02 18:20:22,077 ERROR [main] ebiNeutrinoSDK.EBISystem: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+ Cause :null
+
+org.hibernate.AnnotationException: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+	at ebiNeutrinoSDK.EBISystem.printStackTrace(EBISystem.java:683)
+	at ebiNeutrino.core.EBINeutrinoSystemInit.Init(EBINeutrinoSystemInit.java:179)
+	at ebiNeutrino.core.EBINeutrinoSystemInit.<init>(EBINeutrinoSystemInit.java:47)
+	at ebiNeutrino.core.EBIMain.<init>(EBIMain.java:175)
+	at ebiNeutrino.core.EBIMain.main(EBIMain.java:73)
+2019-10-02 18:20:22,079 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+ Cause :null
+
+2019-10-02 18:20:23,785 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: No database connection possible
+Would you like to configure a connection?
+
+2019-10-02 18:22:43,690 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: 
+2019-10-02 18:22:46,462 ERROR [main] ebiNeutrinoSDK.EBISystem: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+ Cause :null
+
+org.hibernate.AnnotationException: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+	at ebiNeutrinoSDK.EBISystem.printStackTrace(EBISystem.java:683)
+	at ebiNeutrino.core.EBINeutrinoSystemInit.Init(EBINeutrinoSystemInit.java:179)
+	at ebiNeutrino.core.EBINeutrinoSystemInit.<init>(EBINeutrinoSystemInit.java:47)
+	at ebiNeutrino.core.EBIMain.<init>(EBIMain.java:175)
+	at ebiNeutrino.core.EBIMain.main(EBIMain.java:73)
+2019-10-02 18:22:46,473 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+ Cause :null
+
+2019-10-02 18:22:58,152 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: No database connection possible
+Would you like to configure a connection?
+
+2019-10-02 18:23:37,408 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: 
+2019-10-02 18:23:38,818 ERROR [main] ebiNeutrinoSDK.EBISystem: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+ Cause :null
+
+org.hibernate.AnnotationException: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+	at ebiNeutrinoSDK.EBISystem.printStackTrace(EBISystem.java:683)
+	at ebiNeutrino.core.EBINeutrinoSystemInit.Init(EBINeutrinoSystemInit.java:179)
+	at ebiNeutrino.core.EBINeutrinoSystemInit.<init>(EBINeutrinoSystemInit.java:47)
+	at ebiNeutrino.core.EBIMain.<init>(EBIMain.java:175)
+	at ebiNeutrino.core.EBIMain.main(EBIMain.java:73)
+2019-10-02 18:23:38,820 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+ Cause :null
+
+2019-10-02 18:23:47,363 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: No database connection possible
+Would you like to configure a connection?
+
+2019-10-02 18:25:40,023 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: 
+2019-10-02 18:25:41,383 ERROR [main] ebiNeutrinoSDK.EBISystem: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+ Cause :null
+
+org.hibernate.AnnotationException: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+	at ebiNeutrinoSDK.EBISystem.printStackTrace(EBISystem.java:683)
+	at ebiNeutrino.core.EBINeutrinoSystemInit.Init(EBINeutrinoSystemInit.java:179)
+	at ebiNeutrino.core.EBINeutrinoSystemInit.<init>(EBINeutrinoSystemInit.java:47)
+	at ebiNeutrino.core.EBIMain.<init>(EBIMain.java:175)
+	at ebiNeutrino.core.EBIMain.main(EBIMain.java:73)
+2019-10-02 18:25:41,385 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: Use of @OneToMany or @ManyToMany targeting an unmapped class: ebiNeutrinoSDK.model.hibernate.Companycategory.companynumberList[Icon.Companynumber]
+ Cause :null
+
+2019-10-02 18:26:07,098 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: No database connection possible
+Would you like to configure a connection?
+
+2019-10-02 18:27:56,368 ERROR [main] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: 
+2019-10-02 18:42:58,260 ERROR [AWT-EventQueue-0] ebiNeutrinoSDK.gui.dialogs.EBIExceptionDialog: Would you like to close the Application?

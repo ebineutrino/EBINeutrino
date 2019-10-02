@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<visualpanel name="MeetingCall" title="EBI_LANG_C_MEETING_PROTOCOL" Location="0,0" Size="1020,850" visualproperties="true" assignable="false" bean="ebiCRM.gui.panels.EBIMeetingProtocol">
+ <panel name="gnAvailableMeeting" title="EBI_LANG_C_AVAILABLE_REPORTS" resizewidth="true" Location="10,10" Size="999,284">
+
+		<table name="companyMeetings" resizewidth="true" Location="6,60" Size="984,217"/>
+
+	<button name="newMeeting" i18ntooltip="EBI_LANG_C_TOOL_TIP_RESET_FORM" Location="8,25" Size="31,27" actionListener="ebiCRM.gui.panels.EBIMeetingProtocol.newMeeting" icon="new.png"/>
+	<button name="editMeeting" i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="41,25" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBIMeetingProtocol.editMeeting" icon="edit.png"/>
+	<button name="copyMeeting" i18ntooltip="EBI_LANG_C_TOOL_TIP_COPY_RECORD" Location="75,25" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBIMeetingProtocol.copyMeeting" icon="editcopy.png"/>
+	<button name="deleteMeeting" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="116,25" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBIMeetingProtocol.deleteMeeting" icon="delete.png"/>
+	<button name="reportMeeting" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_REPORT" Location="152,25" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBIMeetingProtocol.reportMeeting" icon="chart.png"/>
+	<button name="historyMeeting" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="186,25" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBIMeetingProtocol.historyMeeting" icon="historysearch.png"/>
+
+		<label name="filterTable" title="EBI_LANG_FILTER" Location="251,25" Size="77,25"/>
+		<textfield name="filterTableText" Location="330,25" Size="300,25"/>
+</panel>
+<panel name="gnMeeting" title="EBI_LANG_C_MEMO" resizewidth="true" resizeheight="true" Location="11,295" Size="995,540">
+		<label name="subjectMeeting" title="EBI_LANG_C_MEMO_SUBJECT" Location="10,20" Size="100,25"/>
+		<textfield name="subjectMeetingText" tabindex="1" Location="115,20" Size="290,25"/>
+		<label name="meetingType" title="EBI_LANG_C_MEETING_TYPE" Location="10,50" Size="100,25"/>
+		<combobox name="meetingTypeText" tabindex="2" bind="COMPANYMEETINGTYPE" Location="115,50" Size="290,25"/>
+		<label name="dateMeeting" title="EBI_LANG_DATE" Location="10,80" Size="100,25"/>
+		<timepicker name="dateMeetingText" tabindex="3" Location="115,80" Size="290,25"/>
+		<table name="meetingDoc" Location="8,145" Size="405,135"/>
+
+	<button name="newMeetingDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_ADD_NEW_DOC" Location="8,115" Size="31,27" actionListener="ebiCRM.gui.panels.EBIMeetingProtocol.newDocs" icon="new.png"/>
+	<button name="showMeetingDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_DOC" Location="43,115" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBIMeetingProtocol.showDocs" icon="move_up.png"/>
+	<button name="deleteMeetingDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_DOC" Location="80,115" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBIMeetingProtocol.deleteDocs" icon="delete.png"/>
+
+		<textarea name="meetingDescription" min="1" resizewidth="true" resizeheight="true" Location="7,300" Size="981,232"/>
+		<table name="meetingContact" resizewidth="true" Location="419,60" Size="565,221"/>
+
+	<button name="newMeetingContact" i18ntooltip="EBI_LANG_C_TOOL_TIP_NEW_CONTACT" Location="420,20" Size="31,27" actionListener="ebiCRM.gui.panels.EBIMeetingProtocol.addContact" icon="new.png"/>
+	<button name="editMeetingContact" i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="453,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBIMeetingProtocol.editContact" icon="down.png"/>
+	<button name="deleteMeetingContact" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="489,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBIMeetingProtocol.deleteContact" icon="delete.png"/>
+
+		<label name="labelMeetingContact" title="EBI_LANG_C_MEETING_PARTNER" Location="529,20" Size="113,25"/>
+</panel>
+</visualpanel>

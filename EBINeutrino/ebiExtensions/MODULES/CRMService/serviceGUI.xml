@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<visualpanel name="Service" title="EBI_LANG_C_SERVICE" Location="0,0" Size="1020,750" visualproperties="true" assignable="true" bean="ebiCRM.gui.panels.EBICRMService" >
+ <panel name="serviceData" title="EBI_LANG_C_PANEL_SERVICE_DATA" Location="9,6" Size="384,356">
+		<label name="serviceNr" title="EBI_LANG_SERVICE_NUMBER" Location="10,20" Size="113,25"/>
+		<textfield name="serviceNrText" tabindex="1" Location="125,20" Size="245,25"/>
+		<label name="serviceName" title="EBI_LANG_NAME" Location="10,50" Size="113,25"/>
+		<textfield name="serviceNameText" tabindex="2" Location="125,50" Size="245,25"/>
+		<label name="serviceCategory" title="EBI_LANG_CATEGORY" Location="10,80" Size="113,25"/>
+	 	<combobox name="serviceCategoryText" tabindex="3" Location="125,80" bind="COMPANYSERVICECATEGORY" Size="245,25"/>
+	 	<label name="serviceType" title="EBI_LANG_TYPE" Location="10,110" Size="113,25"/>
+	 	<combobox name="serviceTypeText" tabindex="4" Location="125,110" bind="COMPANYSERVICETYPE" Size="245,25"/>
+	 	<label name="serviceStatus" title="EBI_LANG_C_STATUS" Location="10,140" Size="113,25"/>
+	 	<combobox name="serviceStatusText" tabindex="5" Location="125,140" bind="COMPANYSERVICESTATUS" Size="245,25"/>
+		<label name="serviceDescription" title="EBI_LANG_DESCRIPTION" Location="10,184" Size="113,20"/>
+		<textarea name="serviceDescriptionText" tabindex="6" Location="10,206" Size="363,144"/>
+</panel>
+<panel name="serviceDocument" title="EBI_LANG_C_PANEL_DOCUMENT" resizewidth="true" Location="405,7" Size="599,167">
+		<table name="tableServiceDocument" title="tableServiceDocument" resizewidth="true" resizeheight="true" Location="8,50" Size="583,110"/>
+
+	<button name="newServiceDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_ADD_NEW_DOC" Location="8,20" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMService.newDocs" icon="new.png"/>
+	<button name="showServiceDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_DOC" Location="45,20" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMService.showDocs" icon="move_up.png"/>
+	<button name="deleteServiceDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_DOC" Location="80,20" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMService.deleteDocs" icon="delete.png"/>
+
+</panel>
+<panel name="serviceProduct" title="EBI_LANG_C_PANEL_POSITION_PRODUCT" resizewidth="true" Location="405,173" Size="593,190">
+		<table name="tableServiceProduct" resizewidth="true" resizeheight="true" Location="8,50" Size="575,135"/>
+
+	<button name="newServiceProduct" i18ntooltip="EBI_LANG_C_TOOL_TIP_NEW_PRODUCT" Location="8,20" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMService.newProduct" icon="new.png"/>
+	<button name="deleteServiceProduct" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="45,20" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMService.deleteProduct" icon="delete.png"/>
+
+</panel>
+<panel name="serviceProsol" title="EBI_LANG_PROBLEM_SOLUTION" resizewidth="true" Location="10,368" Size="993,192">
+		<table name="tableServiceProsol" resizewidth="true" resizeheight="true" Location="8,55" Size="974,127"/>
+
+	<button name="newServiceProsol" i18ntooltip="EBI_LANG_C_TOOL_TIP_NEW_PROBLEM_SOLUTION" Location="10,20" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMService.newProsol" icon="new.png"/>
+	<button name="deleteServiceProsol" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="50,20" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMService.deleteProSol" icon="delete.png"/>
+
+</panel>
+<panel name="avService" title="EBI_LANG_C_PANEL_AVAILABLE_SERVICE" resizewidth="true" resizeheight="true" Location="11,558" Size="990,183">
+		<table name="companyServiceTable" resizewidth="true" resizeheight="true" Location="8,56" Size="974,120"/>
+
+	<button name="newService" i18ntooltip="EBI_LANG_C_TOOL_TIP_RESET_FORM" Location="8,20" Size="31,27" actionListener="ebiCRM.gui.panels.EBICRMService.newService" icon="new.png"/>
+	<button name="editService" i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="45,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMService.editService" icon="edit.png"/>
+	<button name="copyService" i18ntooltip="EBI_LANG_C_TOOL_TIP_COPY_RECORD" Location="81,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMService.copyService" icon="editcopy.png"/>
+	<button name="deleteService" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="118,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMService.deleteService" icon="delete.png"/>
+	<button name="reportService" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_REPORT" Location="165,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMService.showServiceReport" icon="chart.png"/>
+	<button name="historyService" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="200,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMService.historyService" icon="historysearch.png"/>
+	<button name="createInvoice" i18ntooltip="EBI_LANG_C_TOOL_TIP_CREATE_INVOICE" Location="250,20" Size="31,27" enabled="false" actionListener="ebiCRM.gui.panels.EBICRMService.createInvoice" icon="pexport_min.png"/>
+
+		<label name="filterTable" title="EBI_LANG_FILTER" Location="340,20" Size="77,23"/>
+		<textfield name="filterTableText" Location="427,20" Size="300,25"/>
+</panel>
+</visualpanel>

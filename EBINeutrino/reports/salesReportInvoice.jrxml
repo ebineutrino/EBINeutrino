@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesReportInvoice" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty">
+	<property name="ireport.zoom" value="0.8264462809917371"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="83"/>
+	<style name="Title" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontSize="18" pdfFontName="Times-Bold"/>
+	<style name="Column header" forecolor="#666666" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="Detail" fontSize="12" pdfFontName="Times-Bold"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="ID" class="java.lang.Integer"/>
+	<parameter name="COMPANY_LOGO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_NAME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_STR_NR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_ZIP" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_LOCATION" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_TELEPHONE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_FAX" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_EMAIL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_WEB" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_NAME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_ACCOUNT_NR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_BSB" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_BIC" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_IBAN" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_COUNTRY" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_TAX_INFORMATION" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_VATVAL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_NAME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_SURNAME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_EMAIL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_TELEPHONE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_FAX" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_POSITION" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="EBI_LANG" class="java.util.Properties" isForPrompting="false"/>
+	<parameter name="MEETING_TEXT_TOP" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="MEETING_TEXT_BOTTOM" class="java.lang.String"/>
+	<parameter name="COMPANY_NAME1" class="java.lang.String"/>
+	<parameter name="EBI_ISB2C" class="java.lang.Boolean"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new File(".").getAbsolutePath()+"/reports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_FROM" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_TO" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT inv.INVOICEID,inv.INVOICENR,inv.BEGINCHAR,inv.NAME,inv.CATEGORY,inv.DATE,
+pos.INVOICEID,pos.PRODUCTNR, pos.DEDUCTION,pos.NETAMOUNT,pos.QUANTITY,pos.TAXTYPE, tax.NAME, tax.TAXVALUE
+FROM (CRMINVOICE as inv LEFT JOIN CRMINVOICEPOSITION as pos ON pos.INVOICEID = inv.INVOICEID) LEFT JOIN COMPANYPRODUCTTAX tax ON pos.TAXTYPE = tax.NAME WHERE inv.DATE BETWEEN $P{DATE_FROM} AND $P{DATE_TO}]]>
+	</queryString>
+	<field name="INVOICEID" class="java.lang.Integer"/>
+	<field name="INVOICENR" class="java.lang.Integer"/>
+	<field name="BEGINCHAR" class="java.lang.String"/>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="CATEGORY" class="java.lang.String"/>
+	<field name="DATE" class="java.sql.Date"/>
+	<field name="PRODUCTNR" class="java.lang.String"/>
+	<field name="DEDUCTION" class="java.lang.String"/>
+	<field name="NETAMOUNT" class="java.lang.Double"/>
+	<field name="QUANTITY" class="java.lang.Long"/>
+	<field name="TAXTYPE" class="java.lang.String"/>
+	<field name="TAXVALUE" class="java.lang.Double"/>
+	<variable name="NETAMOUNTCOUNT" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[!$F{DEDUCTION}.equals("") ?
+$F{NETAMOUNT} * $F{QUANTITY} -((($F{NETAMOUNT} * $F{QUANTITY})* Integer.parseInt($F{DEDUCTION})) / 100) :
+$F{NETAMOUNT} * $F{QUANTITY}]]></variableExpression>
+	</variable>
+	<variable name="NETAMOUNT_GROSS" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[!$F{DEDUCTION}.equals("") ?
+($F{NETAMOUNT} * $F{QUANTITY}) - ((($F{NETAMOUNT} * $F{QUANTITY}) * Integer.parseInt($F{DEDUCTION})) / 100) + (($F{NETAMOUNT} * $F{QUANTITY} -((($F{NETAMOUNT} * $F{QUANTITY}) * Integer.parseInt($F{DEDUCTION})) / 100) * $F{TAXVALUE}) / 100) :
+($F{NETAMOUNT} * $F{QUANTITY}) + ((($F{NETAMOUNT} * $F{QUANTITY}) * $F{TAXVALUE}) / 100)]]></variableExpression>
+	</variable>
+	<title>
+		<band height="86" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="571" y="46" width="207" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMPANY_STR_NR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="571" y="10" width="207" height="36"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMPANY_NAME}+"\n"+$P{COMPANY_NAME1}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize">
+				<reportElement key="image-1" isPrintRepeatedValues="false" x="10" y="10" width="297" height="69"/>
+				<imageExpression class="java.lang.String"><![CDATA[System.getProperty("user.dir")+"/images/logo.gif"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="571" y="61" width="207" height="18"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMPANY_ZIP}+" "+$P{COMPANY_LOCATION}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="12" y="83" width="766" height="1" forecolor="#EEEEEE"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="336" splitType="Stretch">
+			<subreport>
+				<reportElement x="10" y="53" width="779" height="283"/>
+				<subreportParameter name="DATE_TO">
+					<subreportParameterExpression><![CDATA[$P{DATE_TO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_FROM">
+					<subreportParameterExpression><![CDATA[$P{DATE_FROM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "salesReportInvoice_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="26" y="5" width="403" height="20"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_SALES_INVOICE")]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="273" y="33" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{DATE_FROM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="471" y="33" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{DATE_TO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="33" width="75" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_ADDED_FROM_DATE")+":  "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="398" y="33" width="73" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_ADDED_TO_DATE")+":  "]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="71" splitType="Stretch">
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="632" y="20" width="157" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{NETAMOUNTCOUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="20" width="142" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_TOTAL_NETAMOUNT")+": "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="43" width="142" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_TOTAL_GROSSAMOUNT")+": "]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="632" y="43" width="157" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{NETAMOUNT_GROSS}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="330" y="12" width="459" height="1" forecolor="#D3D3D3"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

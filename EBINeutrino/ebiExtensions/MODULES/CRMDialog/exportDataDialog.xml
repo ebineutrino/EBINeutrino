@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dialog name="dataExportDialog" title="Export Dialog" icon="..\images\write.png" Location="100,100" Size="570,410" visualproperties="false" assignable="false" modal="true" >
+ 		<label name="selectDBTable" title="Database Table" Location="10,13" Size="210,20"/>
+		<list name="databaseTableList" tabindex="1" Location="10,38" Size="208,144"/>
+		<label name="exportPath" title="Export path" Location="227,16" Size="333,20"/>
+		<textfield name="exportPathText" tabindex="3" Location="225,49" Size="272,20"/>
+		<button name="browsButton" tabindex="4" title="..." Location="502,50" Size="43,20"/>
+		<progressbar name="exportProgress" title="test" Location="233,266" Size="310,20"/>
+		<button name="exportButton" tabindex="8" title="Export" Location="341,198" Size="140,22"/>
+		<button name="closeExportDialog" tabindex="9" title="Close" Location="449,341" Size="106,25"/>
+		<label name="delimiter" title="delimiter" Location="228,98" Size="100,20"/>
+		<textfield name="delimiterText" tabindex="5" title=";" Location="333,98" Size="62,19"/>
+		<label name="sortLabel" title="Sort" Location="229,129" Size="100,20"/>
+		<combobox name="sortCSVText" tabindex="7" title="sortCSVText" Location="335,155" Size="220,20"/>
+		<list name="fieldListText" tabindex="2" title="fieldListText" Location="10,186" Size="208,185"/>
+		<combobox name="sortFieldsNameText" tabindex="6" title="sortFieldsNameText" Location="334,130" Size="220,20"/>
+</dialog>

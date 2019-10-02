@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ebibar name="EBICRMToolBar" title="" Location="0,0" Size="0,0" visualproperties="false" assignable="false" >
+ 	<toolbar name="ebiToolBar" Location="0,0" Size="0,0">
+         <toolbaritem name="toolbarItemNew" title="New" keystroke="N" i18ntooltip="EBI_LANG_C_TOOL_TIP_CREATE_NEW_COMPANY" icon="Tnew.png"/>
+         <toolbaritem name="toolbarItemSave" title="Save" keystroke="S" i18ntooltip="EBI_LANG_C_TOOL_TIP_SAVE_COMPANY" icon="Tsave.png"/>
+         <separator />
+         <toolbaritem name="toolbarItemSearchCompany" keyStroke="F"   title="Search Company" i18ntooltip="EBI_LANG_C_TOOL_TIP_SEARCH_COMPANY" icon="tsearch.png"/>
+         <toolbaritem name="toolbarItemHistory" keyStroke="H" title="History" i18ntooltip="EBI_LANG_C_TOOL_TIP_SEARCH_COMPANY_HISTORY" icon="timemashine.png"/>
+         <toolbaritem name="toolbarItemSearchContact" keyStroke="O" title="Search contact" i18ntooltip="EBI_LANG_C_TOOL_TIP_SEARCH_CONTACT" icon="people.png"/>
+         <separator />
+         <toolbaritem name="toolbarItemCompanyReport" keyStroke="P" title="Company report" i18ntooltip="EBI_LANG_C_TOOL_TIP_COMPANY_REPORT" icon="stock-ticker.png"/>
+         <separator />
+         <toolbaritem name="toolbarItemDelete" keyStroke="D" title="Delete company" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_COMPANY" icon="Tdelete.png"/>
+         <separator />
+         <toolbaritem name="toolbarItemCRMSetting" keyStroke="K" title="CRM Settings" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SETTING" icon="shortcutlf.png"/>
+         <separator />
+         
+         <toolbaritemcheckable name="toolbarItemProductModule" keyStroke="1" title="Product Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_PRODUCT_MODUL" icon="product.png"/>
+         <toolbaritemcheckable name="toolbarItemInvoiceModule" keyStroke="2" title="Invoice Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_INVOICE_MODUL" icon="pexport.png"/>
+         
+         <toolbaritemcheckable name="toolbarItemAccountModule" keyStroke="3" title="Account Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_ACCOUNT_MODUL" icon="account.png"/>
+         
+         <separator />
+         <toolbaritemcheckable name="toolbarItemCampaignModule" keyStroke="4" title="Campaign Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_CAMPAIGN_MODUL" icon="campaign_small.png"/>
+         <toolbaritemcheckable name="toolbarItemProSolModule" keyStroke="5"  title="Problem / Solution Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_PROBLEM_SOLUTION_MODUL" icon="crm_kl.png"/>
+         <separator />
+         <toolbaritemcheckable name="toolbarItemProjectModule" keyStroke="6" title="Project Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_PROJECT_MODUL" icon="run.png"/>
+      </toolbar>
+</ebibar>

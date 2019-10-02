@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dialog name="taxViewDialog" title="EBI_LANG_TAX_DIALOG" icon="..\images\account.png" Location="100,100" Size="610,450" visualproperties="false" assignable="false" modal="true" >
+ 		<button name="closeButton" title="EBI_LANG_CLOSE" Location="489,406" Size="107,29"/>
+		<button name="viewTax" tabindex="2" title="EBI_LANG_SHOW" Location="494,20" Size="100,28"/>
+		<editor name="viewtaxText" Location="14,57" Size="580,340"/>
+		<label name="dateFrom" title="EBI_LANG_FROM" Location="13,22" Size="82,25"/>
+		<timepicker name="dateFromText" Location="97,22" Size="141,25"/>
+		<label name="dateTo" title="EBI_LANG_TO" Location="251,21" Size="85,25"/>
+		<timepicker name="dateToText" Location="336,21" Size="141,25"/>
+</dialog>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dialog name="searchProduct" title="Search Product" icon="../images/product.png" Location="100,100" Size="900,480" visualproperties="false" assignable="false" modal="true" resizable="true" >
+ 		<label name="category" title="category" Location="11,59" Size="100,25"/>
+		<combobox name="categoryText" Location="112,60" Size="250,25"/>
+		<button name="productSearchButton" title="Search" Location="767,59" Size="114,30"/>
+		<treetable name="treetableProduct" resizewidth="true" resizeheight="true" Location="7,106" Size="880,300"/>
+		<button name="cancelButton" title="cancel" fitonresize="true" Location="778,418" Size="107,29"/>
+		<button name="applyButton" title="apply" fitonresize="true" Location="640,418" Size="132,29"/>
+		<label name="productNr" title="productNr" Location="11,22" Size="100,25"/>
+		<textfield name="productNrText" Location="112,22" Size="249,25"/>
+		<label name="productName" title="productName" Location="365,22" Size="100,25"/>
+		<textfield name="productNameText" Location="467,22" Size="262,25"/>
+</dialog>

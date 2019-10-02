@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="showActivityTODOReport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.210000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="81"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#00FFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="COMPANYID" class="java.lang.Integer"/>
+	<parameter name="COMPANY_LOGO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_NAME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_STR_NR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_ZIP" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_LOCATION" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_TELEPHONE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_FAX" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_EMAIL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_WEB" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_NAME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_ACCOUNT_NR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_BSB" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_BIC" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_IBAN" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_BANK_COUNTRY" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_TAX_INFORMATION" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_VATVAL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_NAME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_SURNAME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_EMAIL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_TELEPHONE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_FAX" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="COMPANY_CONTACT_POSITION" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="EBI_LANG" class="java.util.Properties" isForPrompting="false"/>
+	<parameter name="COMPANY_NAME1" class="java.lang.String"/>
+	<parameter name="EBI_ISB2C" class="java.lang.Boolean"/>
+	<parameter name="startDate" class="java.sql.Timestamp"/>
+	<parameter name="endDate" class="java.sql.Timestamp"/>
+	<queryString>
+		<![CDATA[SELECT act.ACTIVITYID, act.ACTIVITYNAME, act.COMPANYID, act.ACTIVITYSTATUS, act.ACTIVITYTYPE, act.DUEDATE, act.DURATION, act.ACTIVITYDESCRIPTION,
+comp.NAME as COMPNAME, comp.CUSTOMERNR
+FROM COMPANYACTIVITIES act, COMPANY as comp WHERE act.COMPANYID = $P{COMPANYID} and comp.COMPANYID = act.COMPANYID and
+ act.DUEDATE BETWEEN $P{startDate} AND $P{endDate}]]>
+	</queryString>
+	<field name="ACTIVITYID" class="java.lang.Integer"/>
+	<field name="ACTIVITYNAME" class="java.lang.String"/>
+	<field name="COMPANYID" class="java.lang.Integer"/>
+	<field name="ACTIVITYSTATUS" class="java.lang.String"/>
+	<field name="ACTIVITYTYPE" class="java.lang.String"/>
+	<field name="DUEDATE" class="java.sql.Timestamp"/>
+	<field name="DURATION" class="java.lang.Integer"/>
+	<field name="ACTIVITYDESCRIPTION" class="java.lang.String"/>
+	<field name="COMPNAME" class="java.lang.String"/>
+	<field name="CUSTOMERNR" class="java.lang.String"/>
+	<title>
+		<band height="100" splitType="Stretch">
+			<line>
+				<reportElement key="line-1" x="14" y="72" width="510" height="1" forecolor="#CCCCFF" backcolor="#CCCCCC"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="311" y="51" width="207" height="18"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{COMPANY_ZIP}+" "+$P{COMPANY_LOCATION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="311" y="36" width="207" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{COMPANY_STR_NR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="311" y="0" width="207" height="36"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{COMPANY_NAME}+"\n"+$P{COMPANY_NAME1}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize">
+				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="297" height="69"/>
+				<imageExpression><![CDATA[System.getProperty("user.dir")+"/images/logo.gif"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="126" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="14" y="68" width="510" height="17"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_ACTIVITIES")]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="393" y="14" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="358" y="14" width="35" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_DATE")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="357" y="34" width="172" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_COMPANY_CUSTOMER_NUMBER")+":   "+$F{CUSTOMERNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="14" y="14" width="258" height="16"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMPNAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="104" y="106" width="90" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{endDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="83" y="106" width="8" height="20"/>
+				<textElement/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="15" y="106" width="68" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{startDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+			<rectangle>
+				<reportElement key="rectangle-1" x="0" y="6" width="535" height="20" forecolor="#CCCCFF" backcolor="#E3F0FB"/>
+			</rectangle>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="3" y="6" width="78" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_NAME")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="81" y="6" width="83" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_TYPE")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="164" y="6" width="82" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_STATUS")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="246" y="6" width="73" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_DUE_DATE")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="379" y="6" width="121" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_DESCRIPTION")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="319" y="6" width="60" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_DURATION")]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="73" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="81" y="8" width="83" height="54" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ACTIVITYTYPE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="0" y="8" width="81" height="54" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ACTIVITYNAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="164" y="8" width="82" height="54"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ACTIVITYSTATUS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField" x="246" y="8" width="73" height="18"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DUEDATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="379" y="8" width="156" height="54" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ACTIVITYDESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="319" y="8" width="60" height="18"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DURATION}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="1" width="535" height="1" forecolor="#E6E6E6">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT} > 1]]></printWhenExpression>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="12" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="391" y="0" width="144" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

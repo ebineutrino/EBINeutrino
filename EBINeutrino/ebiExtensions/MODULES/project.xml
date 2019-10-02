@@ -1,0 +1,15 @@
+<BusinessModule Name="EBICRM">
+ <includeGUI Name="Dashboard" enabled="true" Path="Summary/summaryGUI.xml"/>
+ <includeGUI Name="Leads" enabled="true" Path="Leads/leadsGUI.xml"/>
+ <includeGUI Name="Company" enabled="true" Path="Company/companyGUI.xml"/>
+ <includeGUI Name="Contact" enabled="false" Path="Contact/contactGUI.xml"/>
+ <includeGUI Name="Address" enabled="false" Path="Address/addressGUI.xml"/>
+ <includeGUI Name="Bank" enabled="false" Path="Bank/bankGUI.xml"/>
+ <includeGUI Name="MeetingCall" enabled="false" Path="MeetingsCallManagement/meetingcallGUI.xml"/>
+ <includeGUI Name="Activity" enabled="false" Path="Activity/activityGUI.xml"/>
+ <includeGUI Name="Opportunity" enabled="false" Path="Opportunity/opportunityGUI.xml"/>
+ <includeGUI Name="Offer" enabled="false" Path="Offer/offerGUI.xml"/>
+ <includeGUI Name="Order" enabled="false" Path="Order/orderGUI.xml"/>
+ <includeGUI Name="Service" enabled="false" Path="CRMService/serviceGUI.xml"/>
+ <includeToolbar Name="ebiToolBar" Path="CRMToolbar/crmToolbar.xml"/>
+</BusinessModule>

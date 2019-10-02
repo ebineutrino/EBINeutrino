@@ -1,0 +1,35 @@
+<menuBar Name="EBIMenuBar">
+
+   <menu Name="menuFile" Title="EBI_LANG_FILE" keyEvent="F" >
+       <MenuItem Name="menuItemNew" Title="EBI_LANG_NEW" KeyStroke="N" Icon="" />      
+       <MenuItem Name="menuItemSave" Title="EBI_LANG_SAVE" KeyStroke="S" Icon="" />
+       <MenuItem Name="menuItemPrint" Title="EBI_LANG_PRINT" KeyStroke="P" Icon="" />  
+       <separator/> 
+       <MenuItem Name="menuItemDelete" Title="EBI_LANG_DELETE" KeyStroke="D" Icon="" /> 
+   </menu>
+   <menu Name="menuSearch" Title="EBI_LANG_SEARCH" keyEvent="P">
+       <MenuItem Name="menuItemCompanySearch" KeyStroke="F7" Title="EBI_LANG_COMPANY_SEARCH" Icon="" />   
+       <MenuItem Name="menuItemHistorySearch" KeyStroke="F8" Title="EBI_LANG_COMPANY_HISTORY_SEARCH" Icon="" />
+       <MenuItem Name="menuItemContactSearch" KeyStroke="F9" Title="EBI_LANG_CONTACT_SEARCH" Icon="" />  
+   </menu>
+   <menu Name="menuModule" Title="EBI_LANG_MODULE" KeyEvent="M" >
+       <MenuItem Name="menuItemProductModule" KeyStroke="F1" checkable="true" Title="EBI_LANG_PRODUCT_ADMIN_WINDOW" Icon="" />   
+       <MenuItem Name="menuItemCalendarModule" KeyStroke="F2" checkable="true" Title="EBI_LANG_CRM_CALENDAR_WINDOW" Icon="" />
+       <MenuItem Name="menuItemCampaignModule" KeyStroke="F3" checkable="true" Title="EBI_LANG_CRM_CAMPAIGN_WINDOW" Icon="" />  
+	   <MenuItem Name="menuItemProsolModule"   KeyStroke="F4" checkable="true" Title="EBI_LANG_CRM_PROSOL_WINDOW" Icon="" /> 
+	   <MenuItem Name="menuItemProjectModule"  KeyStroke="F5" checkable="true" Title="EBI_LANG_CRM_PROJECT_WINDOW" Icon="" />  	   
+       <MenuItem Name="menuItemInvoiceModule" KeyStroke="F6" checkable="true" Title="EBI_LANG_CRM_INVOICE_WINDOW"  Icon=""/>
+   </menu>
+
+   <menu Name="menuExportImport" Title="EBI_LANG_IMPORT_EXPORT" KeyEvent="X" >
+       <MenuItem Name="menuItemExportCSV"     KeyStroke="F10" Title="EBI_LANG_EXPORT_AS_CSV" Icon="" />   
+       <MenuItem Name="menuItemImportCSV"     KeyStroke="F11" Title="EBI_LANG_IMPORT_AS_CSV" Icon="" /> 
+       <separator/> 
+       <MenuItem Name="menuItemImportSQL"     KeyStroke="F12" Title="EBI_LANG_IMPORT_SQL_DATA" Icon="" /> 
+   </menu>
+
+   <menu Name="menuExtras" Title="EBI_LANG_EXTRAS" KeyEvent="R" >
+       <MenuItem Name="menuItemSelectNextTab"     KeyStroke="PLUS" Title="EBI_LANG_SELECT_NEXT_TAB" Icon="" />   
+       <MenuItem Name="menuItemSelectPrevTab"     KeyStroke="MINUS" Title="EBI_LANG_SELECT_PREVIOUSE_TAB" Icon="" />   
+   </menu>	
+</menuBar>

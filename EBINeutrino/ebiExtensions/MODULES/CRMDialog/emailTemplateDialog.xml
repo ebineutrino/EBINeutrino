@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dialog name="emailTemplateDialog" title="Email Template" icon="/home/warnwall/git/ebineutrinoCRM_ERP/..\images\write.png" Location="0,0" Size="590,520" visualproperties="false" assignable="false" modal="true" resizable="true" >
+ 		<button name="saveValue" title="Save" Location="449,200" Size="127,32"/>
+		<table name="taxValueTable" resizewidth="true" Location="8,42" Size="567,149"/>
+		<button name="newBnt" Location="10,10" Size="31,27"/>
+		<button name="deleteBnt" Location="80,10" Size="31,27"/>
+		<button name="editBnt" Location="45,10" Size="31,27"/>
+		<label name="name" title="Name" Location="9,199" Size="101,25"/>
+		<textfield name="emailTitle" Location="113,200" Size="334,25"/>
+<panel name="emailTemplate" max="1" resizewidth="true" resizeheight="true" background="#ffffff" Location="11,265" Size="563,241"/>
+		<checkbox name="activeTemplate" title="Active" Location="115,235" Size="130,25"/>
+		<button name="loadHTMLTemplate" title="EBI_LANG_LOAD_HTML_TEMPLATE" Location="249,235" Size="140,25"/>
+</dialog>

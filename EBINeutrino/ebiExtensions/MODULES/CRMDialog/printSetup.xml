@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dialog name="printerSetup" title="Printer Setup" icon="..\images\recmail.png" Location="100,100" Size="570,420" visualproperties="false" assignable="false" modal="true" >
+ 		<button name="saveValue" tabindex="2" title="EBI_LANG_SAVE" Location="267,374" Size="133,25"/>
+		<button name="closeDialog" tabindex="3" title="EBI_LANG_CLOSE" Location="405,374" Size="150,25"/>
+		<label name="setX" title="EBI_LANG_SET_X" Location="21,21" Size="100,20"/>
+		<label name="setY" title="EBI_LANG_SET_Y" Location="206,21" Size="100,20"/>
+		<label name="setWidth" title="EBI_LANG_SET_WIDTH" Location="382,21" Size="100,20"/>
+		<label name="textWidth" title="EBI_LANG_SET_TEXT_WIDTH" Location="21,60" Size="100,20"/>
+		<label name="footerDescription" title="EBI_LANG_DESCRIPTION" Location="22,101" Size="100,20"/>
+		<checkbox name="showPrinterDialog" title="EBI_LANG_SHOW_PRINT_DIALOG" Location="145,97" Size="143,21"/>
+		<label name="spaceMin" title="EBI_LANG_SET_SPACE_MIN" Location="207,61" Size="100,20"/>
+		<label name="spaceMax" title="EBI_LANG_SET_SPACE_MAX" Location="383,61" Size="100,20"/>
+		<textarea name="descriptionText" Location="22,130" Size="530,236"/>
+		<spinner name="setXText" max="2000" min="0" tabindex="5" Location="125,21" Size="68,20"/>
+		<spinner name="setYText" max="2000" min="0" tabindex="5" Location="309,21" Size="68,20"/>
+		<spinner name="setWidthText" max="2000" min="0" tabindex="5" Location="485,21" Size="68,20"/>
+		<spinner name="setTextWidthText" max="2000" min="0" tabindex="5" Location="126,60" Size="68,20"/>
+		<spinner name="setSpaceMinText" max="2000" min="0" tabindex="5" Location="310,61" Size="68,20"/>
+		<spinner name="setSpaceMaxText" max="2000" min="0" tabindex="5" Location="487,61" Size="68,20"/>
+</dialog>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="economyReport_subreport1_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="startDate" class="java.util.Date"/>
+	<parameter name="endDate" class="java.util.Date"/>
+	<parameter name="actDebit" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT(act.ACCOUNTVALUE)
+FROM ACCOUNTSTACK act WHERE act.ACCOUNTDATE BETWEEN $P{startDate} AND $P{endDate} and act.ACCOUNT_DEBIT=$P{actDebit}]]>
+	</queryString>
+	<field name="ACCOUNTVALUE" class="java.lang.Double"/>
+	<variable name="ACCOUNTVALUE_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ACCOUNTVALUE}]]></variableExpression>
+	</variable>
+	<variable name="ACCOUNTVALUE_2" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ACCOUNTVALUE}]]></variableExpression>
+	</variable>
+	<variable name="ACCOUNTVALUE_3" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ACCOUNTVALUE}]]></variableExpression>
+	</variable>
+	<variable name="SUM_AMOUNT" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ACCOUNTVALUE}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="113" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[NumberFormat.getCurrencyInstance().format($V{ACCOUNTVALUE_3})]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

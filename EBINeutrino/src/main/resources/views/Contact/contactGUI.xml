@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<visualpanel name="Contact" title="EBI_LANG_C_CONTACT" Location="0,0" Size="1024,850" visualproperties="true" assignable="false" bean="org.modules.views.EBICRMContactView" >
+    <panel name="gnContactAddress"  title="EBI_LANG_C_ADRESSDATA" Location="10,11" Size="915,184">
+        <table name="contactTableAddress"  Location="8,60" Size="899,116"/>
+        <button name="addContactAddress"  i18ntooltip="EBI_LANG_C_TOOL_TIP_ADD_ADDRESS" Location="8,25" Size="31,27" actionListener="org.modules.views.EBICRMContactView.addContactAddress" icon="new.png"/>
+        <button name="deleteContactAddress"  i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="43,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMContactView.removeAddress" icon="delete.png"/>
+    </panel>
+    <panel name="gnContact"  title="EBI_LANG_C_CONTACT_DATA" Location="10,195" Size="915,361">
+        <label name="contactGender"  title="EBI_LANG_C_GENDER" Location="10,20" Size="113,25"/>
+        <combobox name="genderTex"  tabindex="1" Location="125,20" Size="131,25"/>
+        <textfield name="titleText"  tabindex="2" Location="260,20" Size="110,25"/>
+        <label name="contactPosition"  title="EBI_LANG_C_POSITION" Location="10,50" Size="113,25"/>
+        <textfield name="positionText"  tabindex="3" Location="125,50" Size="245,25"/>
+        <label name="contactName"  title="EBI_LANG_C_NAME" Location="10,80" Size="113,25"/>
+        <textfield name="nameText"  tabindex="4" Location="125,80" Size="245,25"/>
+        <label name="contactSurname"  title="EBI_LANG_SURNAME" Location="10,110" Size="113,25"/>
+        <textfield name="surnameText"  tabindex="5" Location="125,110" Size="245,25"/>
+        <label name="contactMiddlename"  title="EBI_LANG_C_MITTEL_NAME" Location="10,140" Size="113,25"/>
+        <textfield name="middleNameText"  tabindex="6" Location="125,140" Size="245,25"/>
+        <label name="contactBirddate"  title="EBI_LANG_C_BIRTHDATE" Location="10,170" Size="113,25"/>
+        <timepicker name="birthdateText"  tabindex="7" Location="125,170" Size="245,25"/>
+        <label name="contactTelefon"  title="EBI_LANG_C_TELEPHONE" Location="10,200" Size="113,25"/>
+        <textfield name="telefonText"  tabindex="8" Location="125,200" Size="245,25"/>
+        <label name="contactFax"  title="EBI_LANG_C_FAX_1" Location="10,230" Size="113,25"/>
+        <textfield name="faxText"  tabindex="9" Location="125,230" Size="245,25"/>
+        <label name="contactMobile"  title="EBI_LANG_C_MOBILE_PHONE_1" Location="10,260" Size="113,25"/>
+        <textfield name="mobileText"  tabindex="10" Location="125,260" Size="245,25"/>
+        <label name="contactEmail"  title="EBI_LANG_EMAIL" Location="10,290" Size="113,25"/>
+        <textfield name="emailText"  tabindex="11" Location="125,290" Size="245,25"/>
+        <textarea name="contactDescription"  tabindex="12" Location="412,20" Size="495,326"/>
+        <checkbox name="mainContactText"  title="EBI_LANG_MAIN_CONTACT" Location="126,320" Size="239,24"/>
+    </panel>
+    <panel name="avContact"  title="EBI_LANG_C_AVAILABLE_CONTACT" resizewidth="true" resizeheight="true" Location="11,560" Size="1001,269">
+        <table name="companyContacts"  resizewidth="true" resizeheight="true" Location="8,80" Size="984,179"/>
+        <button name="newContact"  i18ntooltip="EBI_LANG_C_TOOL_TIP_RESET_FORM" Location="7,35" Size="31,27" actionListener="org.modules.views.EBICRMContactView.newContact" icon="new.png" />
+        <button name="editContact"  i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="41,35" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMContactView.editContact" icon="edit.png"/>
+        <button name="copyContact"  i18ntooltip="EBI_LANG_C_TOOL_TIP_COPY_RECORD" Location="75,35" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMContactView.copyContact" icon="editcopy.png" />
+        <button name="deleteContact"  i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="111,35" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMContactView.deleteContact" icon="delete.png"/>
+        <button name="historyContact"  i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="147,35" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMContactView.historyContact" icon="historysearch.png"/>
+        <label name="filterTable"  title="EBI_LANG_FILTER" Location="200,35" Size="77,23"/>
+        <textfield name="filterTableText"  Location="285,35" Size="265,25"/>
+    </panel>
+</visualpanel>

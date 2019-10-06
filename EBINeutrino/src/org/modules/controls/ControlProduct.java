@@ -39,8 +39,10 @@ public class ControlProduct {
         EBISystem.hibernate().openHibernateSession("EBIPRODUCT_SESSION");
     }
 
-    public boolean dataStore() {
+    public Integer dataStore() {
 
+        Integer productID=-1;
+        
         try {
             EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").begin();
             if (!isEdit) {
@@ -128,13 +130,15 @@ public class ControlProduct {
             if (!isEdit) {
                 EBISystem.gui().vpanel("Product").setID(product.getProductid());
             }
+            productID = product.getProductid();
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return productID;
     }
 
-    public void dataCopy(final int id) {
+    public Integer dataCopy(final int id) {
+        Integer productID=-1;
         Query query;
         try {
 
@@ -180,6 +184,7 @@ public class ControlProduct {
                         dc.setCreatedfrom(EBISystem.ebiUser);
                         dc.setFiles(docx.getFiles());
                         dc.setName(docx.getName());
+                        pnew.getCrmproductdocses().add(dc);
                         EBISystem.hibernate().session("EBIPRODUCT_SESSION").saveOrUpdate(dc);
                     }
                 }
@@ -195,6 +200,7 @@ public class ControlProduct {
                         nd.setCreatedfrom(EBISystem.ebiUser);
                         nd.setName(dimx.getName());
                         nd.setValue(dimx.getValue());
+                        pnew.getCrmproductdimensions().add(nd);
                         EBISystem.hibernate().session("EBIPRODUCT_SESSION").saveOrUpdate(nd);
                     }
                 }
@@ -210,22 +216,18 @@ public class ControlProduct {
                         d.setCreatedfrom(EBISystem.ebiUser);
                         d.setProductname(cdip.getProductname());
                         d.setProductnr(cdip.getProductnr());
+                        pnew.getCrmproductdependencies().add(d);
                         EBISystem.hibernate().session("EBIPRODUCT_SESSION").saveOrUpdate(d);
                     }
                 }
 
                 EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").commit();
-                EBISystem.gui().table("companyProductTable", "Product").
-                        changeSelection(EBISystem.gui().table("companyProductTable", "Product").
-                                convertRowIndexToView(EBISystem.getModule().dynMethod.
-                                        getIdIndexFormArrayInATable(EBISystem.getModule().
-                                                getEBICRMProductPane().getProductModel().data, 5, pnew.getProductid())), 0, false, false);
-
+                productID = pnew.getProductid();
             }
         } catch (final Exception e) {
             e.printStackTrace();
         }
-
+        return productID;
     }
 
     public void dataEdit(final int id) {
@@ -274,16 +276,11 @@ public class ControlProduct {
                 EBISystem.gui().textArea("productDescription", "Product").setText(product.getDescription() == null ? "" : product.getDescription());
 
                 EBISystem.getInstance().getDataStore("Product", "ebiEdit");
-                EBISystem.gui().table("companyProductTable", "Product").
-                        changeSelection(EBISystem.gui().table("companyProductTable", "Product").
-                                convertRowIndexToView(EBISystem.getModule().dynMethod.
-                                        getIdIndexFormArrayInATable(EBISystem.getModule().getEBICRMProductPane().getProductModel().data, 5, id)), 0, false, false);
                 EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").commit();
 
             } else {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
             }
-
         } catch (final HibernateException e) {
             e.printStackTrace();
         } catch (final Exception e) {
@@ -311,9 +308,9 @@ public class ControlProduct {
         }
     }
 
-    public void dataShow() {
+    public void dataShow(Integer id) {
         ResultSet set = null;
-        final int srow = EBISystem.gui().table("companyProductTable", "Product").getSelectedRow();
+        int srow = EBISystem.gui().table("companyProductTable", "Product").getSelectedRow();
         PreparedStatement ps = null;
         try {
             ps = EBISystem.getInstance().iDB().initPreparedStatement("SELECT PRODUCTID,PRODUCTNR,PRODUCTNAME,CATEGORY,TYPE,DESCRIPTION FROM CRMPRODUCT ORDER BY CREATEDDATE DESC");
@@ -331,6 +328,9 @@ public class ControlProduct {
                         EBISystem.getModule().getEBICRMProductPane().getProductModel().data[i][3] = set.getString("TYPE") == null ? "" : set.getString("TYPE");
                         EBISystem.getModule().getEBICRMProductPane().getProductModel().data[i][4] = set.getString("DESCRIPTION") == null ? "" : set.getString("DESCRIPTION");
                         EBISystem.getModule().getEBICRMProductPane().getProductModel().data[i][5] = set.getInt("PRODUCTID");
+                        if(id != -1 && id == set.getInt("PRODUCTID")){
+                            srow=i;
+                        }
                         i++;
                     }
                 } else {

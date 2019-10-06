@@ -1143,7 +1143,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                contactPane.getControlContact().dataShow();
+                contactPane.getControlContact().dataShow(-1);
                 EBISystem.gui().combo("genderTex", "Contact").grabFocus();
             }
         });
@@ -1157,7 +1157,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                addressPane.getAddressDataControl().dataShow();
+                addressPane.getAddressDataControl().dataShow(-1);
                 EBISystem.gui().combo("addressTypeText", "Address").setRequestFocusEnabled(true);
                 EBISystem.gui().combo("addressTypeText", "Address").grabFocus();
             }
@@ -1171,7 +1171,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                meetingReport.showMeetingProtocol();
+                meetingReport.getDataMeetingControl().dataShow(-1);
                 EBISystem.gui().textField("subjectMeetingText", "MeetingCall").grabFocus();
             }
         });
@@ -1184,7 +1184,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                opportunityPane.showOpportunity();
+                opportunityPane.getDataOpportuniyControl().dataShow(-1);
                 EBISystem.gui().combo("opportunityNameText", "Opportunity").grabFocus();
             }
         });
@@ -1197,7 +1197,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                activitiesPane.showActivity();
+                activitiesPane.getDataControlActivity().dataShow(-1);
                 EBISystem.gui().textField("activityNameText", "Activity").grabFocus();
             }
         });
@@ -1210,7 +1210,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                bankPane.getBankDataControl().dataShow();
+                bankPane.getBankDataControl().dataShow(-1);
                 EBISystem.gui().textField("bankNameText", "Bank").grabFocus();
             }
         });
@@ -1223,7 +1223,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                offerPane.showOffer();
+                offerPane.getDataControlOffer().dataShow(-1);
                 EBISystem.gui().textField("offerNrText", "Offer").requestFocus();
             }
         });
@@ -1236,7 +1236,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                orderPane.showOrder();
+                orderPane.getDataControlOrder().dataShow(-1);
                 EBISystem.gui().textField("orderNrText", "Order").requestFocus();
             }
         });

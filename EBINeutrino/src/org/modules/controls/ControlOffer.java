@@ -30,7 +30,10 @@ public class ControlOffer {
         compOffer = new Companyoffer();
     }
 
-    public boolean dataStore() {
+    public Integer dataStore() {
+        
+        Integer offerID = -1;
+        
         try {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
 
@@ -113,14 +116,17 @@ public class ControlOffer {
                 EBISystem.gui().vpanel("Offer").setID(compOffer.getOfferid());
             }
 
+            offerID =  compOffer.getOfferid();
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
-        return true;
+        return offerID;
     }
 
-    public void dataCopy(final int id) {
+    public Integer dataCopy(final int id) {
 
+        Integer offerID = -1;
+        
         try {
             if (EBISystem.getInstance().getCompany().getCompanyoffers().size() > 0) {
                 Companyoffer offer = null;
@@ -130,7 +136,6 @@ public class ControlOffer {
                         break;
                     }
                 }
-
                 EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
                 final Companyoffer ofnew = new Companyoffer();
                 ofnew.setCreateddate(new Date());
@@ -159,7 +164,7 @@ public class ControlOffer {
                         dc.setCreatedfrom(EBISystem.ebiUser);
                         dc.setFiles(doc.getFiles());
                         dc.setName(doc.getName());
-                        offer.getCompanyofferdocses().add(dc);
+                        ofnew.getCompanyofferdocses().add(dc);
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(dc);
                     }
                 }
@@ -184,7 +189,7 @@ public class ControlOffer {
                         p.setQuantity(pos.getQuantity());
                         p.setTaxtype(pos.getTaxtype());
                         p.setType(pos.getType());
-                        offer.getCompanyofferpositionses().add(p);
+                        ofnew.getCompanyofferpositionses().add(p);
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(p);
                     }
                 }
@@ -214,23 +219,19 @@ public class ControlOffer {
                         r.setStreet(rec.getStreet());
                         r.setSurname(rec.getSurname());
                         r.setZip(rec.getZip());
-                        offer.getCompanyofferreceivers().add(r);
+                        ofnew.getCompanyofferreceivers().add(r);
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(r);
                     }
                 }
 
                 EBISystem.getInstance().getCompany().getCompanyoffers().add(ofnew);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-
-                EBISystem.gui().table("companyOfferTable", "Offer").
-                        changeSelection(EBISystem.gui().table("companyOfferTable", "Offer").
-                                convertRowIndexToView(EBISystem.getModule().dynMethod.
-                                        getIdIndexFormArrayInATable(EBISystem.getModule().getOfferPane().getTabModoffer().data, 7, ofnew.getOfferid())), 0, false, false);
-
+                offerID = ofnew.getOfferid();
             }
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
+        return offerID;
     }
 
     public void dataEdit(final int id) {
@@ -278,10 +279,6 @@ public class ControlOffer {
             EBISystem.gui().textArea("offerDescriptionText", "Offer").setText(compOffer.getDescription());
             EBISystem.getInstance().getDataStore("Offer", "ebiEdit");
 
-            EBISystem.gui().table("companyOfferTable", "Offer").
-                    changeSelection(EBISystem.gui().table("companyOfferTable", "Offer").
-                            convertRowIndexToView(EBISystem.getModule().dynMethod.
-                                    getIdIndexFormArrayInATable(EBISystem.getModule().getOfferPane().getTabModoffer().data, 7, id)), 0, false, false);
         } else {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
         }
@@ -289,7 +286,7 @@ public class ControlOffer {
 
     public void createOrderFromOffer(final int id) {
 
-        EBISystem.getModule().getOrderPane().dataControlOrder.dataNew();
+        EBISystem.getModule().getOrderPane().getDataControlOrder().dataNew();
         if (EBISystem.getInstance().getCompany().getCompanyoffers().size() > 0) {
             Companyoffer ofr = null;
             for (Companyoffer offrObj : EBISystem.getInstance().getCompany().getCompanyoffers()) {
@@ -303,7 +300,7 @@ public class ControlOffer {
             EBISystem.gui().textField("orderNameText", "Order").setText(ofr.getName());
 
             EBISystem.gui().textField("orderOfferText", "Order").setText(ofr.getName());
-            EBISystem.getModule().getOrderPane().dataControlOrder.setOfferID(id);
+            EBISystem.getModule().getOrderPane().getDataControlOrder().setOfferID(id);
 
             EBISystem.gui().textArea("orderDescription", "Order").setText(ofr.getDescription());
             EBISystem.getModule().ebiContainer.setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_ORDER")));
@@ -328,9 +325,9 @@ public class ControlOffer {
                         ordPos.setQuantity(posi.getQuantity());
                         ordPos.setTaxtype(posi.getTaxtype());
                         ordPos.setType(posi.getType());
-                        EBISystem.getModule().getOrderPane().dataControlOrder.getCompOrder().getCompanyorderpositionses().add(ordPos);
+                        EBISystem.getModule().getOrderPane().getDataControlOrder().getCompOrder().getCompanyorderpositionses().add(ordPos);
                     }
-                    EBISystem.getModule().getOrderPane().dataControlOrder.dataShowProduct();
+                    EBISystem.getModule().getOrderPane().getDataControlOrder().dataShowProduct();
                 }
             }
 
@@ -356,10 +353,10 @@ public class ControlOffer {
                         ordRec.setStreet(contact.getStreet());
                         ordRec.setZip(contact.getZip());
                         ordRec.setPbox(contact.getPbox());
-                        EBISystem.getModule().getOrderPane().dataControlOrder.getCompOrder().getCompanyorderreceivers().add(ordRec);
+                        EBISystem.getModule().getOrderPane().getDataControlOrder().getCompOrder().getCompanyorderreceivers().add(ordRec);
 
                     }
-                    EBISystem.getModule().getOrderPane().dataControlOrder.dataShowReceiver();
+                    EBISystem.getModule().getOrderPane().getDataControlOrder().dataShowReceiver();
                 }
             }
             if (ofr.getCompanyofferdocses().size() > 0) {
@@ -374,10 +371,10 @@ public class ControlOffer {
                         docs.setCreateddate(new java.sql.Date(new java.util.Date().getTime()));
                         docs.setCreatedfrom(EBISystem.ebiUser);
                         docs.setFiles(obj.getFiles());
-                        EBISystem.getModule().getOrderPane().dataControlOrder.getCompOrder().getCompanyorderdocses().add(docs);
+                        EBISystem.getModule().getOrderPane().getDataControlOrder().getCompOrder().getCompanyorderdocses().add(docs);
 
                     }
-                    EBISystem.getModule().getOrderPane().dataControlOrder.dataShowDoc();
+                    EBISystem.getModule().getOrderPane().getDataControlOrder().dataShowDoc();
                 }
             }
         } else {
@@ -401,14 +398,13 @@ public class ControlOffer {
         }
     }
 
-    public void dataShow() {
+    public void dataShow(Integer id) {
 
-        final int srow = EBISystem.gui().table("companyOfferTable", "Offer").getSelectedRow();
+        int srow = EBISystem.gui().table("companyOfferTable", "Offer").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyoffers().size();
 
         if (size > 0) {
             EBISystem.getModule().getOfferPane().getTabModoffer().data = new Object[size][8];
-
             final Iterator<Companyoffer> iter = EBISystem.getInstance().getCompany().getCompanyoffers().iterator();
 
             int i = 0;
@@ -423,6 +419,9 @@ public class ControlOffer {
                 EBISystem.getModule().getOfferPane().getTabModoffer().data[i][5] = cOffer.getDescription() == null ? "" : cOffer.getDescription();
                 EBISystem.getModule().getOfferPane().getTabModoffer().data[i][6] = cOffer.getIsrecieved() == null ? 0 : cOffer.getIsrecieved();
                 EBISystem.getModule().getOfferPane().getTabModoffer().data[i][7] = cOffer.getOfferid();
+                if(id != -1 && id == cOffer.getOfferid()){
+                    srow = i;
+                }
                 i++;
             }
 
@@ -469,7 +468,7 @@ public class ControlOffer {
 
     public void dataShowReport(final int id) {
         if (isEdit) {
-            if (!dataStore()) {
+            if (dataStore() == -1) {
                 return;
             }
         }
@@ -506,7 +505,7 @@ public class ControlOffer {
         String fileName = "";
 
         if (isEdit) {
-            if (!dataStore()) {
+            if (dataStore() == -1) {
                 return null;
             }
         }

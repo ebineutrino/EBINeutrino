@@ -27,8 +27,10 @@ public class ControlProblemSolution {
         this.compProsol = new Crmproblemsolutions();
     }
 
-    public boolean dataStore() {
+    public Integer dataStore() {
 
+        Integer prosolID=-1;
+        
         try {
             EBISystem.hibernate().transaction("PROSOL_SESSION").begin();
             if (isEdit == false) {
@@ -93,14 +95,15 @@ public class ControlProblemSolution {
             if (!isEdit) {
                 EBISystem.gui().vpanel("Prosol").setID(compProsol.getProsolid());
             }
+            prosolID = compProsol.getProsolid();
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return prosolID;
     }
 
-    public void dataCopy(final int id) {
-
+    public Integer dataCopy(final int id) {
+        Integer prosolID = -1;
         Query query;
         try {
 
@@ -137,6 +140,7 @@ public class ControlProblemSolution {
                         dc.setCreatedfrom(EBISystem.ebiUser);
                         dc.setFiles(docs.getFiles());
                         dc.setName(docs.getName());
+                        psoln.getCrmproblemsoldocses().add(dc);
                         EBISystem.hibernate().session("PROSOL_SESSION").saveOrUpdate(dc);
                     }
                 }
@@ -158,20 +162,17 @@ public class ControlProblemSolution {
                         p.setProductnr(pos.getProductnr());
                         p.setTaxtype(pos.getTaxtype());
                         p.setType(pos.getType());
+                        psoln.getCrmproblemsolpositions().add(p);
                         EBISystem.hibernate().session("PROSOL_SESSION").saveOrUpdate(p);
                     }
                 }
-
                 EBISystem.hibernate().transaction("PROSOL_SESSION").commit();
-                EBISystem.gui().table("prosolTable", "Prosol").
-                        changeSelection(EBISystem.gui().table("prosolTable", "Prosol").
-                                convertRowIndexToView(EBISystem.getModule().dynMethod.
-                                        getIdIndexFormArrayInATable(EBISystem.getModule().getProsolPane().getTabModProsol().data, 7, psoln.getProsolid())), 0, false, false);
-
+                prosolID = psoln.getProsolid();
             }
         } catch (final Exception e) {
             e.printStackTrace();
         }
+        return prosolID;
     }
 
     public void dataEdit(final int id) {
@@ -218,13 +219,7 @@ public class ControlProblemSolution {
                 }
 
                 EBISystem.gui().textArea("prosolDescriptionText", "Prosol").setText(compProsol.getDescription());
-
                 EBISystem.getInstance().getDataStore("Prosol", "ebiEdit");
-
-                EBISystem.gui().table("prosolTable", "Prosol").
-                        changeSelection(EBISystem.gui().table("prosolTable", "Prosol").
-                                convertRowIndexToView(EBISystem.getModule().dynMethod.
-                                        getIdIndexFormArrayInATable(EBISystem.getModule().getProsolPane().getTabModProsol().data, 7, id)), 0, false, false);
 
             } else {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
@@ -257,10 +252,10 @@ public class ControlProblemSolution {
         }
     }
 
-    public void dataShow() {
+    public void dataShow(Integer id) {
         ResultSet set = null;
 
-        final int srow = EBISystem.gui().table("prosolTable", "Prosol").getSelectedRow();
+        int srow = EBISystem.gui().table("prosolTable", "Prosol").getSelectedRow();
         PreparedStatement ps1 = null;
 
         try {
@@ -285,6 +280,9 @@ public class ControlProblemSolution {
                         EBISystem.getModule().getProsolPane().getTabModProsol().data[i][5] = set.getString("TYPE") == null ? "" : set.getString("TYPE");
                         EBISystem.getModule().getProsolPane().getTabModProsol().data[i][6] = set.getString("DESCRIPTION") == null ? "" : set.getString("DESCRIPTION");
                         EBISystem.getModule().getProsolPane().getTabModProsol().data[i][7] = set.getInt("PROSOLID");
+                        if(id != -1 && id == set.getInt("PROSOLID")){
+                            srow = i;
+                        }
                         i++;
                     }
                 } else {

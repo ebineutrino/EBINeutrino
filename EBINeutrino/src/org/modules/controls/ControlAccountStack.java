@@ -16,10 +16,10 @@ import org.sdk.utils.EBIPropertiesRW;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 
-import javax.swing.*;
 import java.io.*;
 import java.text.NumberFormat;
 import java.util.*;
+import javax.swing.JFileChooser;
 
 public class ControlAccountStack {
 
@@ -33,7 +33,8 @@ public class ControlAccountStack {
         actStack = new Accountstack();
     }
 
-    public boolean dataStore() {
+    public Integer dataStore() {
+        Integer acccoundID = -1;
         try {
 
             EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").begin();
@@ -83,10 +84,11 @@ public class ControlAccountStack {
             // storeActualCredit(EBISystem.getGUIRenderer().getTextfield("creditText","Account").getText(),creditValue);
             EBISystem.hibernate().session("EBIACCOUNT_SESSION").saveOrUpdate(actStack);
             EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").commit();
+            acccoundID = actStack.getAcstackid();
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
-        return true;
+        return acccoundID;
     }
 
     public void dataEdit(final int id) {
@@ -133,12 +135,6 @@ public class ControlAccountStack {
                 EBISystem.getModule().getAccountPane().setAccountDebitTaxName(actStack.getAccountTaxType());
                 EBISystem.getInstance().getDataStore("Account", "ebiEdit");
                 EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").commit();
-
-                EBISystem.gui().table("accountTable", "Account").changeSelection(
-                        EBISystem.gui().table("accountTable", "Account")
-                                .convertRowIndexToView(EBISystem.getModule().dynMethod
-                                        .getIdIndexFormArrayInATable(EBISystem.getModule().getAccountPane().getTabModAccount().data, 6, id)),
-                        0, false, false);
             } else {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
             }
@@ -188,9 +184,9 @@ public class ControlAccountStack {
         EBISystem.getModule().getAccountPane().initialize(false);
     }
 
-    public void dataShow(final String invoiceYear) {
+    public void dataShow(final String invoiceYear, Integer id) {
 
-        final int srow = EBISystem.gui().table("accountTable", "Account").getSelectedRow();
+        int srow = EBISystem.gui().table("accountTable", "Account").getSelectedRow();
         Query query;
         try {
             EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").begin();
@@ -233,6 +229,9 @@ public class ControlAccountStack {
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][5] = act.getAccountDebit() == null ? "" : act.getAccountDebit();
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][6] = act.getAccountCredit() == null ? "" : act.getAccountCredit();
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][7] = act.getAcstackid();
+                    if(id != -1 && id == act.getAcstackid()){
+                        srow = i;
+                    }
                     i++;
                 }
             } else {
@@ -250,9 +249,7 @@ public class ControlAccountStack {
 
     public void dataShowReport() {
         final Map<String, Object> map = new HashMap<String, Object>();
-
         map.put("ID", 0);
-
         EBISystem.getInstance().getIEBIReportSystemInstance().useReportSystem(map,
                 EBISystem.getInstance()
                         .convertReportCategoryToIndex(EBISystem.i18n("EBI_LANG_PRINT_ACCOUNT")),
@@ -398,8 +395,6 @@ public class ControlAccountStack {
                     // Get the BLOB inputstream
 
                     final String file = doc.getName().replaceAll(" ", "_");
-
-//					byte buffer[] = doc.getFiles().getBytes(1,(int)adress.getFiles().length());
                     final byte buffer[] = doc.getFiles();
                     FileName = "tmp/" + file;
                     FileType = file.substring(file.lastIndexOf("."));
@@ -893,7 +888,7 @@ public class ControlAccountStack {
                         wait.setVisible(false);
                     }
                 }
-                dataShow(invoiceYear);
+                dataShow(invoiceYear, -1);
             }
         };
         final Thread impThr = new Thread(run, "Import Invoice");

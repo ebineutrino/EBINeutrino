@@ -320,8 +320,12 @@ public class EBICRMOfferView {
             return;
         }
         EBISystem.showInActionStatus("Offer");
-        dataControlOffer.dataCopy(Integer.parseInt(tabModoffer.data[selectedOfferRow][7].toString()));
-        dataControlOffer.dataShow();
+        Integer id = dataControlOffer.dataCopy(Integer.parseInt(tabModoffer.data[selectedOfferRow][7].toString()));
+        dataControlOffer.dataEdit(id);
+        dataControlOffer.dataShow(id);
+        dataControlOffer.dataShowDoc();
+        dataControlOffer.dataShowProduct();
+        dataControlOffer.dataShowReceiver();
     }
 
     public boolean saveOffer() {
@@ -330,8 +334,8 @@ public class EBICRMOfferView {
         }
         EBISystem.showInActionStatus("Offer");
         int row = EBISystem.gui().table("companyOfferTable", "Offer").getSelectedRow();
-        dataControlOffer.dataStore();
-        dataControlOffer.dataShow();
+        Integer id = dataControlOffer.dataStore();
+        dataControlOffer.dataShow(id);
         dataControlOffer.dataShowProduct();
         dataControlOffer.dataShowDoc();
         dataControlOffer.dataShowReceiver();
@@ -370,7 +374,7 @@ public class EBICRMOfferView {
             EBISystem.showInActionStatus("Offer");
             dataControlOffer.dataDelete(Integer.parseInt(tabModoffer.data[selectedOfferRow][7].toString()));
             dataControlOffer.dataNew();
-            dataControlOffer.dataShow();
+            dataControlOffer.dataShow(-1);
             dataControlOffer.dataShowProduct();
             dataControlOffer.dataShowReceiver();
             dataControlOffer.isEdit = false;
@@ -394,10 +398,6 @@ public class EBICRMOfferView {
             }
         }
         return ret;
-    }
-
-    public void showOffer() {
-        dataControlOffer.dataShow();
     }
 
     public void deleteDocs() {
@@ -564,8 +564,8 @@ public class EBICRMOfferView {
     }
 
     public void searchOpportunity() {
-        final EBIOpportunitySelectionDialog dialog = 
-                new EBIOpportunitySelectionDialog(EBISystem.getModule()
+        final EBIOpportunitySelectionDialog dialog
+                = new EBIOpportunitySelectionDialog(EBISystem.getModule()
                         .getOpportunityPane().getDataOpportuniyControl().getOppportunityList());
         dialog.setVisible();
         if (dialog.shouldSave) {

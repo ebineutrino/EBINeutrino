@@ -175,8 +175,8 @@ public class EBICRMContactView {
         }
         EBISystem.showInActionStatus("Contact");
         int row = EBISystem.gui().table("companyContacts", "Contact").getSelectedRow();
-        controlContact.dataStore();
-        controlContact.dataShow();
+        Integer id = controlContact.dataStore();
+        controlContact.dataShow(id);
         controlContact.showCompanyContactAddress();
         controlContact.isEdit = true;
         EBISystem.gui().table("companyContacts", "Contact").changeSelection(row, 0, false, false);
@@ -210,8 +210,10 @@ public class EBICRMContactView {
             return;
         }
         EBISystem.showInActionStatus("Contact");
-        controlContact.dataCopy(Integer.parseInt(tableModel.data[selectedContactRow][tableModel.columnNames.length].toString()));
-        controlContact.dataShow();
+        Integer id = controlContact.dataCopy(Integer.parseInt(tableModel.data[selectedContactRow][tableModel.columnNames.length].toString()));
+        controlContact.dataEdit(id);
+        controlContact.dataShow(id);
+        controlContact.showCompanyContactAddress();
     }
 
     public void deleteContact() {
@@ -222,7 +224,7 @@ public class EBICRMContactView {
         if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
             EBISystem.showInActionStatus("Contact");
             controlContact.dataDelete(Integer.parseInt(tableModel.data[selectedContactRow][tableModel.columnNames.length].toString()));
-            controlContact.dataShow();
+            controlContact.dataShow(-1);
             controlContact.dataNew();
             controlContact.isEdit = false;
         }
@@ -231,6 +233,8 @@ public class EBICRMContactView {
     public void newContact() {
         EBISystem.showInActionStatus("Contact");
         controlContact.dataNew();
+        controlContact.dataShow(-1);
+        controlContact.showCompanyContactAddress();
         controlContact.isEdit = false;
     }
 

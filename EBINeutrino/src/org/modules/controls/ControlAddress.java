@@ -18,7 +18,10 @@ public class ControlAddress {
         address = new Companyaddress();
     }
 
-    public boolean dataStore() {
+    public Integer dataStore() {
+        
+        Integer addressID = -1;
+        
         try {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
             if (isEdit == false) {
@@ -54,20 +57,18 @@ public class ControlAddress {
             if (address.getCompany().getIsactual() != null && address.getCompany().getIsactual()) {
                 EBISystem.getInstance().loadStandardCompanyData();
             }
-
+            addressID = address.getAddressid();
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
 
-        return true;
+        return addressID;
     }
 
-    public void dataCopy(final int id) {
-
+    public Integer dataCopy(final int id) {
+        Integer addressID=-1;
         try {
-
             if (EBISystem.getInstance().getCompany().getCompanyaddresses().size() > 0) {
-
                 Companyaddress adrs = null;
                 for (Companyaddress adrObj : EBISystem.getInstance().getCompany().getCompanyaddresses()) {
                     if (adrObj.getAddressid() == id) {
@@ -89,17 +90,13 @@ public class ControlAddress {
 
                 EBISystem.getInstance().getCompany().getCompanyaddresses().add(adrsn);
                 EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(adrsn);
-
-                EBISystem.gui().table("companyAddess", "Address").changeSelection(EBISystem
-                        .gui().table("companyAddess", "Address")
-                        .convertRowIndexToView(EBISystem.getModule().dynMethod.getIdIndexFormArrayInATable(
-                                EBISystem.getModule().getAddressPane().getTabModel().data, 6, adrsn.getAddressid())),
-                        0, false, false);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                addressID = adrsn.getAddressid();
             }
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
+        return addressID;
     }
 
     public void dataEdit(final int id) {
@@ -135,13 +132,6 @@ public class ControlAddress {
 
             EBISystem.getInstance().getDataStore("Address", "ebiEdit");
 
-            EBISystem.gui().table("companyAddess", "Address")
-                    .changeSelection(
-                            EBISystem.gui().table("companyAddess", "Address").convertRowIndexToView(
-                                    EBISystem.getModule().dynMethod.getIdIndexFormArrayInATable(
-                                            EBISystem.getModule().getAddressPane().getTabModel().data, 6, id)),
-                            0, false, false);
-
         } else {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
         }
@@ -159,9 +149,9 @@ public class ControlAddress {
         }
     }
 
-    public void dataShow() {
+    public void dataShow(Integer id) {
 
-        final int srow = EBISystem.gui().table("companyAddess", "Address").getSelectedRow();
+        int srow = EBISystem.gui().table("companyAddess", "Address").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyaddresses().size();
 
         if (size > 0) {
@@ -177,6 +167,9 @@ public class ControlAddress {
                 EBISystem.getModule().getAddressPane().getTabModel().data[i][4] = obj.getPbox() == null ? "" : obj.getPbox();
                 EBISystem.getModule().getAddressPane().getTabModel().data[i][5] = obj.getCountry() == null ? "" : obj.getCountry();
                 EBISystem.getModule().getAddressPane().getTabModel().data[i][6] = obj.getAddressid();
+                if(id != -1 && id == obj.getAddressid()){
+                    srow = i;
+                }
                 i++;
             }
         } else {

@@ -122,12 +122,6 @@
             <artifactId>ecs</artifactId>
             <version>1.4.2</version>
         </dependency>
-  
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.29</version>
-        </dependency>
 
         <dependency>
             <groupId>org.codehaus.groovy</groupId>

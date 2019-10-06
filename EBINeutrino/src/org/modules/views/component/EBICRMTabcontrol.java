@@ -84,7 +84,7 @@ public class EBICRMTabcontrol implements CloseableTabbedPaneListener {
         EBISystem.gui().showGUI();
 
         EBISystem.getModule().getEBICRMCampaign();
-        EBISystem.getModule().getEBICRMCampaign().showCampaign();
+        EBISystem.getModule().getEBICRMCampaign().getDataControlCampaign().dataShow(-1);
         final int id = EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN"));
         EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(id);
     }
@@ -94,7 +94,7 @@ public class EBICRMTabcontrol implements CloseableTabbedPaneListener {
         EBISystem.gui().showGUI();
 
         EBISystem.getModule().getProsolPane();
-        EBISystem.getModule().getProsolPane().showProSol();
+        EBISystem.getModule().getProsolPane().getDataControlProsol().dataShow(-1);
         final int id = EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_TAB_PROSOL"));
         EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(id);
     }
@@ -122,9 +122,9 @@ public class EBICRMTabcontrol implements CloseableTabbedPaneListener {
     public void showClosableAccountContainer() {
         EBISystem.gui().loadGUI("AccountStack/accountGUI.xml");
         EBISystem.gui().showGUI();
-
         EBISystem.getModule().getAccountPane();
-        EBISystem.getModule().getAccountPane().showAccount();
+        EBISystem.getModule().getAccountPane().
+                getDataControlAccount().dataShow(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString(), -1);
         final int id = EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_TAB_ACCOUNT"));
         EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(id);
     }

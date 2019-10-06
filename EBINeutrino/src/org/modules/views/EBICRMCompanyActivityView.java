@@ -248,6 +248,8 @@ public class EBICRMCompanyActivityView implements ChangeListener {
     public void newActivity() {
         EBISystem.showInActionStatus("Activity");
         dataControlActivity.dataNew();
+        dataControlActivity.dataShow(-1);
+        dataControlActivity.dataShowDoc();
         dataControlActivity.isEdit = false;
     }
 
@@ -256,8 +258,9 @@ public class EBICRMCompanyActivityView implements ChangeListener {
             return;
         }
         EBISystem.showInActionStatus("Activity");
-        dataControlActivity.dataCopy(Integer.parseInt(tabModel.data[selectedActivityRow][7].toString()));
-        dataControlActivity.dataShow();
+        Integer id = dataControlActivity.dataCopy(Integer.parseInt(tabModel.data[selectedActivityRow][7].toString()));
+        dataControlActivity.dataEdit(id);
+        dataControlActivity.dataShow(id);
         dataControlActivity.dataShowDoc();
     }
 
@@ -267,8 +270,8 @@ public class EBICRMCompanyActivityView implements ChangeListener {
         }
         EBISystem.showInActionStatus("Activity");
         int row = EBISystem.gui().table("tableActivity", "Activity").getSelectedRow();
-        dataControlActivity.dataStore();
-        dataControlActivity.dataShow();
+        Integer id = dataControlActivity.dataStore();
+        dataControlActivity.dataShow(id);
         dataControlActivity.dataShowDoc();
         dataControlActivity.isEdit = true;
         EBISystem.gui().table("tableActivity", "Activity").changeSelection(row, 0, false, false);
@@ -289,6 +292,7 @@ public class EBICRMCompanyActivityView implements ChangeListener {
     public void remoteEditActivity(final int id) {
         EBISystem.showInActionStatus("Activity");
         dataControlActivity.dataNew();
+        dataControlActivity.dataShow(-1);
         dataControlActivity.dataEdit(id);
         dataControlActivity.dataShowDoc();
         dataControlActivity.isEdit = true;
@@ -302,18 +306,15 @@ public class EBICRMCompanyActivityView implements ChangeListener {
             EBISystem.showInActionStatus("Activity");
             dataControlActivity.dataDelete(Integer.parseInt(tabModel.data[selectedActivityRow][7].toString()));
             dataControlActivity.dataNew();
-            dataControlActivity.dataShow();
+            dataControlActivity.dataShow(-1);
             dataControlActivity.dataShowDoc();
             dataControlActivity.isEdit = false;
         }
     }
 
-    public void showActivity() {
-        dataControlActivity.dataShow();
-    }
-
     public void historySearch() {
-        new EBICRMHistoryView(EBISystem.getModule().hcreator.retrieveDBHistory(EBISystem.getInstance().getCompany().getCompanyid(), "Activities")).setVisible();
+        new EBICRMHistoryView(EBISystem.getModule().
+                hcreator.retrieveDBHistory(EBISystem.getInstance().getCompany().getCompanyid(), "Activities")).setVisible();
     }
 
     private boolean validateInput() {

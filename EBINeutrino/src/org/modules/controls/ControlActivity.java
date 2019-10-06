@@ -24,8 +24,9 @@ public class ControlActivity {
         companyActivity = new Companyactivities();
     }
 
-    public boolean dataStore() {
-
+    public Integer dataStore() {
+        
+        Integer activityID = -1;
         try {
 
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
@@ -105,17 +106,19 @@ public class ControlActivity {
             if (!isEdit) {
                 EBISystem.gui().vpanel("Activity").setID(companyActivity.getActivityid());
             }
-
+            activityID = companyActivity.getActivityid();
         } catch (final HibernateException e) {
             e.printStackTrace();
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return activityID;
     }
 
-    public void dataCopy(final int id) {
+    public Integer dataCopy(final int id) {
 
+        Integer activityID = -1;
+        
         try {
             if (EBISystem.getInstance().getCompany().getCompanyactivitieses().size() > 0) {
                 Companyactivities compActivity = null;
@@ -163,20 +166,14 @@ public class ControlActivity {
 
                 EBISystem.getInstance().getCompany().getCompanyactivitieses().add(compAct);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-
-                EBISystem.gui().table("tableActivity", "Activity")
-                        .changeSelection(EBISystem.gui().table("tableActivity", "Activity")
-                                .convertRowIndexToView(EBISystem.getModule().dynMethod.getIdIndexFormArrayInATable(
-                                        EBISystem.getModule().getActivitiesPane().getTabModel().data, 7,
-                                        compAct.getActivityid())),
-                                0, false, false);
-
+                activityID = compAct.getActivityid();
             }
         } catch (final HibernateException e) {
             e.printStackTrace();
         } catch (final Exception e) {
             e.printStackTrace();
         }
+        return activityID;
     }
 
     public void dataEdit(final int id) {
@@ -251,15 +248,8 @@ public class ControlActivity {
             EBISystem.gui().textArea("activityDescription", "Activity").setText(companyActivity.getActivitydescription());
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(companyActivity);
-            EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-
             EBISystem.getInstance().getDataStore("Activity", "ebiEdit");
-            EBISystem.gui().table("tableActivity", "Activity").changeSelection(
-                    EBISystem.gui().table("tableActivity", "Activity")
-                            .convertRowIndexToView(EBISystem.getModule().dynMethod.getIdIndexFormArrayInATable(
-                                    EBISystem.getModule().getActivitiesPane().getTabModel().data, 7, id)),
-                    0, false, false);
-
+            EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
         } else {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
         }
@@ -287,11 +277,11 @@ public class ControlActivity {
         }
     }
 
-    public void dataShow() {
+    public void dataShow(Integer id) {
 
         try {
 
-            final int srow = EBISystem.gui().table("tableActivity", "Activity").getSelectedRow();
+            int srow = EBISystem.gui().table("tableActivity", "Activity").getSelectedRow();
             final int size = EBISystem.getInstance().getCompany().getCompanyactivitieses().size();
 
             if (size > 0) {
@@ -329,6 +319,9 @@ public class ControlActivity {
                     EBISystem.getModule().getActivitiesPane().getTabModel().data[i][5] = act.getActivitystatus() == null ? "" : act.getActivitystatus();
                     EBISystem.getModule().getActivitiesPane().getTabModel().data[i][6] = act.getActivitydescription() == null ? "" : act.getActivitydescription();
                     EBISystem.getModule().getActivitiesPane().getTabModel().data[i][7] = act.getActivityid();
+                    if(id != -1 && id == act.getActivityid()){
+                        srow = i;
+                    }
                     i++;
                 }
             } else {
@@ -433,7 +426,6 @@ public class ControlActivity {
                 list.add("*EOR*"); // END OF RECORD
             }
         }
-
         EBISystem.getModule().hcreator.setDataToCreate(new EBICRMHistoryDataUtil(com.getCompanyid(), "Activities", list));
     }
 
@@ -441,9 +433,6 @@ public class ControlActivity {
         companyActivity = new Companyactivities();
         EBISystem.getModule().getActivitiesPane().initialize(false);
         EBISystem.getInstance().getDataStore("Activity", "ebiNew");
-        EBISystem.gui().vpanel("Activity").setID(-1);
-        dataShow();
-        dataShowDoc();
     }
 
     public void dataDeleteDoc(final int id) {
@@ -461,8 +450,8 @@ public class ControlActivity {
     }
 
     public void dataShowDoc() {
-        if (this.companyActivity.getCompanyactivitiesdocses() != null && 
-                    this.companyActivity.getCompanyactivitiesdocses().size() > 0) {
+        if (this.companyActivity.getCompanyactivitiesdocses() != null
+                && this.companyActivity.getCompanyactivitiesdocses().size() > 0) {
             EBISystem.getModule().getActivitiesPane().getTabActDoc().data = new Object[this.companyActivity.getCompanyactivitiesdocses().size()][4];
             final Iterator itr = this.companyActivity.getCompanyactivitiesdocses().iterator();
             int i = 0;

@@ -25,8 +25,9 @@ public class ControlService {
         compService = new Companyservice();
     }
 
-    public boolean dataStore() {
+    public Integer dataStore() {
 
+        Integer serviceID = -1;
         try {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
 
@@ -103,14 +104,15 @@ public class ControlService {
             if (!isEdit) {
                 EBISystem.gui().vpanel("Service").setID(compService.getServiceid());
             }
+            serviceID = compService.getServiceid();
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return serviceID;
     }
 
-    public void dataCopy(final int id) {
-
+    public Integer dataCopy(final int id) {
+        Integer serviceID = -1;
         try {
             if (EBISystem.getInstance().getCompany().getCompanyservices().size() > 0) {
                 Companyservice service = null;
@@ -145,7 +147,7 @@ public class ControlService {
                         dc.setCreatedfrom(EBISystem.ebiUser);
                         dc.setFiles(docs.getFiles());
                         dc.setName(docs.getName());
-                        service.getCompanyservicedocses().add(dc);
+                        serv.getCompanyservicedocses().add(dc);
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(dc);
                     }
                 }
@@ -171,7 +173,7 @@ public class ControlService {
                         p.setQuantity(pos.getQuantity());
                         p.setTaxtype(pos.getTaxtype());
                         p.setType(pos.getType());
-                        service.getCompanyservicepositionses().add(p);
+                        serv.getCompanyservicepositionses().add(p);
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(p);
                     }
                 }
@@ -192,23 +194,18 @@ public class ControlService {
                         sv.setSolutionnr(psol.getSolutionnr());
                         sv.setStatus(psol.getStatus());
                         sv.setType(psol.getType());
-                        service.getCompanyservicepsols().add(sv);
+                        serv.getCompanyservicepsols().add(sv);
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(sv);
-
                     }
                 }
-
                 EBISystem.getInstance().getCompany().getCompanyservices().add(serv);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-                EBISystem.gui().table("companyServiceTable", "Service").changeSelection(EBISystem.gui().table("companyServiceTable", "Service")
-                        .convertRowIndexToView(EBISystem.getModule().dynMethod.getIdIndexFormArrayInATable(
-                                EBISystem.getModule().getServicePane().getTabModService().data, 6, serv.getServiceid())),
-                        0, false, false);
-
+                serviceID = serv.getServiceid();
             }
         } catch (final Exception e) {
             e.printStackTrace();
         }
+        return serviceID;
     }
 
     public void dataEdit(final int id) {
@@ -251,11 +248,6 @@ public class ControlService {
             EBISystem.gui().textArea("serviceDescriptionText", "Service").setText(compService.getDescription());
 
             EBISystem.getInstance().getDataStore("Service", "ebiEdit");
-
-            EBISystem.gui().table("companyServiceTable", "Service").changeSelection(
-                    EBISystem.gui().table("companyServiceTable", "Service")
-                            .convertRowIndexToView(EBISystem.getModule().dynMethod.getIdIndexFormArrayInATable(
-                                    EBISystem.getModule().getServicePane().getTabModService().data, 6, id)), 0, false, false);
         } else {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
         }
@@ -278,8 +270,8 @@ public class ControlService {
         }
     }
 
-    public void dataShow() {
-        final int srow = EBISystem.gui().table("companyServiceTable", "Service").getSelectedRow();
+    public void dataShow(Integer id) {
+        int srow = EBISystem.gui().table("companyServiceTable", "Service").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyservices().size();
         if (size > 0) {
             EBISystem.getModule().getServicePane().getTabModService().data = new Object[size][8];
@@ -294,6 +286,9 @@ public class ControlService {
                 EBISystem.getModule().getServicePane().getTabModService().data[i][4] = service.getCategory() == null ? "" : service.getCategory();
                 EBISystem.getModule().getServicePane().getTabModService().data[i][5] = service.getDescription() == null ? "" : service.getDescription();
                 EBISystem.getModule().getServicePane().getTabModService().data[i][6] = service.getServiceid();
+                if(id != -1 && id == service.getServiceid()){
+                    srow =i;
+                }
                 i++;
             }
         } else {

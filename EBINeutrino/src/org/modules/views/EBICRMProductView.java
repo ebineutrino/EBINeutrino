@@ -347,13 +347,13 @@ public class EBICRMProductView {
     }
 
     public void showProduct() {
-        dataControlProduct.dataShow();
+        dataControlProduct.dataShow(-1);
     }
 
     public void newProduct() {
         EBISystem.showInActionStatus("Product");
         dataControlProduct.dataNew();
-        dataControlProduct.dataShow();
+        dataControlProduct.dataShow(-1);
         dataControlProduct.dataShowDependency();
         dataControlProduct.dataShowDimension();
         dataControlProduct.dataShowDoc();
@@ -366,8 +366,8 @@ public class EBICRMProductView {
         }
         EBISystem.showInActionStatus("Product");
         int row = EBISystem.gui().table("companyProductTable", "Product").getSelectedRow();
-        dataControlProduct.dataStore();
-        dataControlProduct.dataShow();
+        Integer id = dataControlProduct.dataStore();
+        dataControlProduct.dataShow(id);
         dataControlProduct.dataShowDoc();
         dataControlProduct.dataShowDependency();
         dataControlProduct.dataShowDimension();
@@ -396,8 +396,12 @@ public class EBICRMProductView {
             return;
         }
         EBISystem.showInActionStatus("Product");
-        dataControlProduct.dataCopy(Integer.parseInt(productModel.data[selectedProductRow][5].toString()));
-        dataControlProduct.dataShow();
+        Integer id = dataControlProduct.dataCopy(Integer.parseInt(productModel.data[selectedProductRow][5].toString()));
+        dataControlProduct.dataEdit(id);
+        dataControlProduct.dataShow(id);
+        dataControlProduct.dataShowDependency();
+        dataControlProduct.dataShowDimension();
+        dataControlProduct.dataShowDoc();
     }
 
     public void deleteProduct() {
@@ -409,7 +413,7 @@ public class EBICRMProductView {
             EBISystem.showInActionStatus("Product");
             dataControlProduct.dataDelete(Integer.parseInt(productModel.data[selectedProductRow][5].toString()));
             dataControlProduct.dataNew();
-            dataControlProduct.dataShow();
+            dataControlProduct.dataShow(-1);
             dataControlProduct.isEdit = false;
         }
     }

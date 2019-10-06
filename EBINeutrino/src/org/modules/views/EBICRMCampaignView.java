@@ -64,7 +64,6 @@ public class EBICRMCampaignView {
     @Setter
     private int selectedPropertiesRow = -1;
 
-
     public EBICRMCampaignView() {
         dataControlCampaign = new ControlCampaign();
     }
@@ -74,7 +73,8 @@ public class EBICRMCampaignView {
         EBISystem.gui().label("filterTable", "Campaign").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Campaign").addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(final KeyEvent e) {}
+            public void keyTyped(final KeyEvent e) {
+            }
 
             @Override
             public void keyPressed(final KeyEvent e) {
@@ -364,10 +364,6 @@ public class EBICRMCampaignView {
         dataControlCampaign.dataShowProduct();
     }
 
-    public void showCampaign() {
-        dataControlCampaign.dataShow();
-    }
-
     public void newCampaignProduct() {
         final EBICRMDialogAddProduct product = new EBICRMDialogAddProduct(dataControlCampaign.getCampaign());
         product.setVisible();
@@ -376,6 +372,7 @@ public class EBICRMCampaignView {
     public void newCampaign() {
         EBISystem.showInActionStatus("Campaign");
         dataControlCampaign.dataNew();
+        dataControlCampaign.dataShow(-1);
         dataControlCampaign.dataShowDoc();
         dataControlCampaign.dataShowProduct();
         dataControlCampaign.dataShowReciever();
@@ -388,8 +385,8 @@ public class EBICRMCampaignView {
             return false;
         }
         EBISystem.showInActionStatus("Campaign");
-        dataControlCampaign.dataStore();
-        dataControlCampaign.dataShow();
+        Integer id = dataControlCampaign.dataStore();
+        dataControlCampaign.dataShow(id);
         dataControlCampaign.dataShowDoc();
         dataControlCampaign.dataShowProduct();
         dataControlCampaign.dataShowProperties();
@@ -418,8 +415,13 @@ public class EBICRMCampaignView {
             return;
         }
         EBISystem.showInActionStatus("Campaign");
-        dataControlCampaign.dataCopy(Integer.parseInt(tabModelCampaign.data[selectedCampaignRow][4].toString()));
-        dataControlCampaign.dataShow();
+        Integer id = dataControlCampaign.dataCopy(Integer.parseInt(tabModelCampaign.data[selectedCampaignRow][4].toString()));
+        dataControlCampaign.dataEdit(id);
+        dataControlCampaign.dataShow(id);
+        dataControlCampaign.dataShowDoc();
+        dataControlCampaign.dataShowProduct();
+        dataControlCampaign.dataShowProperties();
+        dataControlCampaign.dataShowReciever();
     }
 
     public void deleteCampaign() {
@@ -431,7 +433,11 @@ public class EBICRMCampaignView {
             EBISystem.showInActionStatus("Campaign");
             dataControlCampaign.dataDelete(Integer.parseInt(tabModelCampaign.data[selectedCampaignRow][4].toString()));
             dataControlCampaign.dataNew();
-            dataControlCampaign.dataShow();
+            dataControlCampaign.dataShow(-1);
+            dataControlCampaign.dataShowDoc();
+            dataControlCampaign.dataShowProduct();
+            dataControlCampaign.dataShowProperties();
+            dataControlCampaign.dataShowReciever();
             dataControlCampaign.isEdit = false;
         }
     }

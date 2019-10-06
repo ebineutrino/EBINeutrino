@@ -19,19 +19,18 @@ import java.util.*;
 public class ControlInvoice {
 
     public Crminvoice invoice = null;
-    public boolean isEdit=false;
-
+    public boolean isEdit = false;
 
     public ControlInvoice() {
         invoice = new Crminvoice();
     }
 
-    public boolean dataStore() {
-
+    public Integer dataStore() {
+        Integer invoiceID = -1;
         try {
             EBISystem.hibernate().transaction("EBIINVOICE_SESSION").begin();
-            if (isEdit == false) {
-            	invoice.setCreatedfrom(EBISystem.gui().vpanel("Invoice").getCreatedFrom());
+            EBISystem.hibernate().transaction("EBIINVOICE_SESSION").begin();if (isEdit == false) {
+                invoice.setCreatedfrom(EBISystem.gui().vpanel("Invoice").getCreatedFrom());
                 invoice.setCreateddate(new Date());
             } else {
                 createHistory(invoice.getInvoiceid());
@@ -90,7 +89,7 @@ public class ControlInvoice {
                 final Iterator iter = invoice.getCrminvoicepositions().iterator();
                 while (iter.hasNext()) {
                     final Crminvoiceposition pos = (Crminvoiceposition) iter.next();
-                    if(pos.getPositionid() != null && pos.getPositionid() < 0){
+                    if (pos.getPositionid() != null && pos.getPositionid() < 0) {
                         pos.setPositionid(null);
                     }
                     pos.setCrminvoice(invoice);
@@ -104,11 +103,11 @@ public class ControlInvoice {
             if (!isEdit) {
                 EBISystem.gui().vpanel("Invoice").setID(invoice.getInvoiceid());
             }
-
+            invoiceID = invoice.getInvoiceid();
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return invoiceID;
     }
 
     public void dataEdit(final int id) {
@@ -178,16 +177,6 @@ public class ControlInvoice {
 
                 EBISystem.getInstance().getDataStore("Invoice", "ebiEdit");
                 calculateTotalAmount();
-
-                EBISystem.gui().table("tableTotalInvoice", "Invoice")
-                        .changeSelection(EBISystem.gui().table("tableTotalInvoice", "Invoice")
-                                        .convertRowIndexToView(
-                                                EBISystem.getModule().dynMethod.getIdIndexFormArrayInATable(
-                                                        ((EBIAbstractTableModel) EBISystem.gui()
-                                                                .table("tableTotalInvoice", "Invoice").getModel()).data,
-                                                        9, id)),
-                                0, false, false);
-
             } else {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND"))
                         .Show(EBIMessage.INFO_MESSAGE);
@@ -203,11 +192,8 @@ public class ControlInvoice {
     }
 
     public void dataDelete(final int id) {
-
         Query query;
-
         try {
-
             EBISystem.hibernate().transaction("EBIINVOICE_SESSION").begin();
             query = EBISystem.hibernate().session("EBIINVOICE_SESSION").createQuery("from Crminvoice where invoiceId=?1 ").setParameter(1, id);
             final Iterator iter = query.iterate();
@@ -281,6 +267,9 @@ public class ControlInvoice {
                     model.data[i][7] = inv.getContactsurname() == null ? "" : inv.getContactsurname();
                     model.data[i][8] = inv.getDate() == null ? "" : EBISystem.getInstance().getDateToString(inv.getDate());
                     model.data[i][9] = inv.getInvoiceid();
+                    if(showID != -1 && showID == inv.getInvoiceid()){
+                        srow = i;
+                    }
                     i++;
                 }
             } else {
@@ -317,7 +306,7 @@ public class ControlInvoice {
 
                         taxTable.put(pos.getTaxtype(),
                                 taxTable.get(pos.getTaxtype()) + (((pos.getNetamount() * pos.getQuantity().intValue())
-                                        * EBISystem.getModule().dynMethod.getTaxVal(pos.getTaxtype())) / 100));
+                                * EBISystem.getModule().dynMethod.getTaxVal(pos.getTaxtype())) / 100));
                     } else {
                         taxTable.put(pos.getTaxtype(), (((pos.getNetamount() * pos.getQuantity().intValue())
                                 * EBISystem.getModule().dynMethod.getTaxVal(pos.getTaxtype())) / 100));
@@ -440,129 +429,129 @@ public class ControlInvoice {
                 : invoice.getInvoicenr() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_NAME") + ": "
                 + (invoice.getName().equals(
-                EBISystem.gui().textField("invoiceNameText", "Invoice").getText()) == true
+                        EBISystem.gui().textField("invoiceNameText", "Invoice").getText()) == true
                 ? invoice.getName()
                 : invoice.getName() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_STATUS") + ": "
                 + (invoice.getStatus()
-                .equals(EBISystem.gui().combo("invoiceStatusText", "Invoice")
-                        .getSelectedItem().toString()) == true ? invoice.getStatus()
-                : invoice.getStatus() + "$"));
+                        .equals(EBISystem.gui().combo("invoiceStatusText", "Invoice")
+                                .getSelectedItem().toString()) == true ? invoice.getStatus()
+                        : invoice.getStatus() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_CATEGORY") + ": "
                 + (invoice.getCategory()
-                .equals(EBISystem.gui().combo("categoryText", "Invoice")
-                        .getSelectedItem().toString()) == true ? invoice.getCategory()
-                : invoice.getCategory() + "$"));
+                        .equals(EBISystem.gui().combo("categoryText", "Invoice")
+                                .getSelectedItem().toString()) == true ? invoice.getCategory()
+                        : invoice.getCategory() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_C_ORDER") + ": "
                 + (String.valueOf(invoice.getAssosiation() == null ? "" : invoice.getAssosiation()).equals(
-                EBISystem.gui().textField("orderText", "Invoice").getText()) == true
+                        EBISystem.gui().textField("orderText", "Invoice").getText()) == true
                 ? invoice.getAssosiation()
                 : invoice.getAssosiation() + "$"));
 
         if (invoice.getPosition() != null) {
             list.add(EBISystem.i18n("EBI_LANG_POSITION") + ": "
                     + (invoice.getPosition().equals(
-                    EBISystem.gui().textField("titleText", "Invoice").getText()) == true
+                            EBISystem.gui().textField("titleText", "Invoice").getText()) == true
                     ? invoice.getPosition()
                     : invoice.getPosition() + "$"));
         }
         if (invoice.getCompanyname() != null) {
             list.add(EBISystem.i18n("EBI_LANG_COMPANY_NAME") + ": "
                     + (invoice.getCompanyname().equals(EBISystem.gui()
-                    .textField("companyNameText", "Invoice").getText()) == true ? invoice.getCompanyname()
+                            .textField("companyNameText", "Invoice").getText()) == true ? invoice.getCompanyname()
                     : invoice.getCompanyname() + "$"));
         }
         if (invoice.getContactname() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_CNAME") + ": "
                     + (invoice.getContactname().equals(
-                    EBISystem.gui().textField("nameText", "Invoice").getText()) == true
+                            EBISystem.gui().textField("nameText", "Invoice").getText()) == true
                     ? invoice.getContactname()
                     : invoice.getContactname() + "$"));
         }
         if (invoice.getContactsurname() != null) {
             list.add(EBISystem.i18n("EBI_LANG_SURNAME") + ": "
                     + (invoice.getContactsurname().equals(
-                    EBISystem.gui().textField("surnameText", "Invoice").getText()) == true
+                            EBISystem.gui().textField("surnameText", "Invoice").getText()) == true
                     ? invoice.getContactsurname()
                     : invoice.getContactsurname() + "$"));
         }
         if (invoice.getContactstreet() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_STREET_NR") + ": "
                     + (invoice.getContactstreet().equals(
-                    EBISystem.gui().textField("streetNrText", "Invoice").getText()) == true
+                            EBISystem.gui().textField("streetNrText", "Invoice").getText()) == true
                     ? invoice.getContactstreet()
                     : invoice.getContactstreet() + "$"));
         }
         if (invoice.getContactzip() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_ZIP_LOCATION") + ": "
                     + (invoice.getContactzip().equals(
-                    EBISystem.gui().textField("zipText", "Invoice").getText()) == true
+                            EBISystem.gui().textField("zipText", "Invoice").getText()) == true
                     ? invoice.getContactzip()
                     : invoice.getContactzip() + "$"));
         }
         if (invoice.getContactlocation() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_ZIP_LOCATION") + ": "
                     + (invoice.getContactlocation().equals(
-                    EBISystem.gui().textField("locationText", "Invoice").getText()) == true
+                            EBISystem.gui().textField("locationText", "Invoice").getText()) == true
                     ? invoice.getContactlocation()
                     : invoice.getContactlocation() + "$"));
         }
         if (invoice.getContactpostcode() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_POST_CODE") + ": "
                     + (invoice.getContactpostcode().equals(
-                    EBISystem.gui().textField("postCodeText", "Invoice").getText()) == true
+                            EBISystem.gui().textField("postCodeText", "Invoice").getText()) == true
                     ? invoice.getContactpostcode()
                     : invoice.getContactpostcode() + "$"));
         }
         if (invoice.getContactcountry() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_COUNTRY") + ": "
                     + (invoice.getContactcountry().equals(
-                    EBISystem.gui().textField("countryText", "Invoice").getText()) == true
+                            EBISystem.gui().textField("countryText", "Invoice").getText()) == true
                     ? invoice.getContactcountry()
                     : invoice.getContactcountry() + "$"));
         }
         if (invoice.getContacttelephone() != null) {
             list.add(EBISystem.i18n("EBI_LANG_TELEPHONE") + ": "
                     + (invoice.getContacttelephone().equals(
-                    EBISystem.gui().textField("telefonText", "Invoice").getText()) == true
+                            EBISystem.gui().textField("telefonText", "Invoice").getText()) == true
                     ? invoice.getContacttelephone()
                     : invoice.getContacttelephone() + "$"));
         }
         if (invoice.getContactfax() != null) {
             list.add(EBISystem.i18n("EBI_LANG_FAX") + ": "
                     + (invoice.getContactfax().equals(
-                    EBISystem.gui().textField("faxText", "Invoice").getText()) == true
+                            EBISystem.gui().textField("faxText", "Invoice").getText()) == true
                     ? invoice.getContactfax()
                     : invoice.getContactfax() + "$"));
         }
         if (invoice.getContactemail() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_EMAIL") + ": "
                     + (invoice.getContactemail().equals(
-                    EBISystem.gui().textField("emailText", "Invoice").getText()) == true
+                            EBISystem.gui().textField("emailText", "Invoice").getText()) == true
                     ? invoice.getContactemail()
                     : invoice.getContactemail() + "$"));
         }
         if (invoice.getContactweb() != null) {
             list.add(EBISystem.i18n("EBI_LANG_INTERNET") + ": "
                     + (invoice.getContactweb().equals(
-                    EBISystem.gui().textField("internetText", "Invoice").getText()) == true
+                            EBISystem.gui().textField("internetText", "Invoice").getText()) == true
                     ? invoice.getContactweb()
                     : invoice.getContactweb() + "$"));
         }
         if (invoice.getContactdescription() != null) {
             list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": "
                     + (invoice.getContactdescription()
-                    .equals(EBISystem.gui().textArea("recDescription", "Invoice")
-                            .getText()) == true ? invoice.getContactdescription()
-                    : invoice.getContactdescription() + "$"));
+                            .equals(EBISystem.gui().textArea("recDescription", "Invoice")
+                                    .getText()) == true ? invoice.getContactdescription()
+                            : invoice.getContactdescription() + "$"));
         }
 
         list.add(EBISystem.i18n("EBI_LANG_CREATED_DATE") + ": "
                 + (EBISystem.getInstance().getDateToString(invoice.getDate())
-                .equals(EBISystem.gui().timePicker("invoiceDateText", "Invoice")
-                        .getEditor().getText()) == true
-                ? EBISystem.getInstance().getDateToString(invoice.getDate())
-                : EBISystem.getInstance().getDateToString(invoice.getDate()) + "$"));
+                        .equals(EBISystem.gui().timePicker("invoiceDateText", "Invoice")
+                                .getEditor().getText()) == true
+                        ? EBISystem.getInstance().getDateToString(invoice.getDate())
+                        : EBISystem.getInstance().getDateToString(invoice.getDate()) + "$"));
         list.add("*EOR*"); // END OF RECORD
 
         if (!invoice.getCrminvoicepositions().isEmpty()) {
@@ -621,7 +610,7 @@ public class ControlInvoice {
             }
         } else {
             EBISystem.getModule().getInvoicePane().getTabModProduct().data = new Object[][]{
-                    {EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
+                {EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
         }
         EBISystem.getModule().getInvoicePane().getTabModProduct().fireTableDataChanged();
     }
@@ -758,7 +747,7 @@ public class ControlInvoice {
         double val = 0.0;
         Query query;
         try {
-            
+
             query = EBISystem.hibernate().session("EBIINVOICE_SESSION")
                     .createQuery("from Companyproducttax where name=?1 ").setParameter(1, cat);
 

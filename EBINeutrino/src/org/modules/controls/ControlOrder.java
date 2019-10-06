@@ -30,8 +30,10 @@ public class ControlOrder {
         compOrder = new Companyorder();
     }
 
-    public boolean dataStore() {
+    public Integer dataStore() {
 
+        Integer orderID = -1;
+        
         try {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
             if (isEdit == false) {
@@ -106,19 +108,22 @@ public class ControlOrder {
 
             EBISystem.getInstance().getDataStore("Order", "ebiSave");
             EBISystem.getInstance().getCompany().getCompanyorders().add(compOrder);
-
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
 
             if (!isEdit) {
                 EBISystem.gui().vpanel("Order").setID(compOrder.getOrderid());
             }
+            orderID = compOrder.getOrderid();
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return orderID;
     }
 
-    public void dataCopy(final int id) {
+    public Integer dataCopy(final int id) {
+        
+        Integer orderID = -1;
+        
         try {
             if (EBISystem.getInstance().getCompany().getCompanyorders().size() > 0) {
                 Companyorder order = null;
@@ -217,19 +222,14 @@ public class ControlOrder {
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(r);
                     }
                 }
-
                 EBISystem.getInstance().getCompany().getCompanyorders().add(ordnew);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-
-                EBISystem.gui().table("companyorderTable", "Order").
-                        changeSelection(EBISystem.gui().table("companyorderTable", "Order").
-                                convertRowIndexToView(EBISystem.getModule().dynMethod.
-                                        getIdIndexFormArrayInATable(EBISystem.getModule().getOrderPane().tabModOrder.data, 7, ordnew.getOrderid())), 0, false, false);
-
+                orderID = ordnew.getOrderid();
             }
         } catch (final Exception e) {
             e.printStackTrace();
         }
+        return orderID;
     }
 
     public void dataEdit(final int id) {
@@ -281,10 +281,6 @@ public class ControlOrder {
             EBISystem.gui().textArea("orderDescription", "Order").setText(compOrder.getDescription());
 
             EBISystem.getInstance().getDataStore("Order", "ebiEdit");
-            EBISystem.gui().table("companyorderTable", "Order").
-                    changeSelection(EBISystem.gui().table("companyorderTable", "Order").
-                            convertRowIndexToView(EBISystem.getModule().dynMethod.
-                                    getIdIndexFormArrayInATable(EBISystem.getModule().getOrderPane().tabModOrder.data, 7, id)), 0, false, false);
         } else {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
         }
@@ -471,31 +467,35 @@ public class ControlOrder {
         }
     }
 
-    public void dataShow() {
+    public void dataShow(Integer id) {
 
-        final int srow = EBISystem.gui().table("companyorderTable", "Order").getSelectedRow();
+        int srow = EBISystem.gui().table("companyorderTable", "Order").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyorders().size();
 
         if (size > 0) {
-            EBISystem.getModule().getOrderPane().tabModOrder.data = new Object[size][8];
+            EBISystem.getModule().getOrderPane().getTabModOrder().data = new Object[size][8];
             final Iterator<Companyorder> iter = EBISystem.getInstance().getCompany().getCompanyorders().iterator();
             int i = 0;
             while (iter.hasNext()) {
                 final Companyorder order = iter.next();
-                EBISystem.getModule().getOrderPane().tabModOrder.data[i][0] = order.getName() == null ? "" : order.getName();
-                EBISystem.getModule().getOrderPane().tabModOrder.data[i][1] = order.getOfferdate() == null ? "" : EBISystem.getInstance().getDateToString(order.getOfferdate());
-                EBISystem.getModule().getOrderPane().tabModOrder.data[i][2] = order.getValidto() == null ? "" : EBISystem.getInstance().getDateToString(order.getValidto());
-                EBISystem.getModule().getOrderPane().tabModOrder.data[i][3] = String.valueOf(order.getOfferid() == null ? "0" : order.getOfferid());
-                EBISystem.getModule().getOrderPane().tabModOrder.data[i][4] = order.getStatus() == null ? "" : order.getStatus();
-                EBISystem.getModule().getOrderPane().tabModOrder.data[i][5] = order.getDescription() == null ? "" : order.getDescription();
-                EBISystem.getModule().getOrderPane().tabModOrder.data[i][6] = order.getIsrecieved() == null ? 0 : order.getIsrecieved();
-                EBISystem.getModule().getOrderPane().tabModOrder.data[i][7] = order.getOrderid();
+                EBISystem.getModule().getOrderPane().getTabModOrder().data[i][0] = order.getName() == null ? "" : order.getName();
+                EBISystem.getModule().getOrderPane().getTabModOrder().data[i][1] = order.getOfferdate() == null ? "" : EBISystem.getInstance().getDateToString(order.getOfferdate());
+                EBISystem.getModule().getOrderPane().getTabModOrder().data[i][2] = order.getValidto() == null ? "" : EBISystem.getInstance().getDateToString(order.getValidto());
+                EBISystem.getModule().getOrderPane().getTabModOrder().data[i][3] = String.valueOf(order.getOfferid() == null ? "0" : order.getOfferid());
+                EBISystem.getModule().getOrderPane().getTabModOrder().data[i][4] = order.getStatus() == null ? "" : order.getStatus();
+                EBISystem.getModule().getOrderPane().getTabModOrder().data[i][5] = order.getDescription() == null ? "" : order.getDescription();
+                EBISystem.getModule().getOrderPane().getTabModOrder().data[i][6] = order.getIsrecieved() == null ? 0 : order.getIsrecieved();
+                EBISystem.getModule().getOrderPane().getTabModOrder().data[i][7] = order.getOrderid();
+                if(id != -1 && id == order.getOrderid()){
+                    srow = i;
+                }
                 i++;
             }
         } else {
-            EBISystem.getModule().getOrderPane().tabModOrder.data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
+            EBISystem.getModule().getOrderPane().getTabModOrder().data
+                    = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
         }
-        EBISystem.getModule().getOrderPane().tabModOrder.fireTableDataChanged();
+        EBISystem.getModule().getOrderPane().getTabModOrder().fireTableDataChanged();
         EBISystem.gui().table("companyorderTable", "Order").changeSelection(srow, 0, false, false);
     }
 
@@ -532,7 +532,7 @@ public class ControlOrder {
     public void dataShowReport(final int id) {
 
         if (isEdit) {
-            if (!dataStore()) {
+            if (dataStore() == -1) {
                 return;
             }
         }
@@ -569,7 +569,7 @@ public class ControlOrder {
         String to = "";
 
         if (isEdit) {
-            if (!dataStore()) {
+            if (dataStore() == -1) {
                 return null;
             }
         }
@@ -787,28 +787,29 @@ public class ControlOrder {
 
     public void dataShowDoc() {
         if (this.compOrder.getCompanyorderdocses().size() > 0) {
-            EBISystem.getModule().getOrderPane().tabModDoc.data = new Object[this.compOrder.getCompanyorderdocses().size()][4];
+            EBISystem.getModule().getOrderPane().getTabModDoc().data = new Object[this.compOrder.getCompanyorderdocses().size()][4];
 
             final Iterator itr = this.compOrder.getCompanyorderdocses().iterator();
             int i = 0;
             while (itr.hasNext()) {
                 final Companyorderdocs obj = (Companyorderdocs) itr.next();
-                EBISystem.getModule().getOrderPane().tabModDoc.data[i][0] = obj.getName() == null ? "" : obj.getName();
-                EBISystem.getModule().getOrderPane().tabModDoc.data[i][1] = EBISystem.getInstance().getDateToString(obj.getCreateddate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getCreateddate());
-                EBISystem.getModule().getOrderPane().tabModDoc.data[i][2] = obj.getCreatedfrom() == null ? "" : obj.getCreatedfrom();
-                EBISystem.getModule().getOrderPane().tabModDoc.data[i][3] = obj.getOrderdocid();
+                EBISystem.getModule().getOrderPane().getTabModDoc().data[i][0] = obj.getName() == null ? "" : obj.getName();
+                EBISystem.getModule().getOrderPane().getTabModDoc().data[i][1] = EBISystem.getInstance().getDateToString(obj.getCreateddate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getCreateddate());
+                EBISystem.getModule().getOrderPane().getTabModDoc().data[i][2] = obj.getCreatedfrom() == null ? "" : obj.getCreatedfrom();
+                EBISystem.getModule().getOrderPane().getTabModDoc().data[i][3] = obj.getOrderdocid();
                 i++;
             }
         } else {
-            EBISystem.getModule().getOrderPane().tabModDoc.data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", ""}};
+            EBISystem.getModule().getOrderPane().getTabModDoc().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", ""}};
         }
-        EBISystem.getModule().getOrderPane().tabModDoc.fireTableDataChanged();
+        EBISystem.getModule().getOrderPane().getTabModDoc().fireTableDataChanged();
     }
 
     public void dataShowProduct() {
 
         if (compOrder.getCompanyorderpositionses().size() > 0) {
-            EBISystem.getModule().getOrderPane().tabModProduct.data = new Object[this.compOrder.getCompanyorderpositionses().size()][9];
+            EBISystem.getModule().getOrderPane().getTabModProduct().data 
+                    = new Object[this.compOrder.getCompanyorderpositionses().size()][9];
 
             final Iterator itr = compOrder.getCompanyorderpositionses().iterator();
             int i = 0;
@@ -817,48 +818,48 @@ public class ControlOrder {
 
             while (itr.hasNext()) {
                 final Companyorderpositions obj = (Companyorderpositions) itr.next();
-                EBISystem.getModule().getOrderPane().tabModProduct.data[i][0] = String.valueOf(obj.getQuantity());
-                EBISystem.getModule().getOrderPane().tabModProduct.data[i][1] = obj.getProductnr();
-                EBISystem.getModule().getOrderPane().tabModProduct.data[i][2] = obj.getProductname() == null ? "" : obj.getProductname();
-                EBISystem.getModule().getOrderPane().tabModProduct.data[i][3] = obj.getCategory() == null ? "" : obj.getCategory();
-                EBISystem.getModule().getOrderPane().tabModProduct.data[i][4] = obj.getTaxtype() == null ? "" : obj.getTaxtype();
-                EBISystem.getModule().getOrderPane().tabModProduct.data[i][5] = currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(obj.getNetamount(), String.valueOf(obj.getQuantity()), String.valueOf(obj.getDeduction()))) == null ? "" : currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(obj.getNetamount(), String.valueOf(obj.getQuantity()), String.valueOf(obj.getDeduction())));
-                EBISystem.getModule().getOrderPane().tabModProduct.data[i][6] = obj.getDeduction().equals("") ? "" : obj.getDeduction() + "%";
-                EBISystem.getModule().getOrderPane().tabModProduct.data[i][7] = obj.getDescription() == null ? "" : obj.getDescription();
-                EBISystem.getModule().getOrderPane().tabModProduct.data[i][8] = obj.getPositionid();
+                EBISystem.getModule().getOrderPane().getTabModProduct().data[i][0] = String.valueOf(obj.getQuantity());
+                EBISystem.getModule().getOrderPane().getTabModProduct().data[i][1] = obj.getProductnr();
+                EBISystem.getModule().getOrderPane().getTabModProduct().data[i][2] = obj.getProductname() == null ? "" : obj.getProductname();
+                EBISystem.getModule().getOrderPane().getTabModProduct().data[i][3] = obj.getCategory() == null ? "" : obj.getCategory();
+                EBISystem.getModule().getOrderPane().getTabModProduct().data[i][4] = obj.getTaxtype() == null ? "" : obj.getTaxtype();
+                EBISystem.getModule().getOrderPane().getTabModProduct().data[i][5] = currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(obj.getNetamount(), String.valueOf(obj.getQuantity()), String.valueOf(obj.getDeduction()))) == null ? "" : currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(obj.getNetamount(), String.valueOf(obj.getQuantity()), String.valueOf(obj.getDeduction())));
+                EBISystem.getModule().getOrderPane().getTabModProduct().data[i][6] = obj.getDeduction().equals("") ? "" : obj.getDeduction() + "%";
+                EBISystem.getModule().getOrderPane().getTabModProduct().data[i][7] = obj.getDescription() == null ? "" : obj.getDescription();
+                EBISystem.getModule().getOrderPane().getTabModProduct().data[i][8] = obj.getPositionid();
                 i++;
             }
         } else {
-            EBISystem.getModule().getOrderPane().tabModProduct.data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
+            EBISystem.getModule().getOrderPane().getTabModProduct().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
         }
-        EBISystem.getModule().getOrderPane().tabModProduct.fireTableDataChanged();
+        EBISystem.getModule().getOrderPane().getTabModProduct().fireTableDataChanged();
     }
 
     public void dataShowReceiver() {
         if (this.compOrder.getCompanyorderreceivers().size() > 0) {
-            EBISystem.getModule().getOrderPane().tabModReceiver.data = new Object[this.compOrder.getCompanyorderreceivers().size()][12];
+            EBISystem.getModule().getOrderPane().getTabModReceiver().data = new Object[this.compOrder.getCompanyorderreceivers().size()][12];
             final Iterator itr = this.compOrder.getCompanyorderreceivers().iterator();
             int i = 0;
             while (itr.hasNext()) {
                 final Companyorderreceiver obj = (Companyorderreceiver) itr.next();
-                EBISystem.getModule().getOrderPane().tabModReceiver.data[i][0] = obj.getReceivervia() == null ? "" : obj.getReceivervia();
-                EBISystem.getModule().getOrderPane().tabModReceiver.data[i][1] = obj.getGender() == null ? "" : obj.getGender();
-                EBISystem.getModule().getOrderPane().tabModReceiver.data[i][2] = obj.getSurname() == null ? "" : obj.getSurname();
-                EBISystem.getModule().getOrderPane().tabModReceiver.data[i][3] = obj.getName() == null ? "" : obj.getName();
-                EBISystem.getModule().getOrderPane().tabModReceiver.data[i][4] = obj.getPosition() == null ? "" : obj.getPosition();
-                EBISystem.getModule().getOrderPane().tabModReceiver.data[i][5] = obj.getStreet() == null ? "" : obj.getStreet();
-                EBISystem.getModule().getOrderPane().tabModReceiver.data[i][6] = obj.getZip() == null ? "" : obj.getZip();
-                EBISystem.getModule().getOrderPane().tabModReceiver.data[i][7] = obj.getLocation() == null ? "" : obj.getLocation();
-                EBISystem.getModule().getOrderPane().tabModReceiver.data[i][8] = obj.getPbox() == null ? "" : obj.getPbox();
-                EBISystem.getModule().getOrderPane().tabModReceiver.data[i][9] = obj.getCountry() == null ? "" : obj.getCountry();
-                EBISystem.getModule().getOrderPane().tabModReceiver.data[i][10] = obj.getEmail() == null ? "" : obj.getEmail();
-                EBISystem.getModule().getOrderPane().tabModReceiver.data[i][11] = obj.getReceiverid();
+                EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][0] = obj.getReceivervia() == null ? "" : obj.getReceivervia();
+                EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][1] = obj.getGender() == null ? "" : obj.getGender();
+                EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][2] = obj.getSurname() == null ? "" : obj.getSurname();
+                EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][3] = obj.getName() == null ? "" : obj.getName();
+                EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][4] = obj.getPosition() == null ? "" : obj.getPosition();
+                EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][5] = obj.getStreet() == null ? "" : obj.getStreet();
+                EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][6] = obj.getZip() == null ? "" : obj.getZip();
+                EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][7] = obj.getLocation() == null ? "" : obj.getLocation();
+                EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][8] = obj.getPbox() == null ? "" : obj.getPbox();
+                EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][9] = obj.getCountry() == null ? "" : obj.getCountry();
+                EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][10] = obj.getEmail() == null ? "" : obj.getEmail();
+                EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][11] = obj.getReceiverid();
                 i++;
             }
         } else {
-            EBISystem.getModule().getOrderPane().tabModReceiver.data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", "", "", ""}};
+            EBISystem.getModule().getOrderPane().getTabModReceiver().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", "", "", ""}};
         }
-        EBISystem.getModule().getOrderPane().tabModReceiver.fireTableDataChanged();
+        EBISystem.getModule().getOrderPane().getTabModReceiver().fireTableDataChanged();
     }
 
     public void dataDeleteDoc(final int id) {

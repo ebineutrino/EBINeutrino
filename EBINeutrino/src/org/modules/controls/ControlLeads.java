@@ -22,7 +22,8 @@ public class ControlLeads {
     private Companyaddress address = null;
     public boolean isEdit = false;
 
-    public boolean dataStore() {
+    public Integer dataStore() {
+        Integer leadID = -1;
         try {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
             if (isEdit == true) {
@@ -118,21 +119,18 @@ public class ControlLeads {
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(contact);
 
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-
             if (!isEdit) {
                 EBISystem.gui().vpanel("Leads").setID(company.getCompanyid());
             }
-
+            leadID = company.getCompanyid();
         } catch (final Exception ex) {
             ex.printStackTrace();
-            return false;
         }
-
-        return true;
+        return leadID;
     }
 
-    public void dataCopy(final int id) {
-
+    public Integer dataCopy(final int id) {
+        Integer leadID = -1;
         Query query;
         try {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
@@ -201,11 +199,13 @@ public class ControlLeads {
 
                 EBISystem.getInstance().getDataStore("Leads", "ebiSave");
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                leadID = cp.getCompanyid();
             }
 
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
+        return leadID;
     }
 
     public void dataEdit(final int id) {
@@ -224,8 +224,7 @@ public class ControlLeads {
                 final Iterator cit = company.getCompanycontactses().iterator();
                 while (cit.hasNext()) {
                     contact = (Companycontacts) cit.next();
-                    if (Integer.parseInt(EBISystem.getModule().getLeadPane().getTabModel()
-                            .data[EBISystem.getModule().getLeadPane().getSelectedRow()][12].toString()) == contact.getContactid()) {
+                    if (Integer.parseInt(EBISystem.getModule().getLeadPane().getTabModel().data[EBISystem.getModule().getLeadPane().getSelectedRow()][12].toString()) == contact.getContactid()) {
 
                         String cName = contact.getGender() == null ? "" : contact.getGender() + " ";
                         cName += contact.getTitle() == null ? "" : contact.getTitle() + " ";
@@ -253,13 +252,13 @@ public class ControlLeads {
 
                 final Iterator ait = company.getCompanyaddresses().iterator();
                 while (ait.hasNext()) {
-                    
+
                     address = (Companyaddress) ait.next();
-                    
+
                     if (Integer.parseInt(EBISystem.getModule().getLeadPane().
                             getTabModel().data[EBISystem.getModule().
                                     getLeadPane().getSelectedRow()][13].toString()) == address.getAddressid()) {
-                        
+
                         EBISystem.gui().label("addressLabel", "Leads").setText(address.getStreet() == null ? "" : address.getStreet());
                         EBISystem.gui().textField("addressStrNrText", "Leads").setText(address.getStreet() == null ? "" : address.getStreet());
 
@@ -326,11 +325,11 @@ public class ControlLeads {
         return true;
     }
 
-    public void dataShow() {
+    public void dataShow(int id) {
 
         ResultSet set = null;
         PreparedStatement ps1 = null;
-        final int srow = EBISystem.gui().table("leadsTable", "Leads").getSelectedRow();
+        int srow = EBISystem.gui().table("leadsTable", "Leads").getSelectedRow();
         try {
             ps1 = EBISystem.getInstance().iDB().initPreparedStatement(""
                     + " SELECT COMPANY.COMPANYID,COMPANY.NAME,COMPANY.CATEGORY,COMPANY.WEB,COMPANY.QUALIFICATION,COMPANY.DESCRIPTION,COMPANYCONTACTS.GENDER,"
@@ -366,6 +365,9 @@ public class ControlLeads {
                         EBISystem.getModule().getLeadPane().getTabModel().data[i][11] = set.getInt("COMPANY.COMPANYID") == 0 ? 0 : set.getInt("COMPANY.COMPANYID");
                         EBISystem.getModule().getLeadPane().getTabModel().data[i][12] = set.getString("COMPANYCONTACTS.CONTACTID") == null ? "" : set.getString("COMPANYCONTACTS.CONTACTID");
                         EBISystem.getModule().getLeadPane().getTabModel().data[i][13] = set.getString("COMPANYADDRESS.ADDRESSID") == null ? "" : set.getString("COMPANYADDRESS.ADDRESSID");
+                        if(id != -1 && id == set.getInt("COMPANY.COMPANYID") ){
+                            srow = i;
+                        }
                         i++;
                     }
                 } else {

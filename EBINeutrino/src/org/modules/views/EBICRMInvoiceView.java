@@ -353,14 +353,13 @@ public class EBICRMInvoiceView {
     }
 
     public boolean saveInvoice() {
-
         if (!validateInput()) {
             return false;
         }
         EBISystem.showInActionStatus("Invoice");
         int row = EBISystem.gui().table("tableTotalInvoice", "Invoice").getSelectedRow();
-        dataControlInvoice.dataStore();
-        dataShow(-1);
+        Integer id = dataControlInvoice.dataStore();
+        dataShow(id);
         dataControlInvoice.dataShowProduct();
         dataControlInvoice.isEdit = true;
         EBISystem.gui().table("tableTotalInvoice", "Invoice").changeSelection(row, 0, false, false);

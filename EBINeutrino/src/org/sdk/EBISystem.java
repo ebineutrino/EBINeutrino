@@ -70,7 +70,8 @@ public class EBISystem {
     public static String DateFormat = "";
     public static String DATABASE_SYSTEM = "";
     public static String selectedLanguage = "";
-    @Getter @Setter
+    @Getter
+    @Setter
     private Company company = null;
     public static Logger logger = Logger.getLogger(EBISystem.class.getName());
     public static boolean canRelease = true;
@@ -85,7 +86,8 @@ public class EBISystem {
     public IEBIModule ebiModule = null;
     private EBISystemUserRights userRights = null;
     private IEBISystemUserRights iuserRights = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private EBIExceptionDialog dialogMessage = null;
     private EBIDBLocking plock = null;
     private Hashtable<String, Script> storableFactory = null;
@@ -979,18 +981,15 @@ public class EBISystem {
     public void mapBean(String cannonicalName, Object cls) {
         this.mappedBbeans.put(cannonicalName, cls);
     }
-    
-    
-    public ImageIcon getIconResource(String iconPath){        
+
+    public ImageIcon getIconResource(String iconPath) {
         ImageIcon icon = null;
-        URL url = getClass().getClassLoader().getResource("images/"+iconPath);
-        if(url != null){
+        URL url = getClass().getClassLoader().getResource("images/" + iconPath);
+        if (url != null) {
             icon = new ImageIcon(url);
         }
         return icon;
     }
-    
-    
 
     public static EBISystem getInstance() {
         if (ebiSystem == null) {

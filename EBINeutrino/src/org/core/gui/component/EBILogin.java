@@ -156,7 +156,7 @@ public class EBILogin extends JFrame {
             setVisible(false);
             main.splash.setVisible(true);
             main.showBusinessModule();
-
+            
             EBIArbitration.arbitrate().begin("AFTER_LOGIN", new EBIArbCallback() {
                 @Override
                 public boolean callback(final Thread currentThread) {

@@ -34,8 +34,8 @@ public class ControlCampaign {
         campaign = new Crmcampaign();
     }
 
-    public boolean dataStore() {
-
+    public Integer dataStore() {
+        Integer campaignID = -1;
         try {
             EBISystem.hibernate().transaction("CAMPAIGN_SESSION").begin();
             if (isEdit == false) {
@@ -124,15 +124,17 @@ public class ControlCampaign {
             if (!isEdit) {
                 EBISystem.gui().vpanel("Campaign").setID(campaign.getCampaignid());
             }
+            campaignID = campaign.getCampaignid();
         } catch (final HibernateException e) {
             e.printStackTrace();
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return campaignID;
     }
 
-    public void dataCopy(final int id) {
+    public Integer dataCopy(final int id) {
+        Integer campID = -1;
         Query query;
         try {
             EBISystem.hibernate().transaction("CAMPAIGN_SESSION").begin();
@@ -168,7 +170,7 @@ public class ControlCampaign {
                         prop.setCreatedfrom(EBISystem.ebiUser);
                         prop.setName(crmprops.getName());
                         prop.setValue(crmprops.getValue());
-
+                        ncamp.getCrmcampaignprops().add(prop);
                         EBISystem.hibernate().session("CAMPAIGN_SESSION").saveOrUpdate(prop);
                     }
                 }
@@ -184,7 +186,7 @@ public class ControlCampaign {
                         dc.setCreatedfrom(EBISystem.ebiUser);
                         dc.setFiles(crmdocs.getFiles());
                         dc.setName(crmdocs.getName());
-
+                        ncamp.getCrmcampaigndocses().add(dc);
                         EBISystem.hibernate().session("CAMPAIGN_SESSION").saveOrUpdate(dc);
                     }
                 }
@@ -209,7 +211,7 @@ public class ControlCampaign {
                         p.setQuantity(crmpos.getQuantity());
                         p.setTaxtype(crmpos.getTaxtype());
                         p.setType(crmpos.getType());
-
+                        ncamp.getCrmcampaignpositions().add(p);
                         EBISystem.hibernate().session("CAMPAIGN_SESSION").saveOrUpdate(p);
                     }
                 }
@@ -240,28 +242,20 @@ public class ControlCampaign {
                         r.setStreet(crmrec.getStreet());
                         r.setSurname(crmrec.getSurname());
                         r.setZip(crmrec.getZip());
-
+                        ncamp.getCrmcampaignreceivers().add(r);
                         EBISystem.hibernate().session("CAMPAIGN_SESSION").saveOrUpdate(r);
                     }
                 }
-
                 EBISystem.hibernate().session("CAMPAIGN_SESSION").saveOrUpdate(ncamp);
                 EBISystem.hibernate().transaction("CAMPAIGN_SESSION").commit();
-
-                EBISystem.gui().table("companyCampaignTable", "Campaign").
-                        changeSelection(EBISystem.gui().table("companyCampaignTable", "Campaign").
-                                convertRowIndexToView(EBISystem.getModule().dynMethod.
-                                        getIdIndexFormArrayInATable(EBISystem.getModule().
-                                                getEBICRMCampaign().getTabModelCampaign().data,
-                                                4, ncamp.getCampaignid())), 0, false, false);
+                campID = ncamp.getCampaignid();
             }
-
         } catch (final HibernateException e) {
             e.printStackTrace();
         } catch (final Exception e) {
             e.printStackTrace();
         }
-
+        return campID;
     }
 
     public void dataEdit(final int id) {
@@ -270,7 +264,6 @@ public class ControlCampaign {
         try {
 
             EBISystem.hibernate().transaction("CAMPAIGN_SESSION").begin();
-
             query = EBISystem.hibernate().session("CAMPAIGN_SESSION").createQuery(
                     "from Crmcampaign where campaignid=?1 ").setParameter(1, id);
 
@@ -314,12 +307,6 @@ public class ControlCampaign {
                 EBISystem.getInstance().getDataStore("Campaign", "ebiEdit");
                 EBISystem.hibernate().transaction("CAMPAIGN_SESSION").commit();
 
-                EBISystem.gui().table("companyCampaignTable", "Campaign").
-                        changeSelection(EBISystem.gui().table("companyCampaignTable", "Campaign").
-                                convertRowIndexToView(EBISystem.getModule().dynMethod.
-                                        getIdIndexFormArrayInATable(EBISystem.getModule().
-                                                getEBICRMCampaign().getTabModelCampaign().data, 4, id)), 0, false, false);
-
             } else {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
             }
@@ -354,9 +341,9 @@ public class ControlCampaign {
 
     }
 
-    public void dataShow() {
+    public void dataShow(Integer id) {
         ResultSet set = null;
-        final int srow = EBISystem.gui().table("companyCampaignTable", "Campaign").getSelectedRow();
+        int srow = EBISystem.gui().table("companyCampaignTable", "Campaign").getSelectedRow();
         PreparedStatement ps1 = null;
         try {
 
@@ -376,6 +363,9 @@ public class ControlCampaign {
                         EBISystem.getModule().getEBICRMCampaign().getTabModelCampaign().data[i][2] = set.getDate("VALIDFROM") == null ? "" : EBISystem.getInstance().getDateToString(set.getDate("VALIDFROM"));
                         EBISystem.getModule().getEBICRMCampaign().getTabModelCampaign().data[i][3] = set.getDate("VALIDTO") == null ? "" : EBISystem.getInstance().getDateToString(set.getDate("VALIDTO"));
                         EBISystem.getModule().getEBICRMCampaign().getTabModelCampaign().data[i][4] = set.getInt("CAMPAIGNID");
+                        if(id != -1 && id == set.getInt("CAMPAIGNID")){
+                            srow = i;
+                        }
                         i++;
                     }
                 } else {

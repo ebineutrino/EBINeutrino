@@ -19,8 +19,8 @@ public class ControlContact {
         contact = new Companycontacts();
     }
 
-    public boolean dataStore() {
-
+    public Integer dataStore() {
+        Integer contactID =-1;
         try {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
 
@@ -76,7 +76,7 @@ public class ControlContact {
             }
 
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-
+            contactID = contact.getContactid();
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
@@ -87,10 +87,11 @@ public class ControlContact {
             EBISystem.getInstance().loadStandardCompanyData();
         }
 
-        return true;
+        return contactID;
     }
 
-    public void dataCopy(final int id) {
+    public Integer dataCopy(final int id) {
+        Integer contactID = -1;
         try {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
             if (EBISystem.getInstance().getCompany().getCompanycontactses().size() > 0) {
@@ -101,10 +102,7 @@ public class ControlContact {
                         break;
                     }
                 }
-
-                if (con == null) {
-                    return;
-                }
+                
                 final Companycontacts conx = new Companycontacts();
                 conx.setCreateddate(new Date());
                 conx.setCreatedfrom(EBISystem.ebiUser);
@@ -147,22 +145,15 @@ public class ControlContact {
                 }
 
                 EBISystem.getInstance().getDataStore("Contact", "ebiSave");
+                EBISystem.getInstance().getCompany().getCompanycontactses().add(conx);
                 EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(conx);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-
-                EBISystem.getInstance().getCompany().getCompanycontactses().add(conx);
-
-                EBISystem.gui().table("companyContacts", "Contact").
-                        changeSelection(EBISystem.gui().table("companyContacts", "Contact")
-                                .convertRowIndexToView(EBISystem.getModule().dynMethod.getIdIndexFormArrayInATable(
-                                        EBISystem.getModule().getContactPane().getTableModel().data,
-                                        EBISystem.getModule().getContactPane().getTableModel().columnNames.length, conx.getContactid())),
-                                0, false, false);
+                contactID = conx.getContactid();
             }
-
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
+        return contactID;
     }
 
     public void dataEdit(final int id) {
@@ -214,13 +205,7 @@ public class ControlContact {
             }
 
             EBISystem.getInstance().getDataStore("Contact", "ebiEdit");
-            EBISystem.gui().table("companyContacts", "Contact").changeSelection(
-                    EBISystem.gui().table("companyContacts", "Contact")
-                            .convertRowIndexToView(EBISystem.getModule().
-                                    dynMethod.getIdIndexFormArrayInATable(EBISystem.getModule().getContactPane().getTableModel().data,
-                                    EBISystem.getModule().getContactPane().getTableModel().columnNames.length, id)),
-                    0, false, false);
-
+            
         } else {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND"))
                     .Show(EBIMessage.INFO_MESSAGE);
@@ -245,9 +230,9 @@ public class ControlContact {
         }
     }
 
-    public void dataShow() {
-
-        final int srow = EBISystem.gui().table("companyContacts", "Contact").getSelectedRow();
+    public void dataShow(Integer id) {
+        
+        int srow = EBISystem.gui().table("companyContacts", "Contact").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanycontactses().size();
 
         if (size > 0) {
@@ -273,6 +258,9 @@ public class ControlContact {
                 EBISystem.getModule().getContactPane().getTableModel().data[i][6] = obj.getEmail() == null ? "" : obj.getEmail();
                 EBISystem.getModule().getContactPane().getTableModel().data[i][7] = obj.getDescription() == null ? "" : obj.getDescription();
                 EBISystem.getModule().getContactPane().getTableModel().data[i][EBISystem.getModule().getContactPane().getTableModel().columnNames.length] = obj.getContactid();
+                if(id != -1 && id == obj.getContactid()){
+                    srow = i;
+                }
                 i++;
             }
         } else {
@@ -293,8 +281,6 @@ public class ControlContact {
         EBISystem.getModule().getContactPane().initialize(false);
         EBISystem.getInstance().getDataStore("Contact", "ebiNew");
         EBISystem.gui().vpanel("Contact").setID(-1);
-        dataShow();
-        showCompanyContactAddress();
     }
 
     private void dataHistory(final Company com) {
@@ -456,7 +442,7 @@ public class ControlContact {
                 i++;
             }
         } else {
-            EBISystem.getModule().getContactPane().getAddressModel().data 
+            EBISystem.getModule().getContactPane().getAddressModel().data
                     = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", ""}};
         }
 

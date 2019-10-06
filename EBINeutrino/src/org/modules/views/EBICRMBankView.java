@@ -19,9 +19,11 @@ import lombok.Setter;
 
 public class EBICRMBankView {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelCRMBankdata tabModel = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ControlBank bankDataControl = new ControlBank();
     private int selectedRow = -1;
 
@@ -30,16 +32,16 @@ public class EBICRMBankView {
         EBISystem.gui().label("filterTable", "Bank").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Bank").addKeyListener(new KeyListener() {
             @Override
-			public void keyTyped(final KeyEvent e) {
+            public void keyTyped(final KeyEvent e) {
             }
 
             @Override
-			public void keyPressed(final KeyEvent e) {
+            public void keyPressed(final KeyEvent e) {
                 EBISystem.gui().table("companyBankTable", "Bank").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Bank").getText()));
             }
 
             @Override
-			public void keyReleased(final KeyEvent e) {
+            public void keyReleased(final KeyEvent e) {
                 EBISystem.gui().table("companyBankTable", "Bank").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Bank").getText()));
             }
         });
@@ -51,8 +53,8 @@ public class EBICRMBankView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow() != -1 &&
-                        EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow() < tabModel.data.length) {
+                if (EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow() != -1
+                        && EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow() < tabModel.data.length) {
 
                     selectedRow = EBISystem.gui().table("companyBankTable", "Bank").convertRowIndexToModel(EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow());
 
@@ -97,7 +99,7 @@ public class EBICRMBankView {
 
         EBISystem.gui().table("companyBankTable", "Bank").setMouseCallback(new MouseAdapter() {
             @Override
-			public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseClicked(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("companyBankTable", "Bank").rowAtPoint(e.getPoint()) != -1) {
                     selectedRow = EBISystem.gui().table("companyBankTable", "Bank").convertRowIndexToModel(EBISystem.gui().table("companyBankTable", "Bank").rowAtPoint(e.getPoint()));
                 }
@@ -107,7 +109,7 @@ public class EBICRMBankView {
     }
 
     public void initialize(boolean reload) {
-        if(reload) {
+        if (reload) {
             tabModel = new ModelCRMBankdata();
             EBISystem.gui().table("companyBankTable", "Bank").setModel(tabModel);
         }
@@ -135,18 +137,19 @@ public class EBICRMBankView {
             return;
         }
         EBISystem.showInActionStatus("Bank");
-    	bankDataControl.dataNew();
+        bankDataControl.dataNew();
         bankDataControl.dataEdit(Integer.parseInt(tabModel.data[selectedRow][6].toString()));
         bankDataControl.setEdit(true);
     }
 
-    public void copyBank(){
+    public void copyBank() {
         if ((selectedRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(tabModel.data[selectedRow][0].toString()))) {
             return;
         }
         EBISystem.showInActionStatus("Bank");
-        bankDataControl.dataCopy(Integer.parseInt(tabModel.data[selectedRow][6].toString()));
-        bankDataControl.dataShow();
+        Integer id = bankDataControl.dataCopy(Integer.parseInt(tabModel.data[selectedRow][6].toString()));
+        bankDataControl.dataEdit(id);
+        bankDataControl.dataShow(id);
     }
 
     public boolean saveBank() {
@@ -155,8 +158,8 @@ public class EBICRMBankView {
         }
         EBISystem.showInActionStatus("Bank");
         int row = EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow();
-        bankDataControl.dataStore();
-        bankDataControl.dataShow();
+        Integer id = bankDataControl.dataStore();
+        bankDataControl.dataShow(id);
         bankDataControl.setEdit(true);
         EBISystem.gui().table("companyBankTable", "Bank").changeSelection(row, 0, false, false);
         return true;
@@ -171,12 +174,12 @@ public class EBICRMBankView {
             EBISystem.showInActionStatus("Bank");
             bankDataControl.dataDelete(Integer.parseInt(tabModel.data[selectedRow][6].toString()));
             bankDataControl.dataNew();
-            bankDataControl.dataShow();
+            bankDataControl.dataShow(-1);
             bankDataControl.setEdit(false);
         }
     }
 
-    public void historyBank(){
+    public void historyBank() {
         new EBICRMHistoryView(EBISystem.getModule().hcreator.retrieveDBHistory(EBISystem.getInstance().getCompany().getCompanyid(), "Bankdata")).setVisible();
     }
 
@@ -184,15 +187,14 @@ public class EBICRMBankView {
         boolean ret = true;
         if ("".equals(EBISystem.gui().textField("bankNameText", "Bank").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_BANK_NAME")).Show(EBIMessage.ERROR_MESSAGE);
-            ret =false;
-        }else if ("".equals(EBISystem.gui().textField("abaNrText", "Bank").getText())) {
+            ret = false;
+        } else if ("".equals(EBISystem.gui().textField("abaNrText", "Bank").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_BANK_CODE")).Show(EBIMessage.ERROR_MESSAGE);
-            ret =false;
-        }else if ("".equals(EBISystem.gui().textField("accountNrText", "Bank").getText())) {
+            ret = false;
+        } else if ("".equals(EBISystem.gui().textField("accountNrText", "Bank").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_BANK_NR")).Show(EBIMessage.ERROR_MESSAGE);
-            ret =false;
+            ret = false;
         }
         return ret;
     }
 }
-

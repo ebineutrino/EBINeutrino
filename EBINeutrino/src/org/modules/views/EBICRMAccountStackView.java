@@ -28,43 +28,58 @@ import lombok.Setter;
 
 public class EBICRMAccountStackView {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private ControlAccountStack dataControlAccount = new ControlAccountStack();
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelCRMAccount tabModAccount = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedInvoiceRow = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedCDRow = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedCDDialogRow = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelDoc tabModDoc = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelCreditDebit creditDebitMod = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedDocRow = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String[] creditDebitType = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String[] accoutType = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int showDebitID = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int showCreditID = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private NumberFormat taxFormat = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String selectedYear = "";
-    @Getter @Setter
+    @Getter
+    @Setter
     private int accountDebitCreditType = 0;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String accountDebitTaxName = "";
 
     public static int DEBIT = 1;
     public static int CREDIT = 2;
     public static int DEPOT = 3;
-
 
     public void initializeAction() {
         //AVAILABLE TABLE AND BUTTONS
@@ -88,37 +103,39 @@ public class EBICRMAccountStackView {
 
         EBISystem.gui().textField("debitText", "Account").addKeyListener(
                 new KeyAdapter() {
-                    int idx = -1;
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-                        super.keyReleased(e);
-                        idx = dataControlAccount.getIDFromNumber(EBISystem.gui().textField("debitText", "Account").getText(), false);
-                        if (idx != -1) {
-                            showDebitCreditToList(idx);
-                        } else {
-                            EBISystem.gui().textField("descriptionDebit", "Account").setText("");
-                            EBISystem.gui().FormattedField("debitCal", "Account").setText("");
-                            EBISystem.gui().FormattedField("debitCal", "Account").setValue(null);
-                        }
-                    }
-                });
+            int idx = -1;
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                idx = dataControlAccount.getIDFromNumber(EBISystem.gui().textField("debitText", "Account").getText(), false);
+                if (idx != -1) {
+                    showDebitCreditToList(idx);
+                } else {
+                    EBISystem.gui().textField("descriptionDebit", "Account").setText("");
+                    EBISystem.gui().FormattedField("debitCal", "Account").setText("");
+                    EBISystem.gui().FormattedField("debitCal", "Account").setValue(null);
+                }
+            }
+        });
 
         EBISystem.gui().textField("creditText", "Account").addKeyListener(
                 new KeyAdapter() {
-                    int idx = -1;
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-                        super.keyReleased(e);
-                        idx = dataControlAccount.getIDFromNumber(EBISystem.gui().textField("creditText", "Account").getText(), true);
-                        if (idx != -1) {
-                            showDebitCreditToList(idx);
-                        } else {
-                            EBISystem.gui().textField("descriptionCredit", "Account").setText("");
-                            EBISystem.gui().FormattedField("creditCal", "Account").setText("");
-                            EBISystem.gui().FormattedField("creditCal", "Account").setValue(null);
-                        }
-                    }
-                });
+            int idx = -1;
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                idx = dataControlAccount.getIDFromNumber(EBISystem.gui().textField("creditText", "Account").getText(), true);
+                if (idx != -1) {
+                    showDebitCreditToList(idx);
+                } else {
+                    EBISystem.gui().textField("descriptionCredit", "Account").setText("");
+                    EBISystem.gui().FormattedField("creditCal", "Account").setText("");
+                    EBISystem.gui().FormattedField("creditCal", "Account").setValue(null);
+                }
+            }
+        });
 
         EBISystem.gui().table("accountTable", "Account").setModel(tabModAccount);
         EBISystem.gui().table("accountTable", "Account").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -129,7 +146,9 @@ public class EBICRMAccountStackView {
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedInvoiceRow = EBISystem.gui().table("accountTable", "Account").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedInvoiceRow
+                            = EBISystem.gui().table("accountTable", "Account")
+                                    .convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -143,7 +162,6 @@ public class EBICRMAccountStackView {
                 }
             }
         });
-
 
         EBISystem.gui().table("accountTable", "Account").addKeyAction(new EBIUICallback() {
             @Override
@@ -186,7 +204,6 @@ public class EBICRMAccountStackView {
             }
         });
 
-
         //ACCOUNT DOCUMENTS
         EBISystem.gui().table("tableAccountDoc", "Account").setModel(tabModDoc);
         EBISystem.gui().table("tableAccountDoc", "Account").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -216,7 +233,7 @@ public class EBICRMAccountStackView {
         EBISystem.gui().combo("selectCreditDebitText", "Account").addActionListener(new ActionListener() {
 
             @Override
-			public void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 dataControlAccount.dataShowCreditDebitExt(((JComboBox) e.getSource()).getSelectedIndex());
             }
         });
@@ -245,7 +262,7 @@ public class EBICRMAccountStackView {
         // Initialize Action for Account years
         EBISystem.gui().combo("invoiceYearText", "Account").addActionListener(new ActionListener() {
             @Override
-			public void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 if (((JComboBox) e.getSource()).getSelectedIndex() != -1) {
                     selectedYear = ((JComboBox) e.getSource()).getSelectedItem().toString();
                 }
@@ -255,7 +272,7 @@ public class EBICRMAccountStackView {
 
     public void initialize(boolean reload) {
 
-        if(reload) {
+        if (reload) {
             tabModDoc = new ModelDoc();
             creditDebitMod = new ModelCreditDebit();
             tabModAccount = new ModelCRMAccount();
@@ -268,14 +285,13 @@ public class EBICRMAccountStackView {
         EBISystem.hibernate().openHibernateSession("EBIACCOUNT_SESSION");
 
         creditDebitType = new String[]{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"),
-                EBISystem.i18n("EBI_LANG_DEBIT"),
-                EBISystem.i18n("EBI_LANG_CREDIT"), EBISystem.i18n("EBI_LANG_DEPOSIT")};
+            EBISystem.i18n("EBI_LANG_DEBIT"),
+            EBISystem.i18n("EBI_LANG_CREDIT"), EBISystem.i18n("EBI_LANG_DEPOSIT")};
 
         accoutType = new String[]{EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_ACTIVE"),
-                EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_PASSIVE"),
-                EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_EARNING"),
-                EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_LIST_EXPEDITURE")};
-
+            EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_PASSIVE"),
+            EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_EARNING"),
+            EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_LIST_EXPEDITURE")};
 
         dataControlAccount.dataShowCreditDebit();
 
@@ -324,9 +340,9 @@ public class EBICRMAccountStackView {
         try {
             if (!"null".equals(dataControlAccount.properties.getValue("SELECTED_ACCOUNTYEAR_TEXT")) && !"".equals(dataControlAccount.properties.getValue("SELECTED_ACCOUNTYEAR_TEXT"))) {
                 EBISystem.gui().combo("invoiceYearText", "Account").setSelectedItem(dataControlAccount.properties.getValue("SELECTED_ACCOUNTYEAR_TEXT"));
-                dataControlAccount.dataShow(dataControlAccount.properties.getValue("SELECTED_ACCOUNTYEAR_TEXT"));
+                dataControlAccount.dataShow(dataControlAccount.properties.getValue("SELECTED_ACCOUNTYEAR_TEXT"), -1);
             } else {
-                dataControlAccount.dataShow("");
+                dataControlAccount.dataShow("", -1);
             }
 
             if (!"null".equals(dataControlAccount.properties.getValue("ACCOUNTYEAR_TEXT")) && !"".equals(dataControlAccount.properties.getValue("ACCOUNTYEAR_TEXT"))) {
@@ -356,38 +372,35 @@ public class EBICRMAccountStackView {
         }
     }
 
-    public void showAccountReport(){
+    public void showAccountReport() {
         dataControlAccount.dataShowReport();
     }
 
-    public void showAccount(){
-        dataControlAccount.dataShow(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString());
-    }
 
     public boolean saveAccount() {
-        if(!validateInput()){
+        if (!validateInput()) {
             return false;
         }
 
         EBISystem.showInActionStatus("Account");
         int row = EBISystem.gui().table("accountTable", "Account").getSelectedRow();
-        dataControlAccount.dataStore();
-        dataControlAccount.dataShow(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString());
-        dataControlAccount.isEdit=true;
+        Integer id = dataControlAccount.dataStore();
+        dataControlAccount.dataShow(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString(), id);
+        dataControlAccount.isEdit = true;
         EBISystem.gui().table("accountTable", "Account").changeSelection(row, 0, false, false);
         return true;
     }
-
 
     public void deleteAccount() {
         if (selectedInvoiceRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                 equals(tabModAccount.data[selectedInvoiceRow][0].toString())) {
             return;
         }
-        if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true){
+        if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
             EBISystem.showInActionStatus("Account");
             dataControlAccount.dataDelete(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][6].toString()));
             dataControlAccount.dataNew();
+            dataControlAccount.dataShow(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString(), -1);
             dataControlAccount.isEdit = false;
         }
     }
@@ -398,7 +411,7 @@ public class EBICRMAccountStackView {
             return;
         }
         EBISystem.showInActionStatus("Account");
-    	dataControlAccount.dataNew();
+        dataControlAccount.dataNew();
         dataControlAccount.dataEdit(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][6].toString()));
         dataControlAccount.dataShowDoc();
         dataControlAccount.isEdit = true;
@@ -407,6 +420,7 @@ public class EBICRMAccountStackView {
     public void newAccount() {
         EBISystem.showInActionStatus("Account");
         dataControlAccount.dataNew();
+        dataControlAccount.dataShow(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString(), -1);
         dataControlAccount.dataShowDoc();
         dataControlAccount.isEdit = false;
     }
@@ -455,7 +469,7 @@ public class EBICRMAccountStackView {
         newCreditDebit(Integer.parseInt(creditDebitMod.data[selectedCDRow][2].toString()));
     }
 
-    public void newDebitCredit(){
+    public void newDebitCredit() {
         newCreditDebit(-1);
     }
 
@@ -465,7 +479,7 @@ public class EBICRMAccountStackView {
         EBISystem.gui().combo("creditDebitTypeText", "creditDebitDialog").addActionListener(new ActionListener() {
 
             @Override
-			public void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 if (((JComboBox) e.getSource()).getSelectedIndex() == 3) {
                     EBISystem.gui().label("vale", "creditDebitDialog").setVisible(true);
                     EBISystem.gui().label("taxType", "creditDebitDialog").setVisible(false);
@@ -489,7 +503,7 @@ public class EBICRMAccountStackView {
         EBISystem.gui().combo("taxTypeText", "creditDebitDialog").addActionListener(new ActionListener() {
 
             @Override
-			public void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 if (((JComboBox) e.getSource()).getSelectedItem() != null) {
                     EBISystem.gui().label("taxValue", "creditDebitDialog").setText(dataControlAccount.getTaxValue(((JComboBox) e.getSource()).getSelectedItem().toString()) + "%");
                 }
@@ -498,7 +512,7 @@ public class EBICRMAccountStackView {
 
         EBISystem.gui().button("saveValue", "creditDebitDialog").addActionListener(new ActionListener() {
             @Override
-			public void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 if (!validateInputDialog()) {
                     return;
                 }
@@ -509,7 +523,7 @@ public class EBICRMAccountStackView {
 
         EBISystem.gui().button("closeDialog", "creditDebitDialog").addActionListener(new ActionListener() {
             @Override
-			public void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 EBISystem.gui().dialog("creditDebitDialog").setVisible(false);
             }
         });
@@ -521,7 +535,6 @@ public class EBICRMAccountStackView {
         EBISystem.gui().showGUI();
     }
 
-
     public void showCreditDebitListDialog() {
 
         EBISystem.gui().loadGUI("CRMDialog/crmSelectionDialog.xml");
@@ -531,27 +544,26 @@ public class EBICRMAccountStackView {
 
         EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").addKeyListener(new KeyListener() {
             @Override
-			public void keyTyped(final KeyEvent e) {
+            public void keyTyped(final KeyEvent e) {
             }
 
             @Override
-			public void keyPressed(final KeyEvent e) {
+            public void keyPressed(final KeyEvent e) {
                 EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));
             }
 
             @Override
-			public void keyReleased(final KeyEvent e) {
+            public void keyReleased(final KeyEvent e) {
                 EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));
             }
         });
-
 
         EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setModel(creditDebitMod);
         EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         EBISystem.gui().table("abstractTable", "abstractSelectionDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             @Override
-			public void valueChanged(final ListSelectionEvent e) {
+            public void valueChanged(final ListSelectionEvent e) {
                 if (e.getValueIsAdjusting()) {
                     return;
                 }
@@ -568,17 +580,17 @@ public class EBICRMAccountStackView {
         new JTableActionMaps(EBISystem.gui().table("abstractTable", "abstractSelectionDialog")).setTableAction(new AbstractTableKeyAction() {
 
             @Override
-			public void setArrowDownKeyAction(final int selRow) {
+            public void setArrowDownKeyAction(final int selRow) {
                 selectedCDDialogRow = selRow;
             }
 
             @Override
-			public void setArrowUpKeyAction(final int selRow) {
+            public void setArrowUpKeyAction(final int selRow) {
                 selectedCDDialogRow = selRow;
             }
 
             @Override
-			public void setEnterKeyAction(final int selRow) {
+            public void setEnterKeyAction(final int selRow) {
                 selectedCDDialogRow = selRow;
 
                 if (selectedCDDialogRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
@@ -589,11 +601,10 @@ public class EBICRMAccountStackView {
             }
         });
 
-
         EBISystem.gui().table("abstractTable", "abstractSelectionDialog").addMouseListener(new java.awt.event.MouseAdapter() {
 
             @Override
-			public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseClicked(final java.awt.event.MouseEvent e) {
 
                 if (EBISystem.gui().table("abstractTable", "abstractSelectionDialog").rowAtPoint(e.getPoint()) != -1) {
                     selectedCDDialogRow = EBISystem.gui().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(EBISystem.gui().table("abstractTable", "abstractSelectionDialog").rowAtPoint(e.getPoint()));
@@ -604,14 +615,14 @@ public class EBICRMAccountStackView {
                 }
 
                 showDebitCreditToList(Integer.parseInt(creditDebitMod.data[selectedCDDialogRow][2].toString()));
-                
+
             }
         });
 
         EBISystem.gui().button("closeButton", "abstractSelectionDialog").addActionListener(new ActionListener() {
 
             @Override
-			public void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 EBISystem.gui().dialog("abstractSelectionDialog").setVisible(false);
             }
         });
@@ -619,7 +630,7 @@ public class EBICRMAccountStackView {
         EBISystem.gui().button("applyButton", "abstractSelectionDialog").addActionListener(new ActionListener() {
 
             @Override
-			public void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 if (selectedCDDialogRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                         equals(creditDebitMod.data[selectedCDDialogRow][0].toString())) {
                     return;
@@ -627,7 +638,7 @@ public class EBICRMAccountStackView {
                 showDebitCreditToList(Integer.parseInt(creditDebitMod.data[selectedCDDialogRow][2].toString()));
             }
         });
-        
+
         EBISystem.gui().showGUI();
         dataControlAccount.dataShowCreditDebit();
     }
@@ -641,11 +652,11 @@ public class EBICRMAccountStackView {
         }
     }
 
-    public void historyAccount(){
+    public void historyAccount() {
         new EBICRMHistoryView(EBISystem.getModule().hcreator.retrieveDBHistory(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][6].toString()), "Account")).setVisible();
     }
 
-    public void updateYear(){
+    public void updateYear() {
         if (EBISystem.gui().combo("invoiceYearText", "Account").getItemCount() >= 1) {
             boolean isAvailable = false;
             if (!"".equals(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem())) {
@@ -703,28 +714,26 @@ public class EBICRMAccountStackView {
             dataControlAccount.properties.setValue("ACCOUNTYEAR_TEXT", vSave);
         }
 
-
         dataControlAccount.properties.setValue("SELECTED_ACCOUNTYEAR_TEXT", EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString());
         dataControlAccount.properties.saveEBINeutrinoProperties();
-
-        dataControlAccount.dataShow(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString());
+        dataControlAccount.dataShow(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString(), -1);
     }
 
-    public void importInvoice(){
+    public void importInvoice() {
         dataControlAccount.imporInvoicetoAccout(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString());
     }
 
     private boolean validateInputDialog() {
-        boolean ret=true;
+        boolean ret = true;
         if ("".equals(EBISystem.gui().textField("numberText", "creditDebitDialog").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_NUMBER")).Show(EBIMessage.ERROR_MESSAGE);
-            ret=false;
+            ret = false;
         } else if ("".equals(EBISystem.gui().textField("nameText", "creditDebitDialog").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_INSERT_NAME")).Show(EBIMessage.ERROR_MESSAGE);
-            ret=false;
+            ret = false;
         } else if (EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui().combo("creditDebitTypeText", "creditDebitDialog").getSelectedItem().toString())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_SELECT_TYPE")).Show(EBIMessage.ERROR_MESSAGE);
-            ret=false;
+            ret = false;
         }
         return ret;
     }

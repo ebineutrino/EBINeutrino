@@ -21,18 +21,28 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.*;
+import lombok.Getter;
+import lombok.Setter;
 
 public class EBICRMOrderView {
-
-    public ModelDoc tabModDoc = null;
-    public ModelReceiver tabModReceiver = null;
-    public ModelCRMProduct tabModProduct = null;
-    public ModelOrder tabModOrder = null;
+    @Getter @Setter
+    private ModelDoc tabModDoc = null;
+    @Getter @Setter
+    private ModelReceiver tabModReceiver = null;
+    @Getter @Setter
+    private ModelCRMProduct tabModProduct = null;
+    @Getter @Setter
+    private ModelOrder tabModOrder = null;
     public static String[] orderStatus = null;
-    public ControlOrder dataControlOrder = new ControlOrder();
+    @Getter @Setter
+    private ControlOrder dataControlOrder = new ControlOrder();
+    @Getter @Setter
     private int selectedOrderRow = -1;
+    @Getter @Setter
     private int selectedDocRow = -1;
+    @Getter @Setter
     private int selectedReceiverRow = -1;
+    @Getter @Setter
     private int selectedProductRow = -1;
 
     public void initializeAction() {
@@ -300,8 +310,8 @@ public class EBICRMOrderView {
         }
         EBISystem.showInActionStatus("Order");
         int row = EBISystem.gui().table("companyorderTable", "Order").getSelectedRow();
-        dataControlOrder.dataStore();
-        dataControlOrder.dataShow();
+        Integer id = dataControlOrder.dataStore();
+        dataControlOrder.dataShow(id);
         dataControlOrder.dataShowProduct();
         dataControlOrder.dataShowDoc();
         dataControlOrder.dataShowReceiver();
@@ -316,8 +326,12 @@ public class EBICRMOrderView {
             return;
         }
         EBISystem.showInActionStatus("Order");
-        dataControlOrder.dataCopy(Integer.parseInt(tabModOrder.data[selectedOrderRow][7].toString()));
-        dataControlOrder.dataShow();
+        Integer orderID = dataControlOrder.dataCopy(Integer.parseInt(tabModOrder.data[selectedOrderRow][7].toString()));
+        dataControlOrder.dataEdit(orderID);
+        dataControlOrder.dataShow(orderID);
+        dataControlOrder.dataShowProduct();
+        dataControlOrder.dataShowDoc();
+        dataControlOrder.dataShowReceiver();
     }
 
     public void editOrder() {
@@ -350,7 +364,7 @@ public class EBICRMOrderView {
             EBISystem.showInActionStatus("Order");
             dataControlOrder.dataDelete(Integer.parseInt(tabModOrder.data[selectedOrderRow][7].toString()));
             dataControlOrder.dataNew();
-            dataControlOrder.dataShow();
+            dataControlOrder.dataShow(-1);
             dataControlOrder.dataShowDoc();
             dataControlOrder.dataShowProduct();
             dataControlOrder.dataShowReceiver();
@@ -375,10 +389,6 @@ public class EBICRMOrderView {
             }
         }
         return ret;
-    }
-
-    public void showOrder() {
-        dataControlOrder.dataShow();
     }
 
     public void showProduct() {

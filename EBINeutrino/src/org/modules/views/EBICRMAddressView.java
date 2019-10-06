@@ -19,12 +19,15 @@ import lombok.Setter;
 
 public class EBICRMAddressView {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelCRMAddress tabModel = null;
     public static String[] AddressType = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ControlAddress addressDataControl = new ControlAddress();
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedRow = -1;
 
     public void initializeAction() {
@@ -108,7 +111,6 @@ public class EBICRMAddressView {
             }
         });
 
-
         EBISystem.gui().table("companyAddess", "Address").setMouseCallback(new MouseAdapter() {
             @Override
             public void mouseClicked(final java.awt.event.MouseEvent e) {
@@ -159,8 +161,9 @@ public class EBICRMAddressView {
             return;
         }
         EBISystem.showInActionStatus("Address");
-        addressDataControl.dataCopy(Integer.parseInt(tabModel.data[selectedRow][6].toString()));
-        addressDataControl.dataShow();
+        Integer id = addressDataControl.dataCopy(Integer.parseInt(tabModel.data[selectedRow][6].toString()));
+        addressDataControl.dataEdit(id);
+        addressDataControl.dataShow(id);
     }
 
     public void deleteAddress() {
@@ -170,12 +173,13 @@ public class EBICRMAddressView {
         EBISystem.showInActionStatus("Address");
         addressDataControl.dataDelete(Integer.parseInt(tabModel.data[selectedRow][6].toString()));
         addressDataControl.dataNew();
-        addressDataControl.dataShow();
+        addressDataControl.dataShow(-1);
         addressDataControl.isEdit = false;
     }
 
     public void historyAddress() {
-        new EBICRMHistoryView(EBISystem.getModule().hcreator.retrieveDBHistory(EBISystem.getInstance().getCompany().getCompanyid(), "Address")).setVisible();
+        new EBICRMHistoryView(EBISystem.getModule().hcreator.
+                retrieveDBHistory(EBISystem.getInstance().getCompany().getCompanyid(), "Address")).setVisible();
     }
 
     public boolean saveAddress() {
@@ -184,9 +188,9 @@ public class EBICRMAddressView {
         }
         EBISystem.showInActionStatus("Address");
         int row = EBISystem.gui().table("companyAddess", "Address").getSelectedRow();
-        addressDataControl.dataStore();
+        Integer id = addressDataControl.dataStore();
         addressDataControl.isEdit = true;
-        addressDataControl.dataShow();
+        addressDataControl.dataShow(id);
         EBISystem.gui().table("companyAddess", "Address").changeSelection(row, 0, false, false);
         return true;
     }
@@ -194,6 +198,7 @@ public class EBICRMAddressView {
     public void newAddress() {
         EBISystem.showInActionStatus("Address");
         addressDataControl.dataNew();
+        addressDataControl.dataShow(-1);
         addressDataControl.isEdit = false;
     }
 

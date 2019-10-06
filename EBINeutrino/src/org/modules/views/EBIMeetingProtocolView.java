@@ -202,10 +202,8 @@ public class EBIMeetingProtocolView {
         EBISystem.gui().timePicker("dateMeetingText", "MeetingCall").setDate(null);
         EBISystem.gui().timePicker("dateMeetingText", "MeetingCall").setFormats(EBISystem.DateFormat);
     }
-
-    public void showMeetingProtocol() {
-        dataMeetingControl.dataShow();
-    }
+    
+    
 
     public boolean saveMeeting() {
         if (!validateInput()) {
@@ -213,8 +211,8 @@ public class EBIMeetingProtocolView {
         }
         EBISystem.showInActionStatus("MeetingCall");
         int row = EBISystem.gui().table("companyMeetings", "MeetingCall").getSelectedRow();
-        dataMeetingControl.dataStore();
-        dataMeetingControl.dataShow();
+        Integer id = dataMeetingControl.dataStore();
+        dataMeetingControl.dataShow(id);
         dataMeetingControl.dataShowContact();
         dataMeetingControl.dataShowDoc();
         dataMeetingControl.isEdit = true;
@@ -229,8 +227,9 @@ public class EBIMeetingProtocolView {
             return;
         }
         EBISystem.showInActionStatus("MeetingCall");
-        dataMeetingControl.dataCopy(Integer.parseInt(tableModel.data[selectedProtocolRow][4].toString()));
-        dataMeetingControl.dataShow();
+        Integer id = dataMeetingControl.dataCopy(Integer.parseInt(tableModel.data[selectedProtocolRow][4].toString()));
+        dataMeetingControl.dataEdit(id);
+        dataMeetingControl.dataShow(id);
         dataMeetingControl.dataShowContact();
         dataMeetingControl.dataShowDoc();
     }
@@ -258,7 +257,7 @@ public class EBIMeetingProtocolView {
             EBISystem.showInActionStatus("MeetingCall");
             dataMeetingControl.dataDelete(Integer.parseInt(tableModel.data[selectedProtocolRow][4].toString()));
             dataMeetingControl.dataNew();
-            dataMeetingControl.dataShow();
+            dataMeetingControl.dataShow(-1);
             dataMeetingControl.dataShowContact();
             dataMeetingControl.dataShowDoc();
             dataMeetingControl.isEdit = false;
@@ -268,6 +267,9 @@ public class EBIMeetingProtocolView {
     public void newMeeting() {
         EBISystem.showInActionStatus("MeetingCall");
         dataMeetingControl.dataNew();
+        dataMeetingControl.dataShow(-1);
+        dataMeetingControl.dataShowContact();
+        dataMeetingControl.dataShowDoc();
         dataMeetingControl.isEdit = false;
     }
 

@@ -266,10 +266,7 @@ public class EBICRMProblemSolutionView {
         }
         dataControlProsol.dataViewDoc(Integer.parseInt(tabModDoc.data[selectedDocRow][3].toString()));
     }
-
-    public void showProSol() {
-        dataControlProsol.dataShow();
-    }
+ 
 
     public void showProsolProduct() {
         dataControlProsol.dataShowProduct();
@@ -279,7 +276,7 @@ public class EBICRMProblemSolutionView {
         EBISystem.showInActionStatus("Prosol");
         dataControlProsol.isEdit = false;
         dataControlProsol.dataNew();
-        showProSol();
+        dataControlProsol.dataShow(-1);
         dataControlProsol.dataShowDoc();
         dataControlProsol.dataShowProduct();
     }
@@ -289,8 +286,8 @@ public class EBICRMProblemSolutionView {
             return false;
         }
         EBISystem.showInActionStatus("Prosol");
-        dataControlProsol.dataStore();
-        showProSol();
+        Integer id = dataControlProsol.dataStore();
+        dataControlProsol.dataShow(id);
         dataControlProsol.dataShowDoc();
         dataControlProsol.dataShowProduct();
         dataControlProsol.isEdit = true;
@@ -316,8 +313,11 @@ public class EBICRMProblemSolutionView {
             return;
         }
         EBISystem.showInActionStatus("Prosol");
-        dataControlProsol.dataCopy(Integer.parseInt(tabModProsol.data[selectedprosolRow][7].toString()));
-        showProSol();
+        Integer id = dataControlProsol.dataCopy(Integer.parseInt(tabModProsol.data[selectedprosolRow][7].toString()));
+        dataControlProsol.dataEdit(id);
+        dataControlProsol.dataShow(id);
+        dataControlProsol.dataShowDoc();
+        dataControlProsol.dataShowProduct();
     }
 
     public void deleteprosol() {
@@ -329,7 +329,7 @@ public class EBICRMProblemSolutionView {
             EBISystem.showInActionStatus("Prosol");
             dataControlProsol.dataDelete(Integer.parseInt(tabModProsol.data[selectedprosolRow][7].toString()));
             dataControlProsol.dataNew();
-            showProSol();
+            dataControlProsol.dataShow(-1);
             dataControlProsol.isEdit = false;
         }
     }

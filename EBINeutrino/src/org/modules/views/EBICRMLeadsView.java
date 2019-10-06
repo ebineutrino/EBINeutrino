@@ -19,11 +19,14 @@ import lombok.Setter;
 
 public class EBICRMLeadsView {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private ControlLeads controlLeads = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedRow = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private EBIAbstractTableModel tabModel = null;
 
     public EBICRMLeadsView() {
@@ -39,7 +42,7 @@ public class EBICRMLeadsView {
                 EBISystem.gui().textField("searchLeadsText", "Leads").setText(EBIPropertiesRW.getEBIProperties().getValue("LEADSSEARCH_TEXT"));
                 controlLeads.dataShow(EBIPropertiesRW.getEBIProperties().getValue("LEADSSEARCH_TEXT"));
             } else {
-                controlLeads.dataShow();
+                controlLeads.dataShow(-1);
             }
         } catch (final Exception e) {
             e.printStackTrace();
@@ -226,10 +229,10 @@ public class EBICRMLeadsView {
         }
         EBISystem.showInActionStatus("Leads");
         int row = EBISystem.gui().table("leadsTable", "Leads").getSelectedRow();
-        controlLeads.dataStore();
+        Integer id = controlLeads.dataStore();
 
         if ("".equals(EBISystem.gui().textField("searchLeadsText", "Leads").getText())) {
-            controlLeads.dataShow();
+            controlLeads.dataShow(id);
         } else {
             controlLeads.dataShow(EBISystem.gui().textField("searchLeadsText", "Leads").getText());
         }
@@ -246,7 +249,7 @@ public class EBICRMLeadsView {
             EBISystem.showInActionStatus("Leads");
             controlLeads.dataDelete(Integer.parseInt(tabModel.data[selectedRow][11].toString()));
             controlLeads.dataNew();
-            controlLeads.dataShow();
+            controlLeads.dataShow(-1);
             if (EBISystem.getInstance().getCompany() != null) {
                 EBISystem.getModule().resetUI(false, true);
             }
@@ -278,8 +281,9 @@ public class EBICRMLeadsView {
             return;
         }
         EBISystem.showInActionStatus("Leads");
-        controlLeads.dataCopy(Integer.parseInt(tabModel.data[selectedRow][11].toString()));
-        controlLeads.dataShow();
+        Integer id = controlLeads.dataCopy(Integer.parseInt(tabModel.data[selectedRow][11].toString()));
+        controlLeads.dataEdit(id);
+        controlLeads.dataShow(id);
     }
 
     public void openCompany() {

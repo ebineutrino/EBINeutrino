@@ -387,13 +387,13 @@ public class EBICRMPlanningView {
     }
 
     public void showProject() {
-        dataControlProject.dataShow();
+        dataControlProject.dataShow(-1);
     }
 
     public void newProject() {
         EBISystem.showInActionStatus("Project");
         dataControlProject.dataNew();
-        dataControlProject.dataShow();
+        dataControlProject.dataShow(-1);
         dataControlProject.isEdit = false;
     }
 
@@ -403,8 +403,8 @@ public class EBICRMPlanningView {
         }
         EBISystem.showInActionStatus("Project");
         int row = EBISystem.gui().table("projectTable", "Project").getSelectedRow();
-        dataControlProject.dataStore();
-        dataControlProject.dataShow();
+        Integer id = dataControlProject.dataStore();
+        dataControlProject.dataShow(id);
         dataControlProject.isEdit = true;
         EBISystem.gui().table("projectTable", "Project").changeSelection(row, 0, false, false);
         return false;
@@ -427,8 +427,9 @@ public class EBICRMPlanningView {
             return;
         }
         EBISystem.showInActionStatus("Project");
-        dataControlProject.dataCopy(Integer.parseInt(model.data[selectedProjectRow][9].toString()));
-        dataControlProject.dataShow();
+        Integer id = dataControlProject.dataCopy(Integer.parseInt(model.data[selectedProjectRow][9].toString()));
+        dataControlProject.dataEdit(id);
+        dataControlProject.dataShow(id);
     }
 
     public void deleteProject() {
@@ -439,7 +440,7 @@ public class EBICRMPlanningView {
             EBISystem.showInActionStatus("Project");
             dataControlProject.dataDelete(Integer.parseInt(model.data[selectedProjectRow][9].toString()));
             dataControlProject.dataNew();
-            dataControlProject.dataShow();
+            dataControlProject.dataShow(-1);
             dataControlProject.isEdit = false;
         }
     }
@@ -457,7 +458,9 @@ public class EBICRMPlanningView {
             pass = EBISystem.getInstance().getIEBISecurityInstance().secureModule();
         }
         if (pass) {
-            dataControlProject.dataShowReport(Integer.parseInt(model.data[selectedProjectRow][9].toString()), model.data[selectedProjectRow][1].toString());
+            dataControlProject.dataShowReport(
+                    Integer.parseInt(model.data[selectedProjectRow][9].toString()),
+                    model.data[selectedProjectRow][1].toString());
         }
     }
 

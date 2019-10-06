@@ -21,8 +21,7 @@ import java.awt.event.MouseListener;
 public class EBITableExt extends JXTable implements MouseListener {
 
     private MouseAdapter mouseCallback = null;
-    public EBISaveRestoreTableProperties tabProp = new EBISaveRestoreTableProperties();;
-
+    public EBISaveRestoreTableProperties tabProp = new EBISaveRestoreTableProperties();
 
     public EBITableExt(){
         addMouseListener(this);
@@ -55,7 +54,6 @@ public class EBITableExt extends JXTable implements MouseListener {
             });
         }
     }
-
 
     public void addKeyAction(final EBIUICallback uiCallback){
         new JTableActionMaps(this).setTableAction(new AbstractTableKeyAction() {

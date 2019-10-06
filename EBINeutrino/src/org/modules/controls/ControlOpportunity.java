@@ -30,7 +30,9 @@ public class ControlOpportunity {
         opportunity = new Companyopportunity();
     }
 
-    public boolean dataStore() {
+    public Integer dataStore() {
+
+        Integer opportunityID=-1;
 
         try {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
@@ -77,7 +79,7 @@ public class ControlOpportunity {
                     opportunity.setOpportunityvalue(Double.parseDouble(EBISystem.gui().FormattedField("oppValueText", "Opportunity").getValue().toString()));
                 } catch (final NumberFormatException ex) {
                     EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_VALID_NUMBER")).Show(EBIMessage.ERROR_MESSAGE);
-                    return false;
+                    return opportunityID;
                 }
             }
 
@@ -113,23 +115,22 @@ public class ControlOpportunity {
                     EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(doc);
                 }
             }
-
             EBISystem.getInstance().getDataStore("Opportunity", "ebiSave");
             EBISystem.getInstance().getCompany().getCompanyopportunities().add(opportunity);
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-
             if (!isEdit) {
                 EBISystem.gui().vpanel("Opportunity").setID(opportunity.getOpportunityid());
             }
+            opportunityID = opportunity.getOpportunityid();
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
-
-        return true;
+        return opportunityID;
     }
 
-    public void dataCopy(final int id) {
+    public Integer dataCopy(final int id) {
 
+        Integer oppID = -1;
         try {
 
             if (EBISystem.getInstance().getCompany().getCompanyopportunities().size() > 0) {
@@ -197,7 +198,7 @@ public class ControlOpportunity {
                         cd.setStreet(contact.getStreet());
                         cd.setSurname(contact.getSurname());
                         cd.setZip(contact.getZip());
-                        opp.getCompanyopportunitycontacts().add(cd);
+                        opnew.getCompanyopportunitycontacts().add(cd);
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(cd);
                     }
                 }
@@ -213,23 +214,21 @@ public class ControlOpportunity {
                         dc.setCreatedfrom(EBISystem.ebiUser);
                         dc.setFiles(doc.getFiles());
                         dc.setName(doc.getName());
-                        opp.getCompanyopporunitydocses().add(dc);
+                        opnew.getCompanyopporunitydocses().add(dc);
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(dc);
                     }
                 }
 
                 EBISystem.getInstance().getCompany().getCompanyopportunities().add(opnew);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-
-                EBISystem.gui().table("companyOpportunityTable", "Opportunity").
-                        changeSelection(EBISystem.gui().table("companyOpportunityTable", "Opportunity").
-                                convertRowIndexToView(EBISystem.getModule().dynMethod.
-                                        getIdIndexFormArrayInATable(EBISystem.getModule().getOpportunityPane().getTabModel().data, 7, opnew.getOpportunityid())), 0, false, false);
+                
+                oppID = opnew.getOpportunityid();
 
             }
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
+        return oppID;
     }
 
     public void dataEdit(final int id) {
@@ -377,9 +376,9 @@ public class ControlOpportunity {
         }
     }
 
-    public void dataShow() {
+    public void dataShow(Integer id) {
 
-        final int srow = EBISystem.gui().table("companyOpportunityTable", "Opportunity").getSelectedRow();
+        int srow = EBISystem.gui().table("companyOpportunityTable", "Opportunity").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyopportunities().size();
 
         if (size > 0) {
@@ -402,6 +401,9 @@ public class ControlOpportunity {
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][5] = obj.getIsclose() == null ? "" : obj.getIsclose();
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][6] = EBISystem.getInstance().getDateToString(obj.getClosedate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getClosedate());
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][7] = obj.getOpportunityid();
+                if(id != -1 && id == obj.getOpportunityid()){
+                    srow=i;
+                }
                 i++;
             }
         } else {

@@ -314,8 +314,8 @@ public class EBICRMServiceView {
         }
         EBISystem.showInActionStatus("Service");
         int row = EBISystem.gui().table("companyServiceTable", "Service").getSelectedRow();
-        dataControlService.dataStore();
-        dataControlService.dataShow();
+        Integer id = dataControlService.dataStore();
+        dataControlService.dataShow(id);
         dataControlService.dataShowDoc();
         dataControlService.dataShowProduct();
         dataControlService.dataShowProblemSolution();
@@ -354,8 +354,12 @@ public class EBICRMServiceView {
             return;
         }
         EBISystem.showInActionStatus("Service");
-        dataControlService.dataCopy(Integer.parseInt(tabModService.data[selectedServiceRow][6].toString()));
-        dataControlService.dataShow();
+        Integer serviceID = dataControlService.dataCopy(Integer.parseInt(tabModService.data[selectedServiceRow][6].toString()));
+        dataControlService.dataEdit(serviceID);
+        dataControlService.dataShow(serviceID);
+        dataControlService.dataShowDoc();
+        dataControlService.dataShowProduct();
+        dataControlService.dataShowProblemSolution();
     }
 
     public void deleteService() {
@@ -367,7 +371,7 @@ public class EBICRMServiceView {
             EBISystem.showInActionStatus("Service");
             dataControlService.dataDelete(Integer.parseInt(tabModService.data[selectedServiceRow][6].toString()));
             dataControlService.dataNew();
-            dataControlService.dataShow();
+            dataControlService.dataShow(-1);
             dataControlService.dataShowDoc();
             dataControlService.dataShowProduct();
             dataControlService.dataShowProblemSolution();
@@ -407,7 +411,7 @@ public class EBICRMServiceView {
     }
 
     public void showService() {
-        dataControlService.dataShow();
+        dataControlService.dataShow(-1);
     }
 
     public void showProduct() {

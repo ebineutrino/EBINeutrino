@@ -9,7 +9,8 @@ import org.sdk.utils.Encrypter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -28,94 +29,102 @@ import java.sql.DriverManager;
  */
 public class EBISetupDB extends JPanel {
 
-    private JTextField jTextUser = null;
-    private JTextField jTexPassword = null;
-    private JButton jButtonCancel = null;
-    private JButton jButtonGenerating = null;
-    private JTextField jTextIP = null;
-    private JButton jButtonTest = null;
-    private EBISetup setup = null;
-    private JButton jButtonOK = null;
-    private JPopupMenu.Separator jSepara = null;
-    private JComboBox jComboDatabaseDriver = null;
-    private JComboBox jTextDatabaseType = null;
-    private JTextField jTextSIDCatalog = null;
-    private JLabel jLabel7 = null;
-    private JButton jButtonImportSchema = null;
-    private Connection conn = null;
+    private JTextField userNameText;
+    private JTextField passwordText;
+    private JButton cancelButton;
+    private JButton generatingButton;
+    private JTextField ipText;
+    private JButton testDatabaseButton;
+    private EBISetup setup;
+    private JButton okButton;
+    private JPopupMenu.Separator separatorCmp;
+    private JComboBox databaseDriverCombo;
+    private JComboBox databaseTypeText;
+    private JTextField catalogText;
+    private JLabel catalogLabel;
+    private JButton importSchemaButton;
+    private Connection conn;
     private String databaseType = "";
+    private JLabel databaseNameLabel;
+    private JLabel databaseDriverLabel;
+    private JLabel databaseHostIPLabel;
+    private JLabel databaseUserLabel;
+    private JLabel passwordLabel;
+    private JLabel spriteIconLabel;
+    private JLabel headerTitleLabel;
 
     public EBISetupDB(final EBISetup setUp) {
         super();
         setup = setUp;
         initialize();
-        jComboDatabaseDriver.addItem("Please select");
+        databaseDriverCombo.addItem("com.mysql.jdbc.Driver");
+        databaseTypeText.setSelectedItem("mysql");
     }
 
     private void initialize() {
 
-        jLabel7 = new JLabel();
-        jLabel7.setBounds(new Rectangle(445, 70, 115, 25));
-        jLabel7.setText("SID");
-        jLabel7.setVisible(false);
+        catalogLabel = new JLabel();
+        catalogLabel.setBounds(new Rectangle(445, 70, 115, 25));
+        catalogLabel.setText("SID");
+        catalogLabel.setVisible(false);
 
-        final JLabel jLabel6 = new JLabel();
-        jLabel6.setBounds(new Rectangle(15, 70, 125, 25));
-        jLabel6.setHorizontalAlignment(SwingConstants.RIGHT);
-        jLabel6.setText("Database name:");
+        databaseNameLabel = new JLabel();
+        databaseNameLabel.setBounds(new Rectangle(15, 70, 125, 25));
+        databaseNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        databaseNameLabel.setText("Database name:");
 
-        final JLabel jLabel3 = new JLabel();
-        jLabel3.setBounds(new Rectangle(15, 100, 125, 25));
-        jLabel3.setHorizontalAlignment(SwingConstants.RIGHT);
-        jLabel3.setText("Database driver:");
+        databaseDriverLabel = new JLabel();
+        databaseDriverLabel.setBounds(new Rectangle(15, 100, 125, 25));
+        databaseDriverLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        databaseDriverLabel.setText("Database driver:");
 
-        final JLabel jLabel4 = new JLabel();
-        jLabel4.setBounds(new Rectangle(15, 130, 125, 25));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Host/IP:");
+        databaseHostIPLabel = new JLabel();
+        databaseHostIPLabel.setBounds(new Rectangle(15, 130, 125, 25));
+        databaseHostIPLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        databaseHostIPLabel.setText("Host/IP:");
 
-        final JLabel jLabel1 = new JLabel();
-        jLabel1.setBounds(new Rectangle(15, 160, 125, 25));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("User:");
+        databaseUserLabel = new JLabel();
+        databaseUserLabel.setBounds(new Rectangle(15, 160, 125, 25));
+        databaseUserLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        databaseUserLabel.setText("User:");
 
-        final JLabel jLabel2 = new JLabel();
-        jLabel2.setBounds(new Rectangle(15, 190, 125, 25));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Password:");
+        passwordLabel = new JLabel();
+        passwordLabel.setBounds(new Rectangle(15, 190, 125, 25));
+        passwordLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        passwordLabel.setText("Password:");
 
-        final JLabel jLabel = new JLabel();
-        jLabel.setBounds(new Rectangle(100, 10, 315, 35));
-        jLabel.setFont(new Font("Dialog", Font.BOLD, 14));
-        jLabel.setText("EBI Neutrino database setup");
+        headerTitleLabel = new JLabel();
+        headerTitleLabel.setBounds(new Rectangle(100, 10, 315, 35));
+        headerTitleLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+        headerTitleLabel.setText("EBI Neutrino database setup");
 
-        final JLabel jLabel5 = new JLabel();
-        jLabel5.setBounds(new Rectangle(20, 5, 80, 50));
-        jLabel5.setIcon(EBISystem.getInstance().getIconResource("/Icon/spire.png"));
-        jLabel5.setText("");
+        spriteIconLabel = new JLabel();
+        spriteIconLabel.setBounds(new Rectangle(20, 5, 80, 50));
+        spriteIconLabel.setIcon(EBISystem.getInstance().getIconResource("spire.png"));
+        spriteIconLabel.setText("");
 
         this.setLayout(null);
         this.setSize(570, 360);
-        this.add(jLabel, null);
-        this.add(jLabel1, null);
-        this.add(jLabel2, null);
-        this.add(getJTextUser(), null);
-        this.add(getJTexPassword(), null);
-        this.add(getJButtonCancel(), null);
+        this.add(headerTitleLabel, null);
+        this.add(databaseUserLabel, null);
+        this.add(passwordLabel, null);
+        this.add(getUsernameText(), null);
+        this.add(getPasswordText(), null);
+        this.add(getCancelButton(), null);
         this.add(getJButtonGenerating(), null);
-        this.add(jLabel4, null);
+        this.add(databaseHostIPLabel, null);
         this.add(getJTextIP(), null);
         this.add(getJButtonTest(), null);
-        this.add(jLabel5, null);
-        this.add(getJButtonOK(), null);
-        this.add(getJSepara(), null);
-        this.add(jLabel3, null);
+        this.add(spriteIconLabel, null);
+        this.add(getOkButton(), null);
+        this.add(getSeparator(), null);
+        this.add(databaseDriverLabel, null);
         this.add(getJComboDatabaseDriver(), null);
-        this.add(jLabel6, null);
+        this.add(databaseNameLabel, null);
         this.add(getJTextDatabaseName(), null);
-        this.add(getJTextOracleSID(), null);
-        this.add(jLabel7, null);
-        this.add(getJButtonImportSchema(), null);
+        this.add(getCatalogText(), null);
+        this.add(catalogLabel, null);
+        this.add(getImportSchemaButton(), null);
     }
 
     @Override
@@ -138,39 +147,37 @@ public class EBISetupDB extends JPanel {
         g2.setPaint(gradient1);
 
         g.fillRect(0, 61, getWidth(), getHeight());
-
-        g2.drawImage(EBISystem.getInstance().getIconResource("theader.gif").getImage(), 0, 0, null);
         g.setColor(new Color(34, 34, 34));
         g.drawLine(0, 60, getWidth(), 60);
         setOpaque(false);
     }
 
-    private JTextField getJTextUser() {
-        if (jTextUser == null) {
-            jTextUser = new JTextField();
-            jTextUser.setBounds(new Rectangle(145, 160, 307, 25));
+    private JTextField getUsernameText() {
+        if (userNameText == null) {
+            userNameText = new JTextField();
+            userNameText.setBounds(new Rectangle(145, 160, 307, 25));
         }
-        return jTextUser;
+        return userNameText;
     }
 
-    private JTextField getJTexPassword() {
-        if (jTexPassword == null) {
-            jTexPassword = new JTextField();
-            jTexPassword.setBounds(new Rectangle(145, 190, 307, 25));
+    private JTextField getPasswordText() {
+        if (passwordText == null) {
+            passwordText = new JTextField();
+            passwordText.setBounds(new Rectangle(145, 190, 307, 25));
         }
-        return jTexPassword;
+        return passwordText;
     }
 
     private JButton getJButtonGenerating() {
-        if (jButtonGenerating == null) {
-            jButtonGenerating = new JButton();
-            jButtonGenerating.setBounds(new Rectangle(191, 250, 135, 30));
-            jButtonGenerating.setIcon(EBISystem.getInstance().getIconResource("button_ok.png"));
-            jButtonGenerating.setText("Generating");
-            jButtonGenerating.setEnabled(false);
-            jButtonGenerating.addActionListener(new java.awt.event.ActionListener() {
+        if (generatingButton == null) {
+            generatingButton = new JButton();
+            generatingButton.setBounds(new Rectangle(191, 250, 135, 30));
+            generatingButton.setIcon(EBISystem.getInstance().getIconResource("button_ok.png"));
+            generatingButton.setText("Generating");
+            generatingButton.setEnabled(false);
+            generatingButton.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(final java.awt.event.ActionEvent e) {
+                public void actionPerformed(final ActionEvent e) {
                     if (!checkField()) {
                         return;
                     }
@@ -179,28 +186,24 @@ public class EBISetupDB extends JPanel {
                         Encrypter encrypter = new Encrypter("EBINeutrino");
 
                         // Encrypt
-                        final String Pwdencrypted = encrypter.encrypt(jTexPassword.getText());
-                        final String Usrencrypted = encrypter.encrypt(jTextUser.getText().trim());
+                        final String Pwdencrypted = encrypter.encrypt(passwordText.getText());
+                        final String Usrencrypted = encrypter.encrypt(userNameText.getText().trim());
 
                         final EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
-                        properties.setValue("EBI_Neutrino_Database_Driver",
-                                jComboDatabaseDriver.getSelectedItem().toString());
-                        properties.setValue("EBI_Neutrino_Database",
-                                jTextDatabaseType.getSelectedItem().toString().trim());
+                        properties.setValue("EBI_Neutrino_Database_Driver", databaseDriverCombo.getSelectedItem().toString());
+                        properties.setValue("EBI_Neutrino_Database", databaseTypeText.getSelectedItem().toString().trim());
                         properties.setValue("EBI_Neutrino_Database_UpperCase", "yes");
-                        properties.setValue("EBI_Neutrino_Database_Name", jTextSIDCatalog.getText().trim());
+                        properties.setValue("EBI_Neutrino_Database_Name", catalogText.getText().trim());
                         properties.setValue("EBI_Neutrino_Password", Pwdencrypted);
                         properties.setValue("EBI_Neutrino_User", Usrencrypted);
-                        properties.setValue("EBI_Neutrino_Host", jTextIP.getText().trim());
-                        properties.setValue("EBI_Neutrino_Oracle_SID", jTextSIDCatalog.getText().trim());
+                        properties.setValue("EBI_Neutrino_Host", ipText.getText().trim());
+                        properties.setValue("EBI_Neutrino_Oracle_SID", catalogText.getText().trim());
 
-                        EBIExceptionDialog.getInstance(setup, "Database connection data, are saved successfully!")
-                                .Show(EBIMessage.INFO_MESSAGE);
-                        jButtonOK.setEnabled(true);
-                        jButtonImportSchema.setEnabled(true);
-                        configureHibernateFiles();
+                        EBIExceptionDialog.getInstance(setup, "Database connection data, are saved successfully!").Show(EBIMessage.INFO_MESSAGE);
+                        okButton.setEnabled(true);
+                        importSchemaButton.setEnabled(true);
+
                         checkIfSchemaExist();
-
                         encrypter = null;
                         setup.DBConfigured = true;
                         setup.sysINIT.Init(properties.getValue("EBI_Neutrino_Database_Name"));
@@ -209,214 +212,138 @@ public class EBISetupDB extends JPanel {
                         ex.printStackTrace();
                     }
                 }
-
             });
         }
-        return jButtonGenerating;
+        return generatingButton;
     }
 
     public void importSQLDemo() {
         final EBIImportSQLFiles impSQL = new EBIImportSQLFiles();
         if (EBISystem.selectedLanguage.toLowerCase().equals("italiano")) {
-            impSQL.startSQLImport(new String[]{"./reports/ReportsIT.sql", "./sql/demoData_ITALIANO.sql",
-                "./reports/reportParameter.sql"});
+            impSQL.startSQLImport(new String[]{"reports/ReportsIT.sql", "sql/demoData_ITALIANO.sql", "reports/reportParameter.sql"});
         } else if (EBISystem.selectedLanguage.toLowerCase().equals("deutsch")) {
-            impSQL.startSQLImport(new String[]{"./reports/ReportsDE.sql", "./sql/demoData_DEUTSCH.sql",
-                "./reports/reportParameter.sql"});
+            impSQL.startSQLImport(new String[]{"reports/ReportsDE.sql", "sql/demoData_DEUTSCH.sql", "reports/reportParameter.sql"});
         } else {
-            impSQL.startSQLImport(new String[]{"./reports/ReportsEN.sql", "./sql/demoData_ENGLISH.sql",
-                "./reports/reportParameter.sql"});
-        }
-    }
-
-    public void configureHibernateFiles() {
-
-        final File dir = new File("hibernate/");
-
-        final FilenameFilter filter = new FilenameFilter() {
-            @Override
-            public boolean accept(final File dir, final String name) {
-                return name.endsWith(".hbm.xml");
-            }
-        };
-
-        final String[] children = dir.list(filter);
-        if (children == null) {
-            EBIExceptionDialog.getInstance(setup, "Critical Error: No Hibernate files exsist system will exit now! ")
-                    .Show(EBIMessage.ERROR_MESSAGE);
-            System.exit(1);
-        } else {
-
-            for (int i = 0; i < children.length; i++) {
-                // Get filename of file or directory
-                final String filename = children[i];
-
-                try {
-                    final File xml = new File("./hibernate/" + filename);
-                    final FileReader reader = new FileReader(xml.getAbsolutePath());
-                    final BufferedReader in = new BufferedReader(reader);
-
-                    String string;
-                    final StringBuffer newFile = new StringBuffer();
-                    while ((string = in.readLine()) != null) {
-                        int ind;
-                        if ((ind = string.indexOf("table=")) != -1) {
-                            String tmp = string.substring(ind + 7);
-                            tmp = tmp.substring(0, tmp.indexOf("\""));
-                            string = string.replace("table=\"" + tmp + "\"", "table=\"" + tmp.toUpperCase() + "\"");
-                        }
-
-                        newFile.append(string);
-                        newFile.append("\n");
-
-                    }
-                    in.close();
-
-                    final FileWriter writer = new FileWriter(xml.getAbsolutePath());
-                    writer.write(newFile.toString().replaceAll("catalog=\"(.*)\"",
-                            "catalog=\"" + jTextSIDCatalog.getText() + "\""));
-                    writer.close();
-
-                } catch (final FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (final IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            impSQL.startSQLImport(new String[]{"reports/ReportsEN.sql", "sql/demoData_ENGLISH.sql", "reports/reportParameter.sql"});
         }
     }
 
     private void checkIfSchemaExist() throws Exception {
-
-        if (EBIExceptionDialog.getInstance(setup, "Would you like to import the EBI Neutrino R1 database schema?")
-                .Show(EBIMessage.INFO_MESSAGE_YESNO)) {
+        if (EBIExceptionDialog.getInstance(setup, "Would you like to import the EBI Neutrino R1 database schema?").Show(EBIMessage.INFO_MESSAGE_YESNO)) {
             EBISystem.getInstance().iDB().setActiveConnection(conn);
-            new EBISchemaImport(EBISystem.getInstance(), databaseType, this.jTextSIDCatalog.getText(), true)
-                    .setVisible(true);
-            EBISystem.getInstance().iDB().getActiveConnection().setCatalog(jTextSIDCatalog.getText().trim());
+            new EBISchemaImport(databaseType, this.catalogText.getText(), true).setVisible(true);
+            EBISystem.getInstance().iDB().getActiveConnection().setCatalog(catalogText.getText().trim());
             importSQLDemo();
-
         }
     }
 
     private boolean checkField() {
-
-        if ("".equals(jTextDatabaseType.getSelectedItem().toString())) {
+        if ("".equals(databaseTypeText.getSelectedItem().toString())) {
             EBIExceptionDialog.getInstance(setup, "Please select the database!").Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }
-        if ("".equals(jComboDatabaseDriver.getSelectedItem().toString())) {
-            EBIExceptionDialog.getInstance(setup, "Please select the database driver!").Show(EBIMessage.ERROR_MESSAGE);
-            return false;
-        }
-        if (jTextSIDCatalog.isVisible()) {
-            if ("".equals(jTextSIDCatalog.getText())) {
-                EBIExceptionDialog.getInstance(setup, "Please insert the Catalog or SID for connecting to a database!")
-                        .Show(EBIMessage.ERROR_MESSAGE);
+        if (catalogText.isVisible()) {
+            if ("".equals(catalogText.getText())) {
+                EBIExceptionDialog.getInstance(setup, "Please insert the Catalog or SID for connecting to a database!").Show(EBIMessage.ERROR_MESSAGE);
                 return false;
             }
         }
-        if ("".equals(this.jTextIP.getText())) {
+        if ("".equals(this.ipText.getText())) {
             EBIExceptionDialog.getInstance(setup, "Please insert the database host!").Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }
-        if ("".equals(this.jTextUser.getText())) {
-            EBIExceptionDialog.getInstance(setup, "Please insert the database user!").Show(EBIMessage.ERROR_MESSAGE);
+        if ("".equals(this.userNameText.getText())) {
+            EBIExceptionDialog.getInstance(setup, "Please insert a database user!").Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }
-
         return true;
     }
 
     private JTextField getJTextIP() {
-        if (jTextIP == null) {
-            jTextIP = new JTextField();
-            jTextIP.setBounds(new Rectangle(145, 130, 307, 25));
+        if (ipText == null) {
+            ipText = new JTextField();
+            ipText.setBounds(new Rectangle(145, 130, 307, 25));
         }
-        return jTextIP;
+        return ipText;
     }
 
     private JButton getJButtonTest() {
-        if (jButtonTest == null) {
-            jButtonTest = new JButton();
-            jButtonTest.setBounds(new Rectangle(16, 250, 170, 30));
-            jButtonTest.setIcon(EBISystem.getInstance().getIconResource("/Icon/connect_established.png"));
-            jButtonTest.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-            jButtonTest.setText("Test Connection");
-            jButtonTest.addActionListener(new java.awt.event.ActionListener() {
+        if (testDatabaseButton == null) {
+            testDatabaseButton = new JButton();
+            testDatabaseButton.setBounds(new Rectangle(16, 250, 170, 30));
+            testDatabaseButton.setIcon(EBISystem.getInstance().getIconResource("connect_established.png"));
+            testDatabaseButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            testDatabaseButton.setText("Test Connection");
+            testDatabaseButton.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(final java.awt.event.ActionEvent e) {
+                public void actionPerformed(final ActionEvent e) {
+
                     if (!checkField()) {
                         return;
                     }
 
                     try {
-                        Class.forName(jComboDatabaseDriver.getSelectedItem().toString()).newInstance();
+                        Class.forName(databaseDriverCombo.getSelectedItem().toString());
                     } catch (final Exception ex) {
                         ex.printStackTrace();
-                        EBIExceptionDialog.getInstance(setup, "ERROR : Database driver was not found! ")
-                                .Show(EBIMessage.ERROR_MESSAGE);
+                        EBIExceptionDialog.getInstance(setup, "ERROR : Database driver was not found! ").Show(EBIMessage.ERROR_MESSAGE);
                         return;
                     }
 
                     try {
-
                         String conn_url = null;
-                        final String dbType = jTextDatabaseType.getSelectedItem().toString().toLowerCase();
-                        final String host = jTextIP.getText();
+                        final String dbType = databaseTypeText.getSelectedItem().toString().toLowerCase();
+                        final String host = ipText.getText();
 
-                        if ("mysql".equals(jTextDatabaseType.getSelectedItem().toString().toLowerCase())) {
+                        if ("mysql".equals(dbType)) {
                             conn_url = "jdbc:" + dbType + "://" + host
                                     + "/?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
-                        } else if ("oracle".equals(jTextDatabaseType.getSelectedItem().toString().toLowerCase())) {
-                            conn_url = "jdbc:" + dbType + ":thin:@" + host + ":" + jTextSIDCatalog.getText();
-                        }
-
-                        conn = DriverManager.getConnection(conn_url, jTextUser.getText(), jTexPassword.getText());
-
+                            
+                        }  
+                        conn = DriverManager.getConnection(conn_url, userNameText.getText(), passwordText.getText());
                         EBIExceptionDialog.getInstance(setup, "Connection is ok!").Show(EBIMessage.INFO_MESSAGE);
-                        jButtonGenerating.setEnabled(true);
-
+                        EBISystem.db().setActiveConnection(conn);
+                        generatingButton.setEnabled(true);
                     } catch (final Exception ex) {
                         ex.printStackTrace();
                         EBIExceptionDialog.getInstance(setup,
                                 "Connection Error: \nCheck your connection data also check if your database is running! \n\n"
                                 + EBISystem.printStackTrace(ex))
                                 .Show(EBIMessage.NEUTRINO_DEBUG_MESSAGE);
-                        jButtonGenerating.setEnabled(false);
+                        generatingButton.setEnabled(false);
                     }
                 }
             });
         }
-        return jButtonTest;
+        return testDatabaseButton;
     }
 
-    private JButton getJButtonOK() {
-        if (jButtonOK == null) {
-            jButtonOK = new JButton();
-            jButtonOK.setBounds(new Rectangle(305, 335, 125, 30));
-            jButtonOK.setIcon(EBISystem.getInstance().getIconResource("/Icon/button_ok.png"));
-            jButtonOK.setText("Ok");
-            jButtonOK.setEnabled(false);
-            jButtonOK.addActionListener(new java.awt.event.ActionListener() {
+    private JButton getOkButton() {
+        if (okButton == null) {
+            okButton = new JButton();
+            okButton.setBounds(new Rectangle(305, 335, 125, 30));
+            okButton.setIcon(EBISystem.getInstance().getIconResource("button_ok.png"));
+            okButton.setText("Ok");
+            okButton.setEnabled(false);
+            okButton.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(final java.awt.event.ActionEvent e) {
+                public void actionPerformed(final ActionEvent e) {
                     setup.setVisible(false);
                 }
             });
         }
-        return jButtonOK;
+        return okButton;
     }
 
-    private JButton getJButtonCancel() {
-        if (jButtonCancel == null) {
-            jButtonCancel = new JButton();
-            jButtonCancel.setBounds(new Rectangle(435, 335, 125, 30));
-            jButtonCancel.setIcon(EBISystem.getInstance().getIconResource("/Icon/button_cancel.png"));
-            jButtonCancel.setText("Exit");
-            jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+    private JButton getCancelButton() {
+        if (cancelButton == null) {
+            cancelButton = new JButton();
+            cancelButton.setBounds(new Rectangle(435, 335, 125, 30));
+            cancelButton.setIcon(EBISystem.getInstance().getIconResource("button_cancel.png"));
+            cancelButton.setText("Exit");
+            cancelButton.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(final java.awt.event.ActionEvent e) {
+                public void actionPerformed(final ActionEvent e) {
                     if (EBIExceptionDialog.getInstance(setup, EBISystem.i18n("EBI_LANG_MESSAGE_CLOSE"))
                             .Show(EBIMessage.INFO_MESSAGE_YESNO) == true) {
                         System.exit(0);
@@ -424,82 +351,55 @@ public class EBISetupDB extends JPanel {
                 }
             });
         }
-        return jButtonCancel;
+        return cancelButton;
     }
 
-    private JPopupMenu.Separator getJSepara() {
-        if (jSepara == null) {
-            jSepara = new JPopupMenu.Separator();
-            jSepara.setBounds(new Rectangle(0, 320, 570, 2));
-            jSepara.setBackground(new Color(34, 34, 34));
-            jSepara.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(34, 34, 34)));
+    private JPopupMenu.Separator getSeparator() {
+        if (separatorCmp == null) {
+            separatorCmp = new JPopupMenu.Separator();
+            separatorCmp.setBounds(new Rectangle(0, 320, 570, 2));
+            separatorCmp.setBackground(new Color(34, 34, 34));
+            separatorCmp.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(34, 34, 34)));
         }
-        return jSepara;
+        return separatorCmp;
     }
 
     private JComboBox getJComboDatabaseDriver() {
-        if (jComboDatabaseDriver == null) {
-            jComboDatabaseDriver = new JComboBox();
-            jComboDatabaseDriver.setBounds(new Rectangle(145, 100, 150, 25));
+        if (databaseDriverCombo == null) {
+            databaseDriverCombo = new JComboBox();
+            databaseDriverCombo.setBounds(new Rectangle(145, 100, 150, 25));
         }
-        return jComboDatabaseDriver;
+        return databaseDriverCombo;
     }
 
     private JComboBox getJTextDatabaseName() {
-        if (jTextDatabaseType == null) {
-            jTextDatabaseType = new JComboBox();
-            jTextDatabaseType.setBounds(new Rectangle(145, 70, 150, 25));
-            jTextDatabaseType.addItem("Please select");
-            jTextDatabaseType.addItem("Oracle");
-            jTextDatabaseType.addItem("MySQL");
-            jTextDatabaseType.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(final java.awt.event.ActionEvent e) {
-                    if ("oracle".equals(jTextDatabaseType.getSelectedItem().toString().toLowerCase())) {
-                        jComboDatabaseDriver.removeAllItems();
-                        jComboDatabaseDriver.addItem("oracle.jdbc.driver.OracleDriver");
-                        jLabel7.setText("SID");
-                        jTextSIDCatalog.setText("");
-                        jTextSIDCatalog.setVisible(true);
-                        jLabel7.setVisible(true);
-                        databaseType = "oracle";
-                    } else if ("mysql".equals(jTextDatabaseType.getSelectedItem().toString().toLowerCase())) {
-                        jComboDatabaseDriver.removeAllItems();
-                        jComboDatabaseDriver.addItem("com.mysql.jdbc.Driver");
-                        jTextSIDCatalog.setText("EBINEUTRINODB");
-                        jTextSIDCatalog.setVisible(true);
-                        jLabel7.setText("Catalog");
-                        jLabel7.setVisible(true);
-                        databaseType = "mysql";
-                    }
-                }
-            });
-
+        if (databaseTypeText == null) {
+            databaseTypeText = new JComboBox();
+            databaseTypeText.setBounds(new Rectangle(145, 70, 150, 25));
+            databaseTypeText.addItem("MySQL");
         }
-        return jTextDatabaseType;
+        return databaseTypeText;
     }
 
-    private JTextField getJTextOracleSID() {
-        if (jTextSIDCatalog == null) {
-            jTextSIDCatalog = new JTextField();
-            jTextSIDCatalog.setBounds(new Rectangle(300, 70, 140, 25));
-            jTextSIDCatalog.setVisible(false);
+    private JTextField getCatalogText() {
+        if (catalogText == null) {
+            catalogText = new JTextField();
+            catalogText.setBounds(new Rectangle(300, 70, 140, 25));
+            catalogText.setText("EBINEUTRINODB");
         }
-        return jTextSIDCatalog;
+        return catalogText;
     }
 
-    private JButton getJButtonImportSchema() {
-        if (jButtonImportSchema == null) {
-            jButtonImportSchema = new JButton();
-            jButtonImportSchema.setBounds(new Rectangle(332, 250, 174, 30));
-            jButtonImportSchema.setText("DB Schema Import ");
-            jButtonImportSchema.setEnabled(false);
-            jButtonImportSchema.addActionListener(new java.awt.event.ActionListener() {
+    private JButton getImportSchemaButton() {
+        if (importSchemaButton == null) {
+            importSchemaButton = new JButton();
+            importSchemaButton.setBounds(new Rectangle(332, 250, 174, 30));
+            importSchemaButton.setText("DB Schema Import");
+            importSchemaButton.setEnabled(false);
+            importSchemaButton.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(final java.awt.event.ActionEvent e) {
-                    if (!checkField()) {
-                        return;
-                    }
+                public void actionPerformed(final ActionEvent e) {
+                    if (!checkField()) { return; }
                     try {
                         checkIfSchemaExist();
                     } catch (final Exception e1) {
@@ -508,6 +408,6 @@ public class EBISetupDB extends JPanel {
                 }
             });
         }
-        return jButtonImportSchema;
+        return importSchemaButton;
     }
 }

@@ -1,12 +1,16 @@
 package org.sdk.utils;
 
+import java.io.File;
 import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * configuration properties ebi_neutrino.properties and ebi_neutrino.properties
@@ -45,9 +49,11 @@ public class EBIPropertiesRW {
 
     public void saveEBINeutrinoProperties() {
         try {
-            properties.store(new FileOutputStream("ebi_neutrino.properties"), null);
+            properties.store(new FileOutputStream(new File(ClassLoader.getSystemResource("config/ebi_neutrino.properties").toURI())), null);
         } catch (final IOException e) {
             EBIExceptionDialog.getInstance("Properties file cannot be found!").Show(EBIMessage.ERROR_MESSAGE);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(EBIPropertiesRW.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

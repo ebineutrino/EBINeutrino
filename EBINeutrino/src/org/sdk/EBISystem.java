@@ -108,7 +108,7 @@ public class EBISystem {
 
     protected void getLanguageInstance(final String langFile, final boolean reload) {
         // Read properties file.
-        parseLanguageFrom("./" + langFile);
+        parseLanguageFrom(langFile);
         EBIPropertiesLang.getProperties().loadLanguageProperties(langFile);
     }
 

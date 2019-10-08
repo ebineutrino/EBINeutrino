@@ -9,13 +9,9 @@ import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
 import org.sdk.utils.EBIPropertiesRW;
 import org.sdk.utils.Encrypter;
-import java.io.File;
-import java.net.URL;
-import java.util.Enumeration;
 import org.hibernate.cfg.Configuration;
 
 import javax.swing.*;
-import java.util.Iterator;
 import java.util.Set;
 import javax.persistence.Table;
 import org.reflections.Reflections;
@@ -130,7 +126,7 @@ public class EBINeutrinoSystemInit extends EBISystem {
             EBISystem.lastLoggedUser = properties.getValue("EBI_Neutrino_Last_Logged_User");
 
             getLanguageInstance("".equals(properties.getValue("EBI_Neutrino_Language_File"))
-                    ? "EBINeutrinoLanguage_English.properties"
+                    ? "language/EBINeutrinoLanguage_English.properties"
                     : properties.getValue("EBI_Neutrino_Language_File"), false);
 
             // Set global database system
@@ -151,24 +147,30 @@ public class EBINeutrinoSystemInit extends EBISystem {
             new Thread(() -> EBISystem.getInstance().fillComboWithUser()).start();
 
             //configure hibernate
-            if ("mysql".equals(dbType.toLowerCase())) {
+            if("apache derby".equals(dbType.toLowerCase())){
                 cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");
+                cfg.setProperty("javax.persistence.jdbc.driver", "org.apache.derby.jdbc.EmbeddedDriver");
+                
+                String jdbcURL = "jdbc:derby:" + data + "://" +
+                                    ClassLoader.getSystemResource("database").toURI().toString() + ";create=true";
+                cfg.setProperty("hibernate.connection.url", jdbcURL);
+                
+            }else if ("mysql".equals(dbType.toLowerCase())) {
+                cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");
+                cfg.setProperty("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
+                cfg.setProperty("hibernate.connection.url", "jdbc:mysql://" + EBISystem.host.trim() + ":3306/" + data + "?serverTimezone=UTC");
             } else if ("oracle".equals(dbType.toLowerCase())) {
                 cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
-            } else if ("hsqldb".equals(dbType.toLowerCase())) {
-                cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
             }
 
-            cfg.setProperty("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
-            cfg.setProperty("hibernate.connection.url", "jdbc:mysql://" + EBISystem.host.trim() + ":3306/" + data + "?serverTimezone=UTC");
             cfg.setProperty("hibernate.connection.username", user);
             cfg.setProperty("hibernate.connection.password", password);
 
             cfg.addPackage("org.sdk.model.hibernate");
-            
+
             Reflections reflections = new Reflections("org.sdk.model.hibernate");
             Set<Class<?>> entityTypes = reflections.getTypesAnnotatedWith(Table.class);
-            for (Class<?> type : entityTypes){
+            for (Class<?> type : entityTypes) {
                 cfg.addAnnotatedClass(type);
             }
             EBISystem.getInstance().setIEBIHibernate(new EBIHibernateSessionPooling(cfg));

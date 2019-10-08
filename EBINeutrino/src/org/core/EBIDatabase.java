@@ -11,7 +11,6 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Iterator;
 
-
 public class EBIDatabase implements IEBIDatabase {
 
     public Connection conn = null;
@@ -39,9 +38,8 @@ public class EBIDatabase implements IEBIDatabase {
      * @param SID
      * @return
      */
-
     @Override
-	public boolean connect(final String driver, final String host, String db, final String password, final String user, final String dbType, final String SID, final String toUpper) {
+    public boolean connect(final String driver, final String host, String db, final String password, final String user, final String dbType, final String SID, final String toUpper) {
         try {
             this.user = user.trim();
             this.password = password.trim();
@@ -66,7 +64,7 @@ public class EBIDatabase implements IEBIDatabase {
             } else {
                 return false;
             }
-            
+
             System.out.println(connectionUrl);
 
             conn = DriverManager.getConnection(connectionUrl, this.user, this.password);
@@ -113,7 +111,7 @@ public class EBIDatabase implements IEBIDatabase {
      * @return SQL ResultSet
      */
     @Override
-	public ResultSet execute(final String query) throws SQLException {
+    public ResultSet execute(final String query) throws SQLException {
         ResultSet rs = null;
         try {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -134,9 +132,8 @@ public class EBIDatabase implements IEBIDatabase {
      * @param query
      * @return return true if query is executed or otherwise false
      */
-
     @Override
-	public boolean exec(final String query) throws SQLException {
+    public boolean exec(final String query) throws SQLException {
         boolean ret = true;
         try {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -156,9 +153,8 @@ public class EBIDatabase implements IEBIDatabase {
      * @param query
      * @return String Exception as string otherwise empty string
      */
-
     @Override
-	public void execExt(final String query) throws SQLException {
+    public void execExt(final String query) throws SQLException {
         try {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             stmt.executeUpdate(query);
@@ -170,6 +166,7 @@ public class EBIDatabase implements IEBIDatabase {
 
     /**
      * SQL mapped functionality
+     *
      * @param Table
      * @param Type
      * @param fields Hashmap pair field value
@@ -177,30 +174,29 @@ public class EBIDatabase implements IEBIDatabase {
      * @param dbclb
      * @return void
      */
-
     @Override
-	public TABLE ebiSQL(final String Table, final String Type, final HashMap<String, Object> fields, final HashMap<String, Object> where, final DBCALLBACK dbclb){
+    public TABLE ebiSQL(final String Table, final String Type, final HashMap<String, Object> fields, final HashMap<String, Object> where, final DBCALLBACK dbclb) {
 
-       TABLE table=null;
+        TABLE table = null;
 
-       try{
+        try {
             //todo implement a query cache!
             final StringBuilder queryBuilder = new StringBuilder();
-            boolean iterateField=false;
-            switch(Type){
+            boolean iterateField = false;
+            switch (Type) {
 
                 case "INSERT":
                     queryBuilder.append(EBIDatabase.INSERT);
                     queryBuilder.append(" INTO ");
                     queryBuilder.append(Table);
                     queryBuilder.append(" ( ");
-                    final String values= iterateFields(queryBuilder, fields);
+                    final String values = iterateFields(queryBuilder, fields);
                     queryBuilder.append(" ) ");
                     queryBuilder.append(" VALUES ( ");
                     queryBuilder.append(values);
                     queryBuilder.append(" ) ");
-                    iterateField=true;
-                break;
+                    iterateField = true;
+                    break;
 
                 case "UPDATE":
                     queryBuilder.append(EBIDatabase.UPDATE);
@@ -208,29 +204,29 @@ public class EBIDatabase implements IEBIDatabase {
                     queryBuilder.append(Table);
                     queryBuilder.append(" SET ");
                     iterateFieldsP(queryBuilder, fields);
-                    if(where.size() >0){
+                    if (where.size() > 0) {
                         queryBuilder.append(" WHERE ");
                         iterateFieldsP(queryBuilder, where);
                     }
-                    iterateField=true;
-                break;
+                    iterateField = true;
+                    break;
 
                 case "DELETE":
                     queryBuilder.append(EBIDatabase.DELETE);
                     queryBuilder.append(" FROM ");
                     queryBuilder.append(Table);
-                    if(where.size() >0){
+                    if (where.size() > 0) {
                         queryBuilder.append(" WHERE ");
                         iterateFieldsP(queryBuilder, where);
                     }
-                break;
+                    break;
 
                 case "SELECT":
                     queryBuilder.append(EBIDatabase.SELECT);
                     queryBuilder.append(" FROM ");
                     queryBuilder.append(Table);
                     iterateFields(queryBuilder, fields);
-                break;
+                    break;
 
                 default:
                     //exception :(=
@@ -242,92 +238,92 @@ public class EBIDatabase implements IEBIDatabase {
             final PreparedStatement ps = conn.prepareStatement(queryBuilder.toString(),
                     ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE, Statement.RETURN_GENERATED_KEYS);
 
-            if(iterateField) {
+            if (iterateField) {
                 iterateValues(ps, fields);
             }
 
-            if(where.size() >0){
-                iterateValues(ps,where);
+            if (where.size() > 0) {
+                iterateValues(ps, where);
             }
 
             final ResultSet exRes = ps.executeQuery();
             exRes.beforeFirst();
-            if(exRes.next()){
+            if (exRes.next()) {
                 iterateResult(exRes, table);
-            }else if(iterateField){
-                table.NEW_ROW(1).ADD_COLUMN(1,"INSERTED_KEY",ps.getGeneratedKeys().getLong(1));
+            } else if (iterateField) {
+                table.NEW_ROW(1).ADD_COLUMN(1, "INSERTED_KEY", ps.getGeneratedKeys().getLong(1));
             }
 
-            if(dbclb != null){
+            if (dbclb != null) {
                 dbclb.callback(table);
             }
 
-        }catch(final SQLException EX){
+        } catch (final SQLException EX) {
             exceptionHandle(EX);
         }
 
         return table;
     }
 
-
     /**
      * Iterate hashmap of fields return a string like FIELD=?,FIELD1=? .. ..
+     *
      * @param builder
      * @param flds
      * @return
      */
-    private final void iterateFieldsP(final StringBuilder builder, final HashMap<String,Object> flds){
-        int i=0;
+    private final void iterateFieldsP(final StringBuilder builder, final HashMap<String, Object> flds) {
+        int i = 0;
         final int size = flds.size();
         final Iterator<String> fields = flds.keySet().iterator();
 
-        while(fields.hasNext()){
+        while (fields.hasNext()) {
             builder.append(fields.next());
             builder.append("=?");
-            if(i<size-1){
+            if (i < size - 1) {
                 builder.append(",");
             }
             i++;
         }
     }
 
-
     /**
      * Iterate hashmap of fields return a string like ( ?,?,?,? )
+     *
      * @param builder
      * @param flds
      * @return
      */
-    private final String iterateFields(final StringBuilder builder, final HashMap<String,Object> flds){
-        int i=0;
+    private final String iterateFields(final StringBuilder builder, final HashMap<String, Object> flds) {
+        int i = 0;
         final int size = flds.size();
         final Iterator<String> fields = flds.keySet().iterator();
-        String values="";
-        while(fields.hasNext()){
+        String values = "";
+        while (fields.hasNext()) {
             builder.append(fields.next());
-            if(i<size-1){
-                values+="?,";
+            if (i < size - 1) {
+                values += "?,";
                 builder.append(",");
-            }else{
-                values+="?";
+            } else {
+                values += "?";
             }
             i++;
         }
         return values;
     }
 
-
     /**
      * Iterate hashmap of fields values
+     *
      * @param ps
      * @param flds
      * @return
      */
-    private final void iterateValues(final PreparedStatement ps, final HashMap<String,Object> flds) throws SQLException{
-        int i=0;
+    private final void iterateValues(final PreparedStatement ps, final HashMap<String, Object> flds) throws SQLException {
+        int i = 0;
         final Iterator<String> fields = flds.keySet().iterator();
-        while(fields.hasNext()){
-            ps.setObject(i,flds.get(fields.next()));
+        while (fields.hasNext()) {
+            ps.setObject(i, flds.get(fields.next()));
             i++;
         }
 
@@ -335,26 +331,25 @@ public class EBIDatabase implements IEBIDatabase {
 
     /**
      * Iterate a ResultSet
+     *
      * @param set
      * @param table
      * @return
      */
-    private final void iterateResult(final ResultSet set, final TABLE table) throws SQLException{
-        int rowNr=0;
+    private final void iterateResult(final ResultSet set, final TABLE table) throws SQLException {
+        int rowNr = 0;
         set.beforeFirst();
         final ResultSetMetaData rsmd = set.getMetaData();
         final int cCnt = rsmd.getColumnCount();
-        while(set.next()){
+        while (set.next()) {
             table.NEW_ROW(rowNr);
-            for(int i=0; i<cCnt; i++){
+            for (int i = 0; i < cCnt; i++) {
                 final String colName = rsmd.getColumnName(i);
-                table.ADD_COLUMN(rowNr, colName,set.getObject(colName));
+                table.ADD_COLUMN(rowNr, colName, set.getObject(colName));
             }
-           rowNr++;
+            rowNr++;
         }
     }
-
-
 
     /**
      * create new PreparedStatement
@@ -363,7 +358,7 @@ public class EBIDatabase implements IEBIDatabase {
      * @return Preparedstatement
      */
     @Override
-	public PreparedStatement initPreparedStatement(final String query) {
+    public PreparedStatement initPreparedStatement(final String query) {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -374,7 +369,7 @@ public class EBIDatabase implements IEBIDatabase {
     }
 
     @Override
-	public boolean isValidConnection() {
+    public boolean isValidConnection() {
         try {
             if (!conn.isClosed()) {
                 return true;
@@ -392,7 +387,7 @@ public class EBIDatabase implements IEBIDatabase {
      * @return generated key (id)
      */
     @Override
-	public String executePreparedStmtGetKey(final PreparedStatement ps) {
+    public String executePreparedStmtGetKey(final PreparedStatement ps) {
         ResultSet key;
         String gkey = "";
         try {
@@ -413,9 +408,8 @@ public class EBIDatabase implements IEBIDatabase {
      * @param ps
      * @return return true if the preparedstatement is successfully executed
      */
-
     @Override
-	public boolean executePreparedStmt(final PreparedStatement ps) {
+    public boolean executePreparedStmt(final PreparedStatement ps) {
         try {
             ps.execute();
             ps.close();
@@ -435,7 +429,7 @@ public class EBIDatabase implements IEBIDatabase {
      * @return return ResultSet if successfully or null
      */
     @Override
-	public ResultSet executePreparedQuery(final PreparedStatement ps) {
+    public ResultSet executePreparedQuery(final PreparedStatement ps) {
         ResultSet set = null;
         try {
             set = ps.executeQuery();
@@ -451,7 +445,7 @@ public class EBIDatabase implements IEBIDatabase {
      * @param set
      */
     @Override
-	public void closeResultSet(final ResultSet set) {
+    public void closeResultSet(final ResultSet set) {
         try {
             stmt.close();
             set.close();
@@ -465,7 +459,7 @@ public class EBIDatabase implements IEBIDatabase {
      * Enable autocommit
      */
     @Override
-	public void setAutoCommit(final boolean autocommit) {
+    public void setAutoCommit(final boolean autocommit) {
         try {
             conn.setAutoCommit(autocommit);
             isAutocommit = autocommit;
@@ -475,7 +469,7 @@ public class EBIDatabase implements IEBIDatabase {
     }
 
     @Override
-	public boolean isAutoCommit() {
+    public boolean isAutoCommit() {
         return isAutocommit;
     }
 
@@ -485,7 +479,7 @@ public class EBIDatabase implements IEBIDatabase {
      * @return
      */
     @Override
-	public Connection getActiveConnection() {
+    public Connection getActiveConnection() {
         return conn;
     }
 
@@ -495,7 +489,7 @@ public class EBIDatabase implements IEBIDatabase {
      * @param con
      */
     @Override
-	public void setActiveConnection(final Connection con) {
+    public void setActiveConnection(final Connection con) {
         this.conn = con;
     }
 

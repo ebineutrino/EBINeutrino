@@ -338,16 +338,17 @@ public class EBICRMAccountStackView {
         EBISystem.gui().FormattedField("creditCal", "Account").setEditable(false);
 
         try {
-            if (!"null".equals(dataControlAccount.properties.getValue("SELECTED_ACCOUNTYEAR_TEXT")) && !"".equals(dataControlAccount.properties.getValue("SELECTED_ACCOUNTYEAR_TEXT"))) {
-                EBISystem.gui().combo("invoiceYearText", "Account").setSelectedItem(dataControlAccount.properties.getValue("SELECTED_ACCOUNTYEAR_TEXT"));
-                dataControlAccount.dataShow(dataControlAccount.properties.getValue("SELECTED_ACCOUNTYEAR_TEXT"), -1);
+            if (!"null".equals(EBISystem.properties().getValue("SELECTED_ACCOUNTYEAR_TEXT")) && !"".equals(EBISystem.properties().getValue("SELECTED_ACCOUNTYEAR_TEXT"))) {
+                EBISystem.gui().combo("invoiceYearText", "Account").setSelectedItem(EBISystem.properties().getValue("SELECTED_ACCOUNTYEAR_TEXT"));
+                dataControlAccount.dataShow(EBISystem.properties().getValue("SELECTED_ACCOUNTYEAR_TEXT"), -1);
             } else {
                 dataControlAccount.dataShow("", -1);
             }
 
-            if (!"null".equals(dataControlAccount.properties.getValue("ACCOUNTYEAR_TEXT")) && !"".equals(dataControlAccount.properties.getValue("ACCOUNTYEAR_TEXT"))) {
+            if (!"null".equals(EBISystem.properties().getValue("ACCOUNTYEAR_TEXT")) 
+                    && !"".equals(EBISystem.properties().getValue("ACCOUNTYEAR_TEXT"))) {
 
-                final String[] years = dataControlAccount.properties.getValue("ACCOUNTYEAR_TEXT").split(",");
+                final String[] years = EBISystem.properties().getValue("ACCOUNTYEAR_TEXT").split(",");
                 if (years != null) {
                     for (int i = 0; i < years.length; i++) {
                         if (years[i] != null) {
@@ -696,7 +697,6 @@ public class EBICRMAccountStackView {
 
         //  Sort
         if (EBISystem.gui().combo("invoiceYearText", "Account").getItemCount() > 0) {
-
             final String[] avalItems = vSave.split(",");
             Arrays.sort(avalItems);
             final String selected = EBISystem.gui().combo("invoiceYearText", "Account").getSelectedItem().toString();
@@ -711,11 +711,11 @@ public class EBICRMAccountStackView {
                 }
             }
             EBISystem.gui().combo("invoiceYearText", "Account").setSelectedItem(selected);
-            dataControlAccount.properties.setValue("ACCOUNTYEAR_TEXT", vSave);
+            EBISystem.properties().setValue("ACCOUNTYEAR_TEXT", vSave);
         }
 
-        dataControlAccount.properties.setValue("SELECTED_ACCOUNTYEAR_TEXT", EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString());
-        dataControlAccount.properties.saveEBINeutrinoProperties();
+        EBISystem.properties().setValue("SELECTED_ACCOUNTYEAR_TEXT", EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString());
+        EBISystem.properties().saveEBINeutrinoProperties();
         dataControlAccount.dataShow(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString(), -1);
     }
 

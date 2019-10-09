@@ -52,12 +52,17 @@ public class EBIPropertiesLang {
 
     public void saveProperties() {
         try {
-            properties.store(new FileOutputStream(new File(ClassLoader.getSystemResource(selLang).toURI())), null);
+            OutputStream out = new ByteArrayOutputStream();
+            InputStream stream = ClassLoader.getSystemResourceAsStream(selLang);
+            int av = -1;
+            while ((av = stream.available()) > 0) {
+                byte[] bt = new byte[av];
+                out.write(stream.read(bt));
+            }
+            properties.store(out, null);
         } catch (final IOException e) {
             e.printStackTrace();
             EBIExceptionDialog.getInstance("Language file cannot be found!").Show(EBIMessage.ERROR_MESSAGE);
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(EBIPropertiesLang.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

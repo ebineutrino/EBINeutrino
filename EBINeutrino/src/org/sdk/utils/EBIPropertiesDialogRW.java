@@ -48,12 +48,17 @@ public class EBIPropertiesDialogRW {
 
     public void saveProperties() {
         try {
-            properties.store(new FileOutputStream(new File(ClassLoader.getSystemResource("config/dialogstore.properties").toURI())), null);
+            OutputStream out = new ByteArrayOutputStream();
+            InputStream stream = ClassLoader.getSystemResourceAsStream("config/dialogstore.properties");
+            int av=-1;
+            while((av = stream.available()) > 0){
+                byte[] bt = new byte[av];
+                out.write(stream.read(bt));
+            }            
+            properties.store(out, null); 
         } catch (final IOException e) {
             e.printStackTrace();
             EBIExceptionDialog.getInstance("Properties file cannot be found!").Show(EBIMessage.ERROR_MESSAGE);
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(EBIPropertiesDialogRW.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

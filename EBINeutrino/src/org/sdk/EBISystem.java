@@ -97,6 +97,8 @@ public class EBISystem {
     private JFileChooser fileDialog = null;
     private static EBISystem ebiSystem = null;
     private HashMap<String, Object> mappedBbeans = new HashMap();
+    @Getter @Setter
+    private EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
 
     public EBISystem() {
         calendar = new GregorianCalendar();
@@ -167,6 +169,15 @@ public class EBISystem {
         return val;
     }
 
+    
+    /**
+     * Return the EBINeutrino Properties
+     * @return 
+     */
+    public static EBIPropertiesRW properties(){
+        return EBISystem.getInstance().getProperties();
+    }
+    
     /**
      * Read EMail Setting from a Database
      */

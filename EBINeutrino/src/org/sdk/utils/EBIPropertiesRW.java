@@ -1,16 +1,14 @@
 package org.sdk.utils;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * configuration properties ebi_neutrino.properties and ebi_neutrino.properties
@@ -22,12 +20,10 @@ public class EBIPropertiesRW {
     private Properties properties = null;
 
     public EBIPropertiesRW() {
-
         try {
             properties = new Properties();
             URL url = ClassLoader.getSystemResource("config/ebi_neutrino.properties");
             properties.load(url.openStream());
-
         } catch (final IOException e) {
             e.printStackTrace();
             EBIExceptionDialog.getInstance("Critical Error :Properties file cannot be found !")
@@ -49,11 +45,18 @@ public class EBIPropertiesRW {
 
     public void saveEBINeutrinoProperties() {
         try {
-            properties.store(new FileOutputStream(new File(ClassLoader.getSystemResource("config/ebi_neutrino.properties").toURI())), null);
+            OutputStream out = new ByteArrayOutputStream();
+            InputStream stream = ClassLoader.getSystemResourceAsStream("config/ebi_neutrino.properties");
+
+            int av=-1;
+            while((av = stream.available()) > 0){
+                byte[] bt = new byte[av];
+                out.write(stream.read(bt));
+            }
+
+            properties.store(out, null);
         } catch (final IOException e) {
             EBIExceptionDialog.getInstance("Properties file cannot be found!").Show(EBIMessage.ERROR_MESSAGE);
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(EBIPropertiesRW.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -63,5 +66,4 @@ public class EBIPropertiesRW {
         }
         return rwProp;
     }
-
 }

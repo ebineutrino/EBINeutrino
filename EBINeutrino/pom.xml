@@ -13,7 +13,9 @@
         <jdk-version>8</jdk-version>
     </properties>
     <build>
+        
         <sourceDirectory>src</sourceDirectory>
+        
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -31,6 +33,7 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+            
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -59,7 +62,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        ebiNeutrino.core.EBIMain
+                                        org.core.EBIMain
                                     </mainClass>
                                 </manifest>
                             </archive>

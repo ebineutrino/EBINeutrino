@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<visualpanel name="Order" title="EBI_LANG_C_ORDER" Location="0,0" Size="1020,750" visualproperties="true" assignable="true" bean="org.modules.views.EBICRMOrderView" >
+<visualpanel name="Order" title="EBI_LANG_C_ORDER" Location="0,0" Size="1020,750" 
+             visualproperties="true" assignable="true" bean="org.modules.views.EBICRMOrderView" >
     <panel name="orderData" title="EBI_LANG_C_PANEL_ORDER_DATA" Location="9,6" Size="384,356">
         <label name="orderNr" title="EBI_LANG_ORDER_NUMBER" Location="10,20" Size="113,25"/>
         <textfield name="orderNrText" tabindex="1" Location="125,20" Size="245,25"/>

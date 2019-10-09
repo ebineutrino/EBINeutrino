@@ -277,20 +277,12 @@ public class EBISetupDB extends JPanel {
             testDatabaseButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(final ActionEvent e) {
-
                     if (!checkField()) {
                         return;
                     }
 
                     try {
                         Class.forName(databaseDriverCombo.getSelectedItem().toString());
-                    } catch (final Exception ex) {
-                        ex.printStackTrace();
-                        EBIExceptionDialog.getInstance(setup, "ERROR : Database driver was not found! ").Show(EBIMessage.ERROR_MESSAGE);
-                        return;
-                    }
-
-                    try {
                         String conn_url = null;
                         final String dbType = databaseTypeText.getSelectedItem().toString().toLowerCase();
                         final String host = ipText.getText();

@@ -12,7 +12,6 @@ import org.sdk.EBISystem;
 import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
 import org.sdk.gui.dialogs.EBIWinWaiting;
-import org.sdk.utils.EBIPropertiesRW;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 
@@ -23,9 +22,7 @@ import javax.swing.JFileChooser;
 
 public class ControlAccountStack {
 
-    public int accountID = -1;
-    public Accountstack actStack = null;
-    public final EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
+    private Accountstack actStack = null;
     private final NumberFormat currency = NumberFormat.getCurrencyInstance();
     public boolean isEdit = false;
 
@@ -51,7 +48,6 @@ public class ControlAccountStack {
             actStack.setAccountnr(EBISystem.gui().textField("numberText", "Account").getText());
 
             actStack.setAccount(EBISystem.gui().combo("accountTypeText", "Account").getEditor().getItem().toString());
-
             actStack.setAccountname(EBISystem.gui().textField("nameText", "Account").getText());
             actStack.setAccountvalue(Double.parseDouble(EBISystem.gui().FormattedField("amountText", "Account").getValue().toString()));
 
@@ -101,7 +97,7 @@ public class ControlAccountStack {
             final Iterator iter = query.iterate();
 
             if (iter.hasNext()) {
-                this.accountID = id;
+
                 actStack = (Accountstack) iter.next();
                 EBISystem.gui().vpanel("Account").setID(id);
                 EBISystem.hibernate().session("EBIACCOUNT_SESSION").refresh(actStack);
@@ -164,7 +160,6 @@ public class ControlAccountStack {
                     } catch (final Exception e) {
                         e.printStackTrace();
                     }
-
                 }
             }
         } catch (final Exception ex) {
@@ -173,7 +168,6 @@ public class ControlAccountStack {
     }
 
     public void dataNew() {
-        accountID = -1;
         EBISystem.getModule().getAccountPane().setAccountDebitCreditType(0);
         EBISystem.getModule().getAccountPane().setAccountDebitTaxName("");
         EBISystem.getModule().getAccountPane().setShowCreditID(-1);

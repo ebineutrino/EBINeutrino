@@ -1,5 +1,6 @@
 package org.core.guiRenderer;
 
+import org.core.gui.component.EBIButton;
 import org.core.EBIMain;
 import org.core.gui.component.EBITableExt;
 import org.core.gui.lookandfeel.MoodyBlueTheme;
@@ -47,6 +48,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.*;
+import org.core.gui.component.EBITextfield;
 
 public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
@@ -97,7 +99,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     public final void loadProject(final String path) {
 
         final EBIXMLGUIReader xmlGui1 = new EBIXMLGUIReader();
-        xmlGui1.setXmlPath("views/"+path);
+        xmlGui1.setXmlPath("views/" + path);
         init();
         if (xmlGui1.loadXMLGUI()) {
 
@@ -495,7 +497,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
             } else if ("textfield".equals(bean.getType())) {
 
-                final JTextField textField = new JTextField();
+                final EBITextfield textField = new EBITextfield();
                 addUndoManager(textField.getDocument(), textField);
 
                 if (bean.getTitle().indexOf("EBI_LANG") != -1) {
@@ -503,7 +505,15 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 } else {
                     textField.setText(bean.getTitle());
                 }
-
+                
+                if(!"".equals(bean.getPlaceHolder())){
+                    if (bean.getPlaceHolder().indexOf("EBI_LANG") != -1) {
+                        textField.setPlaceHolder(EBISystem.i18n(bean.getPlaceHolder()));
+                    }else{
+                        textField.setPlaceHolder(bean.getPlaceHolder());
+                    }
+                }
+               
                 if (observeChanges) {
                     this.addComponentTextChanged(textField);
                 }
@@ -1443,7 +1453,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                                         binding.setVariable(key, PARAM.get(key));
                                     }
                                 }
-                                
+
                                 gse.run(script.getPath(), binding);
                                 final Script scr = gse.createScript(script.getPath(), binding);
 

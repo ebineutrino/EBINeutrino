@@ -5,14 +5,14 @@ import java.text.NumberFormat
 
 //Add functionality to a show tax button
 system.gui.button("taxButton","Account").actionPerformed={
-    
+
     system.gui.loadGUI("CRMDialog/accountShowPTAX.xml")
     system.gui.getEditor("viewtaxText","taxViewDialog").setEditable(false)
-    
+
     system.gui.button("closeButton","taxViewDialog").actionPerformed={ 
         system.gui.dialog("taxViewDialog").setVisible(false)   
     }
-    
+
     system.gui.button("viewTax","taxViewDialog").actionPerformed={
         if(!validateInput()){
             return
@@ -38,18 +38,13 @@ boolean validateInput(){
     
     if(system.gui.getTimepicker("dateFromText","taxViewDialog").getEditor().getText().equals("")
         || system.gui.getTimepicker("dateFromText","taxViewDialog").getDate() == null ){
-                            
         system.message.error(system.getLANG("EBI_LANG_MESSAGE_ILLEGAL_DATE"))
-        
         return false
     }else if(system.gui.getTimepicker("dateToText","taxViewDialog").getEditor().getText().equals("")
         || system.gui.getTimepicker("dateToText","taxViewDialog").getDate() == null ){
-                            
-        system.message.error(system.getLANG("EBI_LANG_MESSAGE_ILLEGAL_DATE"))
-        
+        system.message.error(system.getLANG("EBI_LANG_MESSAGE_ILLEGAL_DATE"))        
         return false
     }
-    
     return true
 }
 
@@ -66,10 +61,8 @@ String calculateTax(String toPrint, int type){
         Hashtable<String,Double> thash = new Hashtable<String,Double>()
             
         if(query.list().size() > 0){
-              
             Iterator iter =  query.iterate();
             while(iter.hasNext()){
-                    
                 Accountstack act = (Accountstack) iter.next();
                 if(act.getAccountTaxType() != null && !act.getAccountTaxType().equals(system.getLANG("EBI_LANG_PLEASE_SELECT"))
                     && act.getAccountDValue() > 0){
@@ -82,12 +75,10 @@ String calculateTax(String toPrint, int type){
             }
             
             Iterator itk =  thash.keySet().iterator()
-                
             toPrint+= "<br><div style='background-color:#ebebeb; margin-left:10px; margin-top:10px; margin-right:10px;'><div style='margin-left:5px;'><br><b>"+system.getLANG("EBI_LANG_TAX_TYPE")+": "+(type == 1 ? system.getLANG("EBI_LANG_CREDIT") : system.getLANG("EBI_LANG_DEBIT"))+"</b><br><br>"
             toPrint+="<font color='gray'>________________________________________________________________________</font><br>"
             double tTax = 0.0
             while(itk.hasNext()){
-                    
                 String str = (String)itk.next()
                 tTax +=thash.get(str)
                 toPrint+= str +" : "+NumberFormat.getCurrencyInstance().format(thash.get(str))+"<br>"

@@ -45,7 +45,6 @@ public class EBIXMLGUIReader {
             URL url = ClassLoader.getSystemResource(xmlPath);
             xmlDoc = builder.build(url.openStream());
             ret = readXMLGUI(xmlDoc.getRootElement());
-
         } catch (final IOException ex) {
             ret = false;
             EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
@@ -323,6 +322,9 @@ public class EBIXMLGUIReader {
                     	widg.setActionListener(att.getValue());
                     	break;
                         
+                    case "placeholder":
+                    	widg.setPlaceHolder(att.getValue());
+                    	break;
                 }
             }
             widg.setType(el.getName().trim().toLowerCase());

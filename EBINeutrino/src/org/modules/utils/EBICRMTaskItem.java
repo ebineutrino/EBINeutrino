@@ -1,7 +1,7 @@
 package org.modules.utils;
 
 import org.modules.views.dialogs.EBIAllertTimerDialog;
-import org.core.guiRenderer.EBIButton;
+import org.core.gui.component.EBIButton;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

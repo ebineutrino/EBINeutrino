@@ -1,6 +1,6 @@
 package org.core.gui.dialogs;
 
-import org.core.guiRenderer.EBIButton;
+import org.core.gui.component.EBIButton;
 import org.sdk.EBISystem;
 import org.sdk.gui.component.EBIVisualPanelTemplate;
 import org.sdk.gui.dialogs.EBIDialogExt;

@@ -65,9 +65,7 @@
         <button name="copyLeads" i18ntooltip="EBI_LANG_C_TOOL_TIP_COPY_RECORD" Location="78,25" Size="31,27"  enabled="false" actionListener="org.modules.views.EBICRMLeadsView.copyLead" icon="editcopy.png"/>
         <button name="deleteLeads" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="117,25" Size="31,27"  enabled="false" actionListener="org.modules.views.EBICRMLeadsView.deleteLead" icon="delete.png"/>
 
-        <textfield name="searchLeadsText" Location="334,25" Size="310,25"/>
-        <label name="searchLead" title="EBI_LANG_SEARCH_LEADS" Location="240,25" Size="80,25"/>
-
+        <textfield name="searchLeadsText" Location="220,20" Size="310,30" resizeWidth="true" placeHolder="EBI_LANG_SEARCH_LEADS"/>
         <button name="openComp" i18ntooltip="EBI_LANG_C_TOOL_TIP_LOAD_TO_COMPANY" Location="152,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMLeadsView.openCompany" icon="move.png"/>
     </panel>
 </visualpanel>

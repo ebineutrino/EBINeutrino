@@ -1,7 +1,6 @@
 package org.core.gui.component;
 
 import org.core.EBIMain;
-import org.core.guiRenderer.EBIButton;
 import org.sdk.EBISystem;
 import org.sdk.arbitration.EBIArbCallback;
 import org.sdk.arbitration.EBIArbitration;

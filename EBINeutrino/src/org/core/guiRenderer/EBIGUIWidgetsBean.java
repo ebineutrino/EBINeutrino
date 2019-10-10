@@ -55,6 +55,15 @@ public class EBIGUIWidgetsBean {
     private boolean storable = false;
     private String actionListener = "";
     private String mappedBean = "";
+    private String placeHolder="";
+
+    public String getPlaceHolder() {
+        return placeHolder;
+    }
+
+    public void setPlaceHolder(String placeHolder) {
+        this.placeHolder = placeHolder;
+    }
 
     public void setSubWidgets(final java.util.List<EBIGUIWidgetsBean> subWidgets) {
         this.subWidgets = subWidgets;

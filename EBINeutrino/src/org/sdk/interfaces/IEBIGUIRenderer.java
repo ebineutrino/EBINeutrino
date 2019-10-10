@@ -1,6 +1,6 @@
 package org.sdk.interfaces;
 
-import org.core.guiRenderer.EBIButton;
+import org.core.gui.component.EBIButton;
 import org.core.guiRenderer.EBIGUIWidgetsBean;
 import org.core.gui.component.EBITableExt;
 import org.sdk.gui.component.EBIVisualPanelTemplate;

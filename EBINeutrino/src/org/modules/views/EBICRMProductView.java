@@ -49,7 +49,6 @@ public class EBICRMProductView {
     private int selectedDocRow = -1;
 
     public void initializeAction() {
-        EBISystem.gui().label("filterTable", "Product").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Product").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
@@ -66,13 +65,8 @@ public class EBICRMProductView {
             }
         });
 
-        /**
-         * ************************************************************************
-         */
+ 
         // TAX PANEL
-        /**
-         * ************************************************************************
-         */
         EBISystem.gui().combo("productTaxTypeTex", "Product").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {

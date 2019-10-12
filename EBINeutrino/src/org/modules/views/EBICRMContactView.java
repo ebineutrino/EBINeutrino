@@ -36,7 +36,6 @@ public class EBICRMContactView {
 
     public void initializeAction() {
 
-        EBISystem.gui().label("filterTable", "Contact").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Contact").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {

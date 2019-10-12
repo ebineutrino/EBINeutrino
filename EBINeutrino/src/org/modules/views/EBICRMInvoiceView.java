@@ -82,8 +82,8 @@ public class EBICRMInvoiceView {
         } catch (final Exception e) {
             e.printStackTrace();
         }
+        
         model = (EBIAbstractTableModel) EBISystem.gui().table("tableTotalInvoice", "Invoice").getModel();
-        EBISystem.gui().label("filterTable", "Invoice").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Invoice").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {

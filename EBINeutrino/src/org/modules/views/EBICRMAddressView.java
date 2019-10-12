@@ -31,7 +31,6 @@ public class EBICRMAddressView {
     private int selectedRow = -1;
 
     public void initializeAction() {
-        EBISystem.gui().label("filterTable", "Address").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.getInstance().getIEBIGUIRendererInstance().textField("filterTableText", "Address").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {

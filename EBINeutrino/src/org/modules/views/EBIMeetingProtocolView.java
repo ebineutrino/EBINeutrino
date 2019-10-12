@@ -39,9 +39,6 @@ public class EBIMeetingProtocolView {
     private int selectedDocRow = -1;
 
     public void initializeAction() {
-
-
-        EBISystem.gui().label("filterTable", "MeetingCall").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "MeetingCall").addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {

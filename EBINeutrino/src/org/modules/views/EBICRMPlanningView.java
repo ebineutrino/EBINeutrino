@@ -52,7 +52,6 @@ public class EBICRMPlanningView {
         valueFormat.setMaximumFractionDigits(2);
 
         model = (EBIAbstractTableModel) EBISystem.gui().table("projectTable", "Project").getModel();
-        EBISystem.gui().label("filterTable", "Project").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Project").addKeyListener(
                 new KeyAdapter() {
             @Override

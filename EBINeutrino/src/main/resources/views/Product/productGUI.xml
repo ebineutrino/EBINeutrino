@@ -44,8 +44,7 @@
         <button name="reportProduct" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_REPORT" Location="165,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMProductView.showProductReport" icon="chart.png"/>
         <button name="historyProduct" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="205,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMProductView.historyProduct" icon="historysearch.png"/>
 
-        <label name="filterTable" title="EBI_LANG_FILTER" Location="280,20" Size="77,25"/>
-        <textfield name="filterTableText" Location="376,20" Size="300,25"/>
+        <textfield name="filterTableText" Location="270,18" Size="300,30" resizeWidth="true" placeHolder="EBI_LANG_FILTER"/>
     </panel>
     <panel name="avProp" title="EBI_LANG_C_TOOL_TIP_NEW_PROPERTIES" Location="14,409" Size="1291,209">
 

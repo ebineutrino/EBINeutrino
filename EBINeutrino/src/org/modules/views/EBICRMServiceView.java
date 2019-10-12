@@ -25,7 +25,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class EBICRMServiceView {
-    
+
     @Getter @Setter
     private ModelDoc tabModDoc = null;
     @Getter @Setter
@@ -34,7 +34,7 @@ public class EBICRMServiceView {
     private ModelCRMProduct tabModProduct = null;
     @Getter @Setter
     private ModelService tabModService = null;
-    
+
     public static String[] serviceStatus = null;
     public static String[] serviceType = null;
     public static String[] serviceCategory = null;
@@ -50,12 +50,9 @@ public class EBICRMServiceView {
     private int selectedProductRow = -1;
 
     public void initializeAction() {
-
-        EBISystem.gui().label("filterTable", "Service").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Service").addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(final KeyEvent e) {
-            }
+            public void keyTyped(final KeyEvent e) {}
 
             @Override
             public void keyPressed(final KeyEvent e) {

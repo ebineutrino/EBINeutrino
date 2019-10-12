@@ -83,7 +83,6 @@ public class EBICRMAccountStackView {
 
     public void initializeAction() {
         //AVAILABLE TABLE AND BUTTONS
-        EBISystem.gui().label("filterTable", "Account").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Account").addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {

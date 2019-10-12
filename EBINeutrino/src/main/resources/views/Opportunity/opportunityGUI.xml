@@ -1,53 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <visualpanel name="Opportunity" title="EBI_LANG_C_OPPORTUNITY" Location="0,0" Size="900,900" visualproperties="true" assignable="true" bean="org.modules.views.EBICRMOpportunityView" >
- <panel name="opportunityContact" title="EBI_LANG_C_CONTACT_DATA" resizewidth="true" Location="9,358" Size="876,223">
-		<table name="contactTableOpportunity" resizewidth="true" resizeheight="true" Location="7,60" Size="861,152"/>
+    <panel name="opportunityContact" title="EBI_LANG_C_CONTACT_DATA" resizewidth="true" Location="9,358" Size="876,223">
+        <table name="contactTableOpportunity" resizewidth="true" resizeheight="true" Location="7,60" Size="861,152"/>
 
-	<button name="newOppContact" i18ntooltip="EBI_LANG_C_TOOL_TIP_NEW_CONTACT" Location="8,25" Size="31,27" actionListener="org.modules.views.EBICRMOpportunityView.newContact" icon="new.png"/>
-	<button name="editOppContact" i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="42,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.editContact" icon="edit.png"/>
-	<button name="deleteOppContact" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="77,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.deleteContact" icon="delete.png"/>
+        <button name="newOppContact" i18ntooltip="EBI_LANG_C_TOOL_TIP_NEW_CONTACT" Location="8,25" Size="31,27" actionListener="org.modules.views.EBICRMOpportunityView.newContact" icon="new.png"/>
+        <button name="editOppContact" i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="42,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.editContact" icon="edit.png"/>
+        <button name="deleteOppContact" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="77,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.deleteContact" icon="delete.png"/>
 
-</panel>
-<panel name="gnOpportunity" title="EBI_LANG_C_OPPORTUNITY" resizewidth="true" Location="9,6" Size="876,336">
-		<label name="oppName" title="EBI_LANG_NAME" Location="10,20" Size="113,25"/>
-		<combobox name="opportunityNameText" tabindex="1" Location="125,20" Size="245,25"/>
-		<label name="oppEvalStatus" title="EBI_LANG_C_EVALUATING_STATUS" Location="10,50" Size="113,25"/>
-		<combobox name="oppEvalStatusText" tabindex="2" bind="COMPANYOPPORTUNITYEVSTATUS" Location="125,50" Size="245,25"/>
-		<label name="oppBdgStatus" title="EBI_LANG_C_BUDGETSTATUS" Location="10,80" Size="113,25"/>
-		<combobox name="oppBdgStatusText" tabindex="3" bind="COMPANYOPPORTUNITYBGSTATUS" Location="125,80" Size="245,25"/>
-		<label name="oppSaleState" title="EBI_LANG_SALE_STAGE" Location="10,110" Size="113,25"/>
-		<combobox name="oppSaleStateText" tabindex="4" Location="125,110" bind="COMPANYOPPORTUNITYSSTAGE" Size="245,25"/>
-		<label name="oppStatus" title="EBI_LANG_C_STATUS" Location="10,140" Size="113,25"/>
-		<combobox name="statusOppText" tabindex="5" bind="COMPANYOPPORTUNITYSTATUS" Location="125,140" Size="245,25"/>
-		<label name="oppBustype" title="EBI_LANG_BUSINESS_TYP" Location="10,170" Size="113,25"/>
-		<combobox name="oppBustypeText" tabindex="6" bind="COMPANYOPPORTUNITYBUSTYP" Location="125,170" Size="245,25"/>
-		<label name="oppProbability" title="EBI_LANG_PROBABILITY" Location="10,200" Size="113,25"/>
-		<combobox name="oppProbabilityText" tabindex="7" Location="125,200" Size="245,25"/>
-		<label name="oppValue" title="EBI_LANG_VALUE" Location="10,230" Size="113,25"/>
-		<formattedtextfield name="oppValueText" tabindex="8" Location="125,230" Size="245,25"/>
+    </panel>
+    <panel name="gnOpportunity" title="EBI_LANG_C_OPPORTUNITY" resizewidth="true" Location="9,6" Size="876,336">
+        <label name="oppName" title="EBI_LANG_NAME" Location="10,20" Size="113,25"/>
+        <combobox name="opportunityNameText" tabindex="1" Location="125,20" Size="245,25"/>
+        <label name="oppEvalStatus" title="EBI_LANG_C_EVALUATING_STATUS" Location="10,50" Size="113,25"/>
+        <combobox name="oppEvalStatusText" tabindex="2" bind="COMPANYOPPORTUNITYEVSTATUS" Location="125,50" Size="245,25"/>
+        <label name="oppBdgStatus" title="EBI_LANG_C_BUDGETSTATUS" Location="10,80" Size="113,25"/>
+        <combobox name="oppBdgStatusText" tabindex="3" bind="COMPANYOPPORTUNITYBGSTATUS" Location="125,80" Size="245,25"/>
+        <label name="oppSaleState" title="EBI_LANG_SALE_STAGE" Location="10,110" Size="113,25"/>
+        <combobox name="oppSaleStateText" tabindex="4" Location="125,110" bind="COMPANYOPPORTUNITYSSTAGE" Size="245,25"/>
+        <label name="oppStatus" title="EBI_LANG_C_STATUS" Location="10,140" Size="113,25"/>
+        <combobox name="statusOppText" tabindex="5" bind="COMPANYOPPORTUNITYSTATUS" Location="125,140" Size="245,25"/>
+        <label name="oppBustype" title="EBI_LANG_BUSINESS_TYP" Location="10,170" Size="113,25"/>
+        <combobox name="oppBustypeText" tabindex="6" bind="COMPANYOPPORTUNITYBUSTYP" Location="125,170" Size="245,25"/>
+        <label name="oppProbability" title="EBI_LANG_PROBABILITY" Location="10,200" Size="113,25"/>
+        <combobox name="oppProbabilityText" tabindex="7" Location="125,200" Size="245,25"/>
+        <label name="oppValue" title="EBI_LANG_VALUE" Location="10,230" Size="113,25"/>
+        <formattedtextfield name="oppValueText" tabindex="8" Location="125,230" Size="245,25"/>
 
-	<button name="newOppDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_ADD_NEW_DOC" Location="400,20" Size="31,27" actionListener="org.modules.views.EBICRMOpportunityView.newDocs" icon="new.png"/>
-	<button name="showOppDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_DOC" Location="435,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.showDocs" icon="move_up.png"/>
-	<button name="deleteOppDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_DOC" Location="470,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.deleteDoc" icon="delete.png"/>
+        <button name="newOppDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_ADD_NEW_DOC" Location="400,20" Size="31,27" actionListener="org.modules.views.EBICRMOpportunityView.newDocs" icon="new.png"/>
+        <button name="showOppDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_DOC" Location="435,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.showDocs" icon="move_up.png"/>
+        <button name="deleteOppDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_DOC" Location="470,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.deleteDoc" icon="delete.png"/>
 
-		<table name="opportunityDoc" resizewidth="true" Location="400,51" Size="468,144"/>
-		<textarea name="opportunityDescription" tabindex="10" resizewidth="true" Location="400,204" Size="466,124"/>
-		<checkbox name="closeOpportunity" tabindex="9" title="EBI_LANG_CLOSED" background="#ffffff" Location="127,260" Size="242,25"/>
-</panel>
-<panel name="avOpportunity" title="EBI_LANG_C_PANEL_AVAILABLE_OPPORTUNITY" resizewidth="true" resizeheight="true" Location="11,590" Size="876,303">
+        <table name="opportunityDoc" resizewidth="true" Location="400,51" Size="468,144"/>
+        <textarea name="opportunityDescription" tabindex="10" resizewidth="true" Location="400,204" Size="466,124"/>
+        <checkbox name="closeOpportunity" tabindex="9" title="EBI_LANG_CLOSED" background="#ffffff" Location="127,260" Size="242,25"/>
+    </panel>
+    <panel name="avOpportunity" title="EBI_LANG_C_PANEL_AVAILABLE_OPPORTUNITY" resizewidth="true" resizeheight="true" Location="11,590" Size="876,303">
 
-		<table name="companyOpportunityTable" resizewidth="true" resizeheight="true" Location="8,65" Size="859,230"/>
+        <table name="companyOpportunityTable" resizewidth="true" resizeheight="true" Location="8,65" Size="859,230"/>
 
-	<button name="newOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_RESET_FORM" Location="8,25" Size="31,27" actionListener="org.modules.views.EBICRMOpportunityView.newOpportunity" icon="new.png"/>
-	<button name="editOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="43,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.editOpportunity" icon="edit.png"/>
-	<button name="copyOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_COPY_RECORD" Location="78,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.copyOpportunity" icon="editcopy.png"/>
-	<button name="deleteOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="112,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.deleteOpportunity" icon="delete.png"/>
-	<button name="reportOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_REPORT" Location="146,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.showOpportunityReports" icon="chart.png"/>
-	<button name="historyOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="180,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.historyOpportunity" icon="historysearch.png"/>
-	<button name="mailOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_MAIL_RECORD" Location="217,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.mailOpportunity" icon="mail.png"/>
-	<button name="createOffer" i18ntooltip="EBI_LANG_C_TOOL_TIP_CREATE_OFFER" Location="255,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.createOffer" icon="move.png"/>
-
-		<label name="filterTable" title="EBI_LANG_FILTER" Location="353,25" Size="77,25"/>
-		<textfield name="filterTableText" Location="440,25" Size="250,25"/>
-</panel>
+        <button name="newOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_RESET_FORM" Location="8,25" Size="31,27" actionListener="org.modules.views.EBICRMOpportunityView.newOpportunity" icon="new.png"/>
+        <button name="editOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="43,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.editOpportunity" icon="edit.png"/>
+        <button name="copyOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_COPY_RECORD" Location="78,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.copyOpportunity" icon="editcopy.png"/>
+        <button name="deleteOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="112,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.deleteOpportunity" icon="delete.png"/>
+        <button name="reportOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_REPORT" Location="146,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.showOpportunityReports" icon="chart.png"/>
+        <button name="historyOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="180,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.historyOpportunity" icon="historysearch.png"/>
+        <button name="mailOpportunity" i18ntooltip="EBI_LANG_C_TOOL_TIP_MAIL_RECORD" Location="217,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.mailOpportunity" icon="mail.png"/>
+        <button name="createOffer" i18ntooltip="EBI_LANG_C_TOOL_TIP_CREATE_OFFER" Location="255,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMOpportunityView.createOffer" icon="move.png"/>
+        
+        <textfield name="filterTableText" Location="320,23" Size="250,30" placeHolder="EBI_LANG_FILTER" resizeWidth="true"/>
+    </panel>
 </visualpanel>

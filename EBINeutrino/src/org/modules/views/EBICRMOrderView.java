@@ -46,7 +46,6 @@ public class EBICRMOrderView {
     private int selectedProductRow = -1;
 
     public void initializeAction() {
-        EBISystem.gui().label("filterTable", "Order").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Order").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {

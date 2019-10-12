@@ -70,7 +70,6 @@ public class EBICRMCampaignView {
 
     public void initializeAction() {
 
-        EBISystem.gui().label("filterTable", "Campaign").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Campaign").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {

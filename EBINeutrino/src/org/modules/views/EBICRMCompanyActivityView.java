@@ -53,7 +53,7 @@ public class EBICRMCompanyActivityView implements ChangeListener {
                 setModel(new DefaultComboBoxModel(new String[]{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"),
             "5 min", "10 min", "15 min", "20 min", "25 min", "30 min", "35 min", "40 min", "50 min", "60 min"}));
 
-        EBISystem.gui().label("filterTable", "Activity").setHorizontalAlignment(SwingConstants.RIGHT);
+        
         EBISystem.gui().textField("filterTableText", "Activity").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {

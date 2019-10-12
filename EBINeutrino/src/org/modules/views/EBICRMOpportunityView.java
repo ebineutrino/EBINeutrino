@@ -58,7 +58,6 @@ public class EBICRMOpportunityView {
     private int selectedDocRow = -1;
 
     public void initializeAction() {
-        EBISystem.gui().label("filterTable", "Opportunity").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Opportunity").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {

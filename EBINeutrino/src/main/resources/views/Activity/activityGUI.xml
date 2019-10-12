@@ -23,7 +23,7 @@
         <panel name="colorPanel" Location="212,110" Size="29,25"/>
 
         <button name="selectColor" title="EBI_LANG_CHOOS_COLOR" Location="245,111" Size="166,25"
-                            actionListener="org.modules.views.EBICRMCompanyActivityView.selectColorDialog"/>
+                actionListener="org.modules.views.EBICRMCompanyActivityView.selectColorDialog"/>
 
         <label name="timerStart" title="EBI_LANG_TIMER_START" Location="10,170" Size="105,25"/>
         <checkbox name="timerActiveBox" title="EBI_LANG_TIMER_DISABLED" background="#ff0000" Location="260,170" Size="148,25"/>
@@ -38,7 +38,6 @@
         <button name="historyActivity" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="151,30" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMCompanyActivityView.historySearch" icon="historysearch.png"/>
 
         <table name="tableActivity" min="1" resizewidth="true" resizeheight="true" Location="8,70" Size="860,254"/>
-        <label name="filterTable" title="EBI_LANG_FILTER" Location="240,30" Size="77,25"/>
-        <textfield name="filterTableText" Location="330,30" Size="260,25"/>
+        <textfield name="filterTableText" Location="220,28" Size="260,30" placeHolder="EBI_LANG_FILTER" resizeWidth="true"/>
     </panel>
 </visualpanel>

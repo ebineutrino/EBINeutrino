@@ -52,7 +52,6 @@ public class EBICRMSummaryView {
             EBISystem.i18n("EBI_LANG_C_TAB_INVOICE"), EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN"),
             EBISystem.i18n("EBI_LANG_C_TAB_PROSOL")}));
 
-        EBISystem.gui().label("filterTable", "Summary").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Summary").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {

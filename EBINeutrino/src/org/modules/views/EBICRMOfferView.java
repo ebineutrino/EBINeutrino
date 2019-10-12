@@ -57,7 +57,6 @@ public class EBICRMOfferView {
     private int selectedOfferRow = -1;
 
     public void initializeAction() {
-        EBISystem.gui().label("filterTable", "Offer").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Offer").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {

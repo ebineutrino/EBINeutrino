@@ -37,7 +37,6 @@
         <button name="copyContact"  i18ntooltip="EBI_LANG_C_TOOL_TIP_COPY_RECORD" Location="75,35" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMContactView.copyContact" icon="editcopy.png" />
         <button name="deleteContact"  i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="111,35" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMContactView.deleteContact" icon="delete.png"/>
         <button name="historyContact"  i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="147,35" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMContactView.historyContact" icon="historysearch.png"/>
-        <label name="filterTable"  title="EBI_LANG_FILTER" Location="200,35" Size="77,23"/>
-        <textfield name="filterTableText"  Location="285,35" Size="265,25"/>
+        <textfield name="filterTableText"  Location="200,33" Size="265,30" placeHolder="EBI_LANG_FILTER" resizeWidth="true"/>
     </panel>
 </visualpanel>

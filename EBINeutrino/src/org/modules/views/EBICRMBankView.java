@@ -28,8 +28,6 @@ public class EBICRMBankView {
     private int selectedRow = -1;
 
     public void initializeAction() {
-
-        EBISystem.gui().label("filterTable", "Bank").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Bank").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {

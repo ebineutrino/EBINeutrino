@@ -47,7 +47,6 @@ public class EBICRMProblemSolutionView {
 
     public void initializeAction() {
 
-        EBISystem.gui().label("filterTable", "Prosol").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().textField("filterTableText", "Prosol").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {

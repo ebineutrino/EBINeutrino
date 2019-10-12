@@ -20,7 +20,6 @@
         <button name="newServiceDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_ADD_NEW_DOC" Location="8,20" Size="31,27" actionListener="org.modules.views.EBICRMServiceView.newDocs" icon="new.png"/>
         <button name="showServiceDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_DOC" Location="45,20" Size="31,27" actionListener="org.modules.views.EBICRMServiceView.showDocs" icon="move_up.png"/>
         <button name="deleteServiceDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_DOC" Location="80,20" Size="31,27" actionListener="org.modules.views.EBICRMServiceView.deleteDocs" icon="delete.png"/>
-
     </panel>
     <panel name="serviceProduct" title="EBI_LANG_C_PANEL_POSITION_PRODUCT" resizewidth="true" Location="405,173" Size="593,190">
         <table name="tableServiceProduct" resizewidth="true" resizeheight="true" Location="8,50" Size="575,135"/>
@@ -47,7 +46,6 @@
         <button name="historyService" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="200,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMServiceView.historyService" icon="historysearch.png"/>
         <button name="createInvoice" i18ntooltip="EBI_LANG_C_TOOL_TIP_CREATE_INVOICE" Location="250,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMServiceView.createInvoice" icon="pexport_min.png"/>
 
-        <label name="filterTable" title="EBI_LANG_FILTER" Location="340,20" Size="77,23"/>
-        <textfield name="filterTableText" Location="427,20" Size="300,25"/>
+        <textfield name="filterTableText" Location="315,18" Size="260,30" placeHolder="EBI_LANG_FILTER" resizeWidth="true" />
     </panel>
 </visualpanel>

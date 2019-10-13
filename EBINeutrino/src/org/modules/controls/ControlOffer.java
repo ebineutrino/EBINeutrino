@@ -109,9 +109,10 @@ public class ControlOffer {
             }
 
             EBISystem.getInstance().getDataStore("Offer", "ebiSave");
-            EBISystem.getInstance().getCompany().getCompanyoffers().add(compOffer);
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
 
+            EBISystem.getInstance().getCompany().getCompanyoffers().add(compOffer);
+            
             if (!isEdit) {
                 EBISystem.gui().vpanel("Offer").setID(compOffer.getOfferid());
             }
@@ -224,8 +225,8 @@ public class ControlOffer {
                     }
                 }
 
-                EBISystem.getInstance().getCompany().getCompanyoffers().add(ofnew);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                EBISystem.getInstance().getCompany().getCompanyoffers().add(ofnew);
                 offerID = ofnew.getOfferid();
             }
         } catch (final Exception ex) {
@@ -399,17 +400,13 @@ public class ControlOffer {
     }
 
     public void dataShow(Integer id) {
-
         int srow = EBISystem.gui().table("companyOfferTable", "Offer").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyoffers().size();
-
         if (size > 0) {
             EBISystem.getModule().getOfferPane().getTabModoffer().data = new Object[size][8];
             final Iterator<Companyoffer> iter = EBISystem.getInstance().getCompany().getCompanyoffers().iterator();
-
             int i = 0;
             while (iter.hasNext()) {
-
                 final Companyoffer cOffer = iter.next();
                 EBISystem.getModule().getOfferPane().getTabModoffer().data[i][0] = cOffer.getName() == null ? "" : cOffer.getName();
                 EBISystem.getModule().getOfferPane().getTabModoffer().data[i][1] = cOffer.getOfferdate() == null ? "" : EBISystem.getInstance().getDateToString(cOffer.getOfferdate());
@@ -420,17 +417,18 @@ public class ControlOffer {
                 EBISystem.getModule().getOfferPane().getTabModoffer().data[i][6] = cOffer.getIsrecieved() == null ? 0 : cOffer.getIsrecieved();
                 EBISystem.getModule().getOfferPane().getTabModoffer().data[i][7] = cOffer.getOfferid();
                 if(id != -1 && id == cOffer.getOfferid()){
-                    srow = i;
+                    srow = EBISystem.gui().table("companyOfferTable", "Offer").convertRowIndexToView(i);
                 }
                 i++;
             }
-
         } else {
             EBISystem.getModule().getOfferPane().getTabModoffer().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
         }
 
         EBISystem.getModule().getOfferPane().getTabModoffer().fireTableDataChanged();
-        EBISystem.gui().table("companyOfferTable", "Offer").changeSelection(srow, 0, false, false);
+        if(srow > -1){
+            EBISystem.gui().table("companyOfferTable", "Offer").changeSelection(srow, 0, false, false);
+        }
     }
 
     public Hashtable<String, Double> getTaxName(final int id) {

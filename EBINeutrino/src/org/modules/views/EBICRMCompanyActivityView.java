@@ -262,6 +262,7 @@ public class EBICRMCompanyActivityView implements ChangeListener {
         dataControlActivity.dataEdit(id);
         dataControlActivity.dataShow(id);
         dataControlActivity.dataShowDoc();
+        dataControlActivity.isEdit = true;
     }
 
     public boolean saveActivity() {

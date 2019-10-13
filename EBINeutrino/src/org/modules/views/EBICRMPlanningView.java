@@ -429,6 +429,7 @@ public class EBICRMPlanningView {
         Integer id = dataControlProject.dataCopy(Integer.parseInt(model.data[selectedProjectRow][9].toString()));
         dataControlProject.dataEdit(id);
         dataControlProject.dataShow(id);
+        dataControlProject.isEdit = true;
     }
 
     public void deleteProject() {

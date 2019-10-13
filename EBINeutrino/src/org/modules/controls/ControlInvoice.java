@@ -268,7 +268,7 @@ public class ControlInvoice {
                     model.data[i][8] = inv.getDate() == null ? "" : EBISystem.getInstance().getDateToString(inv.getDate());
                     model.data[i][9] = inv.getInvoiceid();
                     if(showID != -1 && showID == inv.getInvoiceid()){
-                        srow = i;
+                        srow = EBISystem.gui().table("tableTotalInvoice", "Invoice").convertRowIndexToView(i);
                     }
                     i++;
                 }
@@ -280,7 +280,9 @@ public class ControlInvoice {
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
-        EBISystem.gui().table("tableTotalInvoice", "Invoice").changeSelection(srow, 0, false, false);
+        if(srow > -1){
+            EBISystem.gui().table("tableTotalInvoice", "Invoice").changeSelection(srow, 0, false, false);
+        }
     }
 
     public Hashtable<String, Double> getTaxName(final int id) {

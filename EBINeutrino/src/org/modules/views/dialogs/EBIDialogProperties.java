@@ -312,19 +312,17 @@ public class EBIDialogProperties {
     }
 
     private void saveProductProperties() {
-
         if (!isEdit) {
             dimension = new Crmproductdimension();
             dimension.setDimensionid((product.getCrmproductdimensions().size() +1) * -1);
         }
-
         dimension.setCrmproduct(EBISystem.getModule().getEBICRMProductPane().getDataControlProduct().getProduct());
         dimension.setCreateddate(new Date());
         dimension.setCreatedfrom(EBISystem.ebiUser);
         dimension.setName(EBISystem.gui().combo("propertiesText","propertiesDialog").getSelectedItem().toString());
         dimension.setValue(EBISystem.gui().textArea("propertiesValueText","propertiesDialog").getText());
         product.getCrmproductdimensions().add(dimension);
-        EBISystem.getModule().getEBICRMProductPane().showDependency();
+        EBISystem.getModule().getEBICRMProductPane().showDimension();
 
         EBISystem.gui().textArea("propertiesValueText","propertiesDialog").setText("");
         EBISystem.gui().combo("propertiesText","propertiesDialog").setSelectedIndex(0);

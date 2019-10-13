@@ -107,9 +107,10 @@ public class ControlOrder {
             }
 
             EBISystem.getInstance().getDataStore("Order", "ebiSave");
-            EBISystem.getInstance().getCompany().getCompanyorders().add(compOrder);
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
 
+            EBISystem.getInstance().getCompany().getCompanyorders().add(compOrder);
+            
             if (!isEdit) {
                 EBISystem.gui().vpanel("Order").setID(compOrder.getOrderid());
             }
@@ -222,8 +223,8 @@ public class ControlOrder {
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(r);
                     }
                 }
-                EBISystem.getInstance().getCompany().getCompanyorders().add(ordnew);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                EBISystem.getInstance().getCompany().getCompanyorders().add(ordnew);
                 orderID = ordnew.getOrderid();
             }
         } catch (final Exception e) {
@@ -487,7 +488,7 @@ public class ControlOrder {
                 EBISystem.getModule().getOrderPane().getTabModOrder().data[i][6] = order.getIsrecieved() == null ? 0 : order.getIsrecieved();
                 EBISystem.getModule().getOrderPane().getTabModOrder().data[i][7] = order.getOrderid();
                 if(id != -1 && id == order.getOrderid()){
-                    srow = i;
+                    srow = EBISystem.gui().table("companyorderTable", "Order").convertRowIndexToView(i);
                 }
                 i++;
             }
@@ -496,7 +497,9 @@ public class ControlOrder {
                     = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
         }
         EBISystem.getModule().getOrderPane().getTabModOrder().fireTableDataChanged();
-        EBISystem.gui().table("companyorderTable", "Order").changeSelection(srow, 0, false, false);
+        if(srow > -1){
+            EBISystem.gui().table("companyorderTable", "Order").changeSelection(srow, 0, false, false);
+        }
     }
 
     public Hashtable<String, Double> getTaxName(final int id) {

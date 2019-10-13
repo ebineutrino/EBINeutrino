@@ -60,7 +60,6 @@ public class ControlMeetingProtocol {
                     if (cont.getMeetingcontactid() != null && cont.getMeetingcontactid() < 0) {
                         cont.setMeetingcontactid(null);
                     }
-                    meetingProtocol.getCompanymeetingcontactses().add(cont);
                     EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(cont);
                 }
             }
@@ -73,14 +72,15 @@ public class ControlMeetingProtocol {
                     if (doc.getMeetingdocid() != null && doc.getMeetingdocid() < 0) {
                         doc.setMeetingdocid(null);
                     }
-                    meetingProtocol.getCompanymeetingdocs().add(doc);
                     EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(doc);
                 }
             }
 
             EBISystem.getInstance().getDataStore("MeetingCall", "ebiSave");
-            EBISystem.getInstance().getCompany().getCompanymeetingprotocols().add(meetingProtocol);
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+            
+            EBISystem.getInstance().getCompany().getCompanymeetingprotocols().add(meetingProtocol);
+            
             if (!isEdit) {
                 EBISystem.gui().vpanel("MeetingCall").setID(meetingProtocol.getMeetingprotocolid());
             }
@@ -96,7 +96,7 @@ public class ControlMeetingProtocol {
     public Integer dataCopy(final int id) {
 
         Integer meetingID = -1;
-        
+
         try {
             if (EBISystem.getInstance().getCompany().getCompanymeetingprotocols().size() > 0) {
                 Companymeetingprotocol mProtocol = null;
@@ -167,10 +167,9 @@ public class ControlMeetingProtocol {
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(cdc);
                     }
                 }
-
-                EBISystem.getInstance().getCompany().getCompanymeetingprotocols().add(mPro);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-                meetingID=mPro.getMeetingprotocolid();
+                EBISystem.getInstance().getCompany().getCompanymeetingprotocols().add(mPro);
+                meetingID = mPro.getMeetingprotocolid();
             }
         } catch (final HibernateException e) {
             e.printStackTrace();
@@ -182,7 +181,8 @@ public class ControlMeetingProtocol {
 
     public void dataEdit(final int id) {
         if (EBISystem.getInstance().getCompany().getCompanymeetingprotocols().size() > 0) {
-            for (Companymeetingprotocol metObj : EBISystem.getInstance().getCompany().getCompanymeetingprotocols()) {
+            for (Companymeetingprotocol metObj :
+                    EBISystem.getInstance().getCompany().getCompanymeetingprotocols()) {
                 if (metObj.getMeetingprotocolid() == id) {
                     meetingProtocol = metObj;
                     break;
@@ -249,8 +249,8 @@ public class ControlMeetingProtocol {
                 EBISystem.getModule().getMeetingProtocol().getTableModel().data[i][2] = obj.getMeetingtype() == null ? "" : obj.getMeetingtype();
                 EBISystem.getModule().getMeetingProtocol().getTableModel().data[i][3] = obj.getProtocol() == null ? "" : obj.getProtocol();
                 EBISystem.getModule().getMeetingProtocol().getTableModel().data[i][4] = obj.getMeetingprotocolid();
-                if(id != -1  && id == obj.getMeetingprotocolid()){
-                    srow = i;
+                if (id != -1 && id == obj.getMeetingprotocolid()) {
+                    srow = EBISystem.gui().table("companyMeetings", "MeetingCall").convertRowIndexToView(i);
                 }
                 i++;
             }
@@ -258,7 +258,9 @@ public class ControlMeetingProtocol {
             EBISystem.getModule().getMeetingProtocol().getTableModel().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", ""}};
         }
         EBISystem.getModule().getMeetingProtocol().getTableModel().fireTableDataChanged();
-        EBISystem.gui().table("companyMeetings", "MeetingCall").changeSelection(srow, 0, false, false);
+        if(srow > -1){
+            EBISystem.gui().table("companyMeetings", "MeetingCall").changeSelection(srow, 0, false, false);
+        }
     }
 
     public void dataShowReport(final int id) {

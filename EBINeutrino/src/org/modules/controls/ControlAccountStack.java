@@ -76,8 +76,6 @@ public class ControlAccountStack {
                 }
             }
 
-            // todo this???
-            // storeActualCredit(EBISystem.getGUIRenderer().getTextfield("creditText","Account").getText(),creditValue);
             EBISystem.hibernate().session("EBIACCOUNT_SESSION").saveOrUpdate(actStack);
             EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").commit();
             acccoundID = actStack.getAcstackid();
@@ -224,7 +222,7 @@ public class ControlAccountStack {
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][6] = act.getAccountCredit() == null ? "" : act.getAccountCredit();
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][7] = act.getAcstackid();
                     if(id != -1 && id == act.getAcstackid()){
-                        srow = i;
+                        srow = EBISystem.gui().table("accountTable", "Account").convertRowIndexToView(i);
                     }
                     i++;
                 }
@@ -237,8 +235,10 @@ public class ControlAccountStack {
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
-
-        EBISystem.gui().table("accountTable", "Account").changeSelection(srow, 0, false, false);
+        
+        if(srow > -1){
+            EBISystem.gui().table("accountTable", "Account").changeSelection(srow, 0, false, false);
+        }
     }
 
     public void dataShowReport() {

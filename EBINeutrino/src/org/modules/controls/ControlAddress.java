@@ -50,6 +50,7 @@ public class ControlAddress {
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
 
             EBISystem.getInstance().getCompany().getCompanyaddresses().add(address);
+            
             if (!isEdit) {
                 EBISystem.gui().vpanel("Address").setID(address.getAddressid());
             }
@@ -88,9 +89,10 @@ public class ControlAddress {
                 adrsn.setPbox(adrs.getPbox());
                 adrsn.setCountry(adrs.getCountry());
 
-                EBISystem.getInstance().getCompany().getCompanyaddresses().add(adrsn);
                 EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(adrsn);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                
+                EBISystem.getInstance().getCompany().getCompanyaddresses().add(adrsn);
                 addressID = adrsn.getAddressid();
             }
         } catch (final Exception ex) {
@@ -168,7 +170,7 @@ public class ControlAddress {
                 EBISystem.getModule().getAddressPane().getTabModel().data[i][5] = obj.getCountry() == null ? "" : obj.getCountry();
                 EBISystem.getModule().getAddressPane().getTabModel().data[i][6] = obj.getAddressid();
                 if(id != -1 && id == obj.getAddressid()){
-                    srow = i;
+                    srow = EBISystem.gui().table("companyAddess", "Address").convertRowIndexToView(i);
                 }
                 i++;
             }
@@ -181,7 +183,10 @@ public class ControlAddress {
             EBISystem.getModule().getCompanyPane().getTabModel().data = EBISystem.getModule().getAddressPane().getTabModel().data;
             EBISystem.getModule().getCompanyPane().getTabModel().fireTableDataChanged();
         }
-        EBISystem.gui().table("companyAddess", "Address").changeSelection(srow, 0, false, false);
+        
+        if(srow > -1){
+            EBISystem.gui().table("companyAddess", "Address").changeSelection(srow, 0, false, false);
+        }
     }
 
     public void dataNew() {

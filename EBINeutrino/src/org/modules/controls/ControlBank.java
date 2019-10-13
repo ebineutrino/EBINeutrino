@@ -46,9 +46,11 @@ public class ControlBank {
             companyBank.setBankcountry(EBISystem.gui().textField("countryBankText", "Bank").getText());
 
             EBISystem.getInstance().getDataStore("Bank", "ebiSave");
-            EBISystem.getInstance().getCompany().getCompanybanks().add(companyBank);
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(companyBank);
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+            
+            EBISystem.getInstance().getCompany().getCompanybanks().add(companyBank);
+            
             if (!isEdit) {
                 EBISystem.gui().vpanel("Bank").setID(companyBank.getBankid());
             }
@@ -71,6 +73,7 @@ public class ControlBank {
                         bank = bankObj;
                     }
                 }
+                
                 EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
                 final Companybank compbank = new Companybank();
                 compbank.setCreateddate(new Date());
@@ -83,11 +86,12 @@ public class ControlBank {
                 compbank.setBankbic(bank.getBankbic());
                 compbank.setBankiban(bank.getBankiban());
                 compbank.setBankcountry(bank.getBankcountry());
-
-                EBISystem.getInstance().getCompany().getCompanybanks().add(compbank);
+                
                 EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(compbank);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-                bankID = bank.getBankid();
+                
+                EBISystem.getInstance().getCompany().getCompanybanks().add(compbank);
+                bankID = compbank.getBankid();
             }
         } catch (final HibernateException e) {
             e.printStackTrace();
@@ -171,19 +175,21 @@ public class ControlBank {
                 EBISystem.getModule().getBankdataPane().getTabModel().data[i][4] = obj.getBankiban() == null ? "" : obj.getBankiban();
                 EBISystem.getModule().getBankdataPane().getTabModel().data[i][5] = obj.getBankcountry() == null ? "" : obj.getBankcountry();
                 EBISystem.getModule().getBankdataPane().getTabModel().data[i][6] = obj.getBankid();
-                if(id != -1 && id == obj.getBankid()){
+                if (id != -1 && id == obj.getBankid()) {
                     srow = i;
                 }
                 i++;
             }
 
         } else {
-            EBISystem.getModule().getBankdataPane().getTabModel().data 
+            EBISystem.getModule().getBankdataPane().getTabModel().data
                     = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", ""}};
         }
 
         EBISystem.getModule().getBankdataPane().getTabModel().fireTableDataChanged();
-        EBISystem.gui().table("companyBankTable", "Bank").changeSelection(srow, 0, false, false);
+        if(srow > -1){
+            EBISystem.gui().table("companyBankTable", "Bank").changeSelection(srow, 0, false, false);
+        }
     }
 
     public void dataNew() {

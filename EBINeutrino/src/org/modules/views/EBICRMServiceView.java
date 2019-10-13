@@ -357,6 +357,7 @@ public class EBICRMServiceView {
         dataControlService.dataShowDoc();
         dataControlService.dataShowProduct();
         dataControlService.dataShowProblemSolution();
+        dataControlService.isEdit = true;
     }
 
     public void deleteService() {

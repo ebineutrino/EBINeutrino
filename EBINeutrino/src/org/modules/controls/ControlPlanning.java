@@ -372,7 +372,7 @@ public class ControlPlanning {
                     tabMod.data[i][8] = "";
                     tabMod.data[i][9] = pro.getProjectid();
                     if(id != -1 && id == pro.getProjectid()){
-                        srow = i;
+                        srow = EBISystem.gui().table("projectTable", "Project").convertRowIndexToView(i);
                     }
                     i++;
                 }
@@ -385,7 +385,9 @@ public class ControlPlanning {
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        EBISystem.gui().table("projectTable", "Project").changeSelection(srow, 0, false, false);
+        if(srow > -1){
+            EBISystem.gui().table("projectTable", "Project").changeSelection(srow, 0, false, false);
+        }
     }
 
     public void dataShowReport(final int id, final String name) {

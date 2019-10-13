@@ -331,6 +331,7 @@ public class EBICRMOrderView {
         dataControlOrder.dataShowProduct();
         dataControlOrder.dataShowDoc();
         dataControlOrder.dataShowReceiver();
+        dataControlOrder.isEdit = true;
     }
 
     public void editOrder() {

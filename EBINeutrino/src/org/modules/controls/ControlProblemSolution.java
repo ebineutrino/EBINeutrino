@@ -281,7 +281,7 @@ public class ControlProblemSolution {
                         EBISystem.getModule().getProsolPane().getTabModProsol().data[i][6] = set.getString("DESCRIPTION") == null ? "" : set.getString("DESCRIPTION");
                         EBISystem.getModule().getProsolPane().getTabModProsol().data[i][7] = set.getInt("PROSOLID");
                         if(id != -1 && id == set.getInt("PROSOLID")){
-                            srow = i;
+                            srow = EBISystem.gui().table("prosolTable", "Prosol").convertRowIndexToView(i);
                         }
                         i++;
                     }
@@ -305,7 +305,9 @@ public class ControlProblemSolution {
             }
             EBISystem.getModule().getProsolPane().getTabModProsol().fireTableDataChanged();
         }
-        EBISystem.gui().table("prosolTable", "Prosol").changeSelection(srow, 0, false, false);
+        if(srow > -1){
+            EBISystem.gui().table("prosolTable", "Prosol").changeSelection(srow, 0, false, false);
+        }
     }
 
     public void dataShowReport(final int id) {

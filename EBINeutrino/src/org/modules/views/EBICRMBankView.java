@@ -131,7 +131,9 @@ public class EBICRMBankView {
     }
 
     public void editBank() {
-        if ((selectedRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(tabModel.data[selectedRow][0].toString()))) {
+        if ((selectedRow < 0 
+                || EBISystem.i18n("EBI_LANG_PLEASE_SELECT")
+                        .equals(tabModel.data[selectedRow][0].toString()))) {
             return;
         }
         EBISystem.showInActionStatus("Bank");
@@ -141,13 +143,16 @@ public class EBICRMBankView {
     }
 
     public void copyBank() {
-        if ((selectedRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(tabModel.data[selectedRow][0].toString()))) {
+        if ((selectedRow < 0 
+                || EBISystem.i18n("EBI_LANG_PLEASE_SELECT")
+                        .equals(tabModel.data[selectedRow][0].toString()))) {
             return;
         }
         EBISystem.showInActionStatus("Bank");
         Integer id = bankDataControl.dataCopy(Integer.parseInt(tabModel.data[selectedRow][6].toString()));
         bankDataControl.dataEdit(id);
         bankDataControl.dataShow(id);
+        bankDataControl.setEdit(true);
     }
 
     public boolean saveBank() {

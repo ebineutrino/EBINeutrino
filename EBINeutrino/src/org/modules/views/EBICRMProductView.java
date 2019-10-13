@@ -396,6 +396,7 @@ public class EBICRMProductView {
         dataControlProduct.dataShowDependency();
         dataControlProduct.dataShowDimension();
         dataControlProduct.dataShowDoc();
+        dataControlProduct.isEdit = true;
     }
 
     public void deleteProduct() {
@@ -509,6 +510,11 @@ public class EBICRMProductView {
             dataControlProduct.dataShowDimension();
         }
     }
+    
+    public void showDimension(){
+        dataControlProduct.dataShowDimension();
+    }
+    
 
     public void showProductReport() {
         if (selectedProductRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").

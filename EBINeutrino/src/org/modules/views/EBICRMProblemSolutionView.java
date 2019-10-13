@@ -317,6 +317,7 @@ public class EBICRMProblemSolutionView {
         dataControlProsol.dataShow(id);
         dataControlProsol.dataShowDoc();
         dataControlProsol.dataShowProduct();
+        dataControlProsol.isEdit = true;
     }
 
     public void deleteprosol() {

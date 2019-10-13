@@ -199,8 +199,6 @@ public class EBIMeetingProtocolView {
         EBISystem.gui().timePicker("dateMeetingText", "MeetingCall").setDate(null);
         EBISystem.gui().timePicker("dateMeetingText", "MeetingCall").setFormats(EBISystem.DateFormat);
     }
-    
-    
 
     public boolean saveMeeting() {
         if (!validateInput()) {
@@ -217,7 +215,6 @@ public class EBIMeetingProtocolView {
         return true;
     }
 
-
     public void copyMeeting() {
         if (selectedProtocolRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                 equals(tableModel.data[selectedProtocolRow][0].toString())) {
@@ -229,8 +226,8 @@ public class EBIMeetingProtocolView {
         dataMeetingControl.dataShow(id);
         dataMeetingControl.dataShowContact();
         dataMeetingControl.dataShowDoc();
+        dataMeetingControl.isEdit = true;
     }
-
 
     public void editMeeting() {
         if (selectedProtocolRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").

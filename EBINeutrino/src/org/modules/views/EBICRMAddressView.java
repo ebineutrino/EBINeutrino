@@ -163,6 +163,7 @@ public class EBICRMAddressView {
         Integer id = addressDataControl.dataCopy(Integer.parseInt(tabModel.data[selectedRow][6].toString()));
         addressDataControl.dataEdit(id);
         addressDataControl.dataShow(id);
+        addressDataControl.isEdit = true;
     }
 
     public void deleteAddress() {

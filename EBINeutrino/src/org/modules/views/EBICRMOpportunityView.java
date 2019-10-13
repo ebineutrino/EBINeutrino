@@ -431,6 +431,7 @@ public class EBICRMOpportunityView {
         dataOpportuniyControl.dataShow(id);
         dataOpportuniyControl.showOpportunityContacts();
         dataOpportuniyControl.dataShowDoc();
+        dataOpportuniyControl.isEdit = true;
     }
 
     public void deleteOpportunity() {

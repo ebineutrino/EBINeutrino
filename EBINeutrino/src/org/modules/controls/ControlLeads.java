@@ -177,7 +177,7 @@ public class ControlLeads {
                     co.setMobile(coc.getMobile());
                     co.setFax(coc.getFax());
                     co.setEmail(coc.getEmail());
-                    cp.getCompanycontactses().add(contact);
+                    cp.getCompanycontactses().add(co);
                     EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(co);
                 }
 
@@ -193,7 +193,7 @@ public class ControlLeads {
                     ad.setLocation(adc.getLocation());
                     ad.setStreet(adc.getStreet());
                     ad.setCountry(adc.getCountry());
-                    cp.getCompanyaddresses().add(address);
+                    cp.getCompanyaddresses().add(ad);
                     EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(ad);
                 }
 
@@ -366,7 +366,7 @@ public class ControlLeads {
                         EBISystem.getModule().getLeadPane().getTabModel().data[i][12] = set.getString("COMPANYCONTACTS.CONTACTID") == null ? "" : set.getString("COMPANYCONTACTS.CONTACTID");
                         EBISystem.getModule().getLeadPane().getTabModel().data[i][13] = set.getString("COMPANYADDRESS.ADDRESSID") == null ? "" : set.getString("COMPANYADDRESS.ADDRESSID");
                         if(id != -1 && id == set.getInt("COMPANY.COMPANYID") ){
-                            srow = i;
+                            srow = EBISystem.gui().table("leadsTable", "Leads").convertRowIndexToView(i);
                         }
                         i++;
                     }
@@ -391,7 +391,10 @@ public class ControlLeads {
                 }
             }
         }
-        EBISystem.gui().table("leadsTable", "Leads").changeSelection(srow, 0, false, false);
+        
+        if(srow > -1){
+            EBISystem.gui().table("leadsTable", "Leads").changeSelection(srow, 0, false, false);
+        }
     }
 
     public void dataShow(String searchText) {

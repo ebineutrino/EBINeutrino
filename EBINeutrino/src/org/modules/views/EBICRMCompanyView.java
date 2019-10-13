@@ -51,7 +51,8 @@ public class EBICRMCompanyView {
         EBISystem.gui().combo("categoryText", "Company").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                if (!EBISystem.gui().combo("categoryText", "Company").getSelectedItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
+                if (!EBISystem.gui().combo("categoryText", "Company")
+                        .getSelectedItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
                     if (!EBIModule.isExistCompany) {
                         final Object[] obj = EBISystem.getModule().dynMethod.getInternNumber(EBISystem.gui().combo("categoryText", "Company").getSelectedItem().toString(), false);
                         EBISystem.getModule().beginChar = obj[1].toString();

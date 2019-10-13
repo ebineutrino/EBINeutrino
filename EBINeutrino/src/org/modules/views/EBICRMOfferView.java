@@ -325,6 +325,7 @@ public class EBICRMOfferView {
         dataControlOffer.dataShowDoc();
         dataControlOffer.dataShowProduct();
         dataControlOffer.dataShowReceiver();
+        dataControlOffer.isEdit = true;
     }
 
     public boolean saveOffer() {

@@ -76,14 +76,15 @@ public class ControlContact {
             }
 
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+            EBISystem.getInstance().getCompany().getCompanycontactses().add(contact);
+            
             contactID = contact.getContactid();
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
 
-        EBISystem.getInstance().getCompany().getCompanycontactses().add(contact);
-
-        if (contact != null && contact.getCompany() != null && contact.getCompany().getIsactual() != null && contact.getCompany().getIsactual()) {
+        if (contact != null && contact.getCompany() != null
+                && contact.getCompany().getIsactual() != null && contact.getCompany().getIsactual()) {
             EBISystem.getInstance().loadStandardCompanyData();
         }
 
@@ -145,9 +146,10 @@ public class ControlContact {
                 }
 
                 EBISystem.getInstance().getDataStore("Contact", "ebiSave");
-                EBISystem.getInstance().getCompany().getCompanycontactses().add(conx);
                 EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(conx);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                
+                EBISystem.getInstance().getCompany().getCompanycontactses().add(conx);
                 contactID = conx.getContactid();
             }
         } catch (final Exception ex) {
@@ -259,12 +261,13 @@ public class ControlContact {
                 EBISystem.getModule().getContactPane().getTableModel().data[i][7] = obj.getDescription() == null ? "" : obj.getDescription();
                 EBISystem.getModule().getContactPane().getTableModel().data[i][EBISystem.getModule().getContactPane().getTableModel().columnNames.length] = obj.getContactid();
                 if(id != -1 && id == obj.getContactid()){
-                    srow = i;
+                    srow = EBISystem.gui().table("companyContacts", "Contact").convertRowIndexToView(i);
                 }
                 i++;
             }
         } else {
-            EBISystem.getModule().getContactPane().getTableModel().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", ""}};
+            EBISystem.getModule().getContactPane().getTableModel().data 
+                    = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", ""}};
         }
 
         if (EBISystem.getModule().getCompanyPane() != null) {
@@ -273,7 +276,9 @@ public class ControlContact {
         }
 
         EBISystem.getModule().getContactPane().getTableModel().fireTableDataChanged();
-        EBISystem.gui().table("companyContacts", "Contact").changeSelection(srow, 0, false, false);
+        if(srow > -1){
+            EBISystem.gui().table("companyContacts", "Contact").changeSelection(srow, 0, false, false);
+        }
     }
 
     public void dataNew() {

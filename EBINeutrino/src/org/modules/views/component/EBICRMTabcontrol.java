@@ -14,7 +14,6 @@ public class EBICRMTabcontrol implements CloseableTabbedPaneListener {
     public void setTabPanels(final boolean enableTab) {
         try {
             final JTabbedPane cls = EBISystem.getInstance().getIEBIContainerInstance().getTabInstance();
-
             if (!enableTab && companyPOSID != -1) {
                 EBISystem.getInstance().getIEBIContainerInstance().getTabInstance().setTitleAt(companyPOSID, EBISystem.i18n("EBI_LANG_C_COMPANY"));
             }

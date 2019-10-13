@@ -329,7 +329,7 @@ public class ControlProduct {
                         EBISystem.getModule().getEBICRMProductPane().getProductModel().data[i][4] = set.getString("DESCRIPTION") == null ? "" : set.getString("DESCRIPTION");
                         EBISystem.getModule().getEBICRMProductPane().getProductModel().data[i][5] = set.getInt("PRODUCTID");
                         if(id != -1 && id == set.getInt("PRODUCTID")){
-                            srow=i;
+                            srow= EBISystem.gui().table("companyProductTable", "Product").convertRowIndexToView(i);
                         }
                         i++;
                     }
@@ -354,7 +354,10 @@ public class ControlProduct {
             }
             EBISystem.getModule().getEBICRMProductPane().getProductModel().fireTableDataChanged();
         }
-        EBISystem.gui().table("companyProductTable", "Product").changeSelection(srow, 0, false, false);
+        
+        if(srow > -1){
+            EBISystem.gui().table("companyProductTable", "Product").changeSelection(srow, 0, false, false);
+        }
     }
 
     public void dataShowReport(final int id) {

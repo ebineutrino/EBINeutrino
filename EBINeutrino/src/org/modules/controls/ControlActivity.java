@@ -98,11 +98,11 @@ public class ControlActivity {
             }
 
             EBISystem.getInstance().getDataStore("Activity", "ebiSave");
-            EBISystem.getInstance().getCompany().getCompanyactivitieses().add(companyActivity);
-
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
             EBISystem.getModule().allertTimer.setUpAvailableTimer();
 
+            EBISystem.getInstance().getCompany().getCompanyactivitieses().add(companyActivity);
+            
             if (!isEdit) {
                 EBISystem.gui().vpanel("Activity").setID(companyActivity.getActivityid());
             }
@@ -163,9 +163,10 @@ public class ControlActivity {
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(cd);
                     }
                 }
-
-                EBISystem.getInstance().getCompany().getCompanyactivitieses().add(compAct);
+                
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                
+                EBISystem.getInstance().getCompany().getCompanyactivitieses().add(compAct);
                 activityID = compAct.getActivityid();
             }
         } catch (final HibernateException e) {
@@ -320,7 +321,7 @@ public class ControlActivity {
                     EBISystem.getModule().getActivitiesPane().getTabModel().data[i][6] = act.getActivitydescription() == null ? "" : act.getActivitydescription();
                     EBISystem.getModule().getActivitiesPane().getTabModel().data[i][7] = act.getActivityid();
                     if(id != -1 && id == act.getActivityid()){
-                        srow = i;
+                        srow = EBISystem.gui().table("tableActivity", "Activity").convertRowIndexToView(i);
                     }
                     i++;
                 }
@@ -329,7 +330,11 @@ public class ControlActivity {
             }
 
             EBISystem.getModule().getActivitiesPane().getTabModel().fireTableDataChanged();
-            EBISystem.gui().table("tableActivity", "Activity").changeSelection(srow, 0, false, false);
+            
+            if(srow > -1){
+                EBISystem.gui().table("tableActivity", "Activity").changeSelection(srow, 0, false, false);
+            }
+            
         } catch (final Exception e) {
             e.printStackTrace();
         }

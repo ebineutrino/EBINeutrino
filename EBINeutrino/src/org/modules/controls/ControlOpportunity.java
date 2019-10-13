@@ -32,7 +32,7 @@ public class ControlOpportunity {
 
     public Integer dataStore() {
 
-        Integer opportunityID=-1;
+        Integer opportunityID = -1;
 
         try {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
@@ -116,8 +116,10 @@ public class ControlOpportunity {
                 }
             }
             EBISystem.getInstance().getDataStore("Opportunity", "ebiSave");
-            EBISystem.getInstance().getCompany().getCompanyopportunities().add(opportunity);
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+            
+            EBISystem.getInstance().getCompany().getCompanyopportunities().add(opportunity);
+            
             if (!isEdit) {
                 EBISystem.gui().vpanel("Opportunity").setID(opportunity.getOpportunityid());
             }
@@ -219,11 +221,10 @@ public class ControlOpportunity {
                     }
                 }
 
-                EBISystem.getInstance().getCompany().getCompanyopportunities().add(opnew);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-                
-                oppID = opnew.getOpportunityid();
+                EBISystem.getInstance().getCompany().getCompanyopportunities().add(opnew);
 
+                oppID = opnew.getOpportunityid();
             }
         } catch (final Exception ex) {
             ex.printStackTrace();
@@ -401,8 +402,8 @@ public class ControlOpportunity {
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][5] = obj.getIsclose() == null ? "" : obj.getIsclose();
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][6] = EBISystem.getInstance().getDateToString(obj.getClosedate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getClosedate());
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][7] = obj.getOpportunityid();
-                if(id != -1 && id == obj.getOpportunityid()){
-                    srow=i;
+                if (id != -1 && id == obj.getOpportunityid()) {
+                    srow = EBISystem.gui().table("companyOpportunityTable", "Opportunity").convertRowIndexToView(i);
                 }
                 i++;
             }
@@ -410,7 +411,9 @@ public class ControlOpportunity {
             EBISystem.getModule().getOpportunityPane().getTabModel().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
         }
         EBISystem.getModule().getOpportunityPane().getTabModel().fireTableDataChanged();
-        EBISystem.gui().table("companyOpportunityTable", "Opportunity").changeSelection(srow, 0, false, false);
+        if(srow > -1){
+            EBISystem.gui().table("companyOpportunityTable", "Opportunity").changeSelection(srow, 0, false, false);
+        }
     }
 
     public void dataShowReport(final int id) {

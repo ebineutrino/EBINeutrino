@@ -284,6 +284,7 @@ public class EBICRMLeadsView {
         Integer id = controlLeads.dataCopy(Integer.parseInt(tabModel.data[selectedRow][11].toString()));
         controlLeads.dataEdit(id);
         controlLeads.dataShow(id);
+        controlLeads.isEdit = true;
     }
 
     public void openCompany() {

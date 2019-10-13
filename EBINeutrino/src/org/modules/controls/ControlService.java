@@ -98,9 +98,10 @@ public class ControlService {
             }
 
             EBISystem.getInstance().getDataStore("Service", "ebiSave");
-            EBISystem.getInstance().getCompany().getCompanyservices().add(compService);
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
 
+            EBISystem.getInstance().getCompany().getCompanyservices().add(compService);
+            
             if (!isEdit) {
                 EBISystem.gui().vpanel("Service").setID(compService.getServiceid());
             }
@@ -198,8 +199,9 @@ public class ControlService {
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(sv);
                     }
                 }
-                EBISystem.getInstance().getCompany().getCompanyservices().add(serv);
+                
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                EBISystem.getInstance().getCompany().getCompanyservices().add(serv);
                 serviceID = serv.getServiceid();
             }
         } catch (final Exception e) {
@@ -246,8 +248,8 @@ public class ControlService {
                 EBISystem.gui().combo("serviceTypeText", "Service").setSelectedItem(compService.getType());
             }
             EBISystem.gui().textArea("serviceDescriptionText", "Service").setText(compService.getDescription());
-
             EBISystem.getInstance().getDataStore("Service", "ebiEdit");
+            
         } else {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
         }
@@ -287,7 +289,7 @@ public class ControlService {
                 EBISystem.getModule().getServicePane().getTabModService().data[i][5] = service.getDescription() == null ? "" : service.getDescription();
                 EBISystem.getModule().getServicePane().getTabModService().data[i][6] = service.getServiceid();
                 if(id != -1 && id == service.getServiceid()){
-                    srow =i;
+                    srow =EBISystem.gui().table("companyServiceTable", "Service").convertRowIndexToView(i);
                 }
                 i++;
             }
@@ -296,7 +298,9 @@ public class ControlService {
         }
 
         EBISystem.getModule().getServicePane().getTabModService().fireTableDataChanged();
-        EBISystem.gui().table("companyServiceTable", "Service").changeSelection(srow, 0, false, false);
+        if(srow > -1){
+            EBISystem.gui().table("companyServiceTable", "Service").changeSelection(srow, 0, false, false);
+        }
     }
 
     public void dataShowReport(final int id) {

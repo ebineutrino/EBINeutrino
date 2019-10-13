@@ -364,7 +364,7 @@ public class ControlCampaign {
                         EBISystem.getModule().getEBICRMCampaign().getTabModelCampaign().data[i][3] = set.getDate("VALIDTO") == null ? "" : EBISystem.getInstance().getDateToString(set.getDate("VALIDTO"));
                         EBISystem.getModule().getEBICRMCampaign().getTabModelCampaign().data[i][4] = set.getInt("CAMPAIGNID");
                         if(id != -1 && id == set.getInt("CAMPAIGNID")){
-                            srow = i;
+                            srow = EBISystem.gui().table("companyCampaignTable", "Campaign").convertRowIndexToView(i);
                         }
                         i++;
                     }
@@ -387,7 +387,10 @@ public class ControlCampaign {
                 }
             }
         }
-        EBISystem.gui().table("companyCampaignTable", "Campaign").changeSelection(srow, 0, false, false);
+        
+        if(srow > -1){
+            EBISystem.gui().table("companyCampaignTable", "Campaign").changeSelection(srow, 0, false, false);
+        }
     }
 
     public String dataShowAndMailReport(final int id, final boolean showWindow) {

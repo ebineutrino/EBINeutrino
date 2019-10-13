@@ -410,7 +410,9 @@ public class EBICRMCampaignView {
     }
 
     public void copyCampaign() {
-        if (selectedCampaignRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(tabModelCampaign.data[selectedCampaignRow][0].toString())) {
+        if (selectedCampaignRow < 0 
+                || EBISystem.i18n("EBI_LANG_PLEASE_SELECT")
+                        .equals(tabModelCampaign.data[selectedCampaignRow][0].toString())) {
             return;
         }
         EBISystem.showInActionStatus("Campaign");
@@ -421,6 +423,7 @@ public class EBICRMCampaignView {
         dataControlCampaign.dataShowProduct();
         dataControlCampaign.dataShowProperties();
         dataControlCampaign.dataShowReciever();
+        dataControlCampaign.isEdit=true;
     }
 
     public void deleteCampaign() {

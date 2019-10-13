@@ -58,12 +58,11 @@ public class EBICRMContactView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-
-                if (lsm.getMinSelectionIndex() != -1 && lsm.getMinSelectionIndex() <= tableModel.data.length) {
+                if (lsm.getMinSelectionIndex() > -1
+                        && lsm.getMinSelectionIndex() <= tableModel.data.length) {
                     selectedContactRow = EBISystem.gui().
                             table("companyContacts", "Contact").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
-
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.gui().button("editContact", "Contact").setEnabled(false);
                     EBISystem.gui().button("deleteContact", "Contact").setEnabled(false);
@@ -77,7 +76,6 @@ public class EBICRMContactView {
                 }
             }
         });
-
 
         EBISystem.gui().table("companyContacts", "Contact").addKeyAction(new EBIUICallback() {
             @Override
@@ -213,6 +211,7 @@ public class EBICRMContactView {
         controlContact.dataEdit(id);
         controlContact.dataShow(id);
         controlContact.showCompanyContactAddress();
+        controlContact.isEdit=true;
     }
 
     public void deleteContact() {

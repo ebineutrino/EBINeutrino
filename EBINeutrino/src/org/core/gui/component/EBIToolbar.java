@@ -46,44 +46,7 @@ public class EBIToolbar extends JToolBar implements IEBIToolBar {
         ebiMain.getContentPane().add(this, BorderLayout.NORTH);
 
     }
-
-    /**
-     * Add the system home button to the toolBar
-     */
-    public JButton addLogoutButton() {
-        final JButton logout = new JButton(EBISystem.getInstance().getIconResource("agt_action_fail.png"));
-        logout.setOpaque(true);
-        logout.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                if (iSecurity.checkCanReleaseModules()) {
-                    ebiMain.addLoginModul();
-                }
-            }
-        });
-
-        logout.setToolTipText("<html><body><br><b>EBI Neutrino Logout</b><br><br></body></html>");
-        return logout;
-    }
-
-    public JButton addUserSettingButton() {
-
-        final JButton usetting = new JButton(EBISystem.getInstance().getIconResource("add_userkl.png"));
-        usetting.setFocusable(false);
-        usetting.setOpaque(true);
-        usetting.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                if (iSecurity.secureModule()) {
-                    ebiMain.addUsermanagement();
-                }
-            }
-        });
-
-        usetting.setToolTipText("<html><body><br><b>" + EBISystem.i18n("EBI_LANG_USER_SETTING") + "</b><br><br></body></html>");
-        return usetting;
-    }
-
+  
     public JButton addSystemSettingButton() {
         final JButton ssetting = new JButton(EBISystem.getInstance().getIconResource("tsetting.png"));
         ssetting.setFocusable(false);
@@ -237,10 +200,6 @@ public class EBIToolbar extends JToolBar implements IEBIToolBar {
      */
     @Override
     public void showToolBar(final boolean mainWindows) {
-        if (mainWindows) {
-            getJToolBar().add(addLogoutButton());
-            getJToolBar().addSeparator(new Dimension(10, 10));
-        }
         for (int i = 0; i < buttonList.size(); i++) {
             if (buttonList.get(i) != null) {
                 if (buttonList.get(i) instanceof JComponent) {
@@ -254,7 +213,6 @@ public class EBIToolbar extends JToolBar implements IEBIToolBar {
             //Add User and System Setting
             getJToolBar().addSeparator(new Dimension(10, 10));
             if (EBISystem.getUserRight().isAdministrator()) {
-                getJToolBar().add(addUserSettingButton());
                 getJToolBar().add(addSystemSettingButton());
             }
         }

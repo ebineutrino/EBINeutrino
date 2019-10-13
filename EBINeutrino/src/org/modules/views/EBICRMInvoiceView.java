@@ -106,15 +106,21 @@ public class EBICRMInvoiceView {
         EBISystem.gui().combo("categoryText", "Invoice").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
+                
                 if (!EBISystem.gui().combo("categoryText", "Invoice").getSelectedItem()
                         .equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
+                    
                     if (!dataControlInvoice.isEdit) {
+                        
                         final Object[] obj = EBISystem.getModule().dynMethod.getInternNumber(EBISystem.gui()
                                 .combo("categoryText", "Invoice").getSelectedItem().toString(), true);
+                        
                         beginChar = obj[1].toString();
                         invoiceNr = Integer.parseInt(obj[0].toString());
+                        
                         EBISystem.gui().textField("invoiceNrText", "Invoice")
                                 .setText(obj[1].toString() + obj[0].toString());
+                        
                     }
                 }
 

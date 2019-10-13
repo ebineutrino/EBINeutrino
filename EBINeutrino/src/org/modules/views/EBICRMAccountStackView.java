@@ -398,7 +398,7 @@ public class EBICRMAccountStackView {
         }
         if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
             EBISystem.showInActionStatus("Account");
-            dataControlAccount.dataDelete(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][6].toString()));
+            dataControlAccount.dataDelete(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][7].toString()));
             dataControlAccount.dataNew();
             dataControlAccount.dataShow(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString(), -1);
             dataControlAccount.isEdit = false;
@@ -412,7 +412,7 @@ public class EBICRMAccountStackView {
         }
         EBISystem.showInActionStatus("Account");
         dataControlAccount.dataNew();
-        dataControlAccount.dataEdit(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][6].toString()));
+        dataControlAccount.dataEdit(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][7].toString()));
         dataControlAccount.dataShowDoc();
         dataControlAccount.isEdit = true;
     }
@@ -653,7 +653,7 @@ public class EBICRMAccountStackView {
     }
 
     public void historyAccount() {
-        new EBICRMHistoryView(EBISystem.getModule().hcreator.retrieveDBHistory(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][6].toString()), "Account")).setVisible();
+        new EBICRMHistoryView(EBISystem.getModule().hcreator.retrieveDBHistory(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][7].toString()), "Account")).setVisible();
     }
 
     public void updateYear() {

@@ -12,12 +12,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
 import org.core.setup.EBILanguageSetup;
 
 public class EBISystemSettingPanel extends JPanel {
@@ -45,7 +52,6 @@ public class EBISystemSettingPanel extends JPanel {
     private JComboBox jComboBoxLanguage = null;
     private JComboBox jComboDateFormat = null;
     private JCheckBox deleteMessage = null;
-    private JCheckBox isB2C = null;
     private JLabel jLabel10 = null;
     private JLabel jLabel9 = null;
     private JLabel jLabel8 = null;
@@ -78,15 +84,6 @@ public class EBISystemSettingPanel extends JPanel {
         if (!"".equals(properties.getValue("EBI_Neutrino_Date_Format"))) {
             this.jComboDateFormat.getEditor().setItem(properties.getValue("EBI_Neutrino_Date_Format"));
         }
-
-        if ("true".equals(properties.getValue("EBI_Neutrino_UserAsB2C"))) {
-            this.isB2C.setSelected(true);
-            EBISystem.USE_ASB2C = true;
-        } else {
-            this.isB2C.setSelected(false);
-            EBISystem.USE_ASB2C = false;
-        }
-
         loadEMailSetting();
         EBISystemSetting.selectedModule = 2;
 
@@ -94,37 +91,34 @@ public class EBISystemSettingPanel extends JPanel {
 
     private void parseLanguageFileFromDir() {
         String[] value;
-
-        final File dir;
         try {
-            dir = new File(getClass().getClassLoader().getResource("language").toURI());
-
-            final File files[] = dir.listFiles();
-
+            java.util.List<String> files = IOUtils.readLines(getClass().getClassLoader().getResourceAsStream("language"), Charsets.UTF_8);
             String builder = EBISystem.i18n("EBI_LANG_PLEASE_SELECT") + ",";
-            for (int i = 0; i < files.length; i++) {
-                try {
-                    String lName;
-                    if ((lName = files[i].getName().substring(files[i].getName().lastIndexOf("_") + 1)) != null) {
-                        if (!"".equals(lName) && lName != null) {
-                            if ((lName = lName.substring(0, lName.lastIndexOf("."))) != null) {
-                                if (!"".equals(lName)) {
-                                    builder += lName;
-                                    if (i < files.length) {
-                                        builder += ",";
-                                    }
+
+            Iterator<String> iter = files.iterator();
+            int size = files.size();
+            int i = 0;
+            while (iter.hasNext()) {
+                String lName;
+                String name = iter.next();
+
+                if ((lName = name.substring(name.lastIndexOf("_") + 1)) != null) {
+                    if (!"".equals(lName) && lName != null) {
+                        if ((lName = lName.substring(0, lName.lastIndexOf("."))) != null) {
+                            if (!"".equals(lName)) {
+                                builder += lName;
+                                if (i < size) {
+                                    builder += ",";
                                 }
                             }
                         }
                     }
-                } catch (final StringIndexOutOfBoundsException ex) {
-                    ex.printStackTrace();
                 }
             }
             value = builder.trim().split(",");
             this.jComboBoxLanguage.setModel(new javax.swing.DefaultComboBoxModel(value));
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(EBILanguageSetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EBISystemSettingPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -312,12 +306,6 @@ public class EBISystemSettingPanel extends JPanel {
             properties.setValue("EBI_Neutrino_Date_Format", this.jComboDateFormat.getEditor().getItem().toString());
         }
 
-        if (this.isB2C.isSelected()) {
-            properties.setValue("EBI_Neutrino_UserAsB2C", "true");
-        } else {
-            properties.setValue("EBI_Neutrino_UserAsB2C", "false");
-        }
-
         if (validateInput() == true) {
             saveEMailSetting();
         }
@@ -467,7 +455,6 @@ public class EBISystemSettingPanel extends JPanel {
             generalSettings.add(getJComboBoxLanguage(), null);
             generalSettings.add(jLabel5, null);
             generalSettings.add(getJComboDateFormat(), null);
-            generalSettings.add(getUserAsB2C(), null);
         }
         return generalSettings;
     }
@@ -688,18 +675,6 @@ public class EBISystemSettingPanel extends JPanel {
             deleteMessage.setFont(new Font("Dialog", Font.PLAIN, 12));
         }
         return deleteMessage;
-    }
-
-    private JCheckBox getUserAsB2C() {
-        if (isB2C == null) {
-            isB2C = new JCheckBox();
-            isB2C.setBounds(new Rectangle(142, 89, 200, 20));
-            isB2C.setText(EBISystem.i18n("EBI_LANG_USE_AS_B2C"));
-            isB2C.setFocusTraversalKeysEnabled(false);
-            isB2C.setOpaque(false);
-            isB2C.setFont(new Font("Dialog", Font.PLAIN, 12));
-        }
-        return isB2C;
     }
 
     private void enableEMailFields(final boolean enabled) {
@@ -995,6 +970,10 @@ public class EBISystemSettingPanel extends JPanel {
             jComboDateFormat.addItem("dd/MM/yyyy");
             jComboDateFormat.addItem("MM/dd/yyyy");
             jComboDateFormat.addItem("yyyy/mm/dd");
+            final Border line = BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(34, 34, 34));
+            final Border empty = new EmptyBorder(0, 5, 0, 0);
+            final CompoundBorder border = new CompoundBorder(line, empty);
+            ((JTextField) jComboDateFormat.getEditor().getEditorComponent()).setBorder(border);
 
             jComboDateFormat.addActionListener(new java.awt.event.ActionListener() {
 

@@ -8,12 +8,15 @@ import org.sdk.utils.EBIPropertiesRW;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.net.URISyntaxException;
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
 
 public class EBILanguageSetup extends EBIDialogExt {
 
@@ -63,34 +66,35 @@ public class EBILanguageSetup extends EBIDialogExt {
     private void parseLanguageFileFromDir() {
         String[] value;
 
-        final File dir;
         try {
-            dir = new File(getClass().getClassLoader().getResource("language").toURI());
 
-            final File files[] = dir.listFiles();
-
+            List<String> files = IOUtils.readLines(getClass().getClassLoader().getResourceAsStream("language"), Charsets.UTF_8);
             String builder = EBISystem.i18n("EBI_LANG_PLEASE_SELECT") + ",";
-            for (int i = 0; i < files.length; i++) {
-                try {
-                    String lName;
-                    if ((lName = files[i].getName().substring(files[i].getName().lastIndexOf("_") + 1)) != null) {
-                        if (!"".equals(lName) && lName != null) {
-                            if ((lName = lName.substring(0, lName.lastIndexOf("."))) != null) {
-                                if (!"".equals(lName)) {
-                                    builder += lName;
-                                    if (i < files.length) {
-                                        builder += ",";
-                                    }
+
+            Iterator<String> iter = files.iterator();
+            int size = files.size();
+            int i = 0;
+            while (iter.hasNext()) {
+                String lName;
+                String name = iter.next();
+
+                if ((lName = name.substring(name.lastIndexOf("_") + 1)) != null) {
+                    if (!"".equals(lName) && lName != null) {
+                        if ((lName = lName.substring(0, lName.lastIndexOf("."))) != null) {
+                            if (!"".equals(lName)) {
+                                builder += lName;
+                                if (i < size) {
+                                    builder += ",";
                                 }
                             }
                         }
                     }
-                } catch (final StringIndexOutOfBoundsException ex) {
                 }
             }
+
             value = builder.trim().split(",");
             this.jComboBoxLanguage.setModel(new javax.swing.DefaultComboBoxModel(value));
-        } catch (URISyntaxException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(EBILanguageSetup.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

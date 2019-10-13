@@ -10,7 +10,6 @@ public class EBISystemSetting extends EBIVisualPanelTemplate {
 
     private JSplitPane jSplitPane = null;
     public EBIListSettingName listName = null;
-    public EBISystemSettingStart systemStart = null;
     public JPanel cpanel = null;
     public EBIMain ebiMain = null;
     public static int selectedModule = -1;

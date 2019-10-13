@@ -26,6 +26,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 public class EBIReportSetting extends JPanel {
 
@@ -216,6 +219,10 @@ public class EBIReportSetting extends JPanel {
             jComboReportCat = new JComboBox<String>();
             jComboReportCat.setEditable(true);
             jComboReportCat.setBounds(new java.awt.Rectangle(86, 62, 200, 25));
+            final Border line = BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(34, 34, 34));
+            final Border empty = new EmptyBorder(0, 5, 0, 0);
+            final CompoundBorder border = new CompoundBorder(line, empty);
+            ((JTextField) jComboReportCat.getEditor().getEditorComponent()).setBorder(border);
             jComboReportCat.setModel(new javax.swing.DefaultComboBoxModel<String>(
                     new String[]{EBISystem.i18n("EBI_LANG_PRINT_VIEWS"),
                         EBISystem.i18n("EBI_LANG_PRINT_INVOICES"),

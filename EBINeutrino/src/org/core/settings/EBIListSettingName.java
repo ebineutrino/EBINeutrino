@@ -24,11 +24,9 @@ public class EBIListSettingName extends JPanel {
         cpanel = start;
 
         myListmodel = new DefaultListModel();
-        final EBIListItem item0 = new EBIListItem(EBISystem.getInstance().getIconResource("start.png"), EBISystem.i18n("EBI_LANG_START")),
-                item1 = new EBIListItem(EBISystem.getInstance().getIconResource("sys.png"), EBISystem.i18n("EBI_LANG_SYSTEM_SETTING")),
+        final EBIListItem item1 = new EBIListItem(EBISystem.getInstance().getIconResource("sys.png"), EBISystem.i18n("EBI_LANG_SYSTEM_SETTING")),
                 item3 = new EBIListItem(EBISystem.getInstance().getIconResource("report.png"), EBISystem.i18n("EBI_LANG_REPORT_SETTING"));
 
-        myListmodel.addElement(item0);
         myListmodel.addElement(item1);
         myListmodel.addElement(item3);
 
@@ -67,16 +65,8 @@ public class EBIListSettingName extends JPanel {
                         case 0:
                             setStart();
                             break;
+
                         case 1:
-                            cpanel.removeAll();
-                            cpanel.updateUI();
-                            einstp = new EBISystemSettingPanel(ebiMain);
-                            cpanel.add(einstp, java.awt.BorderLayout.CENTER);
-                            ebiMain.systemSetting.setPreferredSize(new Dimension(950, 700));
-                            einstp.updateUI();
-                            ebiMain.systemSetting.updateUI();
-                            break;
-                        case 2:
                             cpanel.removeAll();
                             cpanel.updateUI();
                             report = new EBIReportSetting(ebiMain);
@@ -98,10 +88,10 @@ public class EBIListSettingName extends JPanel {
     public void setStart() {
         cpanel.removeAll();
         cpanel.updateUI();
-        final EBISystemSettingStart start = new EBISystemSettingStart();
-        cpanel.add(start, java.awt.BorderLayout.CENTER);
-        start.updateUI();
-        ebiMain.systemSetting.setPreferredSize(new Dimension(900, 500));
+        einstp = new EBISystemSettingPanel(ebiMain);
+        cpanel.add(einstp, java.awt.BorderLayout.CENTER);
+        ebiMain.systemSetting.setPreferredSize(new Dimension(950, 700));
+        einstp.updateUI();
         ebiMain.systemSetting.updateUI();
     }
 }

@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.PreparedStatement;
@@ -21,519 +22,516 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * 
+ *
  * Reportsystem class Initialize JasperReport, Managing Reports files
  */
-
 public class EBIReportSystem implements IEBIReportSystem {
 
-	public static Object[] report = null;
-	public Map<String, Object> map = null;
-	public static String fileName = "";
-	public boolean showWindow = false;
-	public boolean eMailRecord = false;
-	public String strRecs = null;
-	private final EBIWinWaiting wait = new EBIWinWaiting(EBISystem.i18n("EBI_LANG_LOAD_REPORT_DATA"));
+    public static Object[] report = null;
+    public Map<String, Object> map = null;
+    public static String fileName = "";
+    public boolean showWindow = false;
+    public boolean eMailRecord = false;
+    public String strRecs = null;
+    private final EBIWinWaiting wait = new EBIWinWaiting(EBISystem.i18n("EBI_LANG_LOAD_REPORT_DATA"));
 
-	@Override
-	public void buildReport(final File reportFile) {
-		final Thread cmplRep = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				if (reportFile.isFile() && reportFile.getName().endsWith(".jrxml")) {
-					wait.setVisible(true);
-					final String jsprFile = reportFile.getAbsolutePath().replace(".jrxml", ".jasper");
-					wait.setString("Compile Report:" + jsprFile);
-					try {
-						Files.deleteIfExists(Paths.get(jsprFile));
-					} catch (final IOException e) {
-						e.printStackTrace();
-						wait.setVisible(false);
-					}
-					// compile report
-					try {
-						JasperCompileManager.compileReportToFile(reportFile.getAbsolutePath(), jsprFile);
-					} catch (final JRException e) {
-						e.printStackTrace();
-						wait.setVisible(false);
-					}
-					wait.setVisible(false);
-				}
-			}
-		});
-		cmplRep.start();
-	}
+    public void buildReport(final File reportFile) {
+        final Thread cmplRep = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (reportFile.isFile() && reportFile.getName().endsWith(".jrxml")) {
+                    wait.setVisible(true);
+                    final String jsprFile = reportFile.getAbsolutePath().replace(".jrxml", ".jasper");
+                    wait.setString("Compile Report:" + jsprFile);
+                    try {
+                        Files.deleteIfExists(Paths.get(jsprFile));
+                    } catch (final IOException e) {
+                        e.printStackTrace();
+                        wait.setVisible(false);
+                    }
+                    // compile report
+                    try {
+                        JasperCompileManager.compileReportToFile(reportFile.getAbsolutePath(), jsprFile);
+                    } catch (final JRException e) {
+                        e.printStackTrace();
+                        wait.setVisible(false);
+                    }
+                    wait.setVisible(false);
+                }
+            }
+        });
+        cmplRep.start();
+    }
 
-	@Override
-	public void buildReports() {
-		final Thread cmplRep = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				final File[] files = new File("reports/").listFiles();
-				for (final File file : files) {
-					buildReport(file);
-				}
-			}
-		});
-		cmplRep.start();
-	}
+    @Override
+    public void buildReports() {
+        final Thread cmplRep = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-	/**
-	 * Check for all available reports
-	 * 
-	 * @param map
-	 * @return
-	 */
+                try {
+                    final File[] files = new File(getClass().getClassLoader().getResource("reports/").toURI()).listFiles();
+                    for (final File file : files) {
+                        buildReport(file);
+                    }
+                } catch (URISyntaxException ex) {
+                    Logger.getLogger(EBIReportSystem.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        cmplRep.start();
+    }
 
-	public Object[] checkForReport(final Map<String, Object> map) {
-		EBIReportSelection reportSelection;
+    /**
+     * Check for all available reports
+     *
+     * @param map
+     * @return
+     */
+    public Object[] checkForReport(final Map<String, Object> map) {
+        EBIReportSelection reportSelection;
 
-		report = new Object[3];
-		if (getReportCount() > 0) {
-			reportSelection = new EBIReportSelection(this);
-			reportSelection.setModal(true);
-			reportSelection.setResizable(false);
-			reportSelection.setVisible(true);
-		} else {
-			report[0] = "";
-			report[1] = false;
-		}
-		return report;
-	}
+        report = new Object[3];
+        if (getReportCount() > 0) {
+            reportSelection = new EBIReportSelection(this);
+            reportSelection.setModal(true);
+            reportSelection.setResizable(false);
+            reportSelection.setVisible(true);
+        } else {
+            report[0] = "";
+            report[1] = false;
+        }
+        return report;
+    }
 
-	/**
-	 * Check for available reports with a specified category
-	 * 
-	 * @param map
-	 * @param category
-	 * @return
-	 */
+    /**
+     * Check for available reports with a specified category
+     *
+     * @param map
+     * @param category
+     * @return
+     */
+    public Object[] checkForReport(final Map<String, Object> map, final String category) {
+        EBIReportSelection reportSelection;
 
-	public Object[] checkForReport(final Map<String, Object> map, final String category) {
-		EBIReportSelection reportSelection;
+        report = new Object[3];
+        if (getReportCount(category) > 0) {
+            reportSelection = new EBIReportSelection(this, category);
+            if (getReportCount(category) > 1) {
+                reportSelection.setModal(true);
+                reportSelection.setResizable(false);
+                reportSelection.setVisible(true);
+            } else {
+                reportSelection.createReport();
+            }
 
-		report = new Object[3];
-		if (getReportCount(category) > 0) {
-			reportSelection = new EBIReportSelection(this, category);
-			if (getReportCount(category) > 1) {
-				reportSelection.setModal(true);
-				reportSelection.setResizable(false);
-				reportSelection.setVisible(true);
-			} else {
-				reportSelection.createReport();
-			}
+        } else {
+            report[0] = "";
+            report[1] = false;
+        }
+        return report;
+    }
 
-		} else {
-			report[0] = "";
-			report[1] = false;
-		}
-		return report;
-	}
+    /**
+     * get all available reports
+     *
+     * @return
+     */
+    public int getReportCount() {
+        int count = 0;
+        ResultSet set = null;
+        try {
+            final PreparedStatement ps1 = EBISystem.getInstance().iDB().initPreparedStatement(
+                    "SELECT * FROM SET_REPORTFORMODULE WHERE ISACTIVE <> 0 ORDER BY REPORTNAME ");
+            set = EBISystem.getInstance().iDB().executePreparedQuery(ps1);
+            set.last();
+            count = set.getRow();
 
-	/**
-	 * get all available reports
-	 * 
-	 * @return
-	 */
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
+        } finally {
+            if (set != null) {
+                try {
+                    set.close();
+                } catch (final SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return count;
+    }
 
-	public int getReportCount() {
-		int count = 0;
-		ResultSet set = null;
-		try {
-			final PreparedStatement ps1 = EBISystem.getInstance().iDB().initPreparedStatement(
-					"SELECT * FROM SET_REPORTFORMODULE WHERE ISACTIVE <> 0 ORDER BY REPORTNAME ");
-			set = EBISystem.getInstance().iDB().executePreparedQuery(ps1);
-			set.last();
-			count = set.getRow();
+    /**
+     * get available reports from a category
+     *
+     * @param category
+     * @return
+     */
+    public int getReportCount(final String category) {
+        int count = 0;
+        ResultSet set = null;
+        try {
+            final PreparedStatement ps1 = EBISystem.getInstance().iDB().initPreparedStatement(
+                    "SELECT * FROM SET_REPORTFORMODULE WHERE ISACTIVE <> 0 and REPORTCATEGORY=? ORDER BY REPORTNAME ");
+            ps1.setString(1, category);
+            set = EBISystem.getInstance().iDB().executePreparedQuery(ps1);
+            set.last();
+            count = set.getRow();
+        } catch (final SQLException ex) {
+            EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
+        } finally {
+            if (set != null) {
+                try {
+                    set.close();
+                } catch (final SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return count;
+    }
 
-		} catch (final SQLException ex) {
-			ex.printStackTrace();
-			EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
-		} finally {
-			if (set != null) {
-				try {
-					set.close();
-				} catch (final SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return count;
-	}
+    // overloading method 1
+    @Override
+    public void useReportSystem(final Map<String, Object> map) {
+        this.map = map;
+        report = checkForReport(map);
 
-	/**
-	 * get available reports from a category
-	 * 
-	 * @param category
-	 * @return
-	 */
-	public int getReportCount(final String category) {
-		int count = 0;
-		ResultSet set = null;
-		try {
-			final PreparedStatement ps1 = EBISystem.getInstance().iDB().initPreparedStatement(
-					"SELECT * FROM SET_REPORTFORMODULE WHERE ISACTIVE <> 0 and REPORTCATEGORY=? ORDER BY REPORTNAME ");
-			ps1.setString(1, category);
-			set = EBISystem.getInstance().iDB().executePreparedQuery(ps1);
-			set.last();
-			count = set.getRow();
-		} catch (final SQLException ex) {
-			EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
-		} finally {
-			if (set != null) {
-				try {
-					set.close();
-				} catch (final SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return count;
-	}
+        if (report[0] == null) {
+            return;
+        }
 
-	// overloading method 1
+        useReportSystemExt(map);
+    }
 
-	@Override
-	public void useReportSystem(final Map<String, Object> map) {
-		this.map = map;
-		report = checkForReport(map);
+    /**
+     * Create reports show report select dialog
+     *
+     * @param map
+     */
+    public void useReportSystemExt(final Map<String, Object> map) {
 
-		if (report[0] == null) {
-			return;
-		}
+        final Runnable run = new Runnable() {
 
-		useReportSystemExt(map);
-	}
+            @Override
+            public void run() {
+                try {
+                    wait.setVisible(true);
+                    if (!"".equals(report[0])) {
 
-	/**
-	 * Create reports show report select dialog
-	 * 
-	 * @param map
-	 */
+                        // if no report was selected release this method
+                        if ("-1".equals(report[0].toString())) {
+                            return;
+                        }
 
-	public void useReportSystemExt(final Map<String, Object> map) {
+                        addParametertoReport(map);
+                        final JasperPrint jasperPrint = JasperFillManager.fillReport(
+                                getClass().getClassLoader().getResourceAsStream("reports/" + report[0].toString()), map,
+                                EBISystem.getInstance().iDB().getActiveConnection());
 
-		final Runnable run = new Runnable() {
+                        if ((Boolean) report[1] == true) {
 
-			@Override
-			public void run() {
-				try {
-					wait.setVisible(true);
-					if (!"".equals(report[0])) {
+                            final String fileN = report[0].toString().replaceAll("[^\\p{L}\\p{N}]", "");
+                            JasperExportManager.exportReportToPdfFile(jasperPrint, "tmp/" + fileN + ".pdf");
 
-						// if no report was selected release this method
-						if ("-1".equals(report[0].toString())) {
-							return;
-						}
+                            EBISystem.getInstance().openPDFReportFile("tmp/" + fileN + ".pdf");
 
-						addParametertoReport(map);
-						final JasperPrint jasperPrint = JasperFillManager.fillReport(
-								new File("reports/" + report[0].toString()).getPath(), map,
-								EBISystem.getInstance().iDB().getActiveConnection());
+                        } else {
+                            JFrame.setDefaultLookAndFeelDecorated(false);
+                            final JasperViewer view = new JasperViewer(jasperPrint, false);
+                            view.setState(Frame.MAXIMIZED_BOTH);
+                            view.setVisible(true);
+                        }
 
-						if ((Boolean) report[1] == true) {
-							final String fileN = report[0].toString().replaceAll("[^\\p{L}\\p{N}]", "");
-							JasperExportManager.exportReportToPdfFile(jasperPrint, "tmp/" + fileN + ".pdf");
-							EBISystem.getInstance().openPDFReportFile("tmp/" + fileN + ".pdf");
+                    } else {
+                        EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_NO_REPORT_FOUND"))
+                                .Show(EBIMessage.ERROR_MESSAGE);
+                    }
+                } catch (final Exception ex) {
+                    ex.printStackTrace();
+                    EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
+                } finally {
+                    if (wait != null) {
+                        wait.setVisible(false);
+                    }
+                }
+            }
+        };
 
-						} else {
-							JFrame.setDefaultLookAndFeelDecorated(false);
-							final JasperViewer view = new JasperViewer(jasperPrint, false);
-							view.setState(Frame.MAXIMIZED_BOTH);
-							view.setVisible(true);
-						}
+        final Thread loaderThread = new Thread(run, "ShowReportThread");
+        loaderThread.start();
+    }
 
-					} else {
-						EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_NO_REPORT_FOUND"))
-								.Show(EBIMessage.ERROR_MESSAGE);
-					}
-				} catch (final Exception ex) {
-					ex.printStackTrace();
-					EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
-				} finally {
-					if (wait != null) {
-						wait.setVisible(false);
-					}
-				}
-			}
-		};
+    // overloading Method 2
+    @Override
+    public void useReportSystem(final Map<String, Object> map, final String category,
+            final String fileName) {
+        this.map = map;
+        EBIReportSystem.fileName = fileName;
+        report = checkForReport(map, category);
 
-		final Thread loaderThread = new Thread(run, "ShowReportThread");
-		loaderThread.start();
-	}
+        if (report[0] == null) {
+            return;
+        }
+        useReportSystemExt(map, category, fileName);
+    }
 
-	// overloading Method 2
-	@Override
-	public void useReportSystem(final Map<String, Object> map, final String category,
-			final String fileName) {
-		this.map = map;
-		EBIReportSystem.fileName = fileName;
-		report = checkForReport(map, category);
+    /**
+     * Create and show reports
+     *
+     * @param map
+     * @param category
+     * @param fileName
+     */
+    public void useReportSystemExt(final Map<String, Object> map, final String category,
+            final String fileName) {
 
-		if (report[0] == null) {
-			return;
-		}
-		useReportSystemExt(map, category, fileName);
-	}
+        final Runnable run = new Runnable() {
 
-	/**
-	 * Create and show reports
-	 * 
-	 * @param map
-	 * @param category
-	 * @param fileName
-	 */
+            @Override
+            public void run() {
+                try {
+                    wait.setVisible(true);
 
-	public void useReportSystemExt(final Map<String, Object> map, final String category,
-			final String fileName) {
+                    if (!"".equals(report[0])) {
 
-		final Runnable run = new Runnable() {
+                        // if no report was selected release this method
+                        if ("-1".equals(report[0].toString())) {
+                            return;
+                        }
 
-			@Override
-			public void run() {
-				try {
-					wait.setVisible(true);
+                        addParametertoReport(map);
+                        final JasperPrint jasperPrint = JasperFillManager.fillReport(
+                                getClass().getClassLoader().getResourceAsStream("reports/" + report[0].toString()), map,
+                                EBISystem.getInstance().iDB().getActiveConnection());
 
-					if (!"".equals(report[0])) {
+                        if ((Boolean) report[1] == true) {
+                            final String fN = fileName.replaceAll("[^\\p{L}\\p{N}]", "");
+                            JasperExportManager.exportReportToPdfFile(jasperPrint, "tmp/" + fN + ".pdf");
+                            EBISystem.getInstance().openPDFReportFile("tmp/" + fN + ".pdf");
 
-						// if no report was selected release this method
-						if ("-1".equals(report[0].toString())) {
-							return;
-						}
+                        } else {
+                            JFrame.setDefaultLookAndFeelDecorated(false);
+                            final JasperViewer view = new JasperViewer(jasperPrint, false);
+                            view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                            view.setState(Frame.MAXIMIZED_BOTH);
+                            view.setVisible(true);
+                        }
 
-						addParametertoReport(map);
-						final JasperPrint jasperPrint = JasperFillManager.fillReport(
-								new File("reports/" + report[0].toString()).getPath(), map,
-								EBISystem.getInstance().iDB().getActiveConnection());
+                    } else {
+                        EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_NO_REPORT_FOUND"))
+                                .Show(EBIMessage.ERROR_MESSAGE);
+                    }
+                } catch (final Exception ex) {
+                    EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                } finally {
+                    if (wait != null) {
+                        wait.setVisible(false);
+                    }
+                }
+            }
+        };
 
-						if ((Boolean) report[1] == true) {
-							final String fN = fileName.replaceAll("[^\\p{L}\\p{N}]", "");
-							JasperExportManager.exportReportToPdfFile(jasperPrint, "tmp/" + fN + ".pdf");
-							EBISystem.getInstance().openPDFReportFile("tmp/" + fN + ".pdf");
+        final Thread loaderThread = new Thread(run, "ShowReportThread");
+        loaderThread.start();
+    }
 
-						} else {
-							JFrame.setDefaultLookAndFeelDecorated(false);
-							final JasperViewer view = new JasperViewer(jasperPrint, false);
-							view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-							view.setState(Frame.MAXIMIZED_BOTH);
-							view.setVisible(true);
-						}
+    // overloading method 3
+    @Override
+    public String useReportSystem(final Map<String, Object> map, final String category, final String fileName,
+            final boolean showWindows, final boolean EMailRecord, final String rec) {
 
-					} else {
-						EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_NO_REPORT_FOUND"))
-								.Show(EBIMessage.ERROR_MESSAGE);
-					}
-				} catch (final Exception ex) {
-					EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
-					ex.printStackTrace();
-				} finally {
-					if (wait != null) {
-						wait.setVisible(false);
-					}
-				}
-			}
-		};
+        final Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                EBIReportSystem.this.map = map;
+                EBIReportSystem.fileName = fileName;
+                showWindow = showWindows;
+                eMailRecord = EMailRecord;
+                strRecs = rec;
+                report = checkForReport(map, category);
+                if (report[0] == null) {
+                    return;
+                }
 
-		final Thread loaderThread = new Thread(run, "ShowReportThread");
-		loaderThread.start();
-	}
+                // EBIReportSystem.this.fileName = fileName.replaceAll(" ","_");
+                // EBIReportSystem.this.fileName = fileName;
+                // useReportSystemExt(map, category, fileName, showWindows, EMailRecord, rec);
+                useReportSystemExt(map, category, fileName, showWindows, EMailRecord, rec);
+            }
+        };
 
-	// overloading method 3
+        final Thread startReporting = new Thread(run, "Start Reporting");
+        startReporting.start();
 
-	@Override
-	public String useReportSystem(final Map<String, Object> map, final String category, final String fileName,
-			final boolean showWindows, final boolean EMailRecord, final String rec) {
+        return fileName;
+    }
 
-		final Runnable run = new Runnable() {
-			@Override
-			public void run() {
-				EBIReportSystem.this.map = map;
-				EBIReportSystem.fileName = fileName;
-				showWindow = showWindows;
-				eMailRecord = EMailRecord;
-				strRecs = rec;
-				report = checkForReport(map, category);
-				if (report[0] == null) {
-					return;
-				}
+    /**
+     * Create and show reports
+     *
+     * @param map
+     * @param category
+     * @param fileName
+     * @param showWindows
+     * @param EMailRecord
+     * @return
+     */
+    public String useReportSystemExt(final Map<String, Object> map, final String category, String fileName,
+            final boolean showWindows, final boolean EMailRecord, final String rec) {
 
-				// EBIReportSystem.this.fileName = fileName.replaceAll(" ","_");
-				// EBIReportSystem.this.fileName = fileName;
-				// useReportSystemExt(map, category, fileName, showWindows, EMailRecord, rec);
-				useReportSystemExt(map, category, fileName, showWindows, EMailRecord, rec);
-			}
-		};
+        String fileToRet;
+        try {
+            wait.setVisible(true);
+            if (report != null && !"".equals(report[0])) {
 
-		final Thread startReporting = new Thread(run, "Start Reporting");
-		startReporting.start();
+                // if no report was selected release this method
+                if ("-1".equals(report[0].toString())) {
+                    return "-1";
+                }
 
-		return fileName;
-	}
+                addParametertoReport(map);
 
-	/**
-	 * Create and show reports
-	 * 
-	 * @param map
-	 * @param category
-	 * @param fileName
-	 * @param showWindows
-	 * @param EMailRecord
-	 * @return
-	 */
+                final JasperPrint jasperPrint = JasperFillManager.fillReport(getClass().getClassLoader().getResourceAsStream("reports/" + report[0].toString()), map,
+                        EBISystem.getInstance().iDB().getActiveConnection());
 
-	public String useReportSystemExt(final Map<String, Object> map, final String category, String fileName,
-			final boolean showWindows, final boolean EMailRecord, final String rec) {
+                fileToRet = new File(getClass().getClassLoader().getResource("tmp/" + fileName.replaceAll(" ", "_") + ".pdf").toURI()).getAbsolutePath();
+                if ((Boolean) report[1] == true) {
+                    fileName = fileName.replaceAll("[^\\p{L}\\p{N}]", "");
+                    JasperExportManager.exportReportToPdfFile(jasperPrint, fileToRet);
 
-		String fileToRet;
-		try {
-			wait.setVisible(true);
-			if (report != null && !"".equals(report[0])) {
+                    if (showWindows) {
+                        EBISystem.getInstance().openPDFReportFile(fileToRet);
+                    }
+                } else {
+                    JasperExportManager.exportReportToPdfFile(jasperPrint, fileToRet);
+                    if (showWindows) {
+                        EBISystem.getInstance().openPDFReportFile(fileToRet);
+                    }
+                }
 
-				// if no report was selected release this method
-				if ("-1".equals(report[0].toString())) {
-					return "-1";
-				}
+                if (EMailRecord) {
+                    String subject = "";
+                    String bodyText = "";
 
-				final File reportFile = new File("reports/" + report[0].toString());
-				addParametertoReport(map);
+                    if (EBISystem.gui().existView("sendEMailMessage")) {
+                        subject = EBISystem.gui().textField("SubjectText", "sendEMailMessage").getText();
+                        bodyText = EBISystem.gui().getEditor("MessageAreaText", "sendEMailMessage").getText();
+                    }
 
-				final JasperPrint jasperPrint = JasperFillManager.fillReport(reportFile.getPath(), map,
-						EBISystem.getInstance().iDB().getActiveConnection());
+                    final HashMap<String, String> EMAIL_PARAM = new HashMap<String, String>();
+                    EMAIL_PARAM.put("_TO", rec);
+                    EMAIL_PARAM.put("_SUBJECT", subject);
+                    EMAIL_PARAM.put("_BODY", bodyText);
+                    EMAIL_PARAM.put("_ATTACHMENT", fileToRet);
 
-				fileToRet = new File("tmp/" + fileName.replaceAll(" ", "_") + ".pdf").getAbsolutePath();
-				if ((Boolean) report[1] == true) {
-					fileName = fileName.replaceAll("[^\\p{L}\\p{N}]", "");
-					JasperExportManager.exportReportToPdfFile(jasperPrint, fileToRet);
-
-					if (showWindows) {
-						EBISystem.getInstance().openPDFReportFile(fileToRet);
-					}
-				} else {
-					JasperExportManager.exportReportToPdfFile(jasperPrint, fileToRet);
-
-					if (showWindows) {
-						EBISystem.getInstance().openPDFReportFile(fileToRet);
-					}
-				}
-
-				if (EMailRecord) {
-					String subject = "";
-					String bodyText = "";
-
-					if (EBISystem.gui().existView("sendEMailMessage")) {
-						subject = EBISystem.gui().textField("SubjectText", "sendEMailMessage").getText();
-						bodyText = EBISystem.gui().getEditor("MessageAreaText", "sendEMailMessage").getText();
-					}
-
-					final HashMap<String, String> EMAIL_PARAM = new HashMap<String, String>();
-					EMAIL_PARAM.put("_TO", rec);
-					EMAIL_PARAM.put("_SUBJECT", subject);
-					EMAIL_PARAM.put("_BODY", bodyText);
-					EMAIL_PARAM.put("_ATTACHMENT", fileToRet);
-
-					EBISystem.gui().addScriptBean("groovy",
+                    EBISystem.gui().addScriptBean("groovy",
                             "Run/sendEMailViaClient.groovy", "groovy", "", "EMail");
-					EBISystem.gui().excScript("EMail", EMAIL_PARAM);
-				}
+                    EBISystem.gui().excScript("EMail", EMAIL_PARAM);
+                }
 
-			} else {
-				EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_NO_REPORT_FOUND"))
-						.Show(EBIMessage.ERROR_MESSAGE);
-				fileToRet = "-1";
-			}
+            } else {
+                EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_NO_REPORT_FOUND"))
+                        .Show(EBIMessage.ERROR_MESSAGE);
+                fileToRet = "-1";
+            }
 
-		} catch (final Exception ex) {
-			EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
-			fileToRet = "-1";
-		} finally {
-			wait.setVisible(false);
-		}
+        } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
+            fileToRet = "-1";
+        } finally {
+            wait.setVisible(false);
+        }
 
-		return fileToRet;
-	}
+        return fileToRet;
+    }
 
-	/**
-	 * Add system param to the report
-	 * 
-	 * @param map
-	 */
-	public void addParametertoReport(final Map<String, Object> map) {
+    /**
+     * Add system param to the report
+     *
+     * @param map
+     */
+    public void addParametertoReport(final Map<String, Object> map) {
 
-		ResultSet set = null;
-		ResultSet set1 = null;
+        ResultSet set = null;
+        ResultSet set1 = null;
 
-		map.put("EBI_LANG", EBIPropertiesLang.getProperties().getProperty());
-		map.put("EBI_ISB2C", EBISystem.USE_ASB2C);
+        map.put("EBI_LANG", EBIPropertiesLang.getProperties().getProperty());
+        map.put("EBI_ISB2C", EBISystem.USE_ASB2C);
 
-		try {
+        try {
 
-			final PreparedStatement ps1 = EBISystem.getInstance().iDB().initPreparedStatement("SELECT * FROM COMPANY com "
-					+ "LEFT JOIN COMPANYBANK bnk ON com.COMPANYID=bnk.COMPANYID WHERE com.ISACTUAL=? ");
+            final PreparedStatement ps1 = EBISystem.getInstance().iDB().initPreparedStatement("SELECT * FROM COMPANY com "
+                    + "LEFT JOIN COMPANYBANK bnk ON com.COMPANYID=bnk.COMPANYID WHERE com.ISACTUAL=? ");
 
-			ps1.setInt(1, 1);
+            ps1.setInt(1, 1);
 
-			set = EBISystem.getInstance().iDB().executePreparedQuery(ps1);
+            set = EBISystem.getInstance().iDB().executePreparedQuery(ps1);
 
-			set.last();
-			if (set.getRow() > 0) {
-				set.beforeFirst();
-				set.next();
-				map.put("COMPANY_NAME", set.getString("NAME"));
-				map.put("COMPANY_NAME1", set.getString("NAME2"));
-				map.put("COMPANY_TELEPHONE", set.getString("PHONE"));
-				map.put("COMPANY_FAX", set.getString("FAX"));
-				map.put("COMPANY_EMAIL", set.getString("EMAIL"));
-				map.put("COMPANY_WEB", set.getString("WEB"));
+            set.last();
+            if (set.getRow() > 0) {
+                set.beforeFirst();
+                set.next();
+                map.put("COMPANY_NAME", set.getString("NAME"));
+                map.put("COMPANY_NAME1", set.getString("NAME2"));
+                map.put("COMPANY_TELEPHONE", set.getString("PHONE"));
+                map.put("COMPANY_FAX", set.getString("FAX"));
+                map.put("COMPANY_EMAIL", set.getString("EMAIL"));
+                map.put("COMPANY_WEB", set.getString("WEB"));
 
-				map.put("COMPANY_BANK_NAME", set.getString("BANKNAME"));
-				map.put("COMPANY_BANK_ACCOUNT_NR", set.getString("BANKACCOUNT"));
-				map.put("COMPANY_BANK_BSB", set.getString("BANKBSB"));
-				map.put("COMPANY_BANK_BIC", set.getString("BANKBIC"));
-				map.put("COMPANY_BANK_IBAN", set.getString("BANKIBAN"));
-				map.put("COMPANY_BANK_COUNTRY", set.getString("BANKCOUNTRY"));
-				map.put("COMPANY_TAX_INFORMATION", set.getString("TAXNUMBER"));
-				final int companyID = set.getInt("COMPANYID");
-				set.close();
+                map.put("COMPANY_BANK_NAME", set.getString("BANKNAME"));
+                map.put("COMPANY_BANK_ACCOUNT_NR", set.getString("BANKACCOUNT"));
+                map.put("COMPANY_BANK_BSB", set.getString("BANKBSB"));
+                map.put("COMPANY_BANK_BIC", set.getString("BANKBIC"));
+                map.put("COMPANY_BANK_IBAN", set.getString("BANKIBAN"));
+                map.put("COMPANY_BANK_COUNTRY", set.getString("BANKCOUNTRY"));
+                map.put("COMPANY_TAX_INFORMATION", set.getString("TAXNUMBER"));
+                final int companyID = set.getInt("COMPANYID");
+                set.close();
 
-				final PreparedStatement ps2 = EBISystem.getInstance().iDB()
-						.initPreparedStatement("SELECT * FROM COMPANYCONTACTS con "
-								+ " LEFT JOIN COMPANYCONTACTADDRESS cadr ON con.CONTACTID=cadr.CONTACTID  WHERE con.COMPANYID=? AND con.MAINCONTACT=? ");
-				ps2.setInt(1, companyID);
-				ps2.setInt(2, 1);
+                final PreparedStatement ps2 = EBISystem.getInstance().iDB()
+                        .initPreparedStatement("SELECT * FROM COMPANYCONTACTS con "
+                                + " LEFT JOIN COMPANYCONTACTADDRESS cadr ON con.CONTACTID=cadr.CONTACTID  WHERE con.COMPANYID=? AND con.MAINCONTACT=? ");
+                ps2.setInt(1, companyID);
+                ps2.setInt(2, 1);
 
-				set1 = EBISystem.getInstance().iDB().executePreparedQuery(ps2);
+                set1 = EBISystem.getInstance().iDB().executePreparedQuery(ps2);
 
-				set1.last();
-				if (set1.getRow() > 0) {
-					set1.beforeFirst();
-					set1.next();
-					map.put("COMPANY_CONTACT_NAME", set1.getString("NAME") == null ? "" : set1.getString("NAME"));
-					map.put("COMPANY_CONTACT_SURNAME",
-							set1.getString("SURNAME") == null ? "" : set1.getString("SURNAME"));
-					map.put("COMPANY_CONTACT_POSITION",
-							set1.getString("POSITION") == null ? "" : set1.getString("POSITION"));
-					map.put("COMPANY_CONTACT_EMAIL", set1.getString("EMAIL") == null ? "" : set1.getString("EMAIL"));
-					map.put("COMPANY_CONTACT_TELEPHONE",
-							set1.getString("PHONE") == null ? "" : set1.getString("PHONE"));
-					map.put("COMPANY_CONTACT_FAX", set1.getString("FAX") == null ? "" : set1.getString("FAX"));
-					map.put("COMPANY_STR_NR", set1.getString("STREET") == null ? "" : set1.getString("STREET"));
-					map.put("COMPANY_ZIP", set1.getString("ZIP") == null ? "" : set1.getString("ZIP"));
-					map.put("COMPANY_LOCATION", set1.getString("LOCATION") == null ? "" : set1.getString("LOCATION"));
-				}
-			}
-		} catch (final SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				set.close();
-				if (set1 != null) {
-					set1.close();
-				}
-			} catch (final SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+                set1.last();
+                if (set1.getRow() > 0) {
+                    set1.beforeFirst();
+                    set1.next();
+                    map.put("COMPANY_CONTACT_NAME", set1.getString("NAME") == null ? "" : set1.getString("NAME"));
+                    map.put("COMPANY_CONTACT_SURNAME",
+                            set1.getString("SURNAME") == null ? "" : set1.getString("SURNAME"));
+                    map.put("COMPANY_CONTACT_POSITION",
+                            set1.getString("POSITION") == null ? "" : set1.getString("POSITION"));
+                    map.put("COMPANY_CONTACT_EMAIL", set1.getString("EMAIL") == null ? "" : set1.getString("EMAIL"));
+                    map.put("COMPANY_CONTACT_TELEPHONE",
+                            set1.getString("PHONE") == null ? "" : set1.getString("PHONE"));
+                    map.put("COMPANY_CONTACT_FAX", set1.getString("FAX") == null ? "" : set1.getString("FAX"));
+                    map.put("COMPANY_STR_NR", set1.getString("STREET") == null ? "" : set1.getString("STREET"));
+                    map.put("COMPANY_ZIP", set1.getString("ZIP") == null ? "" : set1.getString("ZIP"));
+                    map.put("COMPANY_LOCATION", set1.getString("LOCATION") == null ? "" : set1.getString("LOCATION"));
+                }
+            }
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                set.close();
+                if (set1 != null) {
+                    set1.close();
+                }
+            } catch (final SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

@@ -18,11 +18,11 @@ public class EBISystemUserRights implements IEBISystemUserRights {
 	
 	
 	public EBISystemUserRights(){
-		isAdministrator = false;
-		canSave = false;
-		canDelete = false;
-		canPrint = false;
-		canView = false;
+		isAdministrator = true;
+		canSave = true;
+		canDelete = true;
+		canPrint = true;
+		canView = true;
 		userName = "";
 	}
 

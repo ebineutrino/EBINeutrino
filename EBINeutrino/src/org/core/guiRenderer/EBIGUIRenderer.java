@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.*;
 import org.core.gui.component.EBITextfield;
 
+
 public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
     private EBIMain ebiMain = null;

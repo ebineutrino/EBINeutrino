@@ -64,7 +64,6 @@
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="0" y="0" width="303" height="69"/>
-				<imageExpression><![CDATA[System.getProperty("user.dir")+"/images/logo.gif"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="11" y="75" width="531" height="1"/>

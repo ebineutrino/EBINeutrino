@@ -109,14 +109,14 @@ public final class EBICRMDynamicFunctionalityMethods {
                 nr = "COMPANYNUMBER";
             }
 
-            ps = EBISystem.getInstance().iDB().initPreparedStatement("select " + nr + " from "+qu+" where CATEGORY=? order by " + nr + " desc ");
+            ps = EBISystem.getInstance().iDB().initPreparedStatement("select " + nr + " from "+qu+" where CATEGORY=? order by " + nr + " desc limit 1 ");
             ps.setString(1, category);
 
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps);
             set.last();
             if (set.getRow() > 0) {
                 set.beforeFirst();
-                while (set.next()) {
+                if (set.next()) {
                     toRet = set.getInt(nr);
                 }
             }

@@ -282,6 +282,7 @@ public class EBISetupDB extends JPanel {
                     }
 
                     try {
+                        
                         Class.forName(databaseDriverCombo.getSelectedItem().toString());
                         String conn_url = null;
                         final String dbType = databaseTypeText.getSelectedItem().toString().toLowerCase();
@@ -289,13 +290,14 @@ public class EBISetupDB extends JPanel {
 
                         if ("mysql".equals(dbType)) {
                             conn_url = "jdbc:" + dbType + "://" + host
-                                    + "/?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
-                            
+                                    + "/?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";    
                         }  
+                        
                         conn = DriverManager.getConnection(conn_url, userNameText.getText(), passwordText.getText());
                         EBIExceptionDialog.getInstance(setup, "Connection is ok!").Show(EBIMessage.INFO_MESSAGE);
                         EBISystem.db().setActiveConnection(conn);
                         generatingButton.setEnabled(true);
+                        
                     } catch (final Exception ex) {
                         ex.printStackTrace();
                         EBIExceptionDialog.getInstance(setup,

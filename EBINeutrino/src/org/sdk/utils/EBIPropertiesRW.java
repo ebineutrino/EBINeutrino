@@ -53,7 +53,7 @@ public class EBIPropertiesRW {
                 byte[] bt = new byte[av];
                 out.write(stream.read(bt));
             }
-
+            
             properties.store(out, null);
         } catch (final IOException e) {
             EBIExceptionDialog.getInstance("Properties file cannot be found!").Show(EBIMessage.ERROR_MESSAGE);

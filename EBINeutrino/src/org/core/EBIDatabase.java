@@ -499,13 +499,11 @@ public class EBIDatabase implements IEBIDatabase {
      * @param ex
      */
     private void exceptionHandle(final SQLException ex) {
-
         String ext = "\nSQLException: " + ex.getMessage();
         ext += "\nSQLState: " + ex.getSQLState();
         ext += "\nVendorError: " + ex.getErrorCode();
         ext += "\nSQL: " + ex.getSQLState();
         ex.printStackTrace();
-        EBIExceptionDialog.getInstance(ext).Show(EBIMessage.ERROR_MESSAGE);
     }
 
 }

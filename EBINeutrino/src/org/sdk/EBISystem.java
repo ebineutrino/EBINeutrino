@@ -284,7 +284,7 @@ public class EBISystem {
      * @return boolean
      */
     public boolean checkIsValidUser(final String user, final String pw) {
-
+        
         try {
             hibernate.openHibernateSession("LOGINSESSION");
             registeredModule.clear();
@@ -624,16 +624,15 @@ public class EBISystem {
         return ebiModule.getActiveModule();
     }
 
-    public void fillComboWithUser() {
+    public boolean fillComboWithUser() {
+        boolean ret = false;
         final PreparedStatement ps1 = iDB().initPreparedStatement("SELECT EBIUSER FROM EBIUSER ");
         final ResultSet resultSet = iDB().executePreparedQuery(ps1);
 
         if (resultSet != null) {
-
             try {
                 resultSet.last();
                 final int size = resultSet.getRow();
-
                 if (size > 0) {
                     systemUsers = new String[size + 1];
                     systemUsers[0] = EBISystem.i18n("EBI_LANG_PLEASE_SELECT");
@@ -642,21 +641,25 @@ public class EBISystem {
                     while (resultSet.next()) {
                         systemUsers[i++] = resultSet.getString("EBIUSER");
                     }
+                    ret = true;
                 }
             } catch (final SQLException ex) {
                 ex.printStackTrace();
                 logger.error("Exception", ex.fillInStackTrace());
-                EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
+                ret = false;
+                 
             } finally {
                 try {
                     resultSet.close();
                 } catch (final SQLException ex) {
                     ex.printStackTrace();
                     logger.error("Exception", ex.fillInStackTrace());
-                    EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
+                    ret = false;
+                     
                 }
             }
         }
+        return ret;
     }
 
     public void setDataStore(final String packageName, final Script storeAdapter) {

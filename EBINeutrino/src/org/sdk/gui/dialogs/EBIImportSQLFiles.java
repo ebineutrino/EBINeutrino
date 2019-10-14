@@ -9,9 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class EBIImportSQLFiles extends EBIDialogExt {
 
@@ -97,41 +101,39 @@ public class EBIImportSQLFiles extends EBIDialogExt {
                 try {
                     for (int x = 0; x < flx.length; x++) {
                         try {
-                            Thread.sleep(200);
-                            String s;
-                            //StringBuffer sb = new StringBuffer();
 
-                            final FileReader fr = new FileReader(new File(ClassLoader.getSystemResource(flx[x]).getFile()));
-                            final BufferedReader br = new BufferedReader(fr);
+                            Reader reader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(flx[x]));
+                            BufferedReader br = new BufferedReader(reader);
+
+                            List<String> lines = br.lines().collect(Collectors.toList());
+
+                            Iterator<String> iter = lines.iterator();
+                            String line = "";
                             String tmp = "";
-
-                            while ((s = br.readLine()) != null) {
-                                
-                                if (s.endsWith(";")) {
-                                    if (!EBISystem.getInstance().iDB().exec(tmp + s)) {
+                            while (iter.hasNext()) {
+                                line = iter.next();
+                                if (line.endsWith(";")) {
+                                    if (!EBISystem.getInstance().iDB().exec(tmp + line)) {
                                         return;
                                     }
                                     tmp = "";
                                 } else {
-                                    tmp += s;
+                                    tmp += line;
                                 }
                             }
+                            
                             br.close();
-
                             if (isVisible()) {
                                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_IMPORT_WAS_SUCCESSFULLY")).Show(EBIMessage.INFO_MESSAGE);
                                 setVisible(false);
                             }
-
                         } catch (final FileNotFoundException ex) {
                             ex.printStackTrace();
                             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_FILE_NOT_FOUND") + ex.getMessage()).Show(EBIMessage.ERROR_MESSAGE);
                         } catch (final IOException ex) {
                             ex.printStackTrace();
                             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_FILE_NOT_FOUND") + ex.getMessage()).Show(EBIMessage.ERROR_MESSAGE);
-                        } catch (final InterruptedException e) {
-                            e.printStackTrace();
-                        }finally {
+                        } finally {
                             if (isVisible()) {
                                 progress.setIndeterminate(false);
                             }
@@ -146,6 +148,7 @@ public class EBIImportSQLFiles extends EBIDialogExt {
         };
 
         final Thread start = new Thread(run, "Import SQL");
+
         start.start();
 
     }

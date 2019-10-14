@@ -8,15 +8,16 @@ import org.sdk.utils.EBIPropertiesRW;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.Iterator;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.IOUtils;
 
 public class EBILanguageSetup extends EBIDialogExt {
 
@@ -64,38 +65,23 @@ public class EBILanguageSetup extends EBIDialogExt {
     }
 
     private void parseLanguageFileFromDir() {
-        String[] value;
-
         try {
-
-            List<String> files = IOUtils.readLines(getClass().getClassLoader().getResourceAsStream("language"), Charsets.UTF_8);
-            String builder = EBISystem.i18n("EBI_LANG_PLEASE_SELECT") + ",";
-
-            Iterator<String> iter = files.iterator();
-            int size = files.size();
-            int i = 0;
-            while (iter.hasNext()) {
-                String lName;
-                String name = iter.next();
-
-                if ((lName = name.substring(name.lastIndexOf("_") + 1)) != null) {
-                    if (!"".equals(lName) && lName != null) {
-                        if ((lName = lName.substring(0, lName.lastIndexOf("."))) != null) {
-                            if (!"".equals(lName)) {
-                                builder += lName;
-                                if (i < size) {
-                                    builder += ",";
-                                }
-                            }
-                        }
-                    }
-                }
+            
+            String[] files = EBIPropertiesRW.getEBIProperties().getValue("EBI_Neutrino_Languages").split(",");
+            String[] languages = new String[files.length+1];
+            
+            languages[0] = EBISystem.i18n("EBI_LANG_PLEASE_SELECT");
+            
+            int i =1;
+            for(String name : files){
+                languages[i] = name;
+                i++;
             }
-
-            value = builder.trim().split(",");
-            this.jComboBoxLanguage.setModel(new javax.swing.DefaultComboBoxModel(value));
-        } catch (IOException ex) {
-            Logger.getLogger(EBILanguageSetup.class.getName()).log(Level.SEVERE, null, ex);
+            
+            this.jComboBoxLanguage.setModel(new javax.swing.DefaultComboBoxModel(languages));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -126,7 +112,6 @@ public class EBILanguageSetup extends EBIDialogExt {
             jButton.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(final java.awt.event.ActionEvent e) {
-
                     if (!validateInput()) {
                         return;
                     }

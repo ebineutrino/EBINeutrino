@@ -12,11 +12,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.stream.Collectors;
+import java.util.List;
 
 public class EBISchemaImport extends JDialog {
 
@@ -26,8 +29,8 @@ public class EBISchemaImport extends JDialog {
     private JButton importButton = null;
     private JLabel statusText = null;
     private JProgressBar progressBar = null;
-    private long availableLine = 0;
-    private double i = 0;
+    private int availableLine = 0;
+    private int i = 1;
     private StringBuffer toImport = new StringBuffer();
     private boolean failed = true;
     private String dbType = "";
@@ -100,7 +103,7 @@ public class EBISchemaImport extends JDialog {
             importButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(final ActionEvent e) {
-                    if (!importSQLSchema("mysql.sql")) {
+                    if (!importSQLSchema("sql/mysql.sql")) {
                         EBIExceptionDialog.getInstance(EBISchemaImport.this,
                                 "Import SQL schema was not successfully, the file format is damage!").Show(EBIMessage.ERROR_MESSAGE);
                     }
@@ -111,12 +114,16 @@ public class EBISchemaImport extends JDialog {
     }
 
     private boolean importSQLSchema(final String fileName) {
+        
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
+                
                 importButton.setEnabled(false);
                 cancelButton.setEnabled(false);
+                
                 BufferedReader br = null;
+                
                 try {
                     if (useUpperCase) {
                         catalog = catalog.toUpperCase();
@@ -127,16 +134,21 @@ public class EBISchemaImport extends JDialog {
                     EBISystem.db().execExt("CREATE DATABASE IF NOT EXISTS " + catalog);
                     EBISystem.db().getActiveConnection().setCatalog(catalog);
                     errorReport.append("\n");
+                    
+                    Reader reader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(fileName));
+                    br = new BufferedReader(reader);
 
-                    FileReader fr = new FileReader(new File(getClass().getClassLoader().getResource("sql/" + fileName).getFile()));
-                    br = new BufferedReader(fr);
-
-                    availableLine = br.lines().count();
-
+                    List<String> lines =  br.lines().collect(Collectors.toList());
+                    availableLine = lines.size();
+                    
                     boolean isFirstLine = true;
+                    
+                    Iterator<String> iter = lines.iterator();
                     String line = "";
-                    while ((line = br.readLine()) != null) {
-
+                    
+                    progressBar.setMaximum(availableLine);
+                    while (iter.hasNext()) {
+                        line = iter.next();
                         // show the first line to the import dialog label
                         if (isFirstLine) {
                             String firstLine = line;
@@ -145,13 +157,11 @@ public class EBISchemaImport extends JDialog {
                         }
 
                         if (!"/".equals(line.trim())) { // Not import until end of sql statement
-                            i += line.length() + 1;
                             toImport.append(line + "\n");
-                            // Calculate available line in %
-                            progressBar.setValue(((int) ((i / availableLine) * 100)));
                             isFirstLine = false;
                         } else if (!"".equals(line.trim())) { // end of create sql statement import to db
                             // SQL Import Table
+                             
                             if (toImport.toString().length() > 1) {
                                 EBISystem.db().execExt(toImport.toString().toUpperCase());
                                 errorReport.append("\n");
@@ -162,7 +172,8 @@ public class EBISchemaImport extends JDialog {
                                 isFirstLine = true;
                             }
                         }
-                        i++;
+                        progressBar.setValue(i++);
+                      
                     }
                     if (!failed) {
                         importButton.setEnabled(true);
@@ -171,22 +182,16 @@ public class EBISchemaImport extends JDialog {
                         importButton.setVisible(false);
                         cancelButton.setText("Finish");
                     }
+                    br.close();
                     cancelButton.setEnabled(true);
-                } catch (final IOException ex) {
+                } catch (final Exception ex) {
                     EBIExceptionDialog.getInstance(EBISchemaImport.this, EBISystem.printStackTrace(ex)).Show(EBIMessage.NEUTRINO_DEBUG_MESSAGE);
                     ex.printStackTrace();
                     errorReport.append(EBISystem.printStackTrace(ex));
                     errorReport.append("\n");
                     failed = false;
                     setVisible(false);
-                } catch (SQLException ex) {
-                    EBIExceptionDialog.getInstance(EBISchemaImport.this, EBISystem.printStackTrace(ex)).Show(EBIMessage.NEUTRINO_DEBUG_MESSAGE);
-                    ex.printStackTrace();
-                    errorReport.append(EBISystem.printStackTrace(ex));
-                    errorReport.append("\n");
-                    failed = false;
-                    setVisible(false);
-                } finally {
+                }  finally {
                     try {
                         if (br != null) {
                             br.close();

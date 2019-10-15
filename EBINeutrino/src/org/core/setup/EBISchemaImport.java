@@ -173,7 +173,6 @@ public class EBISchemaImport extends JDialog {
                             }
                         }
                         progressBar.setValue(i++);
-                      
                     }
                     if (!failed) {
                         importButton.setEnabled(true);
@@ -182,7 +181,6 @@ public class EBISchemaImport extends JDialog {
                         importButton.setVisible(false);
                         cancelButton.setText("Finish");
                     }
-                    br.close();
                     cancelButton.setEnabled(true);
                 } catch (final Exception ex) {
                     EBIExceptionDialog.getInstance(EBISchemaImport.this, EBISystem.printStackTrace(ex)).Show(EBIMessage.NEUTRINO_DEBUG_MESSAGE);

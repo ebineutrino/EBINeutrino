@@ -8,9 +8,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -85,7 +82,6 @@ public class EBIImportSQLFiles extends EBIDialogExt {
             }
         });
         pane.add(bntStartImport, null);
-
     }
 
     public void startSQLImport(final String[] flx) {
@@ -98,59 +94,54 @@ public class EBIImportSQLFiles extends EBIDialogExt {
         final Runnable run = new Runnable() {
             @Override
             public void run() {
-                try {
-                    for (int x = 0; x < flx.length; x++) {
-                        try {
+                BufferedReader br = null;
+                for (int x = 0; x < flx.length; x++) {
+                    try {
 
-                            Reader reader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(flx[x]));
-                            BufferedReader br = new BufferedReader(reader);
+                        Reader reader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(flx[x]));
+                        br = new BufferedReader(reader);
 
-                            List<String> lines = br.lines().collect(Collectors.toList());
+                        List<String> lines = br.lines().collect(Collectors.toList());
 
-                            Iterator<String> iter = lines.iterator();
-                            String line = "";
-                            String tmp = "";
-                            while (iter.hasNext()) {
-                                line = iter.next();
-                                if (line.endsWith(";")) {
-                                    if (!EBISystem.getInstance().iDB().exec(tmp + line)) {
-                                        return;
-                                    }
-                                    tmp = "";
-                                } else {
-                                    tmp += line;
+                        Iterator<String> iter = lines.iterator();
+                        String line = "";
+                        String tmp = "";
+                        while (iter.hasNext()) {
+                            line = iter.next();
+                            if (line.endsWith(";")) {
+                                if (!EBISystem.getInstance().iDB().exec(tmp + line)) {
+                                    return;
                                 }
+                                tmp = "";
+                            } else {
+                                tmp += line;
                             }
-                            
+                        }
+
+                        if (isVisible()) {
+                            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_IMPORT_WAS_SUCCESSFULLY")).Show(EBIMessage.INFO_MESSAGE);
+                            setVisible(false);
+                        }
+                    } catch (final Exception ex) {
+                        ex.printStackTrace();
+                        EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_FILE_NOT_FOUND") + ex.getMessage()).Show(EBIMessage.ERROR_MESSAGE);
+                    } finally {
+                        try {
                             br.close();
-                            if (isVisible()) {
-                                EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_IMPORT_WAS_SUCCESSFULLY")).Show(EBIMessage.INFO_MESSAGE);
-                                setVisible(false);
-                            }
-                        } catch (final FileNotFoundException ex) {
-                            ex.printStackTrace();
-                            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_FILE_NOT_FOUND") + ex.getMessage()).Show(EBIMessage.ERROR_MESSAGE);
-                        } catch (final IOException ex) {
-                            ex.printStackTrace();
-                            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_FILE_NOT_FOUND") + ex.getMessage()).Show(EBIMessage.ERROR_MESSAGE);
-                        } finally {
                             if (isVisible()) {
                                 progress.setIndeterminate(false);
                             }
                             isFinish = true;
+                        } catch (IOException ex) {
+                            Logger.getLogger(EBIImportSQLFiles.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                } catch (final SQLException ex) {
-                    ex.printStackTrace();
-                    EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_LOADING_FILE") + "\n\n" + ex.getMessage()).Show(EBIMessage.ERROR_MESSAGE);
                 }
             }
         };
 
         final Thread start = new Thread(run, "Import SQL");
-
         start.start();
-
     }
 
 }

@@ -290,7 +290,7 @@ public class EBIMain extends JFrame {
                 if (EBISystemSetting.selectedModule == -1) {
                     addSystemSetting(selectedList);
                 } else {
-                    if (EBISystemSetting.selectedModule == 4) {
+                    if (EBISystemSetting.selectedModule == 1) {
                         try {
                             systemSetting.listName.report.newReport();
                         } catch (final Exception ex) {
@@ -311,16 +311,16 @@ public class EBIMain extends JFrame {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 systemSetting.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-                if (EBISystemSetting.selectedModule == 2) {
+                if (EBISystemSetting.selectedModule == 0) {
 
                     systemSetting.listName.einstp.saveSystemSetting();
                     mng.reloadSelectedModule();
                     frameSetting.setVisible(false);
 
-                    addSystemSetting(1);
+                    addSystemSetting(0);
                     frameSetting.requestFocus();
 
-                } else if (EBISystemSetting.selectedModule == 3) {
+                } else if (EBISystemSetting.selectedModule == 1) {
                     systemSetting.listName.report.saveReport();
                 }
                 systemSetting.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -337,7 +337,7 @@ public class EBIMain extends JFrame {
 
                 setCursor(new Cursor(Cursor.WAIT_CURSOR));
 
-                if (EBISystemSetting.selectedModule == 4) {
+                if (EBISystemSetting.selectedModule == 1) {
                     systemSetting.listName.report.deleteReport();
                 }
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -354,7 +354,7 @@ public class EBIMain extends JFrame {
         if (selectedList != -1) {
             systemSetting.listName.jListnames.setSelectedIndex(selectedList);
             systemSetting.listName.cpanel.removeAll();
-            systemSetting.listName.einstp = new EBISystemSettingPanel(this);
+            systemSetting.listName.einstp = new EBISystemSettingPanel();
             systemSetting.listName.cpanel.add(systemSetting.listName.einstp, java.awt.BorderLayout.CENTER);
         }
 

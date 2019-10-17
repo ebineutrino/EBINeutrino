@@ -1,6 +1,5 @@
 package org.core.settings;
 
-import org.core.EBIMain;
 import org.sdk.EBISystem;
 import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
@@ -12,20 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.IOUtils;
-import org.core.setup.EBILanguageSetup;
+
 
 public class EBISystemSettingPanel extends JPanel {
 
@@ -48,7 +40,6 @@ public class EBISystemSettingPanel extends JPanel {
     private JComboBox jcomboEMailProtocol = null;
     private JTextField jTextpopUser = null;
     private JPasswordField jTextpopPassword = null;
-    private EBIMain ebiMain = null;
     private JComboBox jComboBoxLanguage = null;
     private JComboBox jComboDateFormat = null;
     private JCheckBox deleteMessage = null;
@@ -56,12 +47,10 @@ public class EBISystemSettingPanel extends JPanel {
     private JLabel jLabel9 = null;
     private JLabel jLabel8 = null;
 
-    /**
-     * This is the default constructor
-     */
-    public EBISystemSettingPanel(final EBIMain main) {
+
+    public EBISystemSettingPanel() {
         super();
-        ebiMain = main;
+       
         initialize();
 
         parseLanguageFileFromDir();
@@ -85,41 +74,19 @@ public class EBISystemSettingPanel extends JPanel {
             this.jComboDateFormat.getEditor().setItem(properties.getValue("EBI_Neutrino_Date_Format"));
         }
         loadEMailSetting();
-        EBISystemSetting.selectedModule = 2;
-
+        EBISystemSetting.selectedModule = 0;
     }
 
     private void parseLanguageFileFromDir() {
-        String[] value;
-        try {
-            java.util.List<String> files = IOUtils.readLines(getClass().getClassLoader().getResourceAsStream("language"), Charsets.UTF_8);
-            String builder = EBISystem.i18n("EBI_LANG_PLEASE_SELECT") + ",";
-
-            Iterator<String> iter = files.iterator();
-            int size = files.size();
-            int i = 0;
-            while (iter.hasNext()) {
-                String lName;
-                String name = iter.next();
-
-                if ((lName = name.substring(name.lastIndexOf("_") + 1)) != null) {
-                    if (!"".equals(lName) && lName != null) {
-                        if ((lName = lName.substring(0, lName.lastIndexOf("."))) != null) {
-                            if (!"".equals(lName)) {
-                                builder += lName;
-                                if (i < size) {
-                                    builder += ",";
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            value = builder.trim().split(",");
-            this.jComboBoxLanguage.setModel(new javax.swing.DefaultComboBoxModel(value));
-        } catch (IOException ex) {
-            Logger.getLogger(EBISystemSettingPanel.class.getName()).log(Level.SEVERE, null, ex);
+        String[] files = EBIPropertiesRW.getEBIProperties().getValue("EBI_Neutrino_Languages").split(",");
+        String[] languages = new String[files.length + 1];
+        languages[0] = EBISystem.i18n("EBI_LANG_PLEASE_SELECT");
+        int i = 1;
+        for (String name : files) {
+            languages[i] = name;
+            i++;
         }
+        this.jComboBoxLanguage.setModel(new javax.swing.DefaultComboBoxModel(languages));
     }
 
     private void parseLanguageFromCombo(final String name) {
@@ -135,6 +102,7 @@ public class EBISystemSettingPanel extends JPanel {
                 }
             }
         } catch (final StringIndexOutOfBoundsException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -287,7 +255,6 @@ public class EBISystemSettingPanel extends JPanel {
         final EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
 
         if (!"".equals(jtextPDFPath.getText())) {
-
             properties.setValue("EBI_Neutrino_PDF", jtextPDFPath.getText());
         }
         if (!"".equals(jtextBrowserPath.getText())) {

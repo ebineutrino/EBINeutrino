@@ -22,7 +22,6 @@ public class EBISystemSetting extends EBIVisualPanelTemplate {
         cpanel.setSize(1000, 800);
         listName = new EBIListSettingName(ebiMain, cpanel);
         initialize();
-
     }
     
     @Override

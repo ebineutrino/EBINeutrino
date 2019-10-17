@@ -5,6 +5,7 @@ import org.sdk.EBISystem;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class EBIListSettingName extends JPanel {
 
@@ -15,9 +16,6 @@ public class EBIListSettingName extends JPanel {
     public EBISystemSettingPanel einstp = null;
     public EBIReportSetting report = null;
 
-    /**
-     * This is the default constructor
-     */
     public EBIListSettingName(final EBIMain main, final JPanel start) {
         super();
         ebiMain = main;
@@ -33,39 +31,27 @@ public class EBIListSettingName extends JPanel {
         initialize();
         jListnames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jListnames.setSelectedIndex(0);
-
     }
 
-    /**
-     * This method initializes this
-     *
-     * @return void
-     */
     private void initialize() {
         this.setLayout(new BorderLayout());
         this.setSize(300, 200);
         this.add(getJListnames(), java.awt.BorderLayout.CENTER);
     }
 
-    /**
-     * This method initializes jListnames
-     *
-     * @return javax.swing.JList
-     */
     private JList getJListnames() {
         if (jListnames == null) {
             jListnames = new JList(myListmodel);
             jListnames.setCellRenderer(new EBIListCellRenderer());
             jListnames.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
-                public void mousePressed(final java.awt.event.MouseEvent e) {
+                public void mousePressed(final MouseEvent e) {
                     final int index = jListnames.locationToIndex(e.getPoint());
 
                     switch (index) {
                         case 0:
                             setStart();
                             break;
-
                         case 1:
                             cpanel.removeAll();
                             cpanel.updateUI();
@@ -88,7 +74,7 @@ public class EBIListSettingName extends JPanel {
     public void setStart() {
         cpanel.removeAll();
         cpanel.updateUI();
-        einstp = new EBISystemSettingPanel(ebiMain);
+        einstp = new EBISystemSettingPanel();
         cpanel.add(einstp, java.awt.BorderLayout.CENTER);
         ebiMain.systemSetting.setPreferredSize(new Dimension(950, 700));
         einstp.updateUI();

@@ -47,11 +47,11 @@ public class EBIDatabase implements IEBIDatabase {
             Class.forName(this.driver);
             connectionUrl = null;
 
+            db = db.toLowerCase();
+            
             if ("yes".equals(toUpper.toLowerCase())) {
                 toUpperCase = true;
                 db = db.toUpperCase();
-            } else {
-                db = db.toLowerCase();
             }
 
             if ("mysql".equals(dbType)) {
@@ -64,9 +64,7 @@ public class EBIDatabase implements IEBIDatabase {
             } else {
                 return false;
             }
-
-            System.out.println(connectionUrl);
-
+            
             conn = DriverManager.getConnection(connectionUrl, this.user, this.password);
 
         } catch (final SQLException ex) {

@@ -19,7 +19,6 @@ public class MyTableModelDoc extends AbstractTableModel {
         if (row < 0 || row > data.length - 1) {
             return null;
         }
-
         return data[row];
     }
 

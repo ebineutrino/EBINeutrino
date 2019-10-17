@@ -57,7 +57,7 @@ public class EBISetupDB extends JPanel {
         super();
         setup = setUp;
         initialize();
-        databaseDriverCombo.addItem("com.mysql.jdbc.Driver");
+        databaseDriverCombo.addItem("com.mysql.cj.jdbc.Driver");
         databaseTypeText.setSelectedItem("mysql");
     }
 

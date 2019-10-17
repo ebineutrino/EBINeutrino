@@ -66,20 +66,15 @@ public class EBILanguageSetup extends EBIDialogExt {
 
     private void parseLanguageFileFromDir() {
         try {
-            
             String[] files = EBIPropertiesRW.getEBIProperties().getValue("EBI_Neutrino_Languages").split(",");
             String[] languages = new String[files.length+1];
-            
             languages[0] = EBISystem.i18n("EBI_LANG_PLEASE_SELECT");
-            
             int i =1;
             for(String name : files){
                 languages[i] = name;
                 i++;
             }
-            
             this.jComboBoxLanguage.setModel(new javax.swing.DefaultComboBoxModel(languages));
-            
         } catch (Exception e) {
             e.printStackTrace();
         }

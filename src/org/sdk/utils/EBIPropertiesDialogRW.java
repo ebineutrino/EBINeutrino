@@ -4,11 +4,7 @@ import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * configuration properties dialogstore.properties and dialogstore.properties
@@ -17,17 +13,16 @@ public class EBIPropertiesDialogRW {
 
     private static EBIPropertiesDialogRW rwProp = null;
     private Properties properties = null;
+    private String propertyPath = System.getProperty("user.dir")
+                + File.separator+"resources"
+                + File.separator+"config"
+                + File.separator+"dialogstore.properties";
 
     public EBIPropertiesDialogRW() {
         try {
             properties = new Properties();
-            URL url = ClassLoader.getSystemResource("config/dialogstore.properties");
-            properties.load(url.openStream());
-        } catch (final IOException e) {
-            e.printStackTrace();
-            EBIExceptionDialog.getInstance("Critical Error :Properties file cannot be found !")
-                    .Show(EBIMessage.ERROR_MESSAGE);
-        } catch (final Exception e) {
+            properties.load(new FileReader(propertyPath));
+        }catch (final IOException e) {
             e.printStackTrace();
             EBIExceptionDialog.getInstance("Critical Error :Properties file cannot be found !")
                     .Show(EBIMessage.ERROR_MESSAGE);
@@ -48,17 +43,11 @@ public class EBIPropertiesDialogRW {
 
     public void saveProperties() {
         try {
-            OutputStream out = new ByteArrayOutputStream();
-            InputStream stream = ClassLoader.getSystemResourceAsStream("config/dialogstore.properties");
-            int av=-1;
-            while((av = stream.available()) > 0){
-                byte[] bt = new byte[av];
-                out.write(stream.read(bt));
-            }            
-            properties.store(out, null); 
+            properties.store(new FileWriter(propertyPath), null);
         } catch (final IOException e) {
             e.printStackTrace();
-            EBIExceptionDialog.getInstance("Properties file cannot be found!").Show(EBIMessage.ERROR_MESSAGE);
+            EBIExceptionDialog.getInstance("Properties "
+                    + "file cannot be found!").Show(EBIMessage.ERROR_MESSAGE);
         }
     }
 
@@ -68,5 +57,4 @@ public class EBIPropertiesDialogRW {
         }
         return rwProp;
     }
-
 }

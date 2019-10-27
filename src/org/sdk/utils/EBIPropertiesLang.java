@@ -16,7 +16,23 @@ public class EBIPropertiesLang {
     private static EBIPropertiesLang rwProp = null;
     private Properties properties = null;
     private String selLang = "";
-
+    
+    private String propertyPath = System.getProperty("user.dir")
+                + File.separator+"resources"
+                + File.separator;
+    
+    public void loadLanguageProperties(final String lang) {
+        try {
+            selLang = lang;
+            properties = new Properties();
+            properties.load(new FileReader(propertyPath+lang));
+        } catch (final IOException e) {
+            e.printStackTrace();
+            EBIExceptionDialog.getInstance("Critical Error : Language file cannot be found !")
+                    .Show(EBIMessage.ERROR_MESSAGE);
+        }
+    }
+    
     public String getValue(final String key) {
         String val = properties.getProperty(key);
         if (val == null) {
@@ -28,35 +44,11 @@ public class EBIPropertiesLang {
     public void setValue(final String key, final String value) {
         properties.setProperty(key, value);
     }
-
-    public void loadLanguageProperties(final String lang) {
-        try {
-            selLang = lang;
-            System.out.println(selLang);
-            properties = new Properties();
-            URL url = ClassLoader.getSystemResource(lang);
-            properties.load(url.openStream());
-        } catch (final IOException e) {
-            e.printStackTrace();
-            EBIExceptionDialog.getInstance("Critical Error : Language file cannot be found !")
-                    .Show(EBIMessage.ERROR_MESSAGE);
-        } catch (final Exception e) {
-            e.printStackTrace();
-            EBIExceptionDialog.getInstance("Critical Error : Language file cannot be found !")
-                    .Show(EBIMessage.ERROR_MESSAGE);
-        }
-    }
+    
 
     public void saveProperties() {
         try {
-            OutputStream out = new ByteArrayOutputStream();
-            InputStream stream = ClassLoader.getSystemResourceAsStream(selLang);
-            int av = -1;
-            while ((av = stream.available()) > 0) {
-                byte[] bt = new byte[av];
-                out.write(stream.read(bt));
-            }
-            properties.store(out, null);
+            properties.store(new FileWriter(propertyPath+selLang), null);
         } catch (final IOException e) {
             e.printStackTrace();
             EBIExceptionDialog.getInstance("Language file cannot be found!").Show(EBIMessage.ERROR_MESSAGE);

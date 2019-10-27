@@ -1,13 +1,12 @@
 package org.sdk.utils;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -18,15 +17,15 @@ public class EBIPropertiesRW {
 
     private static EBIPropertiesRW rwProp = null;
     private Properties properties = null;
-
+    private String propertyPath = System.getProperty("user.dir")
+                + File.separator+"resources"
+                + File.separator+"config"
+                + File.separator+"ebi_neutrino.properties";
+    
     public EBIPropertiesRW() {
         try {
-            
-            System.out.println(System.getProperty("user.dir"));
-            
             properties = new Properties();
-            URL url = ClassLoader.getSystemResource("config/ebi_neutrino.properties");
-            properties.load(url.openStream());
+            properties.load(new FileReader(propertyPath));
         } catch (final IOException e) {
             e.printStackTrace();
             EBIExceptionDialog.getInstance("Critical Error :Properties file cannot be found !")
@@ -48,16 +47,8 @@ public class EBIPropertiesRW {
 
     public void saveEBINeutrinoProperties() {
         try {
-            OutputStream out = new ByteArrayOutputStream();
-            InputStream stream = ClassLoader.getSystemResourceAsStream("config/ebi_neutrino.properties");
-
-            int av=-1;
-            while((av = stream.available()) > 0){
-                byte[] bt = new byte[av];
-                out.write(stream.read(bt));
-            }
-            
-            properties.store(out, null);
+             
+            properties.store(new FileWriter(propertyPath), null);
         } catch (final IOException e) {
             EBIExceptionDialog.getInstance("Properties file cannot be found!").Show(EBIMessage.ERROR_MESSAGE);
         }

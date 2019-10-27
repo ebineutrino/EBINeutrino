@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
 /**
  * This program is free software; you can redistribute it and/or modify it under
@@ -63,6 +64,11 @@ public class EBIMain extends JFrame {
     public EBIToolbar userSysBar = null;
 
     private EBIModule ebiModule = null;
+    
+    private String resourceLoggerPath = System.getProperty("user.dir")
+                + File.separator+"resources"
+                + File.separator;
+    
 
     public static void main(final String[] args) throws Exception {
         try {
@@ -161,7 +167,7 @@ public class EBIMain extends JFrame {
             SwingUtilities.updateComponentTreeUI(this);
 
             splash = new EBISplashScreen();
-            PropertyConfigurator.configure(ClassLoader.getSystemResource("config/ebiLogger.config"));
+            PropertyConfigurator.configure(resourceLoggerPath+"config/ebiLogger.config");
             splash.setVisible(true);
 
             final EBIDatabase conn = new EBIDatabase();

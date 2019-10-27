@@ -14,7 +14,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.PreparedStatement;
@@ -24,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -38,6 +39,18 @@ public class EBIReportSystem implements IEBIReportSystem {
     public boolean eMailRecord = false;
     public String strRecs = null;
     private final EBIWinWaiting wait = new EBIWinWaiting(EBISystem.i18n("EBI_LANG_LOAD_REPORT_DATA"));
+    
+    @Getter @Setter
+    private String resourceReportPath = System.getProperty("user.dir")
+                + File.separator+"resources"
+                + File.separator+"reports"
+                + File.separator;
+    
+    private String resourceTmpPath = System.getProperty("user.dir")
+                + File.separator+"resources"
+                + File.separator+"tmp"
+                + File.separator;
+    
 
     public void buildReport(final File reportFile) {
         final Thread cmplRep = new Thread(new Runnable() {
@@ -74,11 +87,11 @@ public class EBIReportSystem implements IEBIReportSystem {
             public void run() {
 
                 try {
-                    final File[] files = new File(getClass().getClassLoader().getResource("reports/").toURI()).listFiles();
+                    final File[] files = new File(resourceReportPath).listFiles();
                     for (final File file : files) {
                         buildReport(file);
                     }
-                } catch (URISyntaxException ex) {
+                } catch (Exception ex) {
                     Logger.getLogger(EBIReportSystem.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -230,16 +243,15 @@ public class EBIReportSystem implements IEBIReportSystem {
                         }
 
                         addParametertoReport(map);
-                        final JasperPrint jasperPrint = JasperFillManager.fillReport(
-                                getClass().getClassLoader().getResourceAsStream("reports/" + report[0].toString()), map,
+                        final JasperPrint jasperPrint = JasperFillManager.fillReport(resourceReportPath+report[0].toString(), map,
                                 EBISystem.getInstance().iDB().getActiveConnection());
 
                         if ((Boolean) report[1] == true) {
 
                             final String fileN = report[0].toString().replaceAll("[^\\p{L}\\p{N}]", "");
-                            JasperExportManager.exportReportToPdfFile(jasperPrint, "tmp/" + fileN + ".pdf");
+                            JasperExportManager.exportReportToPdfFile(jasperPrint, resourceTmpPath + fileN + ".pdf");
 
-                            EBISystem.getInstance().openPDFReportFile("tmp/" + fileN + ".pdf");
+                            EBISystem.getInstance().openPDFReportFile(resourceTmpPath + fileN + ".pdf");
 
                         } else {
                             JFrame.setDefaultLookAndFeelDecorated(false);
@@ -306,14 +318,13 @@ public class EBIReportSystem implements IEBIReportSystem {
                         }
 
                         addParametertoReport(map);
-                        final JasperPrint jasperPrint = JasperFillManager.fillReport(
-                                getClass().getClassLoader().getResourceAsStream("reports/" + report[0].toString()), map,
+                        final JasperPrint jasperPrint = JasperFillManager.fillReport(resourceReportPath+report[0].toString(), map,
                                 EBISystem.getInstance().iDB().getActiveConnection());
 
                         if ((Boolean) report[1] == true) {
                             final String fN = fileName.replaceAll("[^\\p{L}\\p{N}]", "");
-                            JasperExportManager.exportReportToPdfFile(jasperPrint, "tmp/" + fN + ".pdf");
-                            EBISystem.getInstance().openPDFReportFile("tmp/" + fN + ".pdf");
+                            JasperExportManager.exportReportToPdfFile(jasperPrint, resourceTmpPath + fN + ".pdf");
+                            EBISystem.getInstance().openPDFReportFile(resourceTmpPath + fN + ".pdf");
 
                         } else {
                             JFrame.setDefaultLookAndFeelDecorated(false);
@@ -398,10 +409,10 @@ public class EBIReportSystem implements IEBIReportSystem {
 
                 addParametertoReport(map);
 
-                final JasperPrint jasperPrint = JasperFillManager.fillReport(getClass().getClassLoader().getResourceAsStream("reports/" + report[0].toString()), map,
+                final JasperPrint jasperPrint = JasperFillManager.fillReport(resourceReportPath+report[0].toString(), map,
                         EBISystem.getInstance().iDB().getActiveConnection());
 
-                fileToRet = new File(getClass().getClassLoader().getResource("tmp/" + fileName.replaceAll(" ", "_") + ".pdf").toURI()).getAbsolutePath();
+                fileToRet = new File(getClass().getClassLoader().getResource(resourceTmpPath + fileName.replaceAll(" ", "_") + ".pdf").toURI()).getAbsolutePath();
                 if ((Boolean) report[1] == true) {
                     fileName = fileName.replaceAll("[^\\p{L}\\p{N}]", "");
                     JasperExportManager.exportReportToPdfFile(jasperPrint, fileToRet);

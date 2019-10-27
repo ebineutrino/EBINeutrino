@@ -12,8 +12,8 @@ import org.jdom.input.SAXBuilder;
 import javax.swing.*;
 import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,6 +24,10 @@ public class EBIXMLGUIReader {
     public Document xmlDoc = null;
     private SAXBuilder builder = null;
     private boolean stepOne = true;
+
+    private String resourceViewsPath = System.getProperty("user.dir")
+                + File.separator+"resources"
+                + File.separator;
 
     public EBIXMLGUIReader(final String xmlPath) {
         builder = new SAXBuilder();
@@ -42,8 +46,7 @@ public class EBIXMLGUIReader {
         boolean ret = true;
         stepOne = true;
         try {
-            URL url = ClassLoader.getSystemResource(xmlPath);
-            xmlDoc = builder.build(url.openStream());
+            xmlDoc = builder.build(resourceViewsPath+xmlPath);
             ret = readXMLGUI(xmlDoc.getRootElement());
         } catch (final IOException ex) {
             ret = false;

@@ -49,3 +49,71 @@ java.lang.NullPointerException
  Cause :null
 
 2019-10-27 15:20:22,936 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2019-10-27 17:30:54,410 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2019-10-27 17:30:56,149 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2019-10-27 17:36:10,424 ERROR [ShowReportThread] org.sdk.EBISystem: java.io.FileNotFoundException: /Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/reports/meetingCustomerLetterReport.jasper
+ Cause :java.io.FileNotFoundException: /Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/reports/meetingCustomerLetterReport.jasper
+
+net.sf.jasperreports.engine.JRException: java.io.FileNotFoundException: /Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/reports/meetingCustomerLetterReport.jasper
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:729)
+	at org.core.EBIReportSystem$4.run(EBIReportSystem.java:342)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.FileNotFoundException: /Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/reports/meetingCustomerLetterReport.jasper
+	at net.sf.jasperreports.engine.util.JRLoader.loadObject(JRLoader.java:127)
+	at net.sf.jasperreports.engine.util.JRLoader.loadObject(JRLoader.java:116)
+	at net.sf.jasperreports.engine.JasperFillManager.getReportSource(JasperFillManager.java:1105)
+	at net.sf.jasperreports.engine.JasperFillManager.fill(JasperFillManager.java:320)
+	at net.sf.jasperreports.engine.JasperFillManager.fillReport(JasperFillManager.java:850)
+	at org.core.EBIReportSystem$4.run(EBIReportSystem.java:321)
+	... 1 more
+2019-10-27 17:36:10,427 ERROR [ShowReportThread] org.sdk.gui.dialogs.EBIExceptionDialog: java.io.FileNotFoundException: /Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/reports/meetingCustomerLetterReport.jasper
+ Cause :java.io.FileNotFoundException: /Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/reports/meetingCustomerLetterReport.jasper
+
+2019-10-27 17:38:29,535 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: Malformed URL: null, openView.groovy
+ Cause :null
+
+groovy.util.ResourceException: Malformed URL: null, openView.groovy
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:729)
+	at org.core.guiRenderer.EBIGUIRenderer$17.run(EBIGUIRenderer.java:1470)
+	at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:311)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:74)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:205)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+2019-10-27 17:38:29,536 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Malformed URL: null, openView.groovy
+ Cause :null
+
+2019-10-27 17:41:20,326 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2019-10-27 17:41:21,878 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2019-10-27 17:47:53,586 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: Cannot open URL: file:/Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/views//Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/openView.groovy
+ Cause :null
+
+groovy.util.ResourceException: Cannot open URL: file:/Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/views//Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/openView.groovy
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:723)
+	at org.core.guiRenderer.EBIGUIRenderer$17.run(EBIGUIRenderer.java:1481)
+	at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:311)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:74)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:205)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+2019-10-27 17:47:53,589 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Cannot open URL: file:/Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/views//Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/openView.groovy
+ Cause :null
+

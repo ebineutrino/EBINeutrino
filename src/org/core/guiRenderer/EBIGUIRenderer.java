@@ -40,6 +40,7 @@ import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -48,6 +49,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.core.gui.component.EBITextfield;
 
 
@@ -71,6 +74,10 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     private GroovyScriptEngine gse = null;
     private Binding binding = null;
     private boolean observeChanges = false;
+    
+    private String resourcePath = System.getProperty("user.dir")
+                + File.separator+"resources"
+                + File.separator;
 
     public EBIGUIRenderer(final EBIMain main) {
         ebiMain = main;
@@ -79,7 +86,11 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
         componentGet = new TreeMap();
         binding = new Binding();
         binding.setVariable("system", EBISystem.getInstance());
-        gse = new GroovyScriptEngine(new URL[]{getClass().getClassLoader().getResource("views/")});
+        try {
+            gse = new GroovyScriptEngine(new String[]{resourcePath+"views/"});
+        } catch (IOException ex) {
+            Logger.getLogger(EBIGUIRenderer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

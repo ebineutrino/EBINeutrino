@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -99,6 +98,19 @@ public class EBISystem {
     private HashMap<String, Object> mappedBbeans = new HashMap();
     @Getter @Setter
     private EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
+    
+    @Getter @Setter
+    private String resourceImagePath = System.getProperty("user.dir")
+                + File.separator+"resources"
+                + File.separator+"images"
+                + File.separator;
+    
+    @Getter @Setter
+    private String resourceSQLPath = System.getProperty("user.dir")
+                + File.separator+"resources"
+                + File.separator+"sql"
+                + File.separator;
+   
 
     public EBISystem() {
         calendar = new GregorianCalendar();
@@ -997,11 +1009,9 @@ public class EBISystem {
     }
 
     public ImageIcon getIconResource(String iconPath) {
-        ImageIcon icon = null;
-        URL url = getClass().getClassLoader().getResource("images/" + iconPath);
-        if (url != null) {
-            icon = new ImageIcon(url);
-        }
+        
+        ImageIcon icon = new ImageIcon(resourceImagePath+iconPath);
+        
         return icon;
     }
 

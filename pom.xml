@@ -43,12 +43,35 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <outputDirectory>${project.build.directory}/EBINeutrino/lib</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
+            
+            <plugin>
+              <artifactId>maven-resources-plugin</artifactId>
+              <version>3.1.0</version>
+              <executions>
+                <execution>
+                  <id>copy-resources</id>
+                  <phase>validate</phase>
+                  <goals>
+                    <goal>copy-resources</goal>
+                  </goals>
+                  <configuration>
+                    <outputDirectory>${project.build.directory}/EBINeutrino/resources</outputDirectory>
+                    <resources>          
+                      <resource>
+                        <directory>resources</directory>
+                        <filtering>true</filtering>
+                      </resource>
+                    </resources>              
+                  </configuration>            
+                </execution>
+              </executions>
+            </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -59,6 +82,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
+                            <outputDirectory>${project.build.directory}/EBINeutrino</outputDirectory>
                             <archive>
                                 <manifest>
                                     <mainClass>

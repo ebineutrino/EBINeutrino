@@ -21,6 +21,9 @@ public class EBIPropertiesRW {
 
     public EBIPropertiesRW() {
         try {
+            
+            System.out.println(System.getProperty("user.dir"));
+            
             properties = new Properties();
             URL url = ClassLoader.getSystemResource("config/ebi_neutrino.properties");
             properties.load(url.openStream());

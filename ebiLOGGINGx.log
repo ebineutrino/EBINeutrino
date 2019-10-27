@@ -1,0 +1,51 @@
+2019-10-27 15:19:03,624 ERROR [main] org.sdk.EBISystem: Error connection to the database
+java.sql.SQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at org.core.EBIDatabase.connect(EBIDatabase.java:72)
+	at org.core.EBINeutrinoSystemInit.Init(EBINeutrinoSystemInit.java:136)
+	at org.core.EBINeutrinoSystemInit.<init>(EBINeutrinoSystemInit.java:42)
+	at org.core.EBIMain.<init>(EBIMain.java:170)
+	at org.core.EBIMain.main(EBIMain.java:69)
+Caused by: com.mysql.cj.exceptions.CJException: Access denied for user 'root'@'localhost' (using password: YES)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:61)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:151)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:129)
+	at com.mysql.cj.protocol.a.NativeProtocol.checkErrorMessage(NativeProtocol.java:795)
+	at com.mysql.cj.protocol.a.NativeProtocol.checkErrorMessage(NativeProtocol.java:720)
+	at com.mysql.cj.protocol.a.NativeProtocol.checkErrorMessage(NativeProtocol.java:688)
+	at com.mysql.cj.protocol.a.NativeProtocol.checkErrorMessage(NativeProtocol.java:130)
+	at com.mysql.cj.protocol.a.NativeAuthenticationProvider.proceedHandshakeWithPluggableAuthentication(NativeAuthenticationProvider.java:540)
+	at com.mysql.cj.protocol.a.NativeAuthenticationProvider.connect(NativeAuthenticationProvider.java:202)
+	at com.mysql.cj.protocol.a.NativeProtocol.connect(NativeProtocol.java:1348)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:163)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:841)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:822)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:447)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:199)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at org.core.EBIDatabase.connect(EBIDatabase.java:68)
+	... 4 more
+2019-10-27 15:19:03,663 ERROR [main] org.sdk.gui.dialogs.EBIExceptionDialog: No database connection possible
+Would you like to configure a connection?
+
+2019-10-27 15:19:22,295 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Connection is ok!
+2019-10-27 15:19:23,757 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Database connection data, are saved successfully!
+2019-10-27 15:19:24,506 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Would you like to import the EBI Neutrino R1 database schema?
+2019-10-27 15:20:05,092 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Inserisci un contatto!
+2019-10-27 15:20:10,236 ERROR [ShowReportThread] org.sdk.EBISystem: null
+ Cause :null
+
+java.lang.NullPointerException
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:711)
+	at org.core.EBIReportSystem$4.run(EBIReportSystem.java:331)
+	at java.lang.Thread.run(Thread.java:748)
+2019-10-27 15:20:10,236 ERROR [ShowReportThread] org.sdk.gui.dialogs.EBIExceptionDialog: null
+ Cause :null
+
+2019-10-27 15:20:22,936 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?

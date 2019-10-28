@@ -310,8 +310,10 @@ public class ControlProduct {
 
     public void dataShow(Integer id) {
         ResultSet set = null;
-        int srow = EBISystem.gui().table("companyProductTable", "Product").getSelectedRow();
+        int selRow = EBISystem.gui().table("companyProductTable", "Product").getSelectedRow();
         PreparedStatement ps = null;
+        
+      
         try {
             ps = EBISystem.getInstance().iDB().initPreparedStatement("SELECT PRODUCTID,PRODUCTNR,PRODUCTNAME,CATEGORY,TYPE,DESCRIPTION FROM CRMPRODUCT ORDER BY CREATEDDATE DESC");
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps);
@@ -329,7 +331,7 @@ public class ControlProduct {
                         EBISystem.getModule().getEBICRMProductPane().getProductModel().data[i][4] = set.getString("DESCRIPTION") == null ? "" : set.getString("DESCRIPTION");
                         EBISystem.getModule().getEBICRMProductPane().getProductModel().data[i][5] = set.getInt("PRODUCTID");
                         if(id != -1 && id == set.getInt("PRODUCTID")){
-                            srow= EBISystem.gui().table("companyProductTable", "Product").convertRowIndexToView(i);
+                           selRow = i;
                         }
                         i++;
                     }
@@ -355,8 +357,9 @@ public class ControlProduct {
             EBISystem.getModule().getEBICRMProductPane().getProductModel().fireTableDataChanged();
         }
         
-        if(srow > -1){
-            EBISystem.gui().table("companyProductTable", "Product").changeSelection(srow, 0, false, false);
+        if(selRow > -1){
+            selRow= EBISystem.gui().table("companyProductTable", "Product").convertRowIndexToView(selRow);
+            EBISystem.gui().table("companyProductTable", "Product").changeSelection(selRow, 0, false, false);
         }
     }
 

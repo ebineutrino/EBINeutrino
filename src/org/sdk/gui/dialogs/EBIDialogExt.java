@@ -13,13 +13,13 @@ public class EBIDialogExt extends EBIDialog {
         super(owner);
         setFocusableWindowState(true);
         setFocusable(true);
-        pack();
+        //pack();
     }
 
     public EBIDialogExt(final EBIMain owner, final EBIPropertiesDialogRW properties) {
         super(owner, properties);
         setFocusableWindowState(true);
         setFocusable(true);
-        pack();
+        //pack();
     }
 }

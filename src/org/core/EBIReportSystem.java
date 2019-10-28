@@ -87,7 +87,8 @@ public class EBIReportSystem implements IEBIReportSystem {
             public void run() {
 
                 try {
-                    final File[] files = new File(resourceReportPath).listFiles();
+                    final File[] files = 
+                            new File(resourceReportPath).listFiles();
                     for (final File file : files) {
                         buildReport(file);
                     }

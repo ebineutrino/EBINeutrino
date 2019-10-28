@@ -343,8 +343,9 @@ public class ControlCampaign {
 
     public void dataShow(Integer id) {
         ResultSet set = null;
-        int srow = EBISystem.gui().table("companyCampaignTable", "Campaign").getSelectedRow();
+        int selRow = EBISystem.gui().table("companyCampaignTable", "Campaign").getSelectedRow();
         PreparedStatement ps1 = null;
+      
         try {
 
             ps1 = EBISystem.getInstance().iDB().initPreparedStatement("SELECT * FROM CRMCAMPAIGN ORDER BY CREATEDDATE DESC ");
@@ -364,7 +365,7 @@ public class ControlCampaign {
                         EBISystem.getModule().getEBICRMCampaign().getTabModelCampaign().data[i][3] = set.getDate("VALIDTO") == null ? "" : EBISystem.getInstance().getDateToString(set.getDate("VALIDTO"));
                         EBISystem.getModule().getEBICRMCampaign().getTabModelCampaign().data[i][4] = set.getInt("CAMPAIGNID");
                         if(id != -1 && id == set.getInt("CAMPAIGNID")){
-                            srow = EBISystem.gui().table("companyCampaignTable", "Campaign").convertRowIndexToView(i);
+                            selRow = i;
                         }
                         i++;
                     }
@@ -388,8 +389,9 @@ public class ControlCampaign {
             }
         }
         
-        if(srow > -1){
-            EBISystem.gui().table("companyCampaignTable", "Campaign").changeSelection(srow, 0, false, false);
+        if(selRow > -1){
+            selRow = EBISystem.gui().table("companyCampaignTable", "Campaign").convertRowIndexToView(selRow);
+            EBISystem.gui().table("companyCampaignTable", "Campaign").changeSelection(selRow, 0, false, false);
         }
     }
 

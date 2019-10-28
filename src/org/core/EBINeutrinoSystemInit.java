@@ -11,7 +11,6 @@ import org.sdk.utils.EBIPropertiesRW;
 import org.sdk.utils.Encrypter;
 import org.hibernate.cfg.Configuration;
 
-import javax.swing.*;
 import java.util.Set;
 import javax.persistence.Table;
 import org.reflections.Reflections;
@@ -26,52 +25,22 @@ public class EBINeutrinoSystemInit extends EBISystem {
     private static Configuration cfg = new Configuration();
     private EBIPropertiesRW properties = null;
     private boolean toReturn;
+    private EBISplashScreen splash = null;
 
     public EBINeutrinoSystemInit() {
         properties = EBIPropertiesRW.getEBIProperties();
-        if (Init(properties.getValue("EBI_Neutrino_Database_Name")) == false) {
-            isConfigured = false;
-        }
-        checkConnection();
+        checkDB();
     }
 
     public EBINeutrinoSystemInit(final EBISplashScreen spl) {
-
         properties = EBIPropertiesRW.getEBIProperties();
-
-        final boolean ret = Init(properties.getValue("EBI_Neutrino_Database_Name"));
-
-        if (ret == false) {
-            isConfigured = false;
-            if (spl != null) {
-                spl.setVisible(false);
-            }
-            if (checkConnection() == true) {
-                if (spl != null) {
-                    spl.setVisible(true);
-                }
-                if (Init(properties.getValue("EBI_Neutrino_Database_Name")) == false) {
-                    isConfigured = false;
-                    if (spl != null) {
-                        spl.setVisible(false);
-                    }
-                }
-            }
-        }
+        splash = spl;
+        checkDB();
     }
-
-    /**
-     * Check if we have a connection to the database then a setup dialog will
-     * appear
-     */
-    public boolean checkConnection() {
-        if (isConfigured == false) {
-
-            final JFrame frame = new JFrame("EBI Neutrino R1 Setup");
-            frame.setUndecorated(true);
-            frame.setVisible(true);
-            frame.setLocationRelativeTo(null);
-
+    
+    public void checkDB(){
+        if ((isConfigured = Init(properties.getValue("EBI_Neutrino_Database_Name"))) == false) {
+            splash.setVisible(false);
             if (EBIExceptionDialog
                     .getInstance("No database connection possible\nWould you like to configure a connection?\n")
                     .Show(EBIMessage.INFO_MESSAGE_YESNO) == true) {
@@ -82,19 +51,17 @@ public class EBINeutrinoSystemInit extends EBISystem {
                 final EBISetup application = new EBISetup(this);
                 application.setResizable(false);
                 application.setVisible(true);
-
-                if (!application.DBConfigured) {
-                    System.exit(1);
-                }
-
-                frame.dispose();
-
-            } else {
-                System.exit(1);
+            }
+        }else{
+            if(!splash.isVisible()){
+                splash.setVisible(true);
+                try{
+                    EBISystem.getInstance().getMainFrame().initializeTheSystem();
+                }catch(Exception ex){ ex.printStackTrace();}
             }
         }
-        return true;
     }
+    
 
     /**
      * Initialize EBI Neutrino Systems

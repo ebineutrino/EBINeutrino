@@ -379,10 +379,11 @@ public class ControlOpportunity {
 
     public void dataShow(Integer id) {
 
-        int srow = EBISystem.gui().table("companyOpportunityTable", "Opportunity").getSelectedRow();
+        int selRow = EBISystem.gui().table("companyOpportunityTable", "Opportunity").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyopportunities().size();
 
         if (size > 0) {
+            
             EBISystem.getModule().getOpportunityPane().getTabModel().data = new Object[size][8];
             final Iterator<Companyopportunity> iter = EBISystem.getInstance().getCompany().getCompanyopportunities().iterator();
             int i = 0;
@@ -392,6 +393,7 @@ public class ControlOpportunity {
             currency.setMaximumFractionDigits(2);
 
             while (iter.hasNext()) {
+                
                 final Companyopportunity obj = iter.next();
 
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][0] = obj.getName() == null ? "" : obj.getName();
@@ -403,16 +405,19 @@ public class ControlOpportunity {
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][6] = EBISystem.getInstance().getDateToString(obj.getClosedate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getClosedate());
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][7] = obj.getOpportunityid();
                 if (id != -1 && id == obj.getOpportunityid()) {
-                    srow = EBISystem.gui().table("companyOpportunityTable", "Opportunity").convertRowIndexToView(i);
+                    selRow = i;
                 }
                 i++;
             }
         } else {
-            EBISystem.getModule().getOpportunityPane().getTabModel().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
+            EBISystem.getModule().getOpportunityPane().getTabModel().data 
+                    = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
         }
+        
         EBISystem.getModule().getOpportunityPane().getTabModel().fireTableDataChanged();
-        if(srow > -1){
-            EBISystem.gui().table("companyOpportunityTable", "Opportunity").changeSelection(srow, 0, false, false);
+        if(selRow > -1){
+            selRow = EBISystem.gui().table("companyOpportunityTable", "Opportunity").convertRowIndexToView(selRow);
+            EBISystem.gui().table("companyOpportunityTable", "Opportunity").changeSelection(selRow, 0, false, false);
         }
     }
 

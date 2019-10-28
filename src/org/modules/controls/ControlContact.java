@@ -234,16 +234,16 @@ public class ControlContact {
 
     public void dataShow(Integer id) {
         
-        int srow = EBISystem.gui().table("companyContacts", "Contact").getSelectedRow();
+        int selRow = EBISystem.gui().table("companyContacts", "Contact").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanycontactses().size();
 
         if (size > 0) {
-
             EBISystem.getModule().getContactPane().getTableModel().data = new Object[size][9];
 
             final Iterator<Companycontacts> itr = EBISystem.getInstance().getCompany().getCompanycontactses().iterator();
             int i = 0;
             String mainContactMarker;
+            
             while (itr.hasNext()) {
                 final Companycontacts obj = itr.next();
                 if (obj.getMaincontact() != null && obj.getMaincontact() == true) {
@@ -261,7 +261,7 @@ public class ControlContact {
                 EBISystem.getModule().getContactPane().getTableModel().data[i][7] = obj.getDescription() == null ? "" : obj.getDescription();
                 EBISystem.getModule().getContactPane().getTableModel().data[i][EBISystem.getModule().getContactPane().getTableModel().columnNames.length] = obj.getContactid();
                 if(id != -1 && id == obj.getContactid()){
-                    srow = EBISystem.gui().table("companyContacts", "Contact").convertRowIndexToView(i);
+                   selRow = i;
                 }
                 i++;
             }
@@ -273,11 +273,12 @@ public class ControlContact {
         if (EBISystem.getModule().getCompanyPane() != null) {
             EBISystem.getModule().getCompanyPane().ctabModel.data = EBISystem.getModule().getContactPane().getTableModel().data;
             EBISystem.getModule().getCompanyPane().ctabModel.fireTableDataChanged();
+            EBISystem.getModule().getContactPane().getTableModel().fireTableDataChanged();
         }
 
-        EBISystem.getModule().getContactPane().getTableModel().fireTableDataChanged();
-        if(srow > -1){
-            EBISystem.gui().table("companyContacts", "Contact").changeSelection(srow, 0, false, false);
+        if(selRow > -1){
+            selRow = EBISystem.gui().table("companyContacts", "Contact").convertRowIndexToView(selRow);
+            EBISystem.gui().table("companyContacts", "Contact").changeSelection(selRow, 0, false, false);
         }
     }
 

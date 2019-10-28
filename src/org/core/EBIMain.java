@@ -64,11 +64,10 @@ public class EBIMain extends JFrame {
     public EBIToolbar userSysBar = null;
 
     private EBIModule ebiModule = null;
-    
+
     private String resourceLoggerPath = System.getProperty("user.dir")
-                + File.separator+"resources"
-                + File.separator;
-    
+            + File.separator + "resources"
+            + File.separator;
 
     public static void main(final String[] args) throws Exception {
         try {
@@ -167,7 +166,7 @@ public class EBIMain extends JFrame {
             SwingUtilities.updateComponentTreeUI(this);
 
             splash = new EBISplashScreen();
-            PropertyConfigurator.configure(resourceLoggerPath+"config/ebiLogger.config");
+            PropertyConfigurator.configure(resourceLoggerPath + "config/ebiLogger.config");
             splash.setVisible(true);
 
             final EBIDatabase conn = new EBIDatabase();
@@ -176,75 +175,77 @@ public class EBIMain extends JFrame {
             new EBINeutrinoSystemInit(splash);
 
             if (EBINeutrinoSystemInit.isConfigured) {
-                /**
-                 * ******************
-                 */
-                // Initialize xml gui renderer
-                EBISystem.getInstance().setIEBIGUIRendererInstance(new EBIGUIRenderer(EBIMain.this));
-
-                /**
-                 * *****************
-                 */
-                initialize();
-                // Initialize Container, tab panel
-                container = new EBIExtensionContainer(EBIMain.this);
-                container.initContainer();
-                EBISystem.getInstance().setIEBIContainerInstance(container);
-                /**
-                 * ******************
-                 */
-                // Create toolbars
-                ebiBar = new EBIToolbar(EBIMain.this);
-                ebiBar.addToolBarToEBIMain();
-                EBISystem.getInstance().setIEBIToolBarInstance(ebiBar);
-
-                iSecurity = EBISystem.getInstance().getIEBISecurityInstance();
-                bar = EBISystem.getInstance().getIEBIToolBarInstance();
-
-                ebiModule = new EBIModule();
-                EBISystem.getInstance().setIEBIModule(ebiModule);
-                mng = new EBIModuleHandler(EBIMain.this, ebiModule);
-
-                /**
-                 * ******************
-                 */
-                // Initialize report system
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                final EBIReportSystem reportSystem = new EBIReportSystem();
-                                EBISystem.getInstance().setIEBIReportSystemInstance(reportSystem);
-                            }
-                        });
-                    }
-                }).start();
+                initializeTheSystem();
             }
-
-            // CREATE TASKBAR
-            stat = new EBIStatusBar();
-            stat.setSystemVersion(EBIVersion.getInstance().getVersion());
-            stat.setSystemHost(EBISystem.host);
-            stat.setSystemDatabaseText(EBISystem.DATABASE_SYSTEM);
-            pallert = new JScrollPane();
-            panAllert = new JPanel();
-            panAllert.setVisible(false);
-            pallert.setVisible(false);
-            pallert.setViewportView(panAllert);
-            stat.addAllert(pallert);
-            getContentPane().add(stat, BorderLayout.SOUTH);
-            EBISystem.getInstance().addMainFrame(this);
-            EBISystem.getInstance().checkIsValidUser("root", "ebineutrino");
-            showBusinessModule();
-            splash.setVisible(false);
-
         } catch (final Exception ex) {
             ex.printStackTrace();
             EBISystem.getInstance().getDialogMessage().debug(EBISystem.printStackTrace(ex));
             logger.error("Exception", ex.fillInStackTrace());
         }
+    }
+
+    public void initializeTheSystem()
+            throws Exception {
+        /**
+         * ******************
+         */
+        // Initialize xml gui renderer
+        EBISystem.getInstance().setIEBIGUIRendererInstance(new EBIGUIRenderer(EBIMain.this));
+
+        /**
+         * *****************
+         */
+        initialize();
+        // Initialize Container, tab panel
+        container = new EBIExtensionContainer(EBIMain.this);
+        container.initContainer();
+        EBISystem.getInstance().setIEBIContainerInstance(container);
+        /**
+         * ******************
+         */
+        // Create toolbars
+        ebiBar = new EBIToolbar(EBIMain.this);
+        ebiBar.addToolBarToEBIMain();
+        EBISystem.getInstance().setIEBIToolBarInstance(ebiBar);
+
+        iSecurity = EBISystem.getInstance().getIEBISecurityInstance();
+        bar = EBISystem.getInstance().getIEBIToolBarInstance();
+
+        ebiModule = new EBIModule();
+        EBISystem.getInstance().setIEBIModule(ebiModule);
+        mng = new EBIModuleHandler(EBIMain.this, ebiModule);
+
+        /********************/
+        // Initialize report system
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        final EBIReportSystem reportSystem = new EBIReportSystem();
+                        EBISystem.getInstance().setIEBIReportSystemInstance(reportSystem);
+                    }
+                });
+            }
+        }).start();
+
+        // CREATE TASKBAR
+        stat = new EBIStatusBar();
+        stat.setSystemVersion(EBIVersion.getInstance().getVersion());
+        stat.setSystemHost(EBISystem.host);
+        stat.setSystemDatabaseText(EBISystem.DATABASE_SYSTEM);
+        pallert = new JScrollPane();
+        panAllert = new JPanel();
+        panAllert.setVisible(false);
+        pallert.setVisible(false);
+        pallert.setViewportView(panAllert);
+        stat.addAllert(pallert);
+        getContentPane().add(stat, BorderLayout.SOUTH);
+        EBISystem.getInstance().addMainFrame(this);
+        EBISystem.getInstance().checkIsValidUser("root", "ebineutrino");
+        showBusinessModule();
+        splash.setVisible(false);
     }
 
     private void initialize() {

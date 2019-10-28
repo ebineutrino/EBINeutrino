@@ -329,7 +329,7 @@ public class ControlLeads {
 
         ResultSet set = null;
         PreparedStatement ps1 = null;
-        int srow = EBISystem.gui().table("leadsTable", "Leads").getSelectedRow();
+        int selRow = EBISystem.gui().table("leadsTable", "Leads").getSelectedRow();
         try {
             ps1 = EBISystem.getInstance().iDB().initPreparedStatement(""
                     + " SELECT COMPANY.COMPANYID,COMPANY.NAME,COMPANY.CATEGORY,COMPANY.WEB,COMPANY.QUALIFICATION,COMPANY.DESCRIPTION,COMPANYCONTACTS.GENDER,"
@@ -366,7 +366,7 @@ public class ControlLeads {
                         EBISystem.getModule().getLeadPane().getTabModel().data[i][12] = set.getString("COMPANYCONTACTS.CONTACTID") == null ? "" : set.getString("COMPANYCONTACTS.CONTACTID");
                         EBISystem.getModule().getLeadPane().getTabModel().data[i][13] = set.getString("COMPANYADDRESS.ADDRESSID") == null ? "" : set.getString("COMPANYADDRESS.ADDRESSID");
                         if(id != -1 && id == set.getInt("COMPANY.COMPANYID") ){
-                            srow = EBISystem.gui().table("leadsTable", "Leads").convertRowIndexToView(i);
+                            selRow = i;
                         }
                         i++;
                     }
@@ -392,8 +392,9 @@ public class ControlLeads {
             }
         }
         
-        if(srow > -1){
-            EBISystem.gui().table("leadsTable", "Leads").changeSelection(srow, 0, false, false);
+        if(selRow > -1){
+            selRow = EBISystem.gui().table("leadsTable", "Leads").convertRowIndexToView(selRow);
+            EBISystem.gui().table("leadsTable", "Leads").changeSelection(selRow, 0, false, false);
         }
     }
 

@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import lombok.Getter;
+import lombok.Setter;
 
 public class EBIImportSQLFiles extends EBIDialogExt {
 
@@ -23,6 +25,12 @@ public class EBIImportSQLFiles extends EBIDialogExt {
     private final JButton bntStartImport = new JButton();
     public boolean isFinish = false;
     private final EBIVisualPanelTemplate pane = new EBIVisualPanelTemplate(false);
+    
+    @Getter @Setter
+    private String resourceSQLPath = System.getProperty("user.dir")
+                + File.separator+"resources"
+                + File.separator;
+    
 
     public EBIImportSQLFiles() {
         super(EBISystem.getInstance().getMainFrame());
@@ -34,7 +42,6 @@ public class EBIImportSQLFiles extends EBIDialogExt {
         this.setModal(false);
         this.setLayout(null);
         this.setResizable(false);
-        //setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
         setSize(310, 170);
         storeLocation(true);
         storeSize(true);
@@ -94,11 +101,13 @@ public class EBIImportSQLFiles extends EBIDialogExt {
         final Runnable run = new Runnable() {
             @Override
             public void run() {
+                
                 BufferedReader br = null;
                 for (int x = 0; x < flx.length; x++) {
+                    
                     try {
 
-                        Reader reader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(flx[x]));
+                        Reader reader = new FileReader(resourceSQLPath+flx[x]);
                         br = new BufferedReader(reader);
 
                         List<String> lines = br.lines().collect(Collectors.toList());

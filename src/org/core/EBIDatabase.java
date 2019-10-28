@@ -27,7 +27,6 @@ public class EBIDatabase implements IEBIDatabase {
     public static String SELECT = "SELECT";
 
     /**
-     * test
      * connect to a database system
      *
      * @param driver

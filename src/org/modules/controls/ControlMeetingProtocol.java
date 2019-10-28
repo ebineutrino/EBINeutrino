@@ -238,9 +238,13 @@ public class ControlMeetingProtocol {
     public void dataShow(Integer id) {
         int srow = EBISystem.gui().table("companyMeetings", "MeetingCall").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanymeetingprotocols().size();
+        
+        int selRow =0;
         if (size > 0) {
+            
             EBISystem.getModule().getMeetingProtocol().getTableModel().data = new Object[size][5];
             final Iterator<Companymeetingprotocol> iter = EBISystem.getInstance().getCompany().getCompanymeetingprotocols().iterator();
+            
             int i = 0;
             while (iter.hasNext()) {
                 final Companymeetingprotocol obj = iter.next();
@@ -250,15 +254,17 @@ public class ControlMeetingProtocol {
                 EBISystem.getModule().getMeetingProtocol().getTableModel().data[i][3] = obj.getProtocol() == null ? "" : obj.getProtocol();
                 EBISystem.getModule().getMeetingProtocol().getTableModel().data[i][4] = obj.getMeetingprotocolid();
                 if (id != -1 && id == obj.getMeetingprotocolid()) {
-                    srow = EBISystem.gui().table("companyMeetings", "MeetingCall").convertRowIndexToView(i);
+                    selRow = i;
                 }
                 i++;
             }
         } else {
-            EBISystem.getModule().getMeetingProtocol().getTableModel().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", ""}};
+            EBISystem.getModule().getMeetingProtocol().getTableModel().data
+                    = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", ""}};
         }
         EBISystem.getModule().getMeetingProtocol().getTableModel().fireTableDataChanged();
         if(srow > -1){
+            srow = EBISystem.gui().table("companyMeetings", "MeetingCall").convertRowIndexToView(selRow);
             EBISystem.gui().table("companyMeetings", "MeetingCall").changeSelection(srow, 0, false, false);
         }
     }

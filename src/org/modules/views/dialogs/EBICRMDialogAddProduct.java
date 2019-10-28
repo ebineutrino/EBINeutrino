@@ -159,9 +159,13 @@ public class EBICRMDialogAddProduct {
                 }
 
                 if (prod != null) {
+                    //macos hack
+                    EBISystem.gui().dialog("productInsertDialog").setVisible(false);
                     prod.setVisible();
+                    EBISystem.gui().dialog("productInsertDialog").setVisible(true);
                 }
                 EBISystem.gui().textField("quantityText", "productInsertDialog").requestFocus();
+                
             }
         });
 

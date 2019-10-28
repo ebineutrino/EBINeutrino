@@ -105,13 +105,6 @@ public class EBISystem {
                 + File.separator+"images"
                 + File.separator;
     
-    @Getter @Setter
-    private String resourceSQLPath = System.getProperty("user.dir")
-                + File.separator+"resources"
-                + File.separator+"sql"
-                + File.separator;
-   
-
     public EBISystem() {
         calendar = new GregorianCalendar();
         plock = new EBIDBLocking();

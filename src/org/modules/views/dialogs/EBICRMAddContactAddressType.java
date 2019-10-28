@@ -148,7 +148,9 @@ public class EBICRMAddContactAddressType {
                     addCon.setValueToComponent(EBISystem.gui().textField("companyNrText", "addNewReceiverDialog"), "company.CUSTOMERNR");
                     addCon.setValueToComponent(EBISystem.gui().textField("companyNameText", "addNewReceiverDialog"), "company.NAME");
                 }
+                EBISystem.gui().dialog("addNewReceiverDialog").setVisible(false);
                 addCon.setVisible();
+                EBISystem.gui().dialog("addNewReceiverDialog").setVisible(true);
             }
         });
 

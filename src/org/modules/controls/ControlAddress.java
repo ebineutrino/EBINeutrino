@@ -153,7 +153,7 @@ public class ControlAddress {
 
     public void dataShow(Integer id) {
 
-        int srow = EBISystem.gui().table("companyAddess", "Address").getSelectedRow();
+        int selRow = EBISystem.gui().table("companyAddess", "Address").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyaddresses().size();
 
         if (size > 0) {
@@ -170,7 +170,7 @@ public class ControlAddress {
                 EBISystem.getModule().getAddressPane().getTabModel().data[i][5] = obj.getCountry() == null ? "" : obj.getCountry();
                 EBISystem.getModule().getAddressPane().getTabModel().data[i][6] = obj.getAddressid();
                 if(id != -1 && id == obj.getAddressid()){
-                    srow = EBISystem.gui().table("companyAddess", "Address").convertRowIndexToView(i);
+                    selRow = i;
                 }
                 i++;
             }
@@ -184,8 +184,9 @@ public class ControlAddress {
             EBISystem.getModule().getCompanyPane().getTabModel().fireTableDataChanged();
         }
         
-        if(srow > -1){
-            EBISystem.gui().table("companyAddess", "Address").changeSelection(srow, 0, false, false);
+        if(selRow > -1){
+            selRow = EBISystem.gui().table("companyAddess", "Address").convertRowIndexToView(selRow);
+            EBISystem.gui().table("companyAddess", "Address").changeSelection(selRow, 0, false, false);
         }
     }
 

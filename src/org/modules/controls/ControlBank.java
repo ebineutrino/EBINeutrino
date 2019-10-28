@@ -157,7 +157,7 @@ public class ControlBank {
 
     public void dataShow(Integer id) {
 
-        int srow = EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow();
+        int selRow = EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanybanks().size();
 
         if (size > 0) {
@@ -176,7 +176,7 @@ public class ControlBank {
                 EBISystem.getModule().getBankdataPane().getTabModel().data[i][5] = obj.getBankcountry() == null ? "" : obj.getBankcountry();
                 EBISystem.getModule().getBankdataPane().getTabModel().data[i][6] = obj.getBankid();
                 if (id != -1 && id == obj.getBankid()) {
-                    srow = i;
+                    selRow = i;
                 }
                 i++;
             }
@@ -187,8 +187,9 @@ public class ControlBank {
         }
 
         EBISystem.getModule().getBankdataPane().getTabModel().fireTableDataChanged();
-        if(srow > -1){
-            EBISystem.gui().table("companyBankTable", "Bank").changeSelection(srow, 0, false, false);
+        if(selRow > -1){
+            selRow = EBISystem.gui().table("companyBankTable", "Address").convertRowIndexToView(selRow);
+            EBISystem.gui().table("companyBankTable", "Bank").changeSelection(selRow, 0, false, false);
         }
     }
 

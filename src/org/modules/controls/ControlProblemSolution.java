@@ -255,7 +255,7 @@ public class ControlProblemSolution {
     public void dataShow(Integer id) {
         ResultSet set = null;
 
-        int srow = EBISystem.gui().table("prosolTable", "Prosol").getSelectedRow();
+        int selRow = EBISystem.gui().table("prosolTable", "Prosol").getSelectedRow();
         PreparedStatement ps1 = null;
 
         try {
@@ -281,15 +281,17 @@ public class ControlProblemSolution {
                         EBISystem.getModule().getProsolPane().getTabModProsol().data[i][6] = set.getString("DESCRIPTION") == null ? "" : set.getString("DESCRIPTION");
                         EBISystem.getModule().getProsolPane().getTabModProsol().data[i][7] = set.getInt("PROSOLID");
                         if(id != -1 && id == set.getInt("PROSOLID")){
-                            srow = EBISystem.gui().table("prosolTable", "Prosol").convertRowIndexToView(i);
+                            selRow = i;
                         }
                         i++;
                     }
                 } else {
-                    EBISystem.getModule().getProsolPane().getTabModProsol().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", ""}};
+                    EBISystem.getModule().getProsolPane().getTabModProsol().data 
+                            = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", ""}};
                 }
             } else {
-                EBISystem.getModule().getProsolPane().getTabModProsol().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", ""}};
+                EBISystem.getModule().getProsolPane().getTabModProsol().data 
+                        = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", ""}};
             }
 
         } catch (final Exception ex) {
@@ -305,8 +307,10 @@ public class ControlProblemSolution {
             }
             EBISystem.getModule().getProsolPane().getTabModProsol().fireTableDataChanged();
         }
-        if(srow > -1){
-            EBISystem.gui().table("prosolTable", "Prosol").changeSelection(srow, 0, false, false);
+        
+        if(selRow > -1){
+            selRow = EBISystem.gui().table("prosolTable", "Prosol").convertRowIndexToView(selRow);
+            EBISystem.gui().table("prosolTable", "Prosol").changeSelection(selRow, 0, false, false);
         }
     }
 

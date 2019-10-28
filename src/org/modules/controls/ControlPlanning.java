@@ -345,7 +345,7 @@ public class ControlPlanning {
     public void dataShow(Integer id) {
 
         Query query;
-        int srow = EBISystem.gui().table("projectTable", "Project").getSelectedRow();
+        int selRow = EBISystem.gui().table("projectTable", "Project").getSelectedRow();
 
         try {
             query = EBISystem.hibernate().session("EBIPROJECT_SESSION").createQuery("from Crmproject order by createddate desc ");
@@ -372,7 +372,7 @@ public class ControlPlanning {
                     tabMod.data[i][8] = "";
                     tabMod.data[i][9] = pro.getProjectid();
                     if(id != -1 && id == pro.getProjectid()){
-                        srow = EBISystem.gui().table("projectTable", "Project").convertRowIndexToView(i);
+                        selRow = i;
                     }
                     i++;
                 }
@@ -385,8 +385,9 @@ public class ControlPlanning {
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        if(srow > -1){
-            EBISystem.gui().table("projectTable", "Project").changeSelection(srow, 0, false, false);
+        if(selRow > -1){
+            selRow = EBISystem.gui().table("projectTable", "Project").convertRowIndexToView(selRow);
+            EBISystem.gui().table("projectTable", "Project").changeSelection(selRow, 0, false, false);
         }
     }
 

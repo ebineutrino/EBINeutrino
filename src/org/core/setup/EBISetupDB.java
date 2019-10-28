@@ -323,6 +323,7 @@ public class EBISetupDB extends JPanel {
                 @Override
                 public void actionPerformed(final ActionEvent e) {
                     setup.setVisible(false);
+                    setup.sysINIT.checkDB();
                 }
             });
         }

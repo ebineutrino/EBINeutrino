@@ -12,6 +12,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -20,6 +22,8 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 public class EBISchemaImport extends JDialog {
 
@@ -37,6 +41,12 @@ public class EBISchemaImport extends JDialog {
     private final StringBuilder errorReport = new StringBuilder();
     private String catalog = "";
     private boolean useUpperCase = false;
+    
+    @Getter @Setter
+    private String resourceSQLPath = System.getProperty("user.dir")
+                + File.separator+"resources"
+                + File.separator+"sql"
+                + File.separator;
 
     public EBISchemaImport(final String databaseType,
             final String catalogDB, final boolean upperCase) {
@@ -103,7 +113,7 @@ public class EBISchemaImport extends JDialog {
             importButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(final ActionEvent e) {
-                    if (!importSQLSchema("sql/mysql.sql")) {
+                    if (!importSQLSchema("mysql.sql")) {
                         EBIExceptionDialog.getInstance(EBISchemaImport.this,
                                 "Import SQL schema was not successfully, the file format is damage!").Show(EBIMessage.ERROR_MESSAGE);
                     }
@@ -125,6 +135,7 @@ public class EBISchemaImport extends JDialog {
                 BufferedReader br = null;
                 
                 try {
+                    
                     if (useUpperCase) {
                         catalog = catalog.toUpperCase();
                     } else {
@@ -135,7 +146,8 @@ public class EBISchemaImport extends JDialog {
                     EBISystem.db().getActiveConnection().setCatalog(catalog);
                     errorReport.append("\n");
                     
-                    Reader reader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(fileName));
+                    Reader reader = new FileReader(resourceSQLPath+fileName);
+                            
                     br = new BufferedReader(reader);
 
                     List<String> lines =  br.lines().collect(Collectors.toList());
@@ -177,8 +189,9 @@ public class EBISchemaImport extends JDialog {
                     if (!failed) {
                         importButton.setEnabled(true);
                     } else {
-                        createAdminUser();
                         importButton.setVisible(false);
+                        createAdminUser();
+                        
                         cancelButton.setText("Finish");
                     }
                     cancelButton.setEnabled(true);
@@ -238,7 +251,7 @@ public class EBISchemaImport extends JDialog {
             errorReport.append("\n");
         }
 
-        final EBIDialog repDialog = new EBIDialog(null);
+        /*final EBIDialog repDialog = new EBIDialog(null);
         final JScrollPane panes1 = new JScrollPane();
         repDialog.setModal(true);
         repDialog.setSize(450, 300);
@@ -267,7 +280,7 @@ public class EBISchemaImport extends JDialog {
         pane.add("Error Report", panelRepError);
         repDialog.getContentPane().setLayout(new BorderLayout());
         repDialog.getContentPane().add(pane, BorderLayout.CENTER);
-        repDialog.setVisible(true);
+        repDialog.setVisible(true);*/
 
     }
 

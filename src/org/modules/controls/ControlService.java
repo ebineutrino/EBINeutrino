@@ -273,8 +273,10 @@ public class ControlService {
     }
 
     public void dataShow(Integer id) {
-        int srow = EBISystem.gui().table("companyServiceTable", "Service").getSelectedRow();
+        
+        int selRow = EBISystem.gui().table("companyServiceTable", "Service").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyservices().size();
+        
         if (size > 0) {
             EBISystem.getModule().getServicePane().getTabModService().data = new Object[size][8];
             final Iterator<Companyservice> itr = EBISystem.getInstance().getCompany().getCompanyservices().iterator();
@@ -289,17 +291,19 @@ public class ControlService {
                 EBISystem.getModule().getServicePane().getTabModService().data[i][5] = service.getDescription() == null ? "" : service.getDescription();
                 EBISystem.getModule().getServicePane().getTabModService().data[i][6] = service.getServiceid();
                 if(id != -1 && id == service.getServiceid()){
-                    srow =EBISystem.gui().table("companyServiceTable", "Service").convertRowIndexToView(i);
+                    selRow = i;
                 }
                 i++;
             }
         } else {
-            EBISystem.getModule().getServicePane().getTabModService().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", ""}};
+            EBISystem.getModule().getServicePane().getTabModService().data 
+                    = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", ""}};
         }
 
         EBISystem.getModule().getServicePane().getTabModService().fireTableDataChanged();
-        if(srow > -1){
-            EBISystem.gui().table("companyServiceTable", "Service").changeSelection(srow, 0, false, false);
+        if(selRow > -1){
+            selRow = EBISystem.gui().table("companyServiceTable", "Service").convertRowIndexToView(selRow);
+            EBISystem.gui().table("companyServiceTable", "Service").changeSelection(selRow, 0, false, false);
         }
     }
 

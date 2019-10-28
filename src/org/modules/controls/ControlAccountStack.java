@@ -178,8 +178,9 @@ public class ControlAccountStack {
 
     public void dataShow(final String invoiceYear, Integer id) {
 
-        int srow = EBISystem.gui().table("accountTable", "Account").getSelectedRow();
+        int selRow = EBISystem.gui().table("accountTable", "Account").getSelectedRow();
         Query query;
+       
         try {
             EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").begin();
 
@@ -222,7 +223,7 @@ public class ControlAccountStack {
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][6] = act.getAccountCredit() == null ? "" : act.getAccountCredit();
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][7] = act.getAcstackid();
                     if(id != -1 && id == act.getAcstackid()){
-                        srow = EBISystem.gui().table("accountTable", "Account").convertRowIndexToView(i);
+                        selRow = i;
                     }
                     i++;
                 }
@@ -236,8 +237,9 @@ public class ControlAccountStack {
             ex.printStackTrace();
         }
         
-        if(srow > -1){
-            EBISystem.gui().table("accountTable", "Account").changeSelection(srow, 0, false, false);
+        if(selRow > -1){
+            selRow = EBISystem.gui().table("accountTable", "Account").convertRowIndexToView(selRow);
+            EBISystem.gui().table("accountTable", "Account").changeSelection(selRow, 0, false, false);
         }
     }
 

@@ -321,7 +321,7 @@ public class ControlActivity {
                     EBISystem.getModule().getActivitiesPane().getTabModel().data[i][6] = act.getActivitydescription() == null ? "" : act.getActivitydescription();
                     EBISystem.getModule().getActivitiesPane().getTabModel().data[i][7] = act.getActivityid();
                     if(id != -1 && id == act.getActivityid()){
-                        srow = EBISystem.gui().table("tableActivity", "Activity").convertRowIndexToView(i);
+                       srow = i;
                     }
                     i++;
                 }
@@ -332,6 +332,7 @@ public class ControlActivity {
             EBISystem.getModule().getActivitiesPane().getTabModel().fireTableDataChanged();
             
             if(srow > -1){
+                srow = EBISystem.gui().table("tableActivity", "Activity").convertRowIndexToView(srow);
                 EBISystem.gui().table("tableActivity", "Activity").changeSelection(srow, 0, false, false);
             }
             

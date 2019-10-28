@@ -53,7 +53,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.core.gui.component.EBITextfield;
 
-
 public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
     private EBIMain ebiMain = null;
@@ -74,10 +73,10 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     private GroovyScriptEngine gse = null;
     private Binding binding = null;
     private boolean observeChanges = false;
-    
+
     private String resourcePath = System.getProperty("user.dir")
-                + File.separator+"resources"
-                + File.separator;
+            + File.separator + "resources"
+            + File.separator;
 
     public EBIGUIRenderer(final EBIMain main) {
         ebiMain = main;
@@ -87,7 +86,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
         binding = new Binding();
         binding.setVariable("system", EBISystem.getInstance());
         try {
-            gse = new GroovyScriptEngine(new String[]{resourcePath+"views/"});
+            gse = new GroovyScriptEngine(new String[]{resourcePath + "views/"});
         } catch (IOException ex) {
             Logger.getLogger(EBIGUIRenderer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -517,15 +516,15 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 } else {
                     textField.setText(bean.getTitle());
                 }
-                
-                if(!"".equals(bean.getPlaceHolder())){
+
+                if (!"".equals(bean.getPlaceHolder())) {
                     if (bean.getPlaceHolder().indexOf("EBI_LANG") != -1) {
                         textField.setPlaceHolder(EBISystem.i18n(bean.getPlaceHolder()));
-                    }else{
+                    } else {
                         textField.setPlaceHolder(bean.getPlaceHolder());
                     }
                 }
-               
+
                 if (observeChanges) {
                     this.addComponentTextChanged(textField);
                 }

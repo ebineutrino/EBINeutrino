@@ -400,8 +400,9 @@ public class ControlOffer {
     }
 
     public void dataShow(Integer id) {
-        int srow = EBISystem.gui().table("companyOfferTable", "Offer").getSelectedRow();
+        int selRow = EBISystem.gui().table("companyOfferTable", "Offer").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyoffers().size();
+        
         if (size > 0) {
             EBISystem.getModule().getOfferPane().getTabModoffer().data = new Object[size][8];
             final Iterator<Companyoffer> iter = EBISystem.getInstance().getCompany().getCompanyoffers().iterator();
@@ -417,17 +418,19 @@ public class ControlOffer {
                 EBISystem.getModule().getOfferPane().getTabModoffer().data[i][6] = cOffer.getIsrecieved() == null ? 0 : cOffer.getIsrecieved();
                 EBISystem.getModule().getOfferPane().getTabModoffer().data[i][7] = cOffer.getOfferid();
                 if(id != -1 && id == cOffer.getOfferid()){
-                    srow = EBISystem.gui().table("companyOfferTable", "Offer").convertRowIndexToView(i);
+                    selRow = i;
                 }
                 i++;
             }
         } else {
-            EBISystem.getModule().getOfferPane().getTabModoffer().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
+            EBISystem.getModule().getOfferPane().getTabModoffer().data 
+                    = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
         }
 
         EBISystem.getModule().getOfferPane().getTabModoffer().fireTableDataChanged();
-        if(srow > -1){
-            EBISystem.gui().table("companyOfferTable", "Offer").changeSelection(srow, 0, false, false);
+        if(selRow > -1){
+            selRow = EBISystem.gui().table("companyOfferTable", "Offer").convertRowIndexToView(selRow);
+            EBISystem.gui().table("companyOfferTable", "Offer").changeSelection(selRow, 0, false, false);
         }
     }
 

@@ -470,7 +470,7 @@ public class ControlOrder {
 
     public void dataShow(Integer id) {
 
-        int srow = EBISystem.gui().table("companyorderTable", "Order").getSelectedRow();
+        int selRow = EBISystem.gui().table("companyorderTable", "Order").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyorders().size();
 
         if (size > 0) {
@@ -488,7 +488,7 @@ public class ControlOrder {
                 EBISystem.getModule().getOrderPane().getTabModOrder().data[i][6] = order.getIsrecieved() == null ? 0 : order.getIsrecieved();
                 EBISystem.getModule().getOrderPane().getTabModOrder().data[i][7] = order.getOrderid();
                 if(id != -1 && id == order.getOrderid()){
-                    srow = EBISystem.gui().table("companyorderTable", "Order").convertRowIndexToView(i);
+                    selRow = i;
                 }
                 i++;
             }
@@ -496,9 +496,11 @@ public class ControlOrder {
             EBISystem.getModule().getOrderPane().getTabModOrder().data
                     = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
         }
+        
         EBISystem.getModule().getOrderPane().getTabModOrder().fireTableDataChanged();
-        if(srow > -1){
-            EBISystem.gui().table("companyorderTable", "Order").changeSelection(srow, 0, false, false);
+        if(selRow > -1){
+            selRow = EBISystem.gui().table("companyorderTable", "Order").convertRowIndexToView(selRow);
+            EBISystem.gui().table("companyorderTable", "Order").changeSelection(selRow, 0, false, false);
         }
     }
 

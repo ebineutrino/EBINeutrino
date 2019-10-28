@@ -74,8 +74,9 @@ public class EBIMeetingAddContactDialog {
 
                 addCon.setValueToComponent(EBISystem.gui().timePicker("birddateText", "addNewContactDialog"), "contact.BIRDDATE");
                 addCon.setValueToComponent(EBISystem.gui().textArea("contactDescription", "addNewContactDialog"), "contact.DESCRIPTION");
-
+                EBISystem.gui().dialog("addNewContactDialog").setVisible(false);
                 addCon.setVisible();
+                EBISystem.gui().dialog("addNewContactDialog").setVisible(true);
             }
         });
 

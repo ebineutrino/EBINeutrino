@@ -160,7 +160,7 @@ public class EBICRMOrderView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
+                if (lsm.getMinSelectionIndex() != -1 && lsm.getMinSelectionIndex() < tabModOrder.data.length) {
                     selectedOrderRow = EBISystem.gui().table("companyorderTable", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 

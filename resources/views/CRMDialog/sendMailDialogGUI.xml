@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dialog name="sendEMailMessage" title="EMail" icon="write.png" Location="100,100" Size="570,450" 
-        visualproperties="false" assignable="false" modal="true" resizable="true" >
-    <label name="SubjectEMailDialog" title="Subject" Location="9,20" Size="103,20"/>
-    <textfield name="SubjectText" tabindex="1" Location="104,20" Size="400,20"/>
-    <checkbox name="ShowReportBS" tabindex="2" title="Show the Report before sending" Location="103,43" Size="330,20"/>
-    <label name="template" title="Template" Location="13,81" Size="96,20"/>
-    <editor name="MessageAreaText" tabindex="3" resizewidth="true" resizeheight="true" Location="13,107" Size="544,282"/>
-    <button name="sendEmail" tabindex="4" title="Send" fitonresize="true" Location="330,396" Size="112,25"/>
-    <button name="closeEMailDialog" tabindex="5" title="Close" fitonresize="true" Location="446,396" Size="115,25"/>
-    <combobox name="templateText" Location="111,80" Size="397,21"/>
+<dialog name="sendEMailMessage" title="EMail" icon="..\images\write.png" Location="100,100" Size="570,450" visualproperties="false" assignable="false" modal="true" resizable="true" >
+ 		<label name="SubjectEMailDialog" title="Subject" Location="9,20" Size="103,20"/>
+		<textfield name="SubjectText" tabindex="1" Location="104,20" Size="400,20"/>
+		<checkbox name="ShowReportBS" tabindex="2" title="Show the Report before sending" Location="103,43" Size="330,20"/>
+		<label name="template" title="Template" Location="13,81" Size="96,20"/>
+		<editor name="MessageAreaText" tabindex="3" resizewidth="true" resizeheight="true" Location="13,107" Size="544,282"/>
+		<button name="sendEmail" tabindex="4" title="Send" fitonresize="true" Location="330,396" Size="112,25"/>
+		<button name="closeEMailDialog" tabindex="5" title="Close" fitonresize="true" Location="446,396" Size="115,25"/>
+		<combobox name="templateText" Location="111,80" Size="397,21"/>
 </dialog>

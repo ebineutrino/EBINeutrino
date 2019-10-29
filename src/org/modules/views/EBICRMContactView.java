@@ -22,8 +22,7 @@ import lombok.Setter;
 
 public class EBICRMContactView {
 
-    public static final String[] gendersList = {EBISystem.i18n("EBI_LANG_PLEASE_SELECT"),
-        EBISystem.i18n("EBI_LANG_C_MALE"), EBISystem.i18n("EBI_LANG_C_FEMALE")};
+    public static final String[] gendersList = {EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), EBISystem.i18n("EBI_LANG_C_MALE"), EBISystem.i18n("EBI_LANG_C_FEMALE")};
     @Getter @Setter
     private ModelCRMContact tableModel = null;
     @Getter @Setter
@@ -59,7 +58,8 @@ public class EBICRMContactView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() > -1) {
+                if (lsm.getMinSelectionIndex() > -1
+                        && lsm.getMinSelectionIndex() <= tableModel.data.length) {
                     selectedContactRow = EBISystem.gui().
                             table("companyContacts", "Contact").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
@@ -108,8 +108,7 @@ public class EBICRMContactView {
             @Override
             public void mouseClicked(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("companyContacts", "Contact").rowAtPoint(e.getPoint()) != -1) {
-                    selectedContactRow = EBISystem.gui().table("companyContacts", "Contact")
-                            .convertRowIndexToModel(EBISystem.gui().table("companyContacts", "Contact").rowAtPoint(e.getPoint()));
+                    selectedContactRow = EBISystem.gui().table("companyContacts", "Contact").convertRowIndexToModel(EBISystem.gui().table("companyContacts", "Contact").rowAtPoint(e.getPoint()));
                 }
                 if (selectedContactRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                         equals(tableModel.data[selectedContactRow][0].toString())) {
@@ -125,8 +124,7 @@ public class EBICRMContactView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedAddressRow = EBISystem.gui().table("contactTableAddress", "Contact")
-                            .convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedAddressRow = EBISystem.gui().table("contactTableAddress", "Contact").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.gui().button("deleteContactAddress", "Contact").setEnabled(false);

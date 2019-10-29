@@ -379,7 +379,7 @@ public class ControlOpportunity {
 
     public void dataShow(Integer id) {
 
-        int selRow = EBISystem.gui().table("companyOpportunityTable", "Opportunity").getSelectedRow() + id;
+        int selRow = EBISystem.gui().table("companyOpportunityTable", "Opportunity").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyopportunities().size();
 
         if (size > 0) {

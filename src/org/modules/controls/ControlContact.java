@@ -234,7 +234,7 @@ public class ControlContact {
 
     public void dataShow(Integer id) {
         
-        int selRow = EBISystem.gui().table("companyContacts", "Contact").getSelectedRow() + id;
+        int selRow = EBISystem.gui().table("companyContacts", "Contact").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanycontactses().size();
 
         if (size > 0) {

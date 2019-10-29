@@ -274,7 +274,7 @@ public class ControlService {
 
     public void dataShow(Integer id) {
         
-        int selRow = EBISystem.gui().table("companyServiceTable", "Service").getSelectedRow() + id;
+        int selRow = EBISystem.gui().table("companyServiceTable", "Service").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyservices().size();
         
         if (size > 0) {

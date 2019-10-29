@@ -82,7 +82,7 @@ public class EBICRMInvoiceView {
         } catch (final Exception e) {
             e.printStackTrace();
         }
-
+        
         model = (EBIAbstractTableModel) EBISystem.gui().table("tableTotalInvoice", "Invoice").getModel();
         EBISystem.gui().textField("filterTableText", "Invoice").addKeyListener(new KeyListener() {
             @Override
@@ -106,21 +106,21 @@ public class EBICRMInvoiceView {
         EBISystem.gui().combo("categoryText", "Invoice").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-
+                
                 if (!EBISystem.gui().combo("categoryText", "Invoice").getSelectedItem()
                         .equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-
+                    
                     if (!dataControlInvoice.isEdit) {
-
+                        
                         final Object[] obj = EBISystem.getModule().dynMethod.getInternNumber(EBISystem.gui()
                                 .combo("categoryText", "Invoice").getSelectedItem().toString(), true);
-
+                        
                         beginChar = obj[1].toString();
                         invoiceNr = Integer.parseInt(obj[0].toString());
-
+                        
                         EBISystem.gui().textField("invoiceNrText", "Invoice")
                                 .setText(obj[1].toString() + obj[0].toString());
-
+                        
                     }
                 }
 
@@ -164,7 +164,10 @@ public class EBICRMInvoiceView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedInvoiceRow = EBISystem.gui().table("tableTotalInvoice", "Invoice").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    try {
+                        selectedInvoiceRow = EBISystem.gui().table("tableTotalInvoice", "Invoice").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    } catch (final IndexOutOfBoundsException ex) {
+                    }
                 }
                 try {
                     if (lsm.isSelectionEmpty()) {
@@ -478,6 +481,8 @@ public class EBICRMInvoiceView {
         });
         EBISystem.gui().button("sendEmail", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SEND"));
         EBISystem.gui().button("closeEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_CLOSE"));
+
+        EBISystem.gui().showGUI();
         EBISystem.gui().button("sendEmail", "sendEMailMessage").addActionListener(new ActionListener() {
 
             @Override
@@ -507,7 +512,7 @@ public class EBICRMInvoiceView {
                 EBISystem.gui().dialog("sendEMailMessage").setVisible(false);
             }
         });
-        EBISystem.gui().showGUI();
+
     }
 
     public boolean validateDateInput() {

@@ -97,7 +97,7 @@ public class EBIReportSetting extends JPanel {
                 }
             }
         });
-        EBISystemSetting.selectedModule = 1;
+        EBISystemSetting.selectedModule = 4;
     }
 
     /**

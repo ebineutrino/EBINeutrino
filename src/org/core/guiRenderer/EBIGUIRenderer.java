@@ -843,7 +843,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 }
 
                 StyleSheet sheet = ((HTMLEditorKit) editPane.getEditorKit()).getStyleSheet();
-                sheet.addRule("body {color:#ffffff;font-family:'san serif'; font-size:10px;}");
+                sheet.addRule("body {color:#fff;}");
 
                 editPane.setForeground(MoodyBlueTheme.editorForeground);
 
@@ -1491,7 +1491,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             } catch (final NoClassDefFoundError e) {
                                 EBIExceptionDialog.getInstance(e.getMessage()).Show(EBIMessage.ERROR_MESSAGE);
                                 e.printStackTrace();
-                            } 
+                            }
                         }
                     });
 

@@ -153,7 +153,7 @@ public class ControlAddress {
 
     public void dataShow(Integer id) {
 
-        int selRow = EBISystem.gui().table("companyAddess", "Address").getSelectedRow() + id;
+        int selRow = EBISystem.gui().table("companyAddess", "Address").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyaddresses().size();
 
         if (size > 0) {

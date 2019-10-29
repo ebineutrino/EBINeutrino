@@ -178,7 +178,7 @@ public class ControlAccountStack {
 
     public void dataShow(final String invoiceYear, Integer id) {
 
-        int selRow = EBISystem.gui().table("accountTable", "Account").getSelectedRow() + id;
+        int selRow = EBISystem.gui().table("accountTable", "Account").getSelectedRow();
         Query query;
        
         try {

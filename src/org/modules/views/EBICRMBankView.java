@@ -51,7 +51,9 @@ public class EBICRMBankView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow() != -1) {
+                if (EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow() != -1
+                        && EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow() < tabModel.data.length) {
+
                     selectedRow = EBISystem.gui().table("companyBankTable", "Bank").convertRowIndexToModel(EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow());
 
                     if (lsm.isSelectionEmpty()) {
@@ -129,7 +131,7 @@ public class EBICRMBankView {
     }
 
     public void editBank() {
-        if ((selectedRow < 0
+        if ((selectedRow < 0 
                 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT")
                         .equals(tabModel.data[selectedRow][0].toString()))) {
             return;
@@ -141,7 +143,7 @@ public class EBICRMBankView {
     }
 
     public void copyBank() {
-        if ((selectedRow < 0
+        if ((selectedRow < 0 
                 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT")
                         .equals(tabModel.data[selectedRow][0].toString()))) {
             return;

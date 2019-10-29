@@ -584,22 +584,19 @@ public class EBICRMCampaignView {
     }
 
     public void mailCampaign() {
-
         if (selectedCampaignRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT")
                 .equals(tabModelCampaign.data[selectedCampaignRow][0].toString())) {
             return;
         }
 
         EBISystem.gui().loadGUI("CRMDialog/sendMailDialogGUI.xml");
+
         EBISystem.gui().dialog("sendEMailMessage")
                 .setTitle(EBISystem.i18n("EBI_LANG_DIALOG_SEND_EMAIL_MESSAGE"));
-
         EBISystem.gui().getCheckBox("ShowReportBS", "sendEMailMessage")
                 .setText(EBISystem.i18n("EBI_LANG_SHOW_REPORT_BEFORE_SEND"));
-
         EBISystem.gui().label("SubjectEMailDialog", "sendEMailMessage")
                 .setText(EBISystem.i18n("EBI_LANG_SUBJECT"));
-
         EBISystem.gui().label("template", "sendEMailMessage")
                 .setText(EBISystem.i18n("EBI_LANG_TEMPALTE"));
 
@@ -621,10 +618,12 @@ public class EBICRMCampaignView {
                                                     .combo("templateText", "sendEMailMessage")
                                                     .getSelectedItem().toString()));
                         }
+
                     }
                 });
         EBISystem.gui().button("sendEmail", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SEND"));
         EBISystem.gui().button("closeEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_CLOSE"));
+        EBISystem.gui().showGUI();
         EBISystem.gui().button("sendEmail", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
@@ -645,7 +644,6 @@ public class EBICRMCampaignView {
                 EBISystem.gui().dialog("sendEMailMessage").setVisible(false);
             }
         });
-        EBISystem.gui().showGUI();
     }
 
     private boolean validateEMailInput() {

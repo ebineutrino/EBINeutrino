@@ -1,8 +1,8 @@
 package Run
 
 import Run.mail.SMTPSend
-import org.sdk.EBISystem
-import org.sdk.model.hibernate.MailAccount
+import ebiNeutrinoSDK.EBISystem
+import ebiNeutrinoSDK.model.hibernate.MailAccount
 import org.hibernate.query.Query
 
 system.hibernate().openHibernateSession("EMAIL_SETTINGS");
@@ -16,25 +16,20 @@ final Iterator iter = query.list().iterator();
 if (iter.hasNext()) {
     boolean send = false;
     try {
-        SMTPSend sendEMail = new SMTPSend(system);
+        SMTPSend sendEMail = new SMTPSend();
         MailAccount mailAccount = (MailAccount) iter.next();
         sendEMail.setSmtpEMailUser(mailAccount.getSmtpUser());
         sendEMail.setSmtpPassword(mailAccount.getSmtpPassword());
         sendEMail.setSmtpHost(mailAccount.getSmtpServer());
 	 
-        send = sendEMail.sendMessage(_TO, _SUBJECT, _BODY, _ATTACHMENT);
+        sendEMail.sendMessage(_TO, _SUBJECT, _BODY, _ATTACHMENT);
+        send = true;
     }catch(Exception ex) {
         ex.printStackTrace();
-        system.dialogMessage.error(ex.getCause()+" : "+ex.getMessage());
-    }catch(java.net.UnknownHostException ex) {
-        ex.printStackTrace();
-        system.dialogMessage.error(ex.getCause()+" : "+ex.getMessage());
-    }catch(com.sun.mail.util.MailConnectException ex) {
-        ex.printStackTrace();
-        system.dialogMessage.error(ex.getCause()+" : "+ex.getMessage());
+        system.message.error(ex.getCause()+" : "+ex.getMessage());
     }finally {
         if(send) {
-            system.dialogMessage.info("EMail successfully send!");
+            system.message.info("EMail successfully send!");
         }
     }
 }else{

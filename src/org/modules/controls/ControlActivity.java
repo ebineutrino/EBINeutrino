@@ -282,7 +282,7 @@ public class ControlActivity {
 
         try {
 
-            int srow = EBISystem.gui().table("tableActivity", "Activity").getSelectedRow() + id;
+            int srow = EBISystem.gui().table("tableActivity", "Activity").getSelectedRow();
             final int size = EBISystem.getInstance().getCompany().getCompanyactivitieses().size();
 
             if (size > 0) {

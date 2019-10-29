@@ -8,20 +8,17 @@ import javax.mail.internet.*
 
 //If you are using gmail, you need to go to https://myaccount.google.com/security scroll to the bottom and turn ON "Allow less secure apps: ON".
 class SMTPSend{
-
+ 	
     Properties props = new Properties();
     SMTPAuthenticator auth = new SMTPAuthenticator();
     Session session = null;
-    def system
-    
 	 
     String smtpEMailUser = ""; // ex email@gmail.com
     String smtpPassword = ""; // password111
     String smtpHost = ""; // smtp.gmail.com
     int smtpPort = 465; //465,587
 	
-    SMTPSend(def sys){
-        system = sys;
+    SMTPSend(){
         props.put("mail.smtp.user", smtpEMailUser);
         props.put("mail.smtp.host", smtpHost);
         props.put("mail.smtp.port", smtpPort);
@@ -36,47 +33,33 @@ class SMTPSend{
         session.setDebug(true);
     }
 	
-    boolean sendMessage(String to, String subject, String message, String fileName){
-        boolean ret = true;
-        try {
-             
-            def msg = new MimeMessage(session);
+    void sendMessage(String to, String subject, String message,String fileName){
+        def msg = new MimeMessage(session);
 		
-            msg.setSubject(subject);
-            msg.setFrom(new InternetAddress(to));
-            msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+        msg.setSubject(subject);
+        msg.setFrom(new InternetAddress(to));
+        msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 		
 		
-            BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setText(message);
-            messageBodyPart.setContent(message, "text/html; charset=utf-8");
+        BodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setText(message);
+        messageBodyPart.setContent(message, "text/html; charset=utf-8");
         
-            // Create a multipar message
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(messageBodyPart); 
-            // Part two is attachment
-            messageBodyPart = new MimeBodyPart();
-            DataSource source = new FileDataSource(fileName);
-            messageBodyPart.setDataHandler(new DataHandler(source));
-            messageBodyPart.setFileName(new File(fileName).getName());
-            multipart.addBodyPart(messageBodyPart);
+        // Create a multipar message
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(messageBodyPart); 
+        // Part two is attachment
+        messageBodyPart = new MimeBodyPart();
+        DataSource source = new FileDataSource(fileName);
+        messageBodyPart.setDataHandler(new DataHandler(source));
+        messageBodyPart.setFileName(new File(fileName).getName());
+        multipart.addBodyPart(messageBodyPart);
  
-            msg.setContent(multipart);
+        msg.setContent(multipart);
 		 
-            Transport transport = session.getTransport("smtps");
-            transport.connect(smtpHost, smtpPort, smtpEMailUser, smtpPassword);
-            transport.sendMessage(msg, msg.getAllRecipients());
-            transport.close();
-            
-        }catch(Exception ex) {
-            ex.printStackTrace();
-            system.dialogMessage.error(ex.getMessage());
-            ret = false;
-        }catch (java.net.UnknownHostException ex) {
-            system.dialogMessage.error(ex.getMessage());
-            ex.printStackTrace();
-            ret = false;
-        }
-        return ret;
+        Transport transport = session.getTransport("smtps");
+        transport.connect(smtpHost, smtpPort, smtpEMailUser, smtpPassword);
+        transport.sendMessage(msg, msg.getAllRecipients());
+        transport.close();
     }
 }

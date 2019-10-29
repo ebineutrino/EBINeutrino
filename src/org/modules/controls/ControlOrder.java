@@ -470,7 +470,7 @@ public class ControlOrder {
 
     public void dataShow(Integer id) {
 
-        int selRow = EBISystem.gui().table("companyorderTable", "Order").getSelectedRow() + id;
+        int selRow = EBISystem.gui().table("companyorderTable", "Order").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanyorders().size();
 
         if (size > 0) {

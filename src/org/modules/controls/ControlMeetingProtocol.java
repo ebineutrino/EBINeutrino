@@ -236,7 +236,8 @@ public class ControlMeetingProtocol {
     }
 
     public void dataShow(Integer id) {
-        int srow = EBISystem.gui().table("companyMeetings", "MeetingCall").getSelectedRow();
+        
+        int srow = EBISystem.gui().table("companyMeetings", "MeetingCall").getSelectedRow() + id;
         final int size = EBISystem.getInstance().getCompany().getCompanymeetingprotocols().size();
         
         int selRow =0;

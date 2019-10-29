@@ -39,18 +39,18 @@ public class EBIReportSystem implements IEBIReportSystem {
     public boolean eMailRecord = false;
     public String strRecs = null;
     private final EBIWinWaiting wait = new EBIWinWaiting(EBISystem.i18n("EBI_LANG_LOAD_REPORT_DATA"));
-    
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String resourceReportPath = System.getProperty("user.dir")
-                + File.separator+"resources"
-                + File.separator+"reports"
-                + File.separator;
-    
+            + File.separator + "resources"
+            + File.separator + "reports"
+            + File.separator;
+
     private String resourceTmpPath = System.getProperty("user.dir")
-                + File.separator+"resources"
-                + File.separator+"tmp"
-                + File.separator;
-    
+            + File.separator + "resources"
+            + File.separator + "tmp"
+            + File.separator;
 
     public void buildReport(final File reportFile) {
         final Thread cmplRep = new Thread(new Runnable() {
@@ -87,8 +87,8 @@ public class EBIReportSystem implements IEBIReportSystem {
             public void run() {
 
                 try {
-                    final File[] files = 
-                            new File(resourceReportPath).listFiles();
+                    final File[] files
+                            = new File(resourceReportPath).listFiles();
                     for (final File file : files) {
                         buildReport(file);
                     }
@@ -230,49 +230,56 @@ public class EBIReportSystem implements IEBIReportSystem {
      */
     public void useReportSystemExt(final Map<String, Object> map) {
 
+        wait.setVisible(true);
         final Runnable run = new Runnable() {
 
             @Override
             public void run() {
-                try {
-                    wait.setVisible(true);
-                    if (!"".equals(report[0])) {
+                
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            
+                            if (!"".equals(report[0])) {
 
-                        // if no report was selected release this method
-                        if ("-1".equals(report[0].toString())) {
-                            return;
+                                // if no report was selected release this method
+                                if ("-1".equals(report[0].toString())) {
+                                    return;
+                                }
+
+                                addParametertoReport(map);
+                                final JasperPrint jasperPrint = JasperFillManager.fillReport(resourceReportPath + report[0].toString(), map,
+                                        EBISystem.getInstance().iDB().getActiveConnection());
+
+                                if ((Boolean) report[1] == true) {
+
+                                    final String fileN = report[0].toString().replaceAll("[^\\p{L}\\p{N}]", "");
+                                    JasperExportManager.exportReportToPdfFile(jasperPrint, resourceTmpPath + fileN + ".pdf");
+
+                                    EBISystem.getInstance().openPDFReportFile(resourceTmpPath + fileN + ".pdf");
+
+                                } else {
+                                    JFrame.setDefaultLookAndFeelDecorated(false);
+                                    final JasperViewer view = new JasperViewer(jasperPrint, false);
+                                    view.setState(Frame.MAXIMIZED_BOTH);
+                                    view.setVisible(true);
+                                }
+
+                            } else {
+                                EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_NO_REPORT_FOUND"))
+                                        .Show(EBIMessage.ERROR_MESSAGE);
+                            }
+                        } catch (final Exception ex) {
+                            ex.printStackTrace();
+                            EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
+                        } finally {
+                            if (wait != null) {
+                                wait.setVisible(false);
+                            }
                         }
-
-                        addParametertoReport(map);
-                        final JasperPrint jasperPrint = JasperFillManager.fillReport(resourceReportPath+report[0].toString(), map,
-                                EBISystem.getInstance().iDB().getActiveConnection());
-
-                        if ((Boolean) report[1] == true) {
-
-                            final String fileN = report[0].toString().replaceAll("[^\\p{L}\\p{N}]", "");
-                            JasperExportManager.exportReportToPdfFile(jasperPrint, resourceTmpPath + fileN + ".pdf");
-
-                            EBISystem.getInstance().openPDFReportFile(resourceTmpPath + fileN + ".pdf");
-
-                        } else {
-                            JFrame.setDefaultLookAndFeelDecorated(false);
-                            final JasperViewer view = new JasperViewer(jasperPrint, false);
-                            view.setState(Frame.MAXIMIZED_BOTH);
-                            view.setVisible(true);
-                        }
-
-                    } else {
-                        EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_NO_REPORT_FOUND"))
-                                .Show(EBIMessage.ERROR_MESSAGE);
                     }
-                } catch (final Exception ex) {
-                    ex.printStackTrace();
-                    EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
-                } finally {
-                    if (wait != null) {
-                        wait.setVisible(false);
-                    }
-                }
+                });
             }
         };
 
@@ -282,8 +289,8 @@ public class EBIReportSystem implements IEBIReportSystem {
 
     // overloading Method 2
     @Override
-    public void useReportSystem(final Map<String, Object> map, final String category,
-            final String fileName) {
+    public void useReportSystem(final Map<String, Object> map, final String category, final String fileName) {
+        
         this.map = map;
         EBIReportSystem.fileName = fileName;
         report = checkForReport(map, category);
@@ -319,7 +326,7 @@ public class EBIReportSystem implements IEBIReportSystem {
                         }
 
                         addParametertoReport(map);
-                        final JasperPrint jasperPrint = JasperFillManager.fillReport(resourceReportPath+report[0].toString(), map,
+                        final JasperPrint jasperPrint = JasperFillManager.fillReport(resourceReportPath + report[0].toString(), map,
                                 EBISystem.getInstance().iDB().getActiveConnection());
 
                         if ((Boolean) report[1] == true) {
@@ -410,10 +417,10 @@ public class EBIReportSystem implements IEBIReportSystem {
 
                 addParametertoReport(map);
 
-                final JasperPrint jasperPrint = JasperFillManager.fillReport(resourceReportPath+report[0].toString(), map,
+                final JasperPrint jasperPrint = JasperFillManager.fillReport(resourceReportPath + report[0].toString(), map,
                         EBISystem.getInstance().iDB().getActiveConnection());
 
-                fileToRet = new File(getClass().getClassLoader().getResource(resourceTmpPath + fileName.replaceAll(" ", "_") + ".pdf").toURI()).getAbsolutePath();
+                fileToRet = new File(resourceTmpPath + fileName.replaceAll(" ", "_") + ".pdf").getAbsolutePath();
                 if ((Boolean) report[1] == true) {
                     fileName = fileName.replaceAll("[^\\p{L}\\p{N}]", "");
                     JasperExportManager.exportReportToPdfFile(jasperPrint, fileToRet);
@@ -455,6 +462,8 @@ public class EBIReportSystem implements IEBIReportSystem {
             }
 
         } catch (final Exception ex) {
+            wait.setVisible(false);
+            ex.printStackTrace();
             EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
             fileToRet = "-1";
         } finally {

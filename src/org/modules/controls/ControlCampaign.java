@@ -343,7 +343,7 @@ public class ControlCampaign {
 
     public void dataShow(Integer id) {
         ResultSet set = null;
-        int selRow = EBISystem.gui().table("companyCampaignTable", "Campaign").getSelectedRow();
+        int selRow = EBISystem.gui().table("companyCampaignTable", "Campaign").getSelectedRow() + id;
         PreparedStatement ps1 = null;
       
         try {

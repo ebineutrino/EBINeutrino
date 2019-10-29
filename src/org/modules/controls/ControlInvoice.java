@@ -211,7 +211,8 @@ public class ControlInvoice {
     }
 
     public void dataShow(final String invoiceYear, final int showID) {
-        int srow = EBISystem.gui().table("tableTotalInvoice", "Invoice").getSelectedRow();
+        
+        int srow = EBISystem.gui().table("tableTotalInvoice", "Invoice").getSelectedRow() + showID;
         final EBIAbstractTableModel model = (EBIAbstractTableModel) EBISystem.gui()
                 .table("tableTotalInvoice", "Invoice").getModel();
 

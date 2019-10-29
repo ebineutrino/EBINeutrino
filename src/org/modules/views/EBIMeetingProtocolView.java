@@ -50,7 +50,6 @@ public class EBIMeetingProtocolView {
         /***********************************************************************************/
         // BEGIN OF TABLE MEETING DOCUMENT
         /***********************************************************************************/
-
         EBISystem.gui().table("meetingDoc", "MeetingCall").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         EBISystem.gui().table("meetingDoc", "MeetingCall").addSelectionListener(new EBIUICallback() {
             @Override
@@ -58,9 +57,9 @@ public class EBIMeetingProtocolView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (EBISystem.gui().table("meetingDoc", "MeetingCall").getSelectedRow() != -1 &&
-                        EBISystem.gui().table("meetingDoc", "MeetingCall").getSelectedRow() < tabmeetingDoc.data.length) {
-                    selectedDocRow = EBISystem.gui().table("meetingDoc", "MeetingCall").convertRowIndexToModel(EBISystem.gui().table("meetingDoc", "MeetingCall").getSelectedRow());
+                if (EBISystem.gui().table("meetingDoc", "MeetingCall").getSelectedRow() != -1) {
+                    selectedDocRow = EBISystem.gui().table("meetingDoc", "MeetingCall")
+                            .convertRowIndexToModel(EBISystem.gui().table("meetingDoc", "MeetingCall").getSelectedRow());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -108,8 +107,7 @@ public class EBIMeetingProtocolView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 selectedProtocolRow = 0;
-                if (EBISystem.gui().table("companyMeetings", "MeetingCall").getSelectedRow() != -1 &&
-                        EBISystem.gui().table("companyMeetings", "MeetingCall").getSelectedRow() < tableModel.data.length - 1) {
+                if (EBISystem.gui().table("companyMeetings", "MeetingCall").getSelectedRow() != -1) {
                     selectedProtocolRow = EBISystem.gui().table("companyMeetings", "MeetingCall").
                             convertRowIndexToModel(EBISystem.gui().table("companyMeetings", "MeetingCall").getSelectedRow());
                 }
@@ -205,13 +203,11 @@ public class EBIMeetingProtocolView {
             return false;
         }
         EBISystem.showInActionStatus("MeetingCall");
-        int row = EBISystem.gui().table("companyMeetings", "MeetingCall").getSelectedRow();
         Integer id = dataMeetingControl.dataStore();
         dataMeetingControl.dataShow(id);
         dataMeetingControl.dataShowContact();
         dataMeetingControl.dataShowDoc();
         dataMeetingControl.isEdit = true;
-        EBISystem.gui().table("companyMeetings", "MeetingCall").changeSelection(row, 0, false, false);
         return true;
     }
 

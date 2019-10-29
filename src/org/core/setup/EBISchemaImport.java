@@ -2,7 +2,6 @@ package org.core.setup;
 
 import org.core.EBIDatabase;
 import org.sdk.EBISystem;
-import org.sdk.gui.dialogs.EBIDialog;
 import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
 import org.sdk.utils.Encrypter;
@@ -15,7 +14,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -29,7 +27,6 @@ public class EBISchemaImport extends JDialog {
 
     private static final long serialVersionUID = 1L;
     private JPanel jContentPane = null;
-    private JButton cancelButton = null;
     private JButton importButton = null;
     private JLabel statusText = null;
     private JProgressBar progressBar = null;
@@ -41,12 +38,13 @@ public class EBISchemaImport extends JDialog {
     private final StringBuilder errorReport = new StringBuilder();
     private String catalog = "";
     private boolean useUpperCase = false;
-    
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String resourceSQLPath = System.getProperty("user.dir")
-                + File.separator+"resources"
-                + File.separator+"sql"
-                + File.separator;
+            + File.separator + "resources"
+            + File.separator + "sql"
+            + File.separator;
 
     public EBISchemaImport(final String databaseType,
             final String catalogDB, final boolean upperCase) {
@@ -81,7 +79,6 @@ public class EBISchemaImport extends JDialog {
             jLabel.setText("EBI Neutrino Database Schema Import");
             jContentPane = new JPanel();
             jContentPane.setLayout(null);
-            jContentPane.add(getJButtonCancel(), null);
             jContentPane.add(getImportButton(), null);
             jContentPane.add(jLabel, null);
             jContentPane.add(statusText, null);
@@ -90,25 +87,10 @@ public class EBISchemaImport extends JDialog {
         return jContentPane;
     }
 
-    private JButton getJButtonCancel() {
-        if (cancelButton == null) {
-            cancelButton = new JButton();
-            cancelButton.setBounds(new Rectangle(360, 125, 110, 30));
-            cancelButton.setText("Cancel");
-            cancelButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(final ActionEvent e) {
-                    setVisible(false);
-                }
-            });
-        }
-        return cancelButton;
-    }
-
     private JButton getImportButton() {
         if (importButton == null) {
             importButton = new JButton();
-            importButton.setBounds(new Rectangle(235, 125, 120, 30));
+            importButton.setBounds(new Rectangle(360, 125, 110, 30));
             importButton.setText("Import");
             importButton.addActionListener(new ActionListener() {
                 @Override
@@ -124,18 +106,16 @@ public class EBISchemaImport extends JDialog {
     }
 
     private boolean importSQLSchema(final String fileName) {
-        
+
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                
+
                 importButton.setEnabled(false);
-                cancelButton.setEnabled(false);
-                
                 BufferedReader br = null;
-                
+
                 try {
-                    
+
                     if (useUpperCase) {
                         catalog = catalog.toUpperCase();
                     } else {
@@ -145,19 +125,19 @@ public class EBISchemaImport extends JDialog {
                     EBISystem.db().execExt("CREATE DATABASE IF NOT EXISTS " + catalog);
                     EBISystem.db().getActiveConnection().setCatalog(catalog);
                     errorReport.append("\n");
-                    
-                    Reader reader = new FileReader(resourceSQLPath+fileName);
-                            
+
+                    Reader reader = new FileReader(resourceSQLPath + fileName);
+
                     br = new BufferedReader(reader);
 
-                    List<String> lines =  br.lines().collect(Collectors.toList());
+                    List<String> lines = br.lines().collect(Collectors.toList());
                     availableLine = lines.size();
-                    
+
                     boolean isFirstLine = true;
-                    
+
                     Iterator<String> iter = lines.iterator();
                     String line = "";
-                    
+
                     progressBar.setMaximum(availableLine);
                     while (iter.hasNext()) {
                         line = iter.next();
@@ -173,7 +153,6 @@ public class EBISchemaImport extends JDialog {
                             isFirstLine = false;
                         } else if (!"".equals(line.trim())) { // end of create sql statement import to db
                             // SQL Import Table
-                             
                             if (toImport.toString().length() > 1) {
                                 EBISystem.db().execExt(toImport.toString().toUpperCase());
                                 errorReport.append("\n");
@@ -191,10 +170,8 @@ public class EBISchemaImport extends JDialog {
                     } else {
                         importButton.setVisible(false);
                         createAdminUser();
-                        
-                        cancelButton.setText("Finish");
                     }
-                    cancelButton.setEnabled(true);
+               
                 } catch (final Exception ex) {
                     EBIExceptionDialog.getInstance(EBISchemaImport.this, EBISystem.printStackTrace(ex)).Show(EBIMessage.NEUTRINO_DEBUG_MESSAGE);
                     ex.printStackTrace();
@@ -202,7 +179,8 @@ public class EBISchemaImport extends JDialog {
                     errorReport.append("\n");
                     failed = false;
                     setVisible(false);
-                }  finally {
+                } finally {
+                    setVisible(false);
                     try {
                         if (br != null) {
                             br.close();
@@ -281,7 +259,6 @@ public class EBISchemaImport extends JDialog {
         repDialog.getContentPane().setLayout(new BorderLayout());
         repDialog.getContentPane().add(pane, BorderLayout.CENTER);
         repDialog.setVisible(true);*/
-
     }
 
     private String generatePassword(final String password) {

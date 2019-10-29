@@ -165,6 +165,8 @@ public class EBIMain extends JFrame {
             MetalLookAndFeel.setCurrentTheme(new MoodyBlueTheme());
             SwingUtilities.updateComponentTreeUI(this);
 
+            EBISystem.getInstance().addMainFrame(this);
+            
             splash = new EBISplashScreen();
             PropertyConfigurator.configure(resourceLoggerPath + "config/ebiLogger.config");
             splash.setVisible(true);
@@ -184,8 +186,7 @@ public class EBIMain extends JFrame {
         }
     }
 
-    public void initializeTheSystem()
-            throws Exception {
+    public void initializeTheSystem() throws Exception {
         /**
          * ******************
          */
@@ -242,7 +243,6 @@ public class EBIMain extends JFrame {
         pallert.setViewportView(panAllert);
         stat.addAllert(pallert);
         getContentPane().add(stat, BorderLayout.SOUTH);
-        EBISystem.getInstance().addMainFrame(this);
         EBISystem.getInstance().checkIsValidUser("root", "ebineutrino");
         showBusinessModule();
         splash.setVisible(false);

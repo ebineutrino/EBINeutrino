@@ -329,7 +329,7 @@ public class ControlLeads {
 
         ResultSet set = null;
         PreparedStatement ps1 = null;
-        int selRow = EBISystem.gui().table("leadsTable", "Leads").getSelectedRow();
+        int selRow = EBISystem.gui().table("leadsTable", "Leads").getSelectedRow() + id;
         try {
             ps1 = EBISystem.getInstance().iDB().initPreparedStatement(""
                     + " SELECT COMPANY.COMPANYID,COMPANY.NAME,COMPANY.CATEGORY,COMPANY.WEB,COMPANY.QUALIFICATION,COMPANY.DESCRIPTION,COMPANYCONTACTS.GENDER,"

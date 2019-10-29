@@ -255,7 +255,7 @@ public class ControlProblemSolution {
     public void dataShow(Integer id) {
         ResultSet set = null;
 
-        int selRow = EBISystem.gui().table("prosolTable", "Prosol").getSelectedRow();
+        int selRow = EBISystem.gui().table("prosolTable", "Prosol").getSelectedRow() + id;
         PreparedStatement ps1 = null;
 
         try {

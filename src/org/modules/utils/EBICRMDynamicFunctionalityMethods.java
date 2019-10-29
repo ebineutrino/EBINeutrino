@@ -318,7 +318,7 @@ public final class EBICRMDynamicFunctionalityMethods {
         PreparedStatement ps = null;
         try {
 
-            ps = EBISystem.getInstance().iDB().initPreparedStatement("select TEMPLATE from MAILTEMPLATE where NAME=? order by NAME");
+            ps = EBISystem.getInstance().iDB().initPreparedStatement("select TEMPLATE from MAIL_TEMPLATE where NAME=? order by NAME");
             ps.setString(1, name);
 
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps);

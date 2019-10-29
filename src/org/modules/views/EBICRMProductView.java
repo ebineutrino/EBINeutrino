@@ -189,10 +189,7 @@ public class EBICRMProductView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() != -1) {
-                    try {
-                        selectedProductRow = EBISystem.gui().table("companyProductTable", "Product").convertRowIndexToModel(lsm.getMinSelectionIndex());
-                    } catch (final IndexOutOfBoundsException ex) {
-                    }
+                   selectedProductRow = EBISystem.gui().table("companyProductTable", "Product").convertRowIndexToModel(lsm.getMinSelectionIndex()); 
                 }
 
                 if (lsm.isSelectionEmpty()) {

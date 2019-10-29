@@ -345,7 +345,7 @@ public class ControlPlanning {
     public void dataShow(Integer id) {
 
         Query query;
-        int selRow = EBISystem.gui().table("projectTable", "Project").getSelectedRow();
+        int selRow = EBISystem.gui().table("projectTable", "Project").getSelectedRow() + id;
 
         try {
             query = EBISystem.hibernate().session("EBIPROJECT_SESSION").createQuery("from Crmproject order by createddate desc ");

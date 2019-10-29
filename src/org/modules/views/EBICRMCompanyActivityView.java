@@ -119,8 +119,7 @@ public class EBICRMCompanyActivityView implements ChangeListener {
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 try {
                     selectedActivityRow = 0;
-                    if (EBISystem.gui().table("tableActivity", "Activity").getSelectedRow() != -1
-                            && EBISystem.gui().table("tableActivity", "Activity").getSelectedRow() < tabModel.data.length - 1) {
+                    if (lsm.getMinSelectionIndex() != -1) {
                         selectedActivityRow = EBISystem.gui().table("tableActivity", "Activity").convertRowIndexToModel(EBISystem.gui().table("tableActivity", "Activity").getSelectedRow());
                     }
 

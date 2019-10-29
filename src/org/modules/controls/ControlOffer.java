@@ -400,7 +400,8 @@ public class ControlOffer {
     }
 
     public void dataShow(Integer id) {
-        int selRow = EBISystem.gui().table("companyOfferTable", "Offer").getSelectedRow();
+        
+        int selRow = EBISystem.gui().table("companyOfferTable", "Offer").getSelectedRow() + id;
         final int size = EBISystem.getInstance().getCompany().getCompanyoffers().size();
         
         if (size > 0) {

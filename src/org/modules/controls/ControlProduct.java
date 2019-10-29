@@ -310,7 +310,7 @@ public class ControlProduct {
 
     public void dataShow(Integer id) {
         ResultSet set = null;
-        int selRow = EBISystem.gui().table("companyProductTable", "Product").getSelectedRow();
+        int selRow = EBISystem.gui().table("companyProductTable", "Product").getSelectedRow() + id;
         PreparedStatement ps = null;
         
       

@@ -5,7 +5,7 @@ import org.core.guiRenderer.EBIGUIWidgetsBean;
 import java.util.Iterator;
 
 public class EBIDataManager {
-
+    
     public void STORE(final String packg, final String TABLE) {
         final EBIGUIWidgetsBean mainWidget = EBISystem.getInstance().getIEBIGUIRendererInstance().getGUIComponents(packg);
         iterateWidget(mainWidget.getSubWidgets().iterator());
@@ -23,3 +23,4 @@ public class EBIDataManager {
         }
     }
 }
+

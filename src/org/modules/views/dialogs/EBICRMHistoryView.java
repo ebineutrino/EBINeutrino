@@ -59,7 +59,7 @@ public class EBICRMHistoryView {
         final Iterator iter = util.getField().iterator();
 
         boolean trClose = false;
-        buf.append("<table style=\"font-family: Verdana, serif;color:#fff;font-size: 10px; border: solid 1px #a0f0ff; width:100%\" border=\"0\">");
+        buf.append("<table style=\"font-family: Verdana, serif;color:#ffffff;font-size: 10px; border: solid 1px #a0f0ff; width:100%\" border=\"0\">");
 
         while (iter.hasNext()) {
 

@@ -222,7 +222,7 @@ public class EBICRMOfferView {
 
         EBISystem.gui().table("companyOfferTable", "Offer").setMouseCallback(new MouseAdapter() {
             @Override
-            public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseReleased(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("companyOfferTable", "Offer").rowAtPoint(e.getPoint()) != -1) {
                     selectedOfferRow = EBISystem.gui().table("companyOfferTable", "Offer").convertRowIndexToModel(EBISystem.gui().table("companyOfferTable", "Offer").rowAtPoint(e.getPoint()));
                 }
@@ -316,7 +316,7 @@ public class EBICRMOfferView {
             return;
         }
         EBISystem.showInActionStatus("Offer");
-        Integer id = dataControlOffer.dataCopy(Integer.parseInt(tabModoffer.data[selectedOfferRow][7].toString()));
+        Integer id = dataControlOffer.dataCopy(Integer.parseInt(tabModoffer.data[selectedOfferRow][tabModoffer.columnNames.length].toString()));
         dataControlOffer.dataEdit(id);
         dataControlOffer.dataShow(id);
         dataControlOffer.dataShowDoc();
@@ -346,7 +346,7 @@ public class EBICRMOfferView {
                 equals(tabModoffer.data[selectedOfferRow][0].toString())) {
             return;
         }
-        editOfferRemote(Integer.parseInt(tabModoffer.data[selectedOfferRow][7].toString()));
+        editOfferRemote(Integer.parseInt(tabModoffer.data[selectedOfferRow][tabModoffer.columnNames.length].toString()));
     }
 
     public void editOfferRemote(final int id) {
@@ -363,13 +363,13 @@ public class EBICRMOfferView {
     }
 
     public void deleteOffer() {
-        if (selectedDocRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
-                equals(tabModDoc.data[selectedDocRow][0].toString())) {
+        if (selectedOfferRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
+                equals(tabModoffer.data[selectedOfferRow][0].toString())) {
             return;
         }
         if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
             EBISystem.showInActionStatus("Offer");
-            dataControlOffer.dataDelete(Integer.parseInt(tabModoffer.data[selectedOfferRow][7].toString()));
+            dataControlOffer.dataDelete(Integer.parseInt(tabModoffer.data[selectedOfferRow][tabModoffer.columnNames.length].toString()));
             dataControlOffer.dataNew();
             dataControlOffer.dataShow(-1);
             dataControlOffer.dataShowProduct();
@@ -481,7 +481,7 @@ public class EBICRMOfferView {
         }
         if (pass) {
             EBISystem.showInActionStatus("Offer");
-            dataControlOffer.dataShowReport(Integer.parseInt(tabModoffer.data[selectedOfferRow][7].toString()));
+            dataControlOffer.dataShowReport(Integer.parseInt(tabModoffer.data[selectedOfferRow][tabModoffer.columnNames.length].toString()));
         }
         return pass;
     }
@@ -491,7 +491,7 @@ public class EBICRMOfferView {
                 equals(tabModoffer.data[selectedOfferRow][0].toString())) {
             return;
         }
-        dataControlOffer.createOrderFromOffer(Integer.parseInt(tabModoffer.data[selectedOfferRow][7].toString()));
+        dataControlOffer.createOrderFromOffer(Integer.parseInt(tabModoffer.data[selectedOfferRow][tabModoffer.columnNames.length].toString()));
     }
 
     public void mailOffer() {
@@ -521,14 +521,14 @@ public class EBICRMOfferView {
                 }
             }
         });
+
         EBISystem.gui().button("sendEmail", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SEND"));
         EBISystem.gui().button("closeEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_CLOSE"));
-       
 
         EBISystem.gui().button("sendEmail", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                
+
                 boolean pass;
                 if (EBISystem.getInstance().getIEBISystemUserRights().isCanPrint()
                         || EBISystem.getInstance().getIEBISystemUserRights().isAdministrator()) {
@@ -545,7 +545,7 @@ public class EBICRMOfferView {
                     
                     EBISystem.showInActionStatus("Offer");
                     dataControlOffer.dataShowAndMailReport(
-                            Integer.parseInt(tabModoffer.data[selectedOfferRow][7].toString()),
+                            Integer.parseInt(tabModoffer.data[selectedOfferRow][tabModoffer.columnNames.length].toString()),
                             EBISystem.gui().getCheckBox("ShowReportBS", "sendEMailMessage").isSelected());
                     
                     EBISystem.gui().dialog("sendEMailMessage").setVisible(false);

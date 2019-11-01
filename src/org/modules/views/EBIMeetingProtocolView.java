@@ -157,7 +157,7 @@ public class EBIMeetingProtocolView {
 
         EBISystem.gui().table("companyMeetings", "MeetingCall").setMouseCallback(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseReleased(MouseEvent e) {
                 super.mouseClicked(e);
                 if (EBISystem.gui().table("companyMeetings", "MeetingCall").rowAtPoint(e.getPoint()) != -1) {
                     selectedProtocolRow = EBISystem.gui().table("companyMeetings", "MeetingCall").convertRowIndexToModel(EBISystem.gui().table("companyMeetings", "MeetingCall").rowAtPoint(e.getPoint()));

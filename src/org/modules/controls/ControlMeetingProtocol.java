@@ -78,9 +78,9 @@ public class ControlMeetingProtocol {
 
             EBISystem.getInstance().getDataStore("MeetingCall", "ebiSave");
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-            
+
             EBISystem.getInstance().getCompany().getCompanymeetingprotocols().add(meetingProtocol);
-            
+
             if (!isEdit) {
                 EBISystem.gui().vpanel("MeetingCall").setID(meetingProtocol.getMeetingprotocolid());
             }
@@ -181,8 +181,8 @@ public class ControlMeetingProtocol {
 
     public void dataEdit(final int id) {
         if (EBISystem.getInstance().getCompany().getCompanymeetingprotocols().size() > 0) {
-            for (Companymeetingprotocol metObj :
-                    EBISystem.getInstance().getCompany().getCompanymeetingprotocols()) {
+            for (Companymeetingprotocol metObj
+                    : EBISystem.getInstance().getCompany().getCompanymeetingprotocols()) {
                 if (metObj.getMeetingprotocolid() == id) {
                     meetingProtocol = metObj;
                     break;
@@ -236,16 +236,16 @@ public class ControlMeetingProtocol {
     }
 
     public void dataShow(Integer id) {
-        
+
         int srow = EBISystem.gui().table("companyMeetings", "MeetingCall").getSelectedRow() + id;
         final int size = EBISystem.getInstance().getCompany().getCompanymeetingprotocols().size();
-        
-        int selRow =0;
+
+        int selRow = 0;
         if (size > 0) {
-            
+
             EBISystem.getModule().getMeetingProtocol().getTableModel().data = new Object[size][5];
             final Iterator<Companymeetingprotocol> iter = EBISystem.getInstance().getCompany().getCompanymeetingprotocols().iterator();
-            
+
             int i = 0;
             while (iter.hasNext()) {
                 final Companymeetingprotocol obj = iter.next();
@@ -264,7 +264,7 @@ public class ControlMeetingProtocol {
                     = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", ""}};
         }
         EBISystem.getModule().getMeetingProtocol().getTableModel().fireTableDataChanged();
-        if(srow > -1){
+        if (srow > -1) {
             srow = EBISystem.gui().table("companyMeetings", "MeetingCall").convertRowIndexToView(selRow);
             EBISystem.gui().table("companyMeetings", "MeetingCall").changeSelection(srow, 0, false, false);
         }
@@ -480,32 +480,16 @@ public class ControlMeetingProtocol {
     }
 
     public void dataEditDoc(final int id) {
-        String FileName;
-        String FileType;
-        OutputStream fos;
-        try {
-            final Iterator iter = this.meetingProtocol.getCompanymeetingdocs().iterator();
-            while (iter.hasNext()) {
-
-                final Companymeetingdoc doc = (Companymeetingdoc) iter.next();
-                if (id == doc.getMeetingdocid()) {
-                    // Get the BLOB inputstream
-                    final String file = doc.getName().replaceAll(" ", "_");
-                    //byte buffer[] = doc.getFiles().getBytes(1,(int)doc.getFiles().length());
-                    final byte buffer[] = doc.getFiles();
-                    FileName = "tmp/" + file;
-                    FileType = file.substring(file.lastIndexOf("."));
-                    fos = new FileOutputStream(FileName);
-                    fos.write(buffer, 0, buffer.length);
-                    fos.close();
-                    EBISystem.getInstance().resolverType(FileName, FileType);
-                    break;
-                }
+        final Iterator iter = this.meetingProtocol.getCompanymeetingdocs().iterator();
+        while (iter.hasNext()) {
+            final Companymeetingdoc doc = (Companymeetingdoc) iter.next();
+            if (id == doc.getMeetingdocid()) {
+                // Get the BLOB inputstream
+                final String file = doc.getName().replaceAll(" ", "_");
+                final byte buffer[] = doc.getFiles();
+                EBISystem.getInstance().writeBlobToTmp(file, buffer);
+                break;
             }
-        } catch (final FileNotFoundException exx) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_FILE_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
-        } catch (final IOException exx1) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_LOADING_FILE")).Show(EBIMessage.INFO_MESSAGE);
         }
     }
 

@@ -170,7 +170,7 @@ public class EBICRMCompanyActivityView implements ChangeListener {
 
         EBISystem.gui().table("tableActivity", "Activity").setMouseCallback(new MouseAdapter() {
             @Override
-            public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseReleased(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("tableActivity", "Activity").getSelectedRow() != -1) {
                     selectedActivityRow = EBISystem.gui().table("tableActivity", "Activity").convertRowIndexToModel(EBISystem.gui().table("tableActivity", "Activity").getSelectedRow());
 

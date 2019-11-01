@@ -71,7 +71,9 @@ public class EBIMain extends JFrame {
 
     public static void main(final String[] args) throws Exception {
         try {
+            
             final EBIMain application = new EBIMain();
+            
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {

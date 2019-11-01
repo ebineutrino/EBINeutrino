@@ -299,7 +299,7 @@ public class EBICRMCampaignView {
         EBISystem.gui().table("companyCampaignTable", "Campaign")
                 .setMouseCallback(new MouseAdapter() {
                     @Override
-                    public void mouseClicked(final java.awt.event.MouseEvent e) {
+                    public void mouseReleased(final java.awt.event.MouseEvent e) {
                         if (EBISystem.gui().table("companyCampaignTable", "Campaign").rowAtPoint(e.getPoint()) != -1) {
                             selectedCampaignRow = EBISystem.gui()
                                     .table("companyCampaignTable", "Campaign")

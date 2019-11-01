@@ -31,9 +31,9 @@ public class ControlOffer {
     }
 
     public Integer dataStore() {
-        
+
         Integer offerID = -1;
-        
+
         try {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
 
@@ -100,7 +100,7 @@ public class ControlOffer {
                 final Iterator iter = this.compOffer.getCompanyofferreceivers().iterator();
                 while (iter.hasNext()) {
                     final Companyofferreceiver rec = (Companyofferreceiver) iter.next();
-                    if (rec.getReceiverid() != null & rec.getReceiverid() < 0) {
+                    if (rec.getReceiverid() != null && rec.getReceiverid() < 0) {
                         rec.setReceiverid(null);
                     }
                     rec.setCompanyoffer(compOffer);
@@ -112,12 +112,12 @@ public class ControlOffer {
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
 
             EBISystem.getInstance().getCompany().getCompanyoffers().add(compOffer);
-            
+
             if (!isEdit) {
                 EBISystem.gui().vpanel("Offer").setID(compOffer.getOfferid());
             }
 
-            offerID =  compOffer.getOfferid();
+            offerID = compOffer.getOfferid();
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
@@ -127,7 +127,7 @@ public class ControlOffer {
     public Integer dataCopy(final int id) {
 
         Integer offerID = -1;
-        
+
         try {
             if (EBISystem.getInstance().getCompany().getCompanyoffers().size() > 0) {
                 Companyoffer offer = null;
@@ -392,18 +392,18 @@ public class ControlOffer {
                 }
             }
             EBISystem.getInstance().getDataStore("Offer", "ebiDelete");
-            EBISystem.getInstance().getCompany().getCompanyoffers().remove(compOffer);
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
             EBISystem.hibernate().session("EBICRM_SESSION").delete(compOffer);
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+            EBISystem.getInstance().getCompany().getCompanyoffers().remove(compOffer);
         }
     }
 
     public void dataShow(Integer id) {
-        
+
         int selRow = EBISystem.gui().table("companyOfferTable", "Offer").getSelectedRow() + id;
         final int size = EBISystem.getInstance().getCompany().getCompanyoffers().size();
-        
+
         if (size > 0) {
             EBISystem.getModule().getOfferPane().getTabModoffer().data = new Object[size][8];
             final Iterator<Companyoffer> iter = EBISystem.getInstance().getCompany().getCompanyoffers().iterator();
@@ -416,20 +416,19 @@ public class ControlOffer {
                 EBISystem.getModule().getOfferPane().getTabModoffer().data[i][3] = String.valueOf(cOffer.getOpportunityid() == null ? "0" : cOffer.getOpportunityid());
                 EBISystem.getModule().getOfferPane().getTabModoffer().data[i][4] = cOffer.getStatus() == null ? "" : cOffer.getStatus();
                 EBISystem.getModule().getOfferPane().getTabModoffer().data[i][5] = cOffer.getDescription() == null ? "" : cOffer.getDescription();
-                EBISystem.getModule().getOfferPane().getTabModoffer().data[i][6] = cOffer.getIsrecieved() == null ? 0 : cOffer.getIsrecieved();
-                EBISystem.getModule().getOfferPane().getTabModoffer().data[i][7] = cOffer.getOfferid();
-                if(id != -1 && id == cOffer.getOfferid()){
+                EBISystem.getModule().getOfferPane().getTabModoffer().data[i][6] = cOffer.getOfferid();
+                if (id != -1 && id == cOffer.getOfferid()) {
                     selRow = i;
                 }
                 i++;
             }
         } else {
-            EBISystem.getModule().getOfferPane().getTabModoffer().data 
+            EBISystem.getModule().getOfferPane().getTabModoffer().data
                     = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
         }
 
         EBISystem.getModule().getOfferPane().getTabModoffer().fireTableDataChanged();
-        if(selRow > -1){
+        if (selRow > -1) {
             selRow = EBISystem.gui().table("companyOfferTable", "Offer").convertRowIndexToView(selRow);
             EBISystem.gui().table("companyOfferTable", "Offer").changeSelection(selRow, 0, false, false);
         }
@@ -809,33 +808,16 @@ public class ControlOffer {
     }
 
     public void dataViewDoc(final int id) {
-        String FileName;
-        String FileType;
-        OutputStream fos;
-        try {
-
-            final Iterator iter = this.compOffer.getCompanyofferdocses().iterator();
-            while (iter.hasNext()) {
-
-                final Companyofferdocs doc = (Companyofferdocs) iter.next();
-
-                if (id == doc.getOfferdocid()) {
-                    // Get the BLOB inputstream
-                    final String file = doc.getName().replaceAll(" ", "_");
-                    final byte buffer[] = doc.getFiles();
-                    FileName = "tmp/" + file;
-                    FileType = file.substring(file.lastIndexOf("."));
-                    fos = new FileOutputStream(FileName);
-                    fos.write(buffer, 0, buffer.length);
-                    fos.close();
-                    EBISystem.getInstance().resolverType(FileName, FileType);
-                    break;
-                }
+        final Iterator iter = this.compOffer.getCompanyofferdocses().iterator();
+        while (iter.hasNext()) {
+            final Companyofferdocs doc = (Companyofferdocs) iter.next();
+            if (id == doc.getOfferdocid()) {
+                // Get the BLOB inputstream
+                final String file = doc.getName().replaceAll(" ", "_");
+                final byte buffer[] = doc.getFiles();
+                EBISystem.getInstance().writeBlobToTmp(file, buffer);
+                break;
             }
-        } catch (final FileNotFoundException exx) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_FILE_NOT_FOUND")).Show(EBIMessage.ERROR_MESSAGE);
-        } catch (final IOException exx1) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_LOADING_FILE")).Show(EBIMessage.ERROR_MESSAGE);
         }
     }
 

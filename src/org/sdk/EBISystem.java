@@ -26,7 +26,10 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -96,15 +99,24 @@ public class EBISystem {
     private JFileChooser fileDialog = null;
     private static EBISystem ebiSystem = null;
     private HashMap<String, Object> mappedBbeans = new HashMap();
-    @Getter @Setter
+    @Getter
+    @Setter
     private EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
-    
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String resourceImagePath = System.getProperty("user.dir")
-                + File.separator+"resources"
-                + File.separator+"images"
-                + File.separator;
-    
+            + File.separator + "resources"
+            + File.separator + "images"
+            + File.separator;
+
+    @Getter
+    @Setter
+    private String resourceTempPath = System.getProperty("user.dir")
+            + File.separator + "resources"
+            + File.separator + "tmp"
+            + File.separator;
+
     public EBISystem() {
         calendar = new GregorianCalendar();
         plock = new EBIDBLocking();
@@ -174,15 +186,15 @@ public class EBISystem {
         return val;
     }
 
-    
     /**
      * Return the EBINeutrino Properties
-     * @return 
+     *
+     * @return
      */
-    public static EBIPropertiesRW properties(){
+    public static EBIPropertiesRW properties() {
         return EBISystem.getInstance().getProperties();
     }
-    
+
     /**
      * Read EMail Setting from a Database
      */
@@ -289,7 +301,7 @@ public class EBISystem {
      * @return boolean
      */
     public boolean checkIsValidUser(final String user, final String pw) {
-        
+
         try {
             hibernate.openHibernateSession("LOGINSESSION");
             registeredModule.clear();
@@ -652,7 +664,7 @@ public class EBISystem {
                 ex.printStackTrace();
                 logger.error("Exception", ex.fillInStackTrace());
                 ret = false;
-                 
+
             } finally {
                 try {
                     resultSet.close();
@@ -660,7 +672,7 @@ public class EBISystem {
                     ex.printStackTrace();
                     logger.error("Exception", ex.fillInStackTrace());
                     ret = false;
-                     
+
                 }
             }
         }
@@ -993,6 +1005,24 @@ public class EBISystem {
         return is;
     }
 
+    public final void writeBlobToTmp(final String fileName, final byte[] blob) {
+        OutputStream fos;
+        String FileName;
+        String FileType;
+        try {
+            FileName = getResourceTempPath() + fileName;
+            FileType = fileName.substring(fileName.lastIndexOf("."));
+            fos = new FileOutputStream(FileName);
+            fos.write(blob, 0, blob.length);
+            fos.close();
+            EBISystem.getInstance().resolverType(FileName, FileType);
+        } catch (final FileNotFoundException exx) {
+            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_FILE_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
+        } catch (final IOException exx1) {
+            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_LOADING_FILE")).Show(EBIMessage.INFO_MESSAGE);
+        }
+    }
+
     public Object getMappedBean(Class cls) {
         return mappedBbeans.get(cls.getCanonicalName());
     }
@@ -1002,9 +1032,9 @@ public class EBISystem {
     }
 
     public ImageIcon getIconResource(String iconPath) {
-        
-        ImageIcon icon = new ImageIcon(resourceImagePath+iconPath);
-        
+
+        ImageIcon icon = new ImageIcon(resourceImagePath + iconPath);
+
         return icon;
     }
 

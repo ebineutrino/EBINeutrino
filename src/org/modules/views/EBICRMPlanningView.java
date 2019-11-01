@@ -371,7 +371,7 @@ public class EBICRMPlanningView {
 
         EBISystem.gui().table("projectTable", "Project").setMouseCallback(new MouseAdapter() {
             @Override
-            public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseReleased(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("projectTable", "Project").rowAtPoint(e.getPoint()) != -1) {
                     selectedProjectRow = EBISystem.gui().table("projectTable", "Project")
                             .convertRowIndexToModel(EBISystem.gui().table("projectTable", "Project").rowAtPoint(e.getPoint()));

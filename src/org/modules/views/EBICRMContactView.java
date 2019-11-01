@@ -106,7 +106,7 @@ public class EBICRMContactView {
 
         EBISystem.gui().table("companyContacts", "Contact").setMouseCallback(new MouseAdapter() {
             @Override
-            public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseReleased(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("companyContacts", "Contact").rowAtPoint(e.getPoint()) != -1) {
                     selectedContactRow = EBISystem.gui().table("companyContacts", "Contact")
                             .convertRowIndexToModel(EBISystem.gui().table("companyContacts", "Contact").rowAtPoint(e.getPoint()));

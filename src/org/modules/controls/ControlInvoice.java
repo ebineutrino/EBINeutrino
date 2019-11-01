@@ -217,13 +217,6 @@ public class ControlInvoice {
                 .table("tableTotalInvoice", "Invoice").getModel();
 
         String sName = "";
-        if (showID != -1) {
-            if (srow > -1 && model.data.length >= srow) {
-                sName = model.data[EBISystem.gui().table("tableTotalInvoice", "Invoice")
-                        .convertRowIndexToModel(srow)][0].toString();
-            }
-        }
-
         Query query;
         try {
 

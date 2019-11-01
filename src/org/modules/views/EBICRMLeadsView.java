@@ -173,7 +173,7 @@ public class EBICRMLeadsView {
 
         EBISystem.gui().table("leadsTable", "Leads").setMouseCallback(new MouseAdapter() {
             @Override
-            public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseReleased(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("leadsTable", "Leads").getSelectedRow() != -1) {
                     selectedRow = EBISystem.gui().table("leadsTable", "Leads")
                             .convertRowIndexToModel(EBISystem.gui().table("leadsTable", "Leads").getSelectedRow());

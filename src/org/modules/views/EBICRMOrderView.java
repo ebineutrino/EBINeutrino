@@ -215,7 +215,7 @@ public class EBICRMOrderView {
 
         EBISystem.gui().table("companyorderTable", "Order").setMouseCallback(new MouseAdapter() {
             @Override
-            public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseReleased(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("companyorderTable", "Order").rowAtPoint(e.getPoint()) != -1) {
                     selectedOrderRow = EBISystem.gui().table("companyorderTable", "Order")
                             .convertRowIndexToModel(EBISystem.gui().table("companyorderTable", "Order").rowAtPoint(e.getPoint()));

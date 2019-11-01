@@ -213,7 +213,7 @@ public class EBICRMProblemSolutionView {
 
         EBISystem.gui().table("prosolTable", "Prosol").setMouseCallback(new MouseAdapter() {
             @Override
-            public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseReleased(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("prosolTable", "Prosol").rowAtPoint(e.getPoint()) > -1) {
                     selectedprosolRow = EBISystem.gui().table("prosolTable", "Prosol").convertRowIndexToModel(
                             EBISystem.gui().table("prosolTable", "Prosol").rowAtPoint(e.getPoint()));

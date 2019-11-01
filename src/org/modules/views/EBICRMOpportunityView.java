@@ -224,7 +224,7 @@ public class EBICRMOpportunityView {
 
         EBISystem.gui().table("companyOpportunityTable", "Opportunity").setMouseCallback(new MouseAdapter() {
             @Override
-            public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseReleased(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("companyOpportunityTable", "Opportunity").rowAtPoint(e.getPoint()) > -1) {
                     selectedOpportunityRow = EBISystem.gui().table("companyOpportunityTable", "Opportunity").convertRowIndexToModel(EBISystem.gui().table("companyOpportunityTable", "Opportunity").rowAtPoint(e.getPoint()));
                 }
@@ -406,7 +406,7 @@ public class EBICRMOpportunityView {
         }
         EBISystem.showInActionStatus("Opportunity");
         dataOpportuniyControl.dataNew();
-        dataOpportuniyControl.dataEdit(Integer.parseInt(tabModel.data[selectedOpportunityRow][7].toString()));
+        dataOpportuniyControl.dataEdit(Integer.parseInt(tabModel.data[selectedOpportunityRow][tabModel.columnNames.length].toString()));
         dataOpportuniyControl.showOpportunityContacts();
         dataOpportuniyControl.dataShowDoc();
         dataOpportuniyControl.isEdit = true;
@@ -426,7 +426,7 @@ public class EBICRMOpportunityView {
                 equals(tabModel.data[selectedOpportunityRow][0].toString())) {
             return;
         }
-        Integer id = dataOpportuniyControl.dataCopy(Integer.parseInt(tabModel.data[selectedOpportunityRow][7].toString()));
+        Integer id = dataOpportuniyControl.dataCopy(Integer.parseInt(tabModel.data[selectedOpportunityRow][tabModel.columnNames.length].toString()));
         dataOpportuniyControl.dataEdit(id);
         dataOpportuniyControl.dataShow(id);
         dataOpportuniyControl.showOpportunityContacts();
@@ -441,7 +441,7 @@ public class EBICRMOpportunityView {
         }
         if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
             EBISystem.showInActionStatus("Opportunity");
-            dataOpportuniyControl.dataDelete(Integer.parseInt(tabModel.data[selectedOpportunityRow][7].toString()));
+            dataOpportuniyControl.dataDelete(Integer.parseInt(tabModel.data[selectedOpportunityRow][tabModel.columnNames.length].toString()));
             dataOpportuniyControl.dataNew();
             dataOpportuniyControl.dataShow(-1);
             dataOpportuniyControl.isEdit = false;

@@ -345,7 +345,7 @@ public class ControlCampaign {
         ResultSet set = null;
         int selRow = EBISystem.gui().table("companyCampaignTable", "Campaign").getSelectedRow() + id;
         PreparedStatement ps1 = null;
-      
+
         try {
 
             ps1 = EBISystem.getInstance().iDB().initPreparedStatement("SELECT * FROM CRMCAMPAIGN ORDER BY CREATEDDATE DESC ");
@@ -364,7 +364,7 @@ public class ControlCampaign {
                         EBISystem.getModule().getEBICRMCampaign().getTabModelCampaign().data[i][2] = set.getDate("VALIDFROM") == null ? "" : EBISystem.getInstance().getDateToString(set.getDate("VALIDFROM"));
                         EBISystem.getModule().getEBICRMCampaign().getTabModelCampaign().data[i][3] = set.getDate("VALIDTO") == null ? "" : EBISystem.getInstance().getDateToString(set.getDate("VALIDTO"));
                         EBISystem.getModule().getEBICRMCampaign().getTabModelCampaign().data[i][4] = set.getInt("CAMPAIGNID");
-                        if(id != -1 && id == set.getInt("CAMPAIGNID")){
+                        if (id != -1 && id == set.getInt("CAMPAIGNID")) {
                             selRow = i;
                         }
                         i++;
@@ -388,8 +388,8 @@ public class ControlCampaign {
                 }
             }
         }
-        
-        if(selRow > -1){
+
+        if (selRow > -1) {
             selRow = EBISystem.gui().table("companyCampaignTable", "Campaign").convertRowIndexToView(selRow);
             EBISystem.gui().table("companyCampaignTable", "Campaign").changeSelection(selRow, 0, false, false);
         }
@@ -737,38 +737,16 @@ public class ControlCampaign {
     }
 
     public void dataViewDoc(final int id) {
-
-        String FileName;
-        String FileType;
-        OutputStream fos;
-        try {
-
-            final Iterator iter = this.campaign.getCrmcampaigndocses().iterator();
-            while (iter.hasNext()) {
-
-                final Crmcampaigndocs docs = (Crmcampaigndocs) iter.next();
-
-                if (id == docs.getDocid()) {
-                    // Get the BLOB inputstream 
-
-                    final String file = docs.getName().replaceAll(" ", "_");
-                    final byte buffer[] = docs.getFiles();
-                    FileName = "tmp/" + file;
-                    FileType = file.substring(file.lastIndexOf("."));
-
-                    fos = new FileOutputStream(FileName);
-
-                    fos.write(buffer, 0, buffer.length);
-
-                    fos.close();
-                    EBISystem.getInstance().resolverType(FileName, FileType);
-                    break;
-                }
+        final Iterator iter = this.campaign.getCrmcampaigndocses().iterator();
+        while (iter.hasNext()) {
+            final Crmcampaigndocs doc = (Crmcampaigndocs) iter.next();
+            if (id == doc.getDocid()) {
+                // Get the BLOB inputstream 
+                final String file = doc.getName().replaceAll(" ", "_");
+                final byte buffer[] = doc.getFiles();
+                EBISystem.getInstance().writeBlobToTmp(file, buffer);
+                break;
             }
-        } catch (final FileNotFoundException exx) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_FILE_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
-        } catch (final IOException exx1) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_LOADING_FILE")).Show(EBIMessage.INFO_MESSAGE);
         }
     }
 

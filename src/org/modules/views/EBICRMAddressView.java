@@ -110,7 +110,7 @@ public class EBICRMAddressView {
 
         EBISystem.gui().table("companyAddess", "Address").setMouseCallback(new MouseAdapter() {
             @Override
-            public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseReleased(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("companyAddess", "Address")
                         .rowAtPoint(e.getPoint()) != -1) {
                     selectedRow = EBISystem.gui().table("companyAddess", "Address")

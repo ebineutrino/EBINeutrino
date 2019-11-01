@@ -41,8 +41,8 @@ public class ControlProduct {
 
     public Integer dataStore() {
 
-        Integer productID=-1;
-        
+        Integer productID = -1;
+
         try {
             EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").begin();
             if (!isEdit) {
@@ -138,7 +138,7 @@ public class ControlProduct {
     }
 
     public Integer dataCopy(final int id) {
-        Integer productID=-1;
+        Integer productID = -1;
         Query query;
         try {
 
@@ -312,8 +312,7 @@ public class ControlProduct {
         ResultSet set = null;
         int selRow = EBISystem.gui().table("companyProductTable", "Product").getSelectedRow() + id;
         PreparedStatement ps = null;
-        
-      
+
         try {
             ps = EBISystem.getInstance().iDB().initPreparedStatement("SELECT PRODUCTID,PRODUCTNR,PRODUCTNAME,CATEGORY,TYPE,DESCRIPTION FROM CRMPRODUCT ORDER BY CREATEDDATE DESC");
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps);
@@ -330,8 +329,8 @@ public class ControlProduct {
                         EBISystem.getModule().getEBICRMProductPane().getProductModel().data[i][3] = set.getString("TYPE") == null ? "" : set.getString("TYPE");
                         EBISystem.getModule().getEBICRMProductPane().getProductModel().data[i][4] = set.getString("DESCRIPTION") == null ? "" : set.getString("DESCRIPTION");
                         EBISystem.getModule().getEBICRMProductPane().getProductModel().data[i][5] = set.getInt("PRODUCTID");
-                        if(id != -1 && id == set.getInt("PRODUCTID")){
-                           selRow = i;
+                        if (id != -1 && id == set.getInt("PRODUCTID")) {
+                            selRow = i;
                         }
                         i++;
                     }
@@ -356,9 +355,9 @@ public class ControlProduct {
             }
             EBISystem.getModule().getEBICRMProductPane().getProductModel().fireTableDataChanged();
         }
-        
-        if(selRow > -1){
-            selRow= EBISystem.gui().table("companyProductTable", "Product").convertRowIndexToView(selRow);
+
+        if (selRow > -1) {
+            selRow = EBISystem.gui().table("companyProductTable", "Product").convertRowIndexToView(selRow);
             EBISystem.gui().table("companyProductTable", "Product").changeSelection(selRow, 0, false, false);
         }
     }
@@ -495,20 +494,19 @@ public class ControlProduct {
                 // Get the BLOB inputstream
                 final String file = doc.getName().replaceAll(" ", "_");
                 final byte buffer[] = doc.getFiles();
-                FileName = "tmp/" + file;
-                fos = new FileOutputStream(FileName);
+                FileName = EBISystem.getInstance().getResourceTempPath() + file;
+                fos = new FileOutputStream(new File(FileName));
                 fos.write(buffer, 0, buffer.length);
                 fos.close();
 
                 EBISystem.gui().label("productPictureLabel", "Product").setText("");
 
-                final JLabel lbx = new JLabel(new ImageIcon(FileName)) {
-                    @Override
-                    public void paintComponent(final Graphics g) {
-                        super.paintComponent(g);
-                        g.drawImage(((ImageIcon) getIcon()).getImage(), 0, 0, getWidth(), getHeight(), null);
-                    }
-                };
+                ImageIcon icon = new ImageIcon(FileName);
+                Image image = icon.getImage(); // transform it
+                Image newimg = image.getScaledInstance(EBISystem.gui().getPanel("picturePanel", "Product").getWidth(),
+                        EBISystem.gui().getPanel("picturePanel", "Product").getHeight(), java.awt.Image.SCALE_SMOOTH);
+
+                final JLabel lbx = new JLabel(new ImageIcon(newimg));
                 EBISystem.gui().getPanel("picturePanel", "Product").setLayout(new BorderLayout());
                 EBISystem.gui().getPanel("picturePanel", "Product").removeAll();
                 EBISystem.gui().getPanel("picturePanel", "Product").add(lbx, BorderLayout.CENTER);
@@ -527,36 +525,18 @@ public class ControlProduct {
 
     public void dataViewDoc(final int id) {
 
-        String FileName;
-        String FileType;
-        OutputStream fos;
-        try {
-
-            final Iterator iter = this.product.getCrmproductdocses().iterator();
-            while (iter.hasNext()) {
-
-                final Crmproductdocs doc = (Crmproductdocs) iter.next();
-
-                if (id == doc.getProductdocid()) {
-                    // Get the BLOB inputstream
-                    final String file = doc.getName().replaceAll(" ", "_");
-                    final byte buffer[] = doc.getFiles();
-                    FileName = "tmp/" + file;
-                    FileType = file.substring(file.lastIndexOf("."));
-
-                    fos = new FileOutputStream(FileName);
-                    fos.write(buffer, 0, buffer.length);
-
-                    fos.close();
-                    EBISystem.getInstance().resolverType(FileName, FileType);
-                    break;
-                }
+        final Iterator iter = this.product.getCrmproductdocses().iterator();
+        while (iter.hasNext()) {
+            final Crmproductdocs doc = (Crmproductdocs) iter.next();
+            if (id == doc.getProductdocid()) {
+                // Get the BLOB inputstream
+                final String file = doc.getName().replaceAll(" ", "_");
+                final byte buffer[] = doc.getFiles();
+                EBISystem.getInstance().writeBlobToTmp(file, buffer);
+                break;
             }
-        } catch (final FileNotFoundException exx) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_FILE_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
-        } catch (final IOException exx1) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_LOADING_FILE")).Show(EBIMessage.INFO_MESSAGE);
         }
+
     }
 
     public void dataShowDoc() {

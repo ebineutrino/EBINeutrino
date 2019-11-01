@@ -23,20 +23,20 @@ public class EBITableExt extends JXTable implements MouseListener {
     private MouseAdapter mouseCallback = null;
     public EBISaveRestoreTableProperties tabProp = new EBISaveRestoreTableProperties();
 
-    public EBITableExt(){
+    public EBITableExt() {
         addMouseListener(this);
 
         this.getTableHeader().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-              super.mouseReleased(e);
+                super.mouseReleased(e);
                 tabProp.saveTableProperties(EBITableExt.this);
             }
         });
     }
 
-    public void addSelectionListener(final EBIUICallback uiCallback){
-        if(uiCallback != null){
+    public void addSelectionListener(final EBIUICallback uiCallback) {
+        if (uiCallback != null) {
             this.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
                 @Override
@@ -55,23 +55,23 @@ public class EBITableExt extends JXTable implements MouseListener {
         }
     }
 
-    public void addKeyAction(final EBIUICallback uiCallback){
+    public void addKeyAction(final EBIUICallback uiCallback) {
         new JTableActionMaps(this).setTableAction(new AbstractTableKeyAction() {
             @Override
             public void setArrowDownKeyAction(final int selRow) {
-               if(uiCallback != null){
-                   SwingUtilities.invokeLater(new Runnable() {
-                       @Override
-                       public void run() {
-                           uiCallback.tableKeyDown(selRow);
-                       }
-                   });
-               }
+                if (uiCallback != null) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            uiCallback.tableKeyDown(selRow);
+                        }
+                    });
+                }
             }
 
             @Override
             public void setArrowUpKeyAction(final int selRow) {
-                if(uiCallback != null){
+                if (uiCallback != null) {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
@@ -83,7 +83,7 @@ public class EBITableExt extends JXTable implements MouseListener {
 
             @Override
             public void setEnterKeyAction(final int selRow) {
-                if(uiCallback != null){
+                if (uiCallback != null) {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
@@ -94,7 +94,6 @@ public class EBITableExt extends JXTable implements MouseListener {
             }
         });
     }
-
 
     @Override
     public final Component prepareRenderer(final TableCellRenderer renderer, final int rowIndex, final int vColIndex) {
@@ -108,28 +107,23 @@ public class EBITableExt extends JXTable implements MouseListener {
                         + "</b></html>");
 
             }
-        } catch (final IndexOutOfBoundsException e) {e.printStackTrace();}
+        } catch (final IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
         return c;
     }
 
     @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
-        if(mouseCallback != null){
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    mouseCallback.mouseClicked(mouseEvent);
-                }
-            });
-        }
-    }
+    public void mouseClicked(MouseEvent mouseEvent) {}
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-        if(mouseCallback != null){
+        if (mouseCallback != null) {
+            
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
+                    
                     mouseCallback.mousePressed(mouseEvent);
                 }
             });
@@ -138,7 +132,7 @@ public class EBITableExt extends JXTable implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-        if(mouseCallback != null){
+        if (mouseCallback != null) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -150,7 +144,7 @@ public class EBITableExt extends JXTable implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
-        if(mouseCallback != null){
+        if (mouseCallback != null) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -162,7 +156,7 @@ public class EBITableExt extends JXTable implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
-        if(mouseCallback != null){
+        if (mouseCallback != null) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -180,9 +174,8 @@ public class EBITableExt extends JXTable implements MouseListener {
         this.mouseCallback = mouseCallback;
     }
 
-
     @Override
-    public void setModel(TableModel dataModel){
+    public void setModel(TableModel dataModel) {
         super.setModel(dataModel);
         dataModel.addTableModelListener(new TableModelListener() {
             @Override

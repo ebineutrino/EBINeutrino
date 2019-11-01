@@ -29,8 +29,8 @@ public class ControlProblemSolution {
 
     public Integer dataStore() {
 
-        Integer prosolID=-1;
-        
+        Integer prosolID = -1;
+
         try {
             EBISystem.hibernate().transaction("PROSOL_SESSION").begin();
             if (isEdit == false) {
@@ -280,17 +280,17 @@ public class ControlProblemSolution {
                         EBISystem.getModule().getProsolPane().getTabModProsol().data[i][5] = set.getString("TYPE") == null ? "" : set.getString("TYPE");
                         EBISystem.getModule().getProsolPane().getTabModProsol().data[i][6] = set.getString("DESCRIPTION") == null ? "" : set.getString("DESCRIPTION");
                         EBISystem.getModule().getProsolPane().getTabModProsol().data[i][7] = set.getInt("PROSOLID");
-                        if(id != -1 && id == set.getInt("PROSOLID")){
+                        if (id != -1 && id == set.getInt("PROSOLID")) {
                             selRow = i;
                         }
                         i++;
                     }
                 } else {
-                    EBISystem.getModule().getProsolPane().getTabModProsol().data 
+                    EBISystem.getModule().getProsolPane().getTabModProsol().data
                             = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", ""}};
                 }
             } else {
-                EBISystem.getModule().getProsolPane().getTabModProsol().data 
+                EBISystem.getModule().getProsolPane().getTabModProsol().data
                         = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", ""}};
             }
 
@@ -307,8 +307,8 @@ public class ControlProblemSolution {
             }
             EBISystem.getModule().getProsolPane().getTabModProsol().fireTableDataChanged();
         }
-        
-        if(selRow > -1){
+
+        if (selRow > -1) {
             selRow = EBISystem.gui().table("prosolTable", "Prosol").convertRowIndexToView(selRow);
             EBISystem.gui().table("prosolTable", "Prosol").changeSelection(selRow, 0, false, false);
         }
@@ -423,34 +423,15 @@ public class ControlProblemSolution {
     }
 
     public void dataViewDoc(final int id) {
-
-        String FileName;
-        String FileType;
-        OutputStream fos;
-        try {
-            final Iterator iter = this.compProsol.getCrmproblemsoldocses().iterator();
-            while (iter.hasNext()) {
-
-                final Crmproblemsoldocs doc = (Crmproblemsoldocs) iter.next();
-
-                if (id == doc.getSolutiondocid()) {
-                    // Get the BLOB inputstream
-                    final String file = doc.getName().replaceAll(" ", "_");
-                    final byte buffer[] = doc.getFiles();
-                    FileName = "tmp/" + file;
-                    FileType = file.substring(file.lastIndexOf("."));
-
-                    fos = new FileOutputStream(FileName);
-                    fos.write(buffer, 0, buffer.length);
-                    fos.close();
-                    EBISystem.getInstance().resolverType(FileName, FileType);
-                    break;
-                }
+        final Iterator iter = this.compProsol.getCrmproblemsoldocses().iterator();
+        while (iter.hasNext()) {
+            final Crmproblemsoldocs doc = (Crmproblemsoldocs) iter.next();
+            if (id == doc.getSolutiondocid()) {
+                final String file = doc.getName().replaceAll(" ", "_");
+                final byte buffer[] = doc.getFiles();
+                EBISystem.getInstance().writeBlobToTmp(file, buffer);
+                break;
             }
-        } catch (final FileNotFoundException exx) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_FILE_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
-        } catch (final IOException exx1) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_LOADING_FILE")).Show(EBIMessage.INFO_MESSAGE);
         }
     }
 

@@ -180,7 +180,7 @@ public class ControlAccountStack {
 
         int selRow = EBISystem.gui().table("accountTable", "Account").getSelectedRow() + id;
         Query query;
-       
+
         try {
             EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").begin();
 
@@ -222,7 +222,7 @@ public class ControlAccountStack {
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][5] = act.getAccountDebit() == null ? "" : act.getAccountDebit();
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][6] = act.getAccountCredit() == null ? "" : act.getAccountCredit();
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][7] = act.getAcstackid();
-                    if(id != -1 && id == act.getAcstackid()){
+                    if (id != -1 && id == act.getAcstackid()) {
                         selRow = i;
                     }
                     i++;
@@ -236,8 +236,8 @@ public class ControlAccountStack {
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
-        
-        if(selRow > -1){
+
+        if (selRow > -1) {
             selRow = EBISystem.gui().table("accountTable", "Account").convertRowIndexToView(selRow);
             EBISystem.gui().table("accountTable", "Account").changeSelection(selRow, 0, false, false);
         }
@@ -376,42 +376,17 @@ public class ControlAccountStack {
     }
 
     public void dataViewDoc(final int id) {
-
-        String FileName;
-        String FileType;
-        OutputStream fos;
-        try {
-
-            final Iterator iter = this.actStack.getAccountstackdocses().iterator();
-            while (iter.hasNext()) {
-
-                final Accountstackdocs doc = (Accountstackdocs) iter.next();
-
-                if (id == doc.getAccountdocid()) {
-                    // Get the BLOB inputstream
-
-                    final String file = doc.getName().replaceAll(" ", "_");
-                    final byte buffer[] = doc.getFiles();
-                    FileName = "tmp/" + file;
-                    FileType = file.substring(file.lastIndexOf("."));
-
-                    fos = new FileOutputStream(FileName);
-
-                    fos.write(buffer, 0, buffer.length);
-
-                    fos.close();
-                    EBISystem.getInstance().resolverType(FileName, FileType);
-                    break;
-                }
+        final Iterator iter = this.actStack.getAccountstackdocses().iterator();
+        while (iter.hasNext()) {
+            final Accountstackdocs doc = (Accountstackdocs) iter.next();
+            if (id == doc.getAccountdocid()) {
+                // Get the BLOB inputstream
+                final String file = doc.getName().replaceAll(" ", "_");
+                final byte buffer[] = doc.getFiles();
+                EBISystem.getInstance().writeBlobToTmp(file, buffer);
+                break;
             }
-        } catch (final FileNotFoundException exx) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_FILE_NOT_FOUND"))
-                    .Show(EBIMessage.INFO_MESSAGE);
-        } catch (final IOException exx1) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_LOADING_FILE"))
-                    .Show(EBIMessage.INFO_MESSAGE);
         }
-
     }
 
     public void dataShowDoc() {

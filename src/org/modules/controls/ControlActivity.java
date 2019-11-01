@@ -25,7 +25,7 @@ public class ControlActivity {
     }
 
     public Integer dataStore() {
-        
+
         Integer activityID = -1;
         try {
 
@@ -102,7 +102,7 @@ public class ControlActivity {
             EBISystem.getModule().allertTimer.setUpAvailableTimer();
 
             EBISystem.getInstance().getCompany().getCompanyactivitieses().add(companyActivity);
-            
+
             if (!isEdit) {
                 EBISystem.gui().vpanel("Activity").setID(companyActivity.getActivityid());
             }
@@ -118,7 +118,7 @@ public class ControlActivity {
     public Integer dataCopy(final int id) {
 
         Integer activityID = -1;
-        
+
         try {
             if (EBISystem.getInstance().getCompany().getCompanyactivitieses().size() > 0) {
                 Companyactivities compActivity = null;
@@ -163,9 +163,9 @@ public class ControlActivity {
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(cd);
                     }
                 }
-                
+
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-                
+
                 EBISystem.getInstance().getCompany().getCompanyactivitieses().add(compAct);
                 activityID = compAct.getActivityid();
             }
@@ -320,8 +320,8 @@ public class ControlActivity {
                     EBISystem.getModule().getActivitiesPane().getTabModel().data[i][5] = act.getActivitystatus() == null ? "" : act.getActivitystatus();
                     EBISystem.getModule().getActivitiesPane().getTabModel().data[i][6] = act.getActivitydescription() == null ? "" : act.getActivitydescription();
                     EBISystem.getModule().getActivitiesPane().getTabModel().data[i][7] = act.getActivityid();
-                    if(id != -1 && id == act.getActivityid()){
-                       srow = i;
+                    if (id != -1 && id == act.getActivityid()) {
+                        srow = i;
                     }
                     i++;
                 }
@@ -330,12 +330,12 @@ public class ControlActivity {
             }
 
             EBISystem.getModule().getActivitiesPane().getTabModel().fireTableDataChanged();
-            
-            if(srow > -1){
+
+            if (srow > -1) {
                 srow = EBISystem.gui().table("tableActivity", "Activity").convertRowIndexToView(srow);
                 EBISystem.gui().table("tableActivity", "Activity").changeSelection(srow, 0, false, false);
             }
-            
+
         } catch (final Exception e) {
             e.printStackTrace();
         }
@@ -476,31 +476,19 @@ public class ControlActivity {
     }
 
     public void dataViewDoc(final int id) {
-        String FileName;
-        String FileType;
-        OutputStream fos;
-        try {
-            final Iterator iter = this.companyActivity.getCompanyactivitiesdocses().iterator();
-            while (iter.hasNext()) {
-                final Companyactivitiesdocs doc = (Companyactivitiesdocs) iter.next();
-                if (id == doc.getActivitydocid()) {
-                    // Get the BLOB inputstream
-                    final String file = doc.getName().replaceAll(" ", "_");
-                    final byte buffer[] = doc.getFiles();
-                    FileName = "tmp/" + file;
-                    FileType = file.substring(file.lastIndexOf("."));
-                    fos = new FileOutputStream(FileName);
-                    fos.write(buffer, 0, buffer.length);
-                    fos.close();
-                    EBISystem.getInstance().resolverType(FileName, FileType);
-                    break;
-                }
+
+        final Iterator iter = this.companyActivity.getCompanyactivitiesdocses().iterator();
+        while (iter.hasNext()) {
+            final Companyactivitiesdocs doc = (Companyactivitiesdocs) iter.next();
+            if (id == doc.getActivitydocid()) {
+                // Get the BLOB inputstream
+                final String file = doc.getName().replaceAll(" ", "_");
+                final byte buffer[] = doc.getFiles();
+                EBISystem.getInstance().writeBlobToTmp(file, buffer);
+                break;
             }
-        } catch (final FileNotFoundException exx) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_FILE_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
-        } catch (final IOException exx1) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_LOADING_FILE")).Show(EBIMessage.INFO_MESSAGE);
         }
+
     }
 
     public void dataNewDoc() {

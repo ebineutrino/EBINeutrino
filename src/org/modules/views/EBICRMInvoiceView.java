@@ -122,8 +122,9 @@ public class EBICRMInvoiceView {
                                 .setText(obj[1].toString() + obj[0].toString());
 
                     }
+                }else{
+                      EBISystem.gui().textField("invoiceNrText", "Invoice").setText("");
                 }
-
             }
         });
 
@@ -216,7 +217,7 @@ public class EBICRMInvoiceView {
         EBISystem.gui().table("tableTotalInvoice", "Invoice")
                 .setMouseCallback(new MouseAdapter() {
                     @Override
-                    public void mouseClicked(final java.awt.event.MouseEvent e) {
+                    public void mouseReleased(final java.awt.event.MouseEvent e) {
                         if (EBISystem.gui().table("tableTotalInvoice", "Invoice")
                                 .rowAtPoint(e.getPoint()) != -1) {
                             selectedInvoiceRow = EBISystem.gui().table("tableTotalInvoice", "Invoice")

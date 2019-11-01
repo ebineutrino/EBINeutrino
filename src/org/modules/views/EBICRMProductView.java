@@ -27,22 +27,27 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class EBICRMProductView {
-    
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private ModelDoc tabModDoc = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelProductDependency productDependencyModel = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelProduct productModel = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelProperties productModelDimension = null;
-    
+
     public static String[] category = null;
     public static String[] type = null;
     public static String[] taxType = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ControlProduct dataControlProduct = new ControlProduct();
-    
+
     private int selectedProductRow = -1;
     private int selectedDimensionRow = -1;
     private int selectedDependencyRow = -1;
@@ -65,7 +70,6 @@ public class EBICRMProductView {
             }
         });
 
- 
         // TAX PANEL
         EBISystem.gui().combo("productTaxTypeTex", "Product").addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -159,7 +163,7 @@ public class EBICRMProductView {
                     selectedDocRow = EBISystem.gui().table("productTableDoc", "Product").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
-                if (selectedDocRow < 0 || selectedDocRow > tabModDoc.data.length || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
+                if (selectedDocRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                         equals(tabModDoc.data[selectedDocRow][0].toString())) {
                     return;
                 }
@@ -189,7 +193,7 @@ public class EBICRMProductView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() != -1) {
-                   selectedProductRow = EBISystem.gui().table("companyProductTable", "Product").convertRowIndexToModel(lsm.getMinSelectionIndex()); 
+                    selectedProductRow = EBISystem.gui().table("companyProductTable", "Product").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -237,7 +241,7 @@ public class EBICRMProductView {
 
         EBISystem.gui().table("companyProductTable", "Product").setMouseCallback(new MouseAdapter() {
             @Override
-            public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseReleased(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("companyProductTable", "Product").rowAtPoint(e.getPoint()) != -1) {
                     selectedProductRow = EBISystem.gui().table("companyProductTable", "Product").convertRowIndexToModel(EBISystem.gui().table("companyProductTable", "Product").rowAtPoint(e.getPoint()));
                 }
@@ -452,7 +456,7 @@ public class EBICRMProductView {
     /**
      * *************************************************************************
      * Product Dependency manipulation
-     *************************************************************************
+     * ************************************************************************
      */
     public void newDependency() {
         dataControlProduct.dataNewDependency();
@@ -479,7 +483,7 @@ public class EBICRMProductView {
     /**
      * *************************************************************************
      * Product Dimension manipulation
-     *************************************************************************
+     * ************************************************************************
      */
     public void newDimension() {
         dataControlProduct.dataNewDimension();
@@ -507,11 +511,10 @@ public class EBICRMProductView {
             dataControlProduct.dataShowDimension();
         }
     }
-    
-    public void showDimension(){
+
+    public void showDimension() {
         dataControlProduct.dataShowDimension();
     }
-    
 
     public void showProductReport() {
         if (selectedProductRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").

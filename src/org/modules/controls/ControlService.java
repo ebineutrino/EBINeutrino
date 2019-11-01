@@ -101,7 +101,7 @@ public class ControlService {
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
 
             EBISystem.getInstance().getCompany().getCompanyservices().add(compService);
-            
+
             if (!isEdit) {
                 EBISystem.gui().vpanel("Service").setID(compService.getServiceid());
             }
@@ -199,7 +199,7 @@ public class ControlService {
                         EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(sv);
                     }
                 }
-                
+
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
                 EBISystem.getInstance().getCompany().getCompanyservices().add(serv);
                 serviceID = serv.getServiceid();
@@ -249,7 +249,7 @@ public class ControlService {
             }
             EBISystem.gui().textArea("serviceDescriptionText", "Service").setText(compService.getDescription());
             EBISystem.getInstance().getDataStore("Service", "ebiEdit");
-            
+
         } else {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
         }
@@ -273,10 +273,10 @@ public class ControlService {
     }
 
     public void dataShow(Integer id) {
-        
+
         int selRow = EBISystem.gui().table("companyServiceTable", "Service").getSelectedRow() + id;
         final int size = EBISystem.getInstance().getCompany().getCompanyservices().size();
-        
+
         if (size > 0) {
             EBISystem.getModule().getServicePane().getTabModService().data = new Object[size][8];
             final Iterator<Companyservice> itr = EBISystem.getInstance().getCompany().getCompanyservices().iterator();
@@ -290,18 +290,18 @@ public class ControlService {
                 EBISystem.getModule().getServicePane().getTabModService().data[i][4] = service.getCategory() == null ? "" : service.getCategory();
                 EBISystem.getModule().getServicePane().getTabModService().data[i][5] = service.getDescription() == null ? "" : service.getDescription();
                 EBISystem.getModule().getServicePane().getTabModService().data[i][6] = service.getServiceid();
-                if(id != -1 && id == service.getServiceid()){
+                if (id != -1 && id == service.getServiceid()) {
                     selRow = i;
                 }
                 i++;
             }
         } else {
-            EBISystem.getModule().getServicePane().getTabModService().data 
+            EBISystem.getModule().getServicePane().getTabModService().data
                     = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", ""}};
         }
 
         EBISystem.getModule().getServicePane().getTabModService().fireTableDataChanged();
-        if(selRow > -1){
+        if (selRow > -1) {
             selRow = EBISystem.gui().table("companyServiceTable", "Service").convertRowIndexToView(selRow);
             EBISystem.gui().table("companyServiceTable", "Service").changeSelection(selRow, 0, false, false);
         }
@@ -322,6 +322,7 @@ public class ControlService {
     }
 
     public void createInvoiceFromService(final int id) {
+
         final Iterator iter = EBISystem.getInstance().getCompany().getCompanyservices().iterator();
 
         if (!EBISystem.getModule().crmToolBar.isInvoiceSelected()) {
@@ -339,6 +340,7 @@ public class ControlService {
 
             if (serv.getServiceid() == id) {
 
+                EBISystem.getModule().getInvoicePane().newInvoice();
                 // Invoice field
                 EBISystem.gui().textField("invoiceNameText", "Invoice").setText(serv.getName());
 
@@ -368,6 +370,7 @@ public class ControlService {
                         EBISystem.getModule().getInvoicePane().getDataControlInvoice().dataShowProduct();
                     }
                 }
+                break;
             }
         }
     }
@@ -505,38 +508,19 @@ public class ControlService {
             }
         }
     }
-
+    
     public void dataViewDoc(final int id) {
-        String FileName;
-        String FileType;
-        OutputStream fos;
-        try {
-
-            final Iterator iter = this.compService.getCompanyservicedocses().iterator();
-            while (iter.hasNext()) {
-
-                final Companyservicedocs doc = (Companyservicedocs) iter.next();
-
-                if (id == doc.getServicedocid()) {
-                    // Get the BLOB inputstream
-
-                    final String file = doc.getName().replaceAll(" ", "_");
-                    final byte buffer[] = doc.getFiles();
-                    FileName = "tmp/" + file;
-                    FileType = file.substring(file.lastIndexOf("."));
-                    fos = new FileOutputStream(FileName);
-                    fos.write(buffer, 0, buffer.length);
-                    fos.close();
-                    EBISystem.getInstance().resolverType(FileName, FileType);
-                    break;
-                }
+        final Iterator iter = this.compService.getCompanyservicedocses().iterator();
+        while (iter.hasNext()) {
+            final Companyservicedocs doc = (Companyservicedocs) iter.next();
+            if (id == doc.getServicedocid()) {
+                // Get the BLOB inputstream
+                final String file = doc.getName().replaceAll(" ", "_");
+                final byte buffer[] = doc.getFiles();
+                EBISystem.getInstance().writeBlobToTmp(file, buffer);
+                break;
             }
-        } catch (final FileNotFoundException exx) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_FILE_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
-        } catch (final IOException exx1) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_LOADING_FILE")).Show(EBIMessage.INFO_MESSAGE);
         }
-
     }
 
     public void dataShowDoc() {

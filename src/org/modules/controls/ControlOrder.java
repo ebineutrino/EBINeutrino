@@ -33,7 +33,7 @@ public class ControlOrder {
     public Integer dataStore() {
 
         Integer orderID = -1;
-        
+
         try {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
             if (isEdit == false) {
@@ -110,7 +110,7 @@ public class ControlOrder {
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
 
             EBISystem.getInstance().getCompany().getCompanyorders().add(compOrder);
-            
+
             if (!isEdit) {
                 EBISystem.gui().vpanel("Order").setID(compOrder.getOrderid());
             }
@@ -122,9 +122,9 @@ public class ControlOrder {
     }
 
     public Integer dataCopy(final int id) {
-        
+
         Integer orderID = -1;
-        
+
         try {
             if (EBISystem.getInstance().getCompany().getCompanyorders().size() > 0) {
                 Companyorder order = null;
@@ -299,6 +299,9 @@ public class ControlOrder {
         }
 
         if (EBISystem.getInstance().getCompany().getCompanyorders().size() > 0) {
+
+            EBISystem.getModule().getInvoicePane().newInvoice();
+
             Companyorder ord = null;
             for (Companyorder ordObj : EBISystem.getInstance().getCompany().getCompanyorders()) {
                 if (ordObj.getOrderid() == id) {
@@ -487,7 +490,7 @@ public class ControlOrder {
                 EBISystem.getModule().getOrderPane().getTabModOrder().data[i][5] = order.getDescription() == null ? "" : order.getDescription();
                 EBISystem.getModule().getOrderPane().getTabModOrder().data[i][6] = order.getIsrecieved() == null ? 0 : order.getIsrecieved();
                 EBISystem.getModule().getOrderPane().getTabModOrder().data[i][7] = order.getOrderid();
-                if(id != -1 && id == order.getOrderid()){
+                if (id != -1 && id == order.getOrderid()) {
                     selRow = i;
                 }
                 i++;
@@ -496,9 +499,9 @@ public class ControlOrder {
             EBISystem.getModule().getOrderPane().getTabModOrder().data
                     = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
         }
-        
+
         EBISystem.getModule().getOrderPane().getTabModOrder().fireTableDataChanged();
-        if(selRow > -1){
+        if (selRow > -1) {
             selRow = EBISystem.gui().table("companyorderTable", "Order").convertRowIndexToView(selRow);
             EBISystem.gui().table("companyorderTable", "Order").changeSelection(selRow, 0, false, false);
         }
@@ -760,33 +763,16 @@ public class ControlOrder {
     }
 
     public void dataViewDoc(final int id) {
+        final Iterator iter = this.compOrder.getCompanyorderdocses().iterator();
+        while (iter.hasNext()) {
+            final Companyorderdocs doc = (Companyorderdocs) iter.next();
+            if (id == doc.getOrderdocid()) {
+                final String file = doc.getName().replaceAll(" ", "_");
+                final byte buffer[] = doc.getFiles();
 
-        String FileName;
-        String FileType;
-        OutputStream fos;
-        try {
-
-            final Iterator iter = this.compOrder.getCompanyorderdocses().iterator();
-            while (iter.hasNext()) {
-
-                final Companyorderdocs doc = (Companyorderdocs) iter.next();
-
-                if (id == doc.getOrderdocid()) {
-                    final String file = doc.getName().replaceAll(" ", "_");
-                    final byte buffer[] = doc.getFiles();
-                    FileName = "tmp/" + file;
-                    FileType = file.substring(file.lastIndexOf("."));
-                    fos = new FileOutputStream(FileName);
-                    fos.write(buffer, 0, buffer.length);
-                    fos.close();
-                    EBISystem.getInstance().resolverType(FileName, FileType);
-                    break;
-                }
+                EBISystem.getInstance().writeBlobToTmp(file, buffer);
+                break;
             }
-        } catch (final FileNotFoundException exx) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_FILE_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
-        } catch (final IOException exx1) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_LOADING_FILE")).Show(EBIMessage.INFO_MESSAGE);
         }
     }
 
@@ -813,7 +799,7 @@ public class ControlOrder {
     public void dataShowProduct() {
 
         if (compOrder.getCompanyorderpositionses().size() > 0) {
-            EBISystem.getModule().getOrderPane().getTabModProduct().data 
+            EBISystem.getModule().getOrderPane().getTabModProduct().data
                     = new Object[this.compOrder.getCompanyorderpositionses().size()][9];
 
             final Iterator itr = compOrder.getCompanyorderpositionses().iterator();

@@ -38,6 +38,6 @@ if (iter.hasNext()) {
         }
     }
 }else{
-    system.message.info("Please configure an email account using system settings");
+    system.dialogMessage.info("Please configure an email account using system settings");
 }
 system.hibernate().transaction("EMAIL_SETTINGS").commit();

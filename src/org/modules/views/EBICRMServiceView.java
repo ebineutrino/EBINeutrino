@@ -216,7 +216,7 @@ public class EBICRMServiceView {
 
         EBISystem.gui().table("companyServiceTable", "Service").setMouseCallback(new java.awt.event.MouseAdapter() {
             @Override
-            public void mouseClicked(final java.awt.event.MouseEvent e) {
+            public void mouseReleased(final java.awt.event.MouseEvent e) {
                 if (EBISystem.gui().table("companyServiceTable", "Service").rowAtPoint(e.getPoint()) > -1) {
                     selectedServiceRow = EBISystem.gui().table("companyServiceTable", "Service").convertRowIndexToModel(EBISystem.gui().table("companyServiceTable", "Service").rowAtPoint(e.getPoint()));
                 }

@@ -1,5 +1,6 @@
 package org.core;
 
+import com.sun.net.httpserver.HttpServer;
 import org.modules.EBIModule;
 import org.core.guiRenderer.EBIGUIRenderer;
 import org.core.gui.dialogs.EBISplashScreen;
@@ -27,6 +28,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
 
 /**
  * This program is free software; you can redistribute it and/or modify it under
@@ -59,10 +62,8 @@ public class EBIMain extends JFrame {
     public EBIStatusBar stat = null;
     public JPanel panAllert = null;
     public JScrollPane pallert = null;
-    private final JLabel stName = null;
     public int USER_DELETE_ID = -1;
     public EBIToolbar userSysBar = null;
-
     private EBIModule ebiModule = null;
 
     private String resourceLoggerPath = System.getProperty("user.dir")
@@ -71,9 +72,9 @@ public class EBIMain extends JFrame {
 
     public static void main(final String[] args) throws Exception {
         try {
-            
+
             final EBIMain application = new EBIMain();
-            
+
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -168,7 +169,7 @@ public class EBIMain extends JFrame {
             SwingUtilities.updateComponentTreeUI(this);
 
             EBISystem.getInstance().addMainFrame(this);
-            
+
             splash = new EBISplashScreen();
             PropertyConfigurator.configure(resourceLoggerPath + "config/ebiLogger.config");
             splash.setVisible(true);
@@ -218,7 +219,9 @@ public class EBIMain extends JFrame {
         EBISystem.getInstance().setIEBIModule(ebiModule);
         mng = new EBIModuleHandler(EBIMain.this, ebiModule);
 
-        /********************/
+        /**
+         * *****************
+         */
         // Initialize report system
         new Thread(new Runnable() {
             @Override
@@ -248,6 +251,7 @@ public class EBIMain extends JFrame {
         EBISystem.getInstance().checkIsValidUser("root", "ebineutrino");
         showBusinessModule();
         splash.setVisible(false);
+
     }
 
     private void initialize() {

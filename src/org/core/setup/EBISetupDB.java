@@ -11,8 +11,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * This program is free software; you can redistribute it and/or modify it under
@@ -52,6 +55,7 @@ public class EBISetupDB extends JPanel {
     private JLabel passwordLabel;
     private JLabel spriteIconLabel;
     private JLabel headerTitleLabel;
+
 
     public EBISetupDB(final EBISetup setUp) {
         super();
@@ -200,6 +204,7 @@ public class EBISetupDB extends JPanel {
                         properties.setValue("EBI_Neutrino_Oracle_SID", catalogText.getText().trim());
 
                         EBIExceptionDialog.getInstance(setup, "Database connection data, are saved successfully!").Show(EBIMessage.INFO_MESSAGE);
+                        
                         okButton.setEnabled(true);
                         importSchemaButton.setEnabled(true);
 
@@ -290,9 +295,9 @@ public class EBISetupDB extends JPanel {
 
                         if ("mysql".equals(dbType)) {
                             conn_url = "jdbc:" + dbType + "://" + host
-                                    + "/?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";    
-                        }  
-                        
+                                    + "/?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
+                        }
+
                         conn = DriverManager.getConnection(conn_url, userNameText.getText(), passwordText.getText());
                         EBIExceptionDialog.getInstance(setup, "Connection is ok!").Show(EBIMessage.INFO_MESSAGE);
                         EBISystem.db().setActiveConnection(conn);

@@ -122,9 +122,7 @@ public class EBISchemaImport extends JDialog {
                         catalog = catalog.toLowerCase();
                     }
 
-                    
                     EBISystem.db().execExt("CREATE DATABASE IF NOT EXISTS " + catalog);
-                    
                     EBISystem.db().getActiveConnection().setCatalog(catalog);
                     errorReport.append("\n");
 

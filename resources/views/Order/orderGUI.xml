@@ -18,7 +18,7 @@
         <button name="searchOffer" tabindex="7" Location="250,170" Size="31,25" actionListener="org.modules.views.EBICRMOrderView.searchOffer" icon="find.png"/>
         <button name="showOffer" tabindex="8" title="EBI_LANG_SHOW" Location="286,170" Size="85,27" actionListener="org.modules.views.EBICRMOrderView.showOffer"/>
 
-        <checkbox name="odrPurchase" title="EBI_LANG_PURCHASE" Location="10,212" Size="113,20"/>
+        <label name="odrDescription" title="EBI_LANG_DESCRIPTION" Location="10,212" Size="113,20"/>
         <textarea name="orderDescription" tabindex="10" Location="10,235" Size="364,112"/>
     </panel>
     <panel name="orderDocument" title="EBI_LANG_C_PANEL_DOCUMENT" resizewidth="true" Location="405,7" Size="596,164">

@@ -1,6 +1,5 @@
 package org.core;
 
-import java.io.File;
 import org.core.gui.dialogs.EBISplashScreen;
 import org.core.setup.EBILanguageSetup;
 import org.core.setup.EBISetup;
@@ -14,8 +13,6 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.Set;
 import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 import org.reflections.Reflections;
 
 /**
@@ -30,7 +27,6 @@ public class EBINeutrinoSystemInit extends EBISystem {
     private boolean toReturn;
     private EBISplashScreen splash = null;
 
-
     public EBINeutrinoSystemInit() {
         properties = EBIPropertiesRW.getEBIProperties();
         checkDB();
@@ -41,8 +37,8 @@ public class EBINeutrinoSystemInit extends EBISystem {
         splash = spl;
         checkDB();
     }
-
-    public void checkDB() {
+    
+    public void checkDB(){
         if ((isConfigured = Init(properties.getValue("EBI_Neutrino_Database_Name"))) == false) {
             splash.setVisible(false);
             if (EBIExceptionDialog
@@ -56,17 +52,16 @@ public class EBINeutrinoSystemInit extends EBISystem {
                 application.setResizable(false);
                 application.setVisible(true);
             }
-        } else {
-            if (!splash.isVisible()) {
+        }else{
+            if(!splash.isVisible()){
                 splash.setVisible(true);
-                try {
+                try{
                     EBISystem.getInstance().getMainFrame().initializeTheSystem();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                }catch(Exception ex){ ex.printStackTrace();}
             }
         }
     }
+    
 
     /**
      * Initialize EBI Neutrino Systems
@@ -118,12 +113,21 @@ public class EBINeutrinoSystemInit extends EBISystem {
             EBISystem.db().setAutoCommit(true);
             toReturn = EBISystem.getInstance().fillComboWithUser();
             if (toReturn) {
-
                 //configure hibernate
-               if ("mysql".equals(dbType.toLowerCase())) {
+                if ("apache derby".equals(dbType.toLowerCase())) {
+                    cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");
+                    cfg.setProperty("javax.persistence.jdbc.driver", "org.apache.derby.jdbc.EmbeddedDriver");
+
+                    String jdbcURL = "jdbc:derby:" + data + "://"
+                            + ClassLoader.getSystemResource("database").toURI().toString() + ";create=true";
+                    cfg.setProperty("hibernate.connection.url", jdbcURL);
+
+                } else if ("mysql".equals(dbType.toLowerCase())) {
                     cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");
                     cfg.setProperty("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
                     cfg.setProperty("hibernate.connection.url", "jdbc:mysql://" + EBISystem.host.trim() + ":3306/" + data + "?serverTimezone=UTC");
+                } else if ("oracle".equals(dbType.toLowerCase())) {
+                    cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
                 }
 
                 cfg.setProperty("hibernate.connection.username", user);

@@ -1,5 +1,4 @@
 /
-
     create table if not exists  ACCOUNTSTACK (
         ACSTACKID integer not null auto_increment,
         ACCOUNTNR varchar(255),
@@ -22,9 +21,7 @@
         CHANGEDDATE datetime,
         primary key (ACSTACKID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  ACCOUNTSTACKCD (
         ACCOUNTSTACKCDID integer not null auto_increment,
         ACCOUNTSTACKID integer,
@@ -37,9 +34,7 @@
         CREATEDDATE datetime,
         primary key (ACCOUNTSTACKCDID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  ACCOUNTSTACKDOCS (
         ACCOUNTDOCID integer not null auto_increment,
         ACCOUNTID integer,
@@ -49,9 +44,7 @@
         CREATEDFROM varchar(150),
         primary key (ACCOUNTDOCID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANY (
         COMPANYID integer not null auto_increment,
         COMPANYNUMBER integer,
@@ -77,9 +70,7 @@
         ISACTUAL bit,
         primary key (COMPANYID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYACTIVITIES (
         ACTIVITYID integer not null auto_increment,
         COMPANYID integer,
@@ -102,9 +93,7 @@
         TIMER_EXTRA text,
         primary key (ACTIVITYID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYACTIVITIESDOCS (
         ACTIVITYDOCID integer not null auto_increment,
         ACTIVITYID integer,
@@ -114,25 +103,19 @@
         CREATEDFROM varchar(150),
         primary key (ACTIVITYDOCID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYACTIVITYSTATUS (
         ID integer not null auto_increment,
         NAME varchar(255),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYACTIVITYTYPE (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYADDRESS (
         ADDRESSID integer not null auto_increment,
         COMPANYID integer,
@@ -148,9 +131,7 @@
         CHANGEDDATE datetime,
         primary key (ADDRESSID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYBANK (
         BANKID integer not null auto_increment,
         COMPANYID integer,
@@ -166,25 +147,19 @@
         CHANGEDDATE datetime,
         primary key (BANKID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYCATEGORY (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYCLASSIFICATION (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYCONTACTADDRESS (
         ADDRESSID integer not null auto_increment,
         CONTACTID integer,
@@ -200,9 +175,7 @@
         CHANGEDDATE datetime,
         primary key (ADDRESSID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYCONTACTS (
         CONTACTID integer not null auto_increment,
         COMPANYID integer not null,
@@ -225,17 +198,13 @@
         CHANGEDDATE datetime,
         primary key (CONTACTID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYCOOPERATION (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYHIRARCHIE (
         HIERARCHIEID integer not null auto_increment,
         COMPANYID integer,
@@ -248,9 +217,7 @@
         CHANGEDDATE datetime,
         primary key (HIERARCHIEID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYMEETINGCONTACTS (
         MEETINGCONTACTID integer not null auto_increment,
         MEETINGID integer,
@@ -277,9 +244,7 @@
         CHANGEDDATE datetime,
         primary key (MEETINGCONTACTID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYMEETINGDOC (
         MEETINGDOCID integer not null auto_increment,
         MEETINGID integer,
@@ -289,9 +254,7 @@
         CREATEDFROM varchar(150),
         primary key (MEETINGDOCID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYMEETINGPROTOCOL (
         MEETINGPROTOCOLID integer not null auto_increment,
         COMPANYID integer,
@@ -305,17 +268,13 @@
         CHANGEDDATE datetime,
         primary key (MEETINGPROTOCOLID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYMEETINGTYPE (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYNUMBER (
         ID integer not null auto_increment,
         CATEGORYID integer,
@@ -325,9 +284,7 @@
         NUMBERTO integer,
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOFFER (
         OFFERID integer not null auto_increment,
         COMPANYID integer,
@@ -346,9 +303,7 @@
         CHANGEDDATE datetime,
         primary key (OFFERID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOFFERDOCS (
         OFFERDOCID integer not null auto_increment,
         OFFERID integer,
@@ -358,9 +313,7 @@
         CREATEDFROM varchar(150),
         primary key (OFFERDOCID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOFFERPOSITIONS (
         POSITIONID integer not null auto_increment,
         OFFERID integer,
@@ -381,9 +334,7 @@
         CHANGEDFROM varchar(150),
         primary key (POSITIONID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOFFERRECEIVER (
         RECEIVERID integer not null auto_increment,
         OFFERID integer,
@@ -406,17 +357,13 @@
         NAME varchar(150),
         primary key (RECEIVERID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOFFERSTATUS (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOPPORTUNITY (
         OPPORTUNITYID integer not null auto_increment,
         COMPANYID integer,
@@ -441,25 +388,19 @@
         CHANGEDDATE datetime,
         primary key (OPPORTUNITYID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOPPORTUNITYBGSTATUS (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOPPORTUNITYBUSTYP (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOPPORTUNITYCONTACT (
         OPPORTUNITYCONTACTID integer not null auto_increment,
         OPPORTUNITYID integer,
@@ -486,33 +427,25 @@
         CHANGEDDATE datetime,
         primary key (OPPORTUNITYCONTACTID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOPPORTUNITYEVSTATUS (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOPPORTUNITYSSTAGE (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOPPORTUNITYSTATUS (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYOPPORUNITYDOCS (
         DOCID integer not null auto_increment,
         OPPORTUNITYID integer,
@@ -522,9 +455,7 @@
         CREATEDFROM varchar(150),
         primary key (DOCID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYORDER (
         ORDERID integer not null auto_increment,
         COMPANYID integer,
@@ -544,9 +475,7 @@
         CHANGEDDATE datetime,
         primary key (ORDERID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYORDERDOCS (
         ORDERDOCID integer not null auto_increment,
         ORDERID integer,
@@ -556,9 +485,7 @@
         CREATEDDATE datetime,
         primary key (ORDERDOCID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYORDERPOSITIONS (
         POSITIONID integer not null auto_increment,
         ORDERID integer,
@@ -579,9 +506,7 @@
         CHANGEDFROM varchar(150),
         primary key (POSITIONID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYORDERRECEIVER (
         RECEIVERID integer not null auto_increment,
         ORDERID integer,
@@ -606,9 +531,7 @@
         CHANGEDDATE datetime,
         primary key (RECEIVERID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYORDERSTATUS (
         ID integer not null auto_increment,
         NAME varchar(150),
@@ -675,9 +598,7 @@
         CREATEDDATE datetime,
         primary key (SERVICEDOCID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYSERVICEPOSITIONS (
         POSITIONID integer not null auto_increment,
         SERVICEID integer,
@@ -698,9 +619,7 @@
         CHANGEDFROM varchar(150),
         primary key (POSITIONID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYSERVICEPSOL (
         PROSOLID integer not null auto_increment,
         SERVICEID integer,
@@ -717,32 +636,25 @@
         CHANGEDDATE datetime,
         primary key (PROSOLID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYSERVICESTATUS (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  COMPANYSERVICETYPE (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
     create table if not exists  CRMADDRESSTYPE (
         ID integer not null auto_increment,
         NAME varchar(150),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  CRMCALENDAR (
         CALENDARID integer not null auto_increment,
         CUSER varchar(150),
@@ -754,9 +666,7 @@
         CICON longblob,
         primary key (CALENDARID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  CRMCAMPAIGN (
         CAMPAIGNID integer not null auto_increment,
         CAMPAIGNNR varchar(255),
@@ -770,9 +680,7 @@
         VALIDTO datetime,
         primary key (CAMPAIGNID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  CRMCAMPAIGNDOCS (
         DOCID integer not null auto_increment,
         CAMPAIGNID integer,
@@ -782,9 +690,7 @@
         CREATEDFROM varchar(150),
         primary key (DOCID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
 /
-
     create table if not exists  CRMCAMPAIGNPOSITION (
         POSITIONID integer not null auto_increment,
         CAMPAIGNID integer,
@@ -1313,8 +1219,8 @@
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 /
     alter table ACCOUNTSTACKDOCS 
-        add index FKA2D1D936EDEA7D2 (ACCOUNTID),
-        add constraint FKA2D1D936EDEA7D2
+        add index FKA2D1D936EDEA7D2 (ACCOUNTID), 
+        add constraint FKA2D1D936EDEA7D2 
         foreign key (ACCOUNTID) 
         references ACCOUNTSTACK (ACSTACKID) ON DELETE CASCADE ON UPDATE CASCADE;
 /

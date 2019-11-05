@@ -1,6 +1,5 @@
 package org.core;
 
-import java.io.File;
 import org.core.database.DBCALLBACK;
 import org.core.database.TABLE;
 import org.sdk.EBISystem;
@@ -11,8 +10,6 @@ import org.sdk.interfaces.IEBIDatabase;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Iterator;
-import lombok.Getter;
-import lombok.Setter;
 
 public class EBIDatabase implements IEBIDatabase {
 
@@ -28,7 +25,7 @@ public class EBIDatabase implements IEBIDatabase {
     public static String UPDATE = "UPDATE";
     public static String DELETE = "DELETE";
     public static String SELECT = "SELECT";
-   
+
     /**
      * connect to a database system
      *
@@ -62,12 +59,14 @@ public class EBIDatabase implements IEBIDatabase {
                         + "&interactiveClient=true&reconnectAtTxEnd=true&autoReconnect=true&tcpKeepAlive=true"
                         + "&characterEncoding=utf8&jdbcCompliantTruncation=false&zeroDateTimeBehavior=round&serverTimezone=UTC";
 
+            } else if ("oracle".equals(dbType)) {
+                connectionUrl = "jdbc:" + dbType + ":thin:@" + host + ":" + SID.trim();
             } else {
                 return false;
             }
             
             conn = DriverManager.getConnection(connectionUrl, this.user, this.password);
-            conn.setCatalog(db.trim());
+
         } catch (final SQLException ex) {
             ex.printStackTrace();
             EBISystem.logger.error("Error connection to the database", ex.fillInStackTrace());

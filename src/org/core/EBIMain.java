@@ -59,7 +59,6 @@ public class EBIMain extends JFrame {
     public EBIStatusBar stat = null;
     public JPanel panAllert = null;
     public JScrollPane pallert = null;
-    private final JLabel stName = null;
     public int USER_DELETE_ID = -1;
     public EBIToolbar userSysBar = null;
 

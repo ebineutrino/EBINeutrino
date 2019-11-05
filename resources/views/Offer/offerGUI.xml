@@ -17,7 +17,8 @@
         <button name="searchOpportunity" tabindex="7" Location="250,170" Size="31,25" actionListener="org.modules.views.EBICRMOfferView.searchOpportunity" icon="find.png"/>
         <button name="showOpportunity" tabindex="8" title="EBI_LANG_SHOW" Location="283,170" Size="90,27" actionListener="org.modules.views.EBICRMOfferView.showOpportunity"/>
 
-        <label name="offerDescription" title="EBI_LANG_DESCRIPTION" Location="10,212" Size="113,20"/>
+        <checkbox name="offerPurchase" title="EBI_LANG_PURCHASE" Location="10,212" Size="113,20"/>
+        
         <textarea name="offerDescriptionText" tabindex="10" Location="10,235" Size="366,112"/>
     </panel>
     <panel name="offerDocument" title="EBI_LANG_C_PANEL_DOCUMENT" resizewidth="true" Location="406,7" Size="482,170">

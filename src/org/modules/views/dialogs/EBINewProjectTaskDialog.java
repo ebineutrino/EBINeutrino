@@ -129,7 +129,6 @@ public class EBINewProjectTaskDialog implements ChangeListener {
             public void actionPerformed(final ActionEvent event) {
                 final EBIDialogProperties properties = new EBIDialogProperties(projectTask, null, true);
                 properties.setVisible();
-
             }
         });
 

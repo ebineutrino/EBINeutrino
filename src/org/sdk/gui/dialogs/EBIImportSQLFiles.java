@@ -119,7 +119,7 @@ public class EBIImportSQLFiles extends EBIDialogExt {
                             line = iter.next();
                             if (line.endsWith(";")) {
                                 if (!EBISystem.getInstance().iDB().exec(tmp + line)) {
-                                    return;
+                                    continue;
                                 }
                                 tmp = "";
                             } else {

@@ -20,7 +20,7 @@ public class ModelReceiver extends AbstractTableModel {
         EBISystem.i18n("EBI_LANG_EMAIL")
     };
 
-    public Object[][] data = {{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", "", "",""}};
+    public Object[][] data = {{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", "", "","",""}};
 
     public ModelReceiver() {}
 

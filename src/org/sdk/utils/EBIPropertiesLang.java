@@ -4,7 +4,6 @@ import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
 
 import java.io.*;
-import java.net.URL;
 import java.util.Properties;
 
 /**

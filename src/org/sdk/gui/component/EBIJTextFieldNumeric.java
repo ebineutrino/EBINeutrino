@@ -17,6 +17,10 @@ public class EBIJTextFieldNumeric extends PlainDocument {
     public static final String FLOAT = NUMERIC + ",.";
     public static final String NUMERIC_MINUS = NUMERIC + "-";
     public static final String ALPHA_NUMERIC = ALPHA + NUMERIC;
+    public static final String PHONE = NUMERIC + "+"+" ";
+    public static final String EMAIL = ALPHA_NUMERIC + "@";
+    public static final String HOUR = NUMERIC;
+    public static final String MINUTE = NUMERIC;
     protected String acceptedChars = null;
     protected boolean negativeAccepted = false;
     public static String actualString = "";
@@ -26,7 +30,7 @@ public class EBIJTextFieldNumeric extends PlainDocument {
     }
 
     public EBIJTextFieldNumeric(final String acceptedchars) {
-        acceptedChars = acceptedchars;
+        acceptedChars = acceptedchars;    
     }
 
     public void setNegativeAccepted(final boolean negativeaccepted) {
@@ -49,6 +53,27 @@ public class EBIJTextFieldNumeric extends PlainDocument {
 
         if (str == null) {
             return;
+        }
+        
+        if(acceptedChars.equals(HOUR) || acceptedChars.equals(MINUTE)){
+            String partialStr = this.getText(0, offset);
+            if(partialStr.length() > 1){
+                return;
+            }
+        }
+        
+        if(acceptedChars.equals(PHONE)){
+            String partialStr = this.getText(0, offset);
+            partialStr += str;
+            if(partialStr.contains("+") && partialStr.indexOf("+") > 0){
+                return;
+            }
+        }
+        
+        if(acceptedChars.equals(EMAIL)){
+            if(this.getText(0, offset).indexOf("@") == -1){
+                return;
+            }
         }
 
         if (acceptedChars.equals(UPPERCASE)) {

@@ -39,7 +39,9 @@ public class EBIDatabase implements IEBIDatabase {
      * @return
      */
     @Override
-    public boolean connect(final String driver, final String host, String db, final String password, final String user, final String dbType, final String SID, final String toUpper) {
+    public boolean connect(final String driver, final String host,
+                                 String db, final String password, final String user,
+                                 final String dbType, final String SID, final String toUpper) {
         try {
             this.user = user.trim();
             this.password = password.trim();
@@ -173,7 +175,9 @@ public class EBIDatabase implements IEBIDatabase {
      * @return void
      */
     @Override
-    public TABLE ebiSQL(final String Table, final String Type, final HashMap<String, Object> fields, final HashMap<String, Object> where, final DBCALLBACK dbclb) {
+    public TABLE ebiSQL(final String Table, final String Type, 
+            final HashMap<String, Object> fields, 
+            final HashMap<String, Object> where, final DBCALLBACK dbclb) {
 
         TABLE table = null;
 

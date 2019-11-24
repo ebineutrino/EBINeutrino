@@ -7,7 +7,6 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
-
 public class PrintUtilities implements Printable {
 
     private final Component componentToBePrinted;
@@ -25,14 +24,14 @@ public class PrintUtilities implements Printable {
         printJob.setPrintable(this);
         if (printJob.printDialog())
             try {
-                printJob.print();
-            } catch(final PrinterException pe) {
-                System.out.println("Error printing: " + pe);
-            }
+            printJob.print();
+        } catch (final PrinterException pe) {
+            System.out.println("Error printing: " + pe);
+        }
     }
 
     @Override
-	public int print(final Graphics g, final PageFormat pf, final int pageIndex) {
+    public int print(final Graphics g, final PageFormat pf, final int pageIndex) {
 
         pf.setOrientation(PageFormat.LANDSCAPE);
 
@@ -79,6 +78,4 @@ public class PrintUtilities implements Printable {
         final RepaintManager currentManager = RepaintManager.currentManager(c);
         currentManager.setDoubleBufferingEnabled(true);
     }
-
-
 }

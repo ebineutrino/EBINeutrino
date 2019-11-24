@@ -279,6 +279,41 @@ public class EBICRMAccountStackView {
             EBISystem.gui().table("debCreditTable", "Account").setModel(creditDebitMod);
             EBISystem.gui().table("accountTable", "Account").setModel(tabModAccount);
             EBISystem.gui().table("tableAccountDoc", "Account").setModel(tabModDoc);
+
+            try {
+                if (!"null".equals(EBISystem.properties().getValue("SELECTED_ACCOUNTYEAR_TEXT")) && !"".equals(EBISystem.properties().getValue("SELECTED_ACCOUNTYEAR_TEXT"))) {
+                    EBISystem.gui().combo("invoiceYearText", "Account").setSelectedItem(EBISystem.properties().getValue("SELECTED_ACCOUNTYEAR_TEXT"));
+                    dataControlAccount.dataShow(EBISystem.properties().getValue("SELECTED_ACCOUNTYEAR_TEXT"), -1);
+                } else {
+                    dataControlAccount.dataShow("", -1);
+                }
+
+                if (!"null".equals(EBISystem.properties().getValue("ACCOUNTYEAR_TEXT"))
+                        && !"".equals(EBISystem.properties().getValue("ACCOUNTYEAR_TEXT"))) {
+
+                    final String[] years = EBISystem.properties().getValue("ACCOUNTYEAR_TEXT").split(",");
+                    if (years != null) {
+                        for (int i = 0; i < years.length; i++) {
+                            if (years[i] != null) {
+                                EBISystem.gui().combo("invoiceYearText", "Account").insertItemAt(years[i], i);
+                            }
+                        }
+                    }
+                }
+            } catch (final Exception e) {
+                e.printStackTrace();
+            }
+
+            for (int i = 0; i < EBISystem.gui().table("debCreditTable", "Account").getColumnCount(); i++) {
+                final TableColumnExt col = EBISystem.gui().table("debCreditTable", "Account").getColumnExt(i);
+                if (i != 1) {
+                    col.setWidth(40);
+                    col.setPreferredWidth(40);
+                } else {
+                    col.setWidth(500);
+                    col.setPreferredWidth(500);
+                }
+            }
         }
 
         EBISystem.hibernate().openHibernateSession("EBIACCOUNT_SESSION");
@@ -335,47 +370,11 @@ public class EBICRMAccountStackView {
         EBISystem.gui().FormattedField("creditCal", "Account").setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(taxFormat)));
         EBISystem.gui().FormattedField("creditCal", "Account").setHorizontalAlignment(SwingConstants.RIGHT);
         EBISystem.gui().FormattedField("creditCal", "Account").setEditable(false);
-
-        try {
-            if (!"null".equals(EBISystem.properties().getValue("SELECTED_ACCOUNTYEAR_TEXT")) && !"".equals(EBISystem.properties().getValue("SELECTED_ACCOUNTYEAR_TEXT"))) {
-                EBISystem.gui().combo("invoiceYearText", "Account").setSelectedItem(EBISystem.properties().getValue("SELECTED_ACCOUNTYEAR_TEXT"));
-                dataControlAccount.dataShow(EBISystem.properties().getValue("SELECTED_ACCOUNTYEAR_TEXT"), -1);
-            } else {
-                dataControlAccount.dataShow("", -1);
-            }
-
-            if (!"null".equals(EBISystem.properties().getValue("ACCOUNTYEAR_TEXT")) 
-                    && !"".equals(EBISystem.properties().getValue("ACCOUNTYEAR_TEXT"))) {
-
-                final String[] years = EBISystem.properties().getValue("ACCOUNTYEAR_TEXT").split(",");
-                if (years != null) {
-                    for (int i = 0; i < years.length; i++) {
-                        if (years[i] != null) {
-                            EBISystem.gui().combo("invoiceYearText", "Account").insertItemAt(years[i], i);
-                        }
-                    }
-                }
-            }
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-
-        for (int i = 0; i < EBISystem.gui().table("debCreditTable", "Account").getColumnCount(); i++) {
-            final TableColumnExt col = EBISystem.gui().table("debCreditTable", "Account").getColumnExt(i);
-            if (i != 1) {
-                col.setWidth(40);
-                col.setPreferredWidth(40);
-            } else {
-                col.setWidth(500);
-                col.setPreferredWidth(500);
-            }
-        }
     }
 
     public void showAccountReport() {
         dataControlAccount.dataShowReport();
     }
-
 
     public boolean saveAccount() {
         if (!validateInput()) {

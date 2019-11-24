@@ -94,6 +94,7 @@ $F{NETAMOUNT} * $F{QUANTITY}]]></variableExpression>
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="10" y="10" width="297" height="69"/>
+				<imageExpression class="java.lang.String"><![CDATA[System.getProperty("user.dir")+"/resources/images/logo.gif"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="571" y="61" width="207" height="18"/>

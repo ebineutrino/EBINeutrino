@@ -57,6 +57,7 @@ public class ControlOrder {
             compOrder.setDescription(EBISystem.gui().textArea("orderDescription", "Order").getText());
             compOrder.setOrdernr(EBISystem.gui().textField("orderNrText", "Order").getText());
             compOrder.setName(EBISystem.gui().textField("orderNameText", "Order").getText());
+            compOrder.setIsrecieved(EBISystem.gui().getCheckBox("ordPurchase", "Order").isSelected());
 
             if (!"".equals(EBISystem.gui().textField("orderOfferText", "Order").getText())) {
                 compOrder.setOfferid(offerID);
@@ -271,6 +272,8 @@ public class ControlOrder {
             EBISystem.gui().textField("orderNameText", "Order").setText(compOrder.getName());
             EBISystem.gui().textField("orderNrText", "Order").setText(compOrder.getOrdernr() == null ? "" : compOrder.getOrdernr());
 
+            EBISystem.gui().getCheckBox("ordPurchase", "order").setSelected(compOrder.getIsrecieved() != null ? compOrder.getIsrecieved() : false);
+            
             if (compOrder.getStatus() != null) {
                 EBISystem.gui().combo("orderStatusText", "Order").setSelectedItem(compOrder.getStatus());
             }
@@ -280,8 +283,8 @@ public class ControlOrder {
             }
 
             EBISystem.gui().textArea("orderDescription", "Order").setText(compOrder.getDescription());
-
             EBISystem.getInstance().getDataStore("Order", "ebiEdit");
+
         } else {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
         }

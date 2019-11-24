@@ -85,6 +85,7 @@ where camp.CAMPAIGNID = $P{ID} and campro.CAMPAIGNID = camp.CAMPAIGNID and pro.P
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="13" y="0" width="297" height="69"/>
+				<imageExpression class="java.lang.String"><![CDATA[System.getProperty("user.dir")+"/resources/images/logo.gif"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="13" y="72" width="677" height="1" forecolor="#CCCCCC"/>

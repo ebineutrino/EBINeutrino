@@ -67,7 +67,7 @@ public class EBIMain extends JFrame {
     private String resourceLoggerPath = System.getProperty("user.dir")
             + File.separator + "resources"
             + File.separator;
-
+    
     public static void main(final String[] args) throws Exception {
         try {
             

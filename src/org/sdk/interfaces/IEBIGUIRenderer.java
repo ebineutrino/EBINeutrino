@@ -23,9 +23,7 @@ public interface IEBIGUIRenderer {
 
     void addUndoManager(Document doc, JComponent comp);
 
-    void loadGUI(String path);
-
-    String loadGUIPlus(String path);
+    String loadGUI(String path);
 
     void loadProject(String path);
 

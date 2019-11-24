@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
+import org.sdk.gui.component.EBIJTextFieldNumeric;
 
 public class EBICRMContactView {
 
@@ -36,6 +37,11 @@ public class EBICRMContactView {
     private int selectedAddressRow = -1;
 
     public void initializeAction() {
+        
+        EBISystem.gui().textField("telefonText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
+        EBISystem.gui().textField("faxText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
+        EBISystem.gui().textField("mobileText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
+        EBISystem.gui().textField("emailText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.EMAIL));
 
         EBISystem.gui().textField("filterTableText", "Contact").addKeyListener(new KeyListener() {
             @Override

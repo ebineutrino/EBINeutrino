@@ -23,6 +23,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import lombok.Getter;
 import lombok.Setter;
+import org.sdk.gui.component.EBIJTextFieldNumeric;
+import org.sdk.utils.JTextFieldLimit;
 
 public class EBICRMCompanyActivityView implements ChangeListener {
 
@@ -48,6 +50,11 @@ public class EBICRMCompanyActivityView implements ChangeListener {
 
     public void initializeAction() {
 
+        
+        EBISystem.gui().textField("dueH", "Activity").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.HOUR));
+        EBISystem.gui().textField("dueMin", "Activity").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.MINUTE));
+        
+        
         EBISystem.gui().getPanel("colorPanel", "Activity").setOpaque(true);
         EBISystem.gui().combo("timerStartText", "Activity").
                 setModel(new DefaultComboBoxModel(new String[]{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"),
@@ -206,8 +213,8 @@ public class EBICRMCompanyActivityView implements ChangeListener {
         EBISystem.gui().combo("activityStatusText", "Activity").setSelectedIndex(0);
         EBISystem.gui().combo("activityTypeText", "Activity").setSelectedIndex(0);
 
-        EBISystem.gui().getSpinner("dueH", "Activity").setValue(0);
-        EBISystem.gui().getSpinner("dueMin", "Activity").setValue(0);
+        EBISystem.gui().textField("dueH", "Activity").setText("");
+        EBISystem.gui().textField("dueMin", "Activity").setText("");
         EBISystem.gui().textField("durationText", "Activity").setText("");
 
         EBISystem.gui().getPanel("colorPanel", "Activity").setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));

@@ -75,7 +75,7 @@ public class ControlPlanning {
 			 * project.setRemaincost(Double.parseDouble(EBISystem.getGUIRenderer().
 			 * getFormattedTextfield("remainingCost","Project").getValue().toString())); }
              */
-            EBISystem.hibernate().session("EBIPROJECT_SESSION").saveOrUpdate(project);
+            
 
             if (!project.getCrmprojecttasks().isEmpty()) {
                 final Iterator iter = project.getCrmprojecttasks().iterator();
@@ -96,7 +96,7 @@ public class ControlPlanning {
                                 cost.setCostid(null);
                             }
                             cost.setCrmprojecttask(task);
-                            EBISystem.hibernate().session("EBIPROJECT_SESSION").saveOrUpdate(cost);
+                            //EBISystem.hibernate().session("EBIPROJECT_SESSION").saveOrUpdate(cost);
                         }
                     }
 
@@ -108,17 +108,20 @@ public class ControlPlanning {
                                 prop.setPropertiesid(null);
                             }
                             prop.setCrmprojecttask(task);
-                            EBISystem.hibernate().session("EBIPROJECT_SESSION").saveOrUpdate(prop);
+                            //EBISystem.hibernate().session("EBIPROJECT_SESSION").saveOrUpdate(prop);
                         }
                     }
                 }
             }
-
+            
+            EBISystem.hibernate().session("EBIPROJECT_SESSION").saveOrUpdate(project);
             EBISystem.getInstance().getDataStore("Project", "ebiSave");
             EBISystem.hibernate().transaction("EBIPROJECT_SESSION").commit();
+            
             if (!isEdit) {
                 EBISystem.gui().vpanel("Project").setID(project.getProjectid());
             }
+            
             plannID = project.getProjectid();
         } catch (final Exception e) {
             e.printStackTrace();
@@ -348,7 +351,8 @@ public class ControlPlanning {
         int selRow = EBISystem.gui().table("projectTable", "Project").getSelectedRow() + id;
 
         try {
-            query = EBISystem.hibernate().session("EBIPROJECT_SESSION").createQuery("from Crmproject order by createddate desc ");
+             EBISystem.hibernate().transaction("EBIPROJECT_SESSION").begin();
+            query = EBISystem.hibernate().session("EBIPROJECT_SESSION").createQuery("from Crmproject order by createddate desc "); 
             final Iterator iter = query.iterate();
 
             final EBIAbstractTableModel tabMod = (EBIAbstractTableModel) EBISystem.gui().table("projectTable", "Project").getModel();
@@ -380,6 +384,7 @@ public class ControlPlanning {
                 tabMod.data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", ""}};
             }
             tabMod.fireTableDataChanged();
+            EBISystem.hibernate().transaction("EBIPROJECT_SESSION").begin();
         } catch (final HibernateException e) {
             e.printStackTrace();
         } catch (final Exception e) {

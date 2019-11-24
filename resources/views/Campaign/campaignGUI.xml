@@ -13,7 +13,7 @@
         <label name="campainValidTo" title="EBI_LANG_VALID_TO" Location="10,140" Size="113,25"/>
         <timepicker name="campaingValidToText" tabindex="5" Location="125,140" Size="245,25"/>
 
-        <button name="newCampaingProperties" Location="9,203" Size="31,27" actionListener="org.modules.views.EBICRMCampaignView" icon="new.png"/>
+        <button name="newCampaingProperties" Location="9,203" Size="31,27" actionListener="org.modules.views.EBICRMCampaignView.newCampaignProperties" icon="new.png"/>
         <button name="editCampaingProperties" Location="45,203" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMCampaignView.editCampaignProperties" icon="edit.png"/>
         <button name="deleteCampaingProperties" Location="82,203" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMCampaignView.deleteCampaignProperties" icon="delete.png"/>
 

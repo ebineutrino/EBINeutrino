@@ -16,33 +16,33 @@ public class EBIAllertTimerDialog {
 
     private int companyId = 0;
     private int activityId = 0;
-    public String guiSerialID = "";
+    public String nameSpace = "";
 
     public EBIAllertTimerDialog() {
-        guiSerialID = EBISystem.gui().loadGUIPlus("CRMDialog/timerDialog.xml");
+        nameSpace = EBISystem.gui().loadGUI("CRMDialog/timerDialog.xml");
         initializeAction();
     }
 
-    public void setVisible(final int actId, final int compId, final String taskName, final Date dueDate, final int duration, final String message) {
-
+    public void setVisible(final int actId, final int compId, final String taskName,
+                        final Date dueDate, final int duration, final String message) {
         final SimpleDateFormat formatter = new SimpleDateFormat("d.M.y HH:mm ");
         companyId = compId;
         activityId = actId;
-        EBISystem.gui().textArea("messageViewText", guiSerialID).setText(taskName + "\n" + formatter.format(dueDate) + EBISystem.i18n("EBI_LANG_DURATION") + " " + duration + " Min \n\n" + message);
-        EBISystem.gui().label("pictureAlert", guiSerialID).setIcon(new ImageIcon("images/Warning.png"));
+        EBISystem.gui().textArea("messageViewText", nameSpace).setText(taskName + "\n" + formatter.format(dueDate) + EBISystem.i18n("EBI_LANG_DURATION") + " " + duration + " Min \n\n" + message);
+        EBISystem.gui().label("pictureAlert", nameSpace).setIcon(EBISystem.getInstance().getIconResource("Warning.png"));
         EBISystem.gui().showGUI();
     }
 
     public void initializeAction() {
-        EBISystem.gui().dialog(guiSerialID).setHaveSerial(true);
-        EBISystem.gui().button("closeDialog", guiSerialID).addActionListener(new ActionListener() {
+        EBISystem.gui().dialog(nameSpace).setHaveSerial(true);
+        EBISystem.gui().button("closeDialog", nameSpace).addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(final ActionEvent e) {
                 setActionforDialog();
             }
         });
 
-        EBISystem.gui().button("openTask", guiSerialID).addActionListener(new ActionListener() {
+        EBISystem.gui().button("openTask", nameSpace).addActionListener(new ActionListener() {
 
             @Override
 			public void actionPerformed(final ActionEvent e) {
@@ -78,7 +78,7 @@ public class EBIAllertTimerDialog {
     }
 
     private void setActionforDialog() {
-        if (EBISystem.gui().getCheckBox("setAsDone", guiSerialID).isSelected()) {
+        if (EBISystem.gui().getCheckBox("setAsDone", nameSpace).isSelected()) {
             try {
                 EBISystem.getInstance().iDB().exec("UPDATE COMPANYACTIVITIES SET TIMERDISABLED=1 WHERE ACTIVITYID=" + activityId);
             } catch (final SQLException e) {
@@ -88,6 +88,6 @@ public class EBIAllertTimerDialog {
 
             EBISystem.getModule().allertTimer.setUpAvailableTimer();
         }
-        EBISystem.gui().dialog(guiSerialID).setVisible(false);
+        EBISystem.gui().dialog(nameSpace).setVisible(false);
     }
 }

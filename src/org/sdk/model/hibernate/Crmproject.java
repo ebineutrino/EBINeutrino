@@ -229,7 +229,7 @@ public class Crmproject implements Serializable {
 
     @Override
     public String toString() {
-        return "ebiNeutrinoSDK.model.hibernate.Crmproject[ projectid=" + projectid + " ]";
+        return "org.sdk.model.hibernate.Crmproject[ projectid=" + projectid + " ]";
     }
     
 }

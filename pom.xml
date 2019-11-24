@@ -59,13 +59,13 @@
                   </goals>
                   <configuration>
                     <outputDirectory>${project.build.directory}/EBINeutrino/resources</outputDirectory>
-                    <resources>          
+                    <resources>
                       <resource>
                         <directory>resources</directory>
                         <filtering>true</filtering>
                       </resource>
                     </resources>              
-                  </configuration>            
+                  </configuration>
                 </execution>
               </executions>
             </plugin>

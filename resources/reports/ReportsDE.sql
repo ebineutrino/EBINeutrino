@@ -1,3 +1,5 @@
+DELETE FROM SET_REPORTFORMODULE;
+
 INSERT INTO `SET_REPORTFORMODULE` (`IDREPORTFORMODULE`, `REPORTNAME`, `REPORTCATEGORY`, `REPORTFILENAME`, `REPORTDATE`, `SHOWASPDF`, `SHOWASWINDOW`, `PRINTAUTO`, `ISACTIVE`) VALUES
 (1, 'Firmen Aktiviteat Anzeigen', '0', 'showActivityTODOReport.jasper', '2011-09-15 00:00:00', b'0', b'1', NULL, b'1'),
 (2, 'Alle Aktiviteaten Anzeigen', '0', 'ShowAllactivityTODOReport.jasper', '2011-09-15 00:00:00', b'0', b'1', NULL, b'1'),

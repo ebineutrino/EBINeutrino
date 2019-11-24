@@ -190,8 +190,10 @@ public class EBISetupDB extends JPanel {
                         final String Usrencrypted = encrypter.encrypt(userNameText.getText().trim());
 
                         final EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
+                        
                         properties.setValue("EBI_Neutrino_Database_Driver", databaseDriverCombo.getSelectedItem().toString());
                         properties.setValue("EBI_Neutrino_Database", databaseTypeText.getSelectedItem().toString().trim());
+                        
                         properties.setValue("EBI_Neutrino_Database_UpperCase", "yes");
                         properties.setValue("EBI_Neutrino_Database_Name", catalogText.getText().trim());
                         properties.setValue("EBI_Neutrino_Password", Pwdencrypted);

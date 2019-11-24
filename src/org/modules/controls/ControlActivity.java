@@ -66,8 +66,8 @@ public class ControlActivity {
             if (EBISystem.gui().timePicker("activityTODOText", "Activity").getDate() != null) {
                 final Calendar eDate = new GregorianCalendar();
                 eDate.setTime(EBISystem.gui().timePicker("activityTODOText", "Activity").getDate());
-                eDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(EBISystem.gui().getSpinner("dueH", "Activity").getValue().toString()));
-                eDate.set(Calendar.MINUTE, Integer.parseInt(EBISystem.gui().getSpinner("dueMin", "Activity").getValue().toString()));
+                eDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(EBISystem.gui().textField("dueH", "Activity").getText()));
+                eDate.set(Calendar.MINUTE, Integer.parseInt(EBISystem.gui().textField("dueMin", "Activity").getText()));
                 eDate.set(Calendar.SECOND, 0);
                 eDate.set(Calendar.MILLISECOND, 0);
                 companyActivity.setDuedate(eDate.getTime());
@@ -235,8 +235,8 @@ public class ControlActivity {
             startDate.set(Calendar.SECOND, 0);
             startDate.set(Calendar.MILLISECOND, 0);
 
-            EBISystem.gui().getSpinner("dueH", "Activity").setValue(startDate.get(Calendar.HOUR_OF_DAY));
-            EBISystem.gui().getSpinner("dueMin", "Activity").setValue(startDate.get(Calendar.MINUTE));
+            EBISystem.gui().textField("dueH", "Activity").setText(String.valueOf(startDate.get(Calendar.HOUR_OF_DAY)));
+            EBISystem.gui().textField("dueMin", "Activity").setText(String.valueOf(startDate.get(Calendar.MINUTE)));
 
             if (companyActivity.getActivitytype() != null) {
                 EBISystem.gui().combo("activityTypeText", "Activity").setSelectedItem(companyActivity.getActivitytype());

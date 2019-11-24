@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import org.sdk.gui.component.EBIJTextFieldNumeric;
 
 public class EBICRMCompanyView {
 
@@ -33,6 +34,11 @@ public class EBICRMCompanyView {
     public void initializeAction() {
         tabModel = new ModelCRMAddress();
         ctabModel = new ModelCRMContact();
+
+        EBISystem.gui().textField("telephoneText", "Company").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
+        EBISystem.gui().textField("faxText", "Company").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
+        EBISystem.gui().textField("emailText", "Company").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.EMAIL));
+
         //Configure contact table
         EBISystem.gui().table("companyTableContactViewX", "Company").setModel(ctabModel);
         EBISystem.gui().table("companyTableContactViewX", "Company").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

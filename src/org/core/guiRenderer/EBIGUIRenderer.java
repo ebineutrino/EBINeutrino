@@ -164,57 +164,15 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     }
 
     @Override
-    public final void loadGUI(final String path) {
+    public final String loadGUI(final String path) {
         if (EBISystem.getUserRight().isAdministrator()) {
             loadGUIExt("views/" + path);
             canShow = true;
         } else if (EBISystem.registeredModule.contains(path)) {
             loadGUIExt("views/" + path);
-            canShow = true;
-        }
-    }
-
-    @Override
-    public final String loadGUIPlus(final String path) {
-        if (EBISystem.getUserRight().isAdministrator()) {
-            loadGUIExtPlus(path);
-            canShow = true;
-        } else if (EBISystem.registeredModule.contains(path)) {
-            loadGUIExtPlus(path);
             canShow = true;
         }
         return componentNamespace;
-    }
-
-    public final void loadGUIExtPlus(final String path) {
-
-        componentNamespace = "";
-
-        final EBIXMLGUIReader xmlGui = new EBIXMLGUIReader();
-        xmlGui.setXmlPath(path);
-
-        if (xmlGui.loadXMLGUI()) {
-            componentNamespace = "" + (new Date().getTime());
-
-            if (!isInit) {
-                removeGUIObject(componentNamespace);
-            }
-
-            focusTraversal = new EBIFocusTraversalPolicy();
-            componentsTable.put(componentNamespace, xmlGui.getCompObjects());
-
-            final List<Object> toResize = new ArrayList<Object>();
-            resizeContainer.put(componentNamespace, toResize);
-
-            if (!"ebibar".equals(xmlGui.getCompObjects().getType().toLowerCase())) {
-                renderGUI(null, null);
-                if (xmlGui.getCompObjects().getType().toLowerCase().equals("visualpanel")) {
-                    fileToTabPath = path;
-                }
-            }
-        } else {
-            canShow = false;
-        }
     }
 
     @Override
@@ -703,7 +661,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 if (!"".equals(bean.getI18NToolTip())) {
                     box.setToolTipText(EBISystem.i18n(bean.getI18NToolTip()));
                 }
-
+                
                 if (bean.getTabIndex() != -1) {
                     if (bean.getTabIndex() == 1) {
                         box.addComponentListener(new ComponentAdapter() {
@@ -1030,6 +988,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 }
 
             } else if ("timepicker".equals(bean.getType())) {
+                
                 final JXDatePicker timePicker = new JXDatePicker();
                 timePicker.setName(nameSpace);
                 timePicker.setEnabled(bean.isEnabled());
@@ -1078,7 +1037,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
                     timePicker.setFocusable(true);
                     timePicker.getEditor().setFocusable(true);
-                    focusTraversal.addComponent(bean.getTabIndex(), timePicker);
+                    focusTraversal.addComponent(bean.getTabIndex(), timePicker.getEditor());
                 }
 
                 timePicker.setBounds(new Rectangle(bean.getPoint().x, bean.getPoint().y, bean.getDimension().width, bean.getDimension().height));
@@ -1130,7 +1089,6 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                         spinner.remove(cmps[i]);
                         // cmps[i].setPreferredSize(new Dimension(1,1));
                     }
-
                 }
 
                 spinner.setName(nameSpace);

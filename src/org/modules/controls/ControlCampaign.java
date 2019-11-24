@@ -493,9 +493,7 @@ public class ControlCampaign {
             final Iterator itr = this.campaign.getCrmcampaignreceivers().iterator();
             int i = 0;
             while (itr.hasNext()) {
-
                 final Crmcampaignreceiver obj = (Crmcampaignreceiver) itr.next();
-
                 EBISystem.getModule().getEBICRMCampaign().getTabModReceiver().data[i][0] = obj.getReceivervia() == null ? "" : obj.getReceivervia();
                 EBISystem.getModule().getEBICRMCampaign().getTabModReceiver().data[i][1] = obj.getCompanynumber() == null ? "" : obj.getCompanynumber();
                 EBISystem.getModule().getEBICRMCampaign().getTabModReceiver().data[i][2] = obj.getCompanyname() == null ? "" : obj.getCompanyname();
@@ -513,8 +511,9 @@ public class ControlCampaign {
                 i++;
             }
         } else {
-            EBISystem.getModule().getEBICRMCampaign().getTabModReceiver().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", "", "", "", ""}};
+            EBISystem.getModule().getEBICRMCampaign().getTabModReceiver().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", "", "", "", "",""}};
         }
+        
         EBISystem.getModule().getEBICRMCampaign().getTabModReceiver().fireTableDataChanged();
     }
 

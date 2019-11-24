@@ -58,7 +58,9 @@ public class ControlOffer {
             compOffer.setDescription(EBISystem.gui().textArea("offerDescriptionText", "Offer").getText());
             compOffer.setOffernr(EBISystem.gui().textField("offerNrText", "Offer").getText());
             compOffer.setName(EBISystem.gui().textField("offerNameText", "Offer").getText());
-
+            
+            compOffer.setIsrecieved(EBISystem.gui().getCheckBox("offerPurchase", "Offer").isSelected());
+            
             if (!"".equals(EBISystem.gui().textField("offerOpportunityText", "Offer").getText())) {
                 compOffer.setOpportunityid(opportunityID);
             }
@@ -268,7 +270,9 @@ public class ControlOffer {
 
             EBISystem.gui().textField("offerNrText", "Offer").setText(compOffer.getOffernr() == null ? "" : compOffer.getOffernr());
             EBISystem.gui().textField("offerNameText", "Offer").setText(compOffer.getName());
-
+            
+            EBISystem.gui().getCheckBox("offerPurchase", "Offer").setSelected(compOffer.getIsrecieved() != null ?  compOffer.getIsrecieved() : false);
+            
             if (compOffer.getStatus() != null) {
                 EBISystem.gui().combo("offerStatusText", "Offer").setSelectedItem(compOffer.getStatus());
             }

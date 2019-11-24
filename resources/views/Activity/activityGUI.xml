@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<visualpanel name="Activity" title="EBI_LANG_C_ACTIVITIES" Location="0,0" Size="900,650" visualproperties="true" assignable="true" bean="org.modules.views.EBICRMCompanyActivityView" >
+<visualpanel name="Activity" title="EBI_LANG_C_ACTIVITIES" Location="0,0" Size="900,650"
+                 visualproperties="true" assignable="true" bean="org.modules.views.EBICRMCompanyActivityView" >
     <panel name="gnActivity" title="EBI_LANG_C_PANEL_ACTIVITY" Location="10,19" Size="878,276">
+        
         <label name="activityName" title="EBI_LANG_NAME" Location="10,20" Size="106,25"/>
+        
         <textfield name="activityNameText" tabindex="1" Location="120,20" Size="290,25"/>
         <label name="activityType" title="EBI_LANG_TYPE" Location="10,50" Size="106,25"/>
+        
         <combobox name="activityTypeText" tabindex="2" bind="COMPANYACTIVITYTYPE" Location="120,50" Size="290,25"/>
+        
         <label name="activityDate" title="EBI_LANG_DUE_DATE" Location="10,80" Size="106,25"/>
+        
         <timepicker name="activityTODOText" tabindex="3" Location="120,80" Size="159,25"/>
-        <spinner name="dueH" max="24" min="0" tabindex="4" Location="285,80" Size="54,25"/>
-        <spinner name="dueMin" max="59" min="0" tabindex="5" Location="345,80" Size="65,25"/>
+        
+        <textfield name="dueH" tabindex="4" Location="285,80" Size="54,25"/>
+        <textfield name="dueMin" tabindex="5" Location="345,80" Size="65,25"/>
+        
         <label name="activityStatus" title="EBI_LANG_C_STATUS" Location="10,140" Size="106,25"/>
+        
         <textfield name="durationText" tabindex="6" Location="120,110" Size="89,25"/>
+        
         <combobox name="activityStatusText" tabindex="7" bind="COMPANYACTIVITYSTATUS" Location="120,140" Size="290,25"/>
-        <textarea name="activityDescription" tabindex="8" Location="440,155" Size="430,110"/>
+        
 
         <button name="newActivityDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_ADD_NEW_DOC" Location="439,20" Size="31,27" actionListener="org.modules.views.EBICRMCompanyActivityView.newDocs" icon="new.png"/>
         <button name="showActivityDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_DOC" Location="473,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMCompanyActivityView.saveAndShowDocs" icon="move_up.png"/>
@@ -27,7 +37,8 @@
 
         <label name="timerStart" title="EBI_LANG_TIMER_START" Location="10,170" Size="105,25"/>
         <checkbox name="timerActiveBox" title="EBI_LANG_TIMER_DISABLED" background="#ff0000" Location="260,170" Size="148,25"/>
-        <combobox name="timerStartText" Location="120,170" Size="138,25"/>
+        <combobox name="timerStartText" tabindex="8" Location="120,170" Size="138,25"/>
+        <textarea name="activityDescription" tabindex="9" Location="440,155" Size="430,110"/>
     </panel>
     <panel name="availableActivity" title="EBI_LANG_C_AVAILABLE_ACTIVITIES" resizewidth="true" resizeheight="true" Location="8,296" Size="877,334">
 

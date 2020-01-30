@@ -25,19 +25,24 @@ public class EBICRMContactView {
 
     public static final String[] gendersList = {EBISystem.i18n("EBI_LANG_PLEASE_SELECT"),
         EBISystem.i18n("EBI_LANG_C_MALE"), EBISystem.i18n("EBI_LANG_C_FEMALE")};
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelCRMContact tableModel = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelCRMAddress addressModel = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ControlContact controlContact = new ControlContact();
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedContactRow = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedAddressRow = -1;
 
     public void initializeAction() {
-        
+
         EBISystem.gui().textField("telefonText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
         EBISystem.gui().textField("faxText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
         EBISystem.gui().textField("mobileText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
@@ -183,7 +188,6 @@ public class EBICRMContactView {
         Integer id = controlContact.dataStore();
         controlContact.dataShow(id);
         controlContact.showCompanyContactAddress();
-        controlContact.isEdit = true;
         EBISystem.gui().table("companyContacts", "Contact").changeSelection(row, 0, false, false);
         return true;
     }
@@ -208,7 +212,6 @@ public class EBICRMContactView {
         controlContact.isEdit = true;
     }
 
-
     public void copyContact() {
         if (selectedContactRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                 equals(tableModel.data[selectedContactRow][0].toString())) {
@@ -219,7 +222,7 @@ public class EBICRMContactView {
         controlContact.dataEdit(id);
         controlContact.dataShow(id);
         controlContact.showCompanyContactAddress();
-        controlContact.isEdit=true;
+        controlContact.isEdit = true;
     }
 
     public void deleteContact() {
@@ -231,6 +234,7 @@ public class EBICRMContactView {
             EBISystem.showInActionStatus("Contact");
             controlContact.dataDelete(Integer.parseInt(tableModel.data[selectedContactRow][tableModel.columnNames.length].toString()));
             controlContact.dataShow(-1);
+            controlContact.showCompanyContactAddress();
             controlContact.dataNew();
             controlContact.isEdit = false;
         }
@@ -245,11 +249,11 @@ public class EBICRMContactView {
     }
 
     public void addContactAddress() {
-        final EBIAddressSelectionDialog daddress =
-                new EBIAddressSelectionDialog(EBISystem.getModule().
+        final EBIAddressSelectionDialog daddress
+                = new EBIAddressSelectionDialog(EBISystem.getModule().
                         getAddressPane().getAddressDataControl()
-                            .getAddressList(), controlContact.getCoaddressList());
-        
+                        .getAddressList(), controlContact.getCoaddressList());
+
         daddress.setVisible();
     }
 
@@ -277,9 +281,8 @@ public class EBICRMContactView {
         }
     }
 
-    public void historyContact(){
-        new EBICRMHistoryView(EBISystem.getModule().
-                hcreator.retrieveDBHistory(EBISystem.getInstance().getCompany().getCompanyid(), "Contact")).setVisible();
+    public void historyContact() {
+        new EBICRMHistoryView(EBISystem.getModule().hcreator.retrieveDBHistory(EBISystem.getInstance().getCompany().getCompanyid(), "Contact")).setVisible();
     }
 
     public int getSelectedContactRow() {

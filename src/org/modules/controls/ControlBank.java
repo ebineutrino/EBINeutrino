@@ -55,9 +55,13 @@ public class ControlBank {
                 EBISystem.gui().vpanel("Bank").setID(companyBank.getBankid());
             }
             bankID = companyBank.getBankid();
+            isEdit = true;
         } catch (final HibernateException e) {
+            EBISystem.hibernate().session("EBICRM_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return bankID;
@@ -95,8 +99,10 @@ public class ControlBank {
             }
         } catch (final HibernateException e) {
             e.printStackTrace();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
         } catch (final Exception e) {
             e.printStackTrace();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
         }
         return bankID;
     }
@@ -249,6 +255,7 @@ public class ControlBank {
             EBISystem.getModule().hcreator
                     .setDataToCreate(new EBICRMHistoryDataUtil(com.getCompanyid(), "Bankdata", list));
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }

@@ -117,3 +117,240 @@ groovy.util.ResourceException: Cannot open URL: file:/Users/francesco/NetBeansPr
 2019-10-27 17:47:53,589 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Cannot open URL: file:/Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/views//Users/francesco/NetBeansProjects/EBINeutrinoClient/EBINeutrino/resources/openView.groovy
  Cause :null
 
+2020-01-28 14:17:22,767 ERROR [main] org.sdk.EBISystem: Error connection to the database
+java.sql.SQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at org.core.EBIDatabase.connect(EBIDatabase.java:72)
+	at org.core.EBINeutrinoSystemInit.Init(EBINeutrinoSystemInit.java:103)
+	at org.core.EBINeutrinoSystemInit.checkDB(EBINeutrinoSystemInit.java:42)
+	at org.core.EBINeutrinoSystemInit.<init>(EBINeutrinoSystemInit.java:38)
+	at org.core.EBIMain.<init>(EBIMain.java:178)
+	at org.core.EBIMain.main(EBIMain.java:74)
+Caused by: com.mysql.cj.exceptions.CJException: Access denied for user 'root'@'localhost' (using password: YES)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:61)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:151)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:129)
+	at com.mysql.cj.protocol.a.NativeProtocol.checkErrorMessage(NativeProtocol.java:795)
+	at com.mysql.cj.protocol.a.NativeProtocol.checkErrorMessage(NativeProtocol.java:720)
+	at com.mysql.cj.protocol.a.NativeProtocol.checkErrorMessage(NativeProtocol.java:688)
+	at com.mysql.cj.protocol.a.NativeProtocol.checkErrorMessage(NativeProtocol.java:130)
+	at com.mysql.cj.protocol.a.NativeAuthenticationProvider.proceedHandshakeWithPluggableAuthentication(NativeAuthenticationProvider.java:540)
+	at com.mysql.cj.protocol.a.NativeAuthenticationProvider.connect(NativeAuthenticationProvider.java:202)
+	at com.mysql.cj.protocol.a.NativeProtocol.connect(NativeProtocol.java:1348)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:163)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:841)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:822)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:447)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:199)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:677)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:228)
+	at org.core.EBIDatabase.connect(EBIDatabase.java:68)
+	... 5 more
+2020-01-28 14:17:22,776 ERROR [main] org.sdk.gui.dialogs.EBIExceptionDialog: No database connection possible
+Would you like to configure a connection?
+
+2020-01-28 14:17:31,770 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Connection is ok!
+2020-01-28 14:17:33,061 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Database connection data, are saved successfully!
+2020-01-28 14:17:34,317 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Would you like to import the EBI Neutrino R1 database schema?
+2020-01-28 14:17:52,300 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: La sua cerca, non ha riportato nessun risultato
+2020-01-28 15:06:18,912 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2020-01-28 15:06:43,711 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2020-01-28 15:39:21,127 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Non è stata trovata nessuna azienda cliente!
+ Voule salvare questo record come azienda cliente?
+2020-01-28 15:45:55,809 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-28 15:47:23,445 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-28 15:51:01,306 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 15:51:03,326 ERROR [AWT-EventQueue-0] org.hibernate.AssertionFailure: HHH000099: an assertion failure occurred (this may indicate a bug in Hibernate, but is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: null id in org.sdk.model.hibernate.Crmproductdocs entry (don't flush the Session after an exception occurs)
+2020-01-28 15:59:39,276 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 15:59:39,278 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement
+2020-01-28 16:02:25,622 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Scegli una categoria
+2020-01-28 16:02:31,171 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 16:02:31,173 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 16:36:45,763 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 16:36:47,320 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: 
+2020-01-28 16:36:51,610 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-28 16:37:28,589 ERROR [AWT-EventQueue-0] org.hibernate.AssertionFailure: HHH000099: an assertion failure occurred (this may indicate a bug in Hibernate, but is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: null id in org.sdk.model.hibernate.Crmproductdocs entry (don't flush the Session after an exception occurs)
+2020-01-28 16:39:25,100 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 16:39:25,102 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 16:39:28,476 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 16:39:29,570 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: 
+2020-01-28 16:39:31,539 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 16:39:32,238 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: 
+2020-01-28 16:39:40,619 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 16:39:41,334 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: 
+2020-01-28 16:40:26,473 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 16:40:27,438 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: 
+2020-01-28 16:41:51,698 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 16:41:51,700 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 16:41:54,549 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 17:10:33,969 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 17:10:35,254 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: 
+2020-01-28 17:12:41,604 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 17:15:56,091 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 17:15:56,093 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 17:15:58,787 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 17:15:59,564 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: 
+2020-01-28 17:17:25,569 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 17:17:26,578 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: 
+2020-01-28 17:20:11,240 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 17:22:30,986 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 17:22:38,084 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 17:22:38,085 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 17:22:40,849 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 17:22:41,719 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: 
+2020-01-28 17:23:17,376 ERROR [AWT-EventQueue-0] org.hibernate.AssertionFailure: HHH000099: an assertion failure occurred (this may indicate a bug in Hibernate, but is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: null id in org.sdk.model.hibernate.Crmproductdocs entry (don't flush the Session after an exception occurs)
+2020-01-28 17:37:36,696 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-28 17:37:38,370 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2020-01-28 17:40:08,569 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 17:40:08,572 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’258 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 17:47:07,003 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 17:47:07,004 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 17:47:10,481 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 17:47:32,576 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 17:48:39,773 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Scegli una categoria
+2020-01-28 17:48:46,338 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 17:48:46,340 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 17:50:24,896 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 17:51:36,221 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 17:54:16,647 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 17:54:16,650 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 17:54:32,822 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:03:29,020 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-28 18:03:30,567 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2020-01-28 18:05:31,267 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:05:31,269 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:05:34,144 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:05:38,989 ERROR [AWT-EventQueue-0] org.hibernate.AssertionFailure: HHH000099: an assertion failure occurred (this may indicate a bug in Hibernate, but is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: null id in org.sdk.model.hibernate.Crmproductdocs entry (don't flush the Session after an exception occurs)
+2020-01-28 18:05:42,386 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#13] Cause: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#13]
+2020-01-28 18:14:34,969 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:14:40,419 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:14:40,421 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:14:41,909 ERROR [AWT-EventQueue-0] org.hibernate.AssertionFailure: HHH000099: an assertion failure occurred (this may indicate a bug in Hibernate, but is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: null id in org.sdk.model.hibernate.Crmproductdocs entry (don't flush the Session after an exception occurs)
+2020-01-28 18:14:43,441 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:14:44,198 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: 
+2020-01-28 18:18:02,810 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:18:02,812 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:18:03,797 ERROR [AWT-EventQueue-0] org.hibernate.AssertionFailure: HHH000099: an assertion failure occurred (this may indicate a bug in Hibernate, but is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: null id in org.sdk.model.hibernate.Crmproductdocs entry (don't flush the Session after an exception occurs)
+2020-01-28 18:18:06,792 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:20:37,573 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:20:37,576 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:20:38,531 ERROR [AWT-EventQueue-0] org.hibernate.AssertionFailure: HHH000099: an assertion failure occurred (this may indicate a bug in Hibernate, but is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: null id in org.sdk.model.hibernate.Crmproductdocs entry (don't flush the Session after an exception occurs)
+2020-01-28 18:25:55,594 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-28 18:25:56,934 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2020-01-28 18:27:03,481 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:27:03,483 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:27:04,473 ERROR [AWT-EventQueue-0] org.hibernate.AssertionFailure: HHH000099: an assertion failure occurred (this may indicate a bug in Hibernate, but is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: null id in org.sdk.model.hibernate.Crmproductdocs entry (don't flush the Session after an exception occurs)
+2020-01-28 18:27:06,233 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:27:10,064 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:30:54,150 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:30:54,153 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:30:57,167 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:31:56,092 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-28 18:32:02,112 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#18] Cause: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#18]
+2020-01-28 18:33:05,223 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2020-01-28 18:40:22,671 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-28 18:47:12,676 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:47:30,215 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:47:30,218 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:47:33,315 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:47:36,738 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#22] Cause: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#22]
+2020-01-28 18:47:55,625 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#22] Cause: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#22]
+2020-01-28 18:47:59,007 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#22] Cause: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#22]
+2020-01-28 18:48:39,039 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#22] Cause: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#22]
+2020-01-28 18:54:23,475 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:54:46,768 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:54:49,855 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:56:58,587 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:58:29,786 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:58:29,791 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 18:58:32,989 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 18:58:35,607 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#25] Cause: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#25]
+2020-01-28 18:58:45,265 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#25] Cause: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#25]
+2020-01-28 19:03:56,625 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:03:56,629 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:03:59,807 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 19:14:26,257 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:14:26,261 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:14:40,891 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 19:19:11,801 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:19:11,805 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:19:14,830 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 19:19:17,804 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#28] Cause: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#28]
+2020-01-28 19:23:00,805 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:23:06,555 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:23:14,468 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 19:25:20,963 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:29:44,489 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:29:44,493 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:29:47,451 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 19:29:49,960 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#31] Cause: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [org.sdk.model.hibernate.Crmproduct#31]
+2020-01-28 19:31:53,878 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:31:53,881 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:31:56,422 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 19:31:59,040 ERROR [AWT-EventQueue-0] org.hibernate.AssertionFailure: HHH000099: an assertion failure occurred (this may indicate a bug in Hibernate, but is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: null id in org.sdk.model.hibernate.Crmproductdocs entry (don't flush the Session after an exception occurs)
+2020-01-28 19:35:45,247 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:35:47,051 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:35:49,803 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 19:35:56,895 ERROR [AWT-EventQueue-0] org.hibernate.AssertionFailure: HHH000099: an assertion failure occurred (this may indicate a bug in Hibernate, but is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: null id in org.sdk.model.hibernate.Crmproductdocs entry (don't flush the Session after an exception occurs)
+2020-01-28 19:38:00,402 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:38:00,405 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:38:02,638 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 19:38:04,683 ERROR [AWT-EventQueue-0] org.hibernate.AssertionFailure: HHH000099: an assertion failure occurred (this may indicate a bug in Hibernate, but is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: null id in org.sdk.model.hibernate.Crmproductdocs entry (don't flush the Session after an exception occurs)
+2020-01-28 19:39:22,302 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:39:27,426 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 19:39:30,551 ERROR [AWT-EventQueue-0] org.hibernate.AssertionFailure: HHH000099: an assertion failure occurred (this may indicate a bug in Hibernate, but is more likely due to unsafe use of the session): org.hibernate.AssertionFailure: null id in org.sdk.model.hibernate.Crmproductdocs entry (don't flush the Session after an exception occurs)
+2020-01-28 19:42:40,469 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:42:40,471 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement Cause: Packet for query is too large (1’257’259 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-28 19:42:43,241 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-28 20:14:54,956 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 00:25:45,644 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 00:25:47,158 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2020-01-29 14:13:04,576 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 14:13:07,383 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Inserisci un nome!
+2020-01-29 14:13:10,383 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 14:13:11,601 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Inserisci un nome!
+2020-01-29 14:13:14,607 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 14:14:41,235 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 17:36:15,487 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2020-01-29 17:40:05,399 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (1’210’690 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-29 17:40:05,403 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement
+2020-01-29 17:40:08,974 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-29 17:40:16,421 ERROR [AWT-EventQueue-0] org.hibernate.engine.jdbc.spi.SqlExceptionHelper: Packet for query is too large (14’702’288 > 1’048’576). You can change this value on the server by setting the 'max_allowed_packet' variable.
+2020-01-29 17:40:16,421 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: could not execute statement
+2020-01-29 17:40:19,502 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-29 17:41:56,161 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Inserisci tipo di spedizione
+2020-01-29 17:42:52,191 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Inserisci tipo di spedizione
+2020-01-29 17:49:02,774 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 17:50:15,595 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 17:51:21,746 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Si prega di scegliere uno stato
+2020-01-29 17:52:47,205 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 17:54:09,449 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-29 18:03:35,048 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Si prega di inserire un numero valido
+2020-01-29 18:05:31,787 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Si prega di inserire un numero valido
+2020-01-29 18:06:40,192 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Seleziona un numero di serie
+2020-01-29 18:07:04,792 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 18:07:26,415 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: org.modules.views.org.modules.views.EBICRMCompanyView
+2020-01-29 18:07:29,542 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: org.modules.views.org.modules.views.EBICRMCompanyView
+2020-01-29 18:07:39,446 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Inserisci un nome per il cliente!
+2020-01-29 18:07:52,797 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: org.modules.views.org.modules.views.EBICRMCompanyView
+2020-01-29 18:07:57,436 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 18:08:17,667 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 18:08:22,389 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Scegli una categoria
+2020-01-29 18:09:26,897 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: org.modules.views.org.modules.views.EBICRMCompanyView
+2020-01-29 18:09:31,640 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Scegli una categoria
+2020-01-29 18:10:12,622 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Inserisci un nome!
+2020-01-29 18:11:25,666 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 18:11:30,985 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Seleziona un numero di serie
+2020-01-29 18:12:45,727 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Si prega di scegliere uno stato
+2020-01-29 20:18:52,850 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?
+2020-01-29 20:18:54,440 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2020-01-29 20:21:48,410 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2020-01-30 18:12:14,516 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Si prega di inserire un numero valido : Quantità
+2020-01-30 19:16:03,100 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi chiudere il programma?
+2020-01-30 21:11:36,867 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Vuoi eliminare questo record?
+2020-01-30 21:54:51,820 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Sono satati fatti dei cambiamenti, vuole salvarli?

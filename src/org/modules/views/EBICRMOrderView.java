@@ -314,7 +314,6 @@ public class EBICRMOrderView {
         dataControlOrder.dataShowProduct();
         dataControlOrder.dataShowDoc();
         dataControlOrder.dataShowReceiver();
-        dataControlOrder.isEdit = true;
         EBISystem.gui().table("companyorderTable", "Order").changeSelection(row, 0, false, false);
         return true;
     }

@@ -3,8 +3,6 @@ package org.core;
 import org.core.database.DBCALLBACK;
 import org.core.database.TABLE;
 import org.sdk.EBISystem;
-import org.sdk.gui.dialogs.EBIExceptionDialog;
-import org.sdk.gui.dialogs.EBIMessage;
 import org.sdk.interfaces.IEBIDatabase;
 
 import java.sql.*;

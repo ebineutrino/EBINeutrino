@@ -365,7 +365,6 @@ public class EBICRMInvoiceView {
         Integer id = dataControlInvoice.dataStore();
         dataShow(id);
         dataControlInvoice.dataShowProduct();
-        dataControlInvoice.isEdit = true;
         EBISystem.gui().table("tableTotalInvoice", "Invoice").changeSelection(row, 0, false, false);
         return true;
     }
@@ -393,6 +392,7 @@ public class EBICRMInvoiceView {
             dataControlInvoice.dataDelete(Integer.parseInt(model.data[selectedInvoiceRow][9].toString()));
             dataControlInvoice.dataNew();
             dataShow(-1);
+            dataShowProduct();
         }
     }
 
@@ -687,6 +687,7 @@ public class EBICRMInvoiceView {
             if (pass) {
                 dataControlInvoice.dataDeleteProduct(Integer.parseInt(tabModProduct.data[selectedProductRow][8].toString()));
                 dataControlInvoice.calculateTotalAmount();
+                dataControlInvoice.dataShowProduct();
             }
         }
     }

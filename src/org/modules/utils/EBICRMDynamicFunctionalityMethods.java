@@ -26,7 +26,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-//
 public final class EBICRMDynamicFunctionalityMethods {
 
     public final Object[] getInternNumber(final String category, final boolean isInvoice) {
@@ -60,7 +59,7 @@ public final class EBICRMDynamicFunctionalityMethods {
                         toRet[0] = Integer.parseInt(toRet[0].toString()) + 1;
                     }
 
-                    final int nrTo =  set.getInt("NUMBERTO");
+                    final int nrTo = set.getInt("NUMBERTO");
 
                     if (Integer.parseInt(toRet[0].toString()) > nrTo) {
                         toRet[0] = -1;
@@ -69,7 +68,7 @@ public final class EBICRMDynamicFunctionalityMethods {
                     final String bgCahr = set.getString("BEGINCHAR");
                     toRet[1] = bgCahr == null ? "" : bgCahr;
                 }
-            }else{
+            } else {
                 toRet[0] = -1;
                 toRet[1] = "";
             }
@@ -109,7 +108,7 @@ public final class EBICRMDynamicFunctionalityMethods {
                 nr = "COMPANYNUMBER";
             }
 
-            ps = EBISystem.getInstance().iDB().initPreparedStatement("select " + nr + " from "+qu+" where CATEGORY=? order by " + nr + " desc limit 1 ");
+            ps = EBISystem.getInstance().iDB().initPreparedStatement("select " + nr + " from " + qu + " where CATEGORY=? order by " + nr + " desc limit 1 ");
             ps.setString(1, category);
 
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps);
@@ -185,24 +184,54 @@ public final class EBICRMDynamicFunctionalityMethods {
                 EBICRMProblemSolutionView.prosolStatus = getStatusProperties("CRMPROBLEMSOLSTATUS");
                 EBICRMProblemSolutionView.prosolType = getStatusProperties("CRMPROBLEMSOLTYPE");
                 EBICRMProblemSolutionView.prosolCategory = getStatusProperties("CRMPROBLEMSOLCATEGORY");
-
                 EBICRMProblemSolutionView.prosolClassification = getStatusProperties("CRMPROBLEMSOLCLASS");
+
+                if (EBISystem.gui().existView("Prosol")) {
+                    EBISystem.gui().combo("prosolStatusText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolStatus));
+                    EBISystem.gui().combo("prosolTypeText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolType));
+                    EBISystem.gui().combo("prosolCategoryText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolCategory));
+                    EBISystem.gui().combo("prosolClassificationText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolClassification));
+                }
+
                 EBICRMProductView.category = getStatusProperties("COMPANYPRODUCTCATEGORY");
                 EBICRMProductView.type = getStatusProperties("COMPANYPRODUCTTYPE");
                 EBICRMProductView.taxType = getStatusProperties("COMPANYPRODUCTTAXVALUE");
 
+                if (EBISystem.gui().existView("Product")) {
+                    EBISystem.gui().combo("ProductCategoryText", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.category));
+                    EBISystem.gui().combo("ProductTypeText", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.type));
+                    EBISystem.gui().combo("productTaxTypeTex", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.taxType));
+                }
+
                 EBICRMCampaignView.campaignStatus = getStatusProperties("CRMCAMPAIGNSTATUS");
+                if (EBISystem.gui().existView("Campaign")) {
+                    EBISystem.gui().combo("CampaignStatusText", "Campaign").setModel(new javax.swing.DefaultComboBoxModel(EBICRMCampaignView.campaignStatus));
+                }
+
                 EBICRMPlanningView.projectStatus = getStatusProperties("CRMPROJECTSTATUS");
+                if (EBISystem.gui().existView("Project")) {
+                    EBISystem.gui().combo("prjStatusText", "Project").setModel(new DefaultComboBoxModel(EBICRMPlanningView.projectStatus));
+                }
+
                 EBINewProjectTaskDialog.taskStatus = getStatusProperties("CRMPROJECTTASKSTATUS");
                 EBINewProjectTaskDialog.taskType = getStatusProperties("CRMPROJECTTASKTYPE");
+                if (EBISystem.gui().existView("projectTaskDialog")) {
+                    EBISystem.gui().combo("taskStatusText", "projectTaskDialog").setModel(new DefaultComboBoxModel(EBINewProjectTaskDialog.taskStatus));
+                    EBISystem.gui().combo("taskTypeText", "projectTaskDialog").setModel(new DefaultComboBoxModel(EBINewProjectTaskDialog.taskType));
+                }
 
                 EBICRMInvoiceView.invoiceCategory = getStatusProperties("CRMINVOICECATEGORY");
                 EBICRMInvoiceView.invoiceStatus = getStatusProperties("CRMINVOICESTATUS");
+                
+                if (EBISystem.gui().existView("Invoice")) {
+                    EBISystem.gui().combo("invoiceStatusText", "Invoice").setModel(new DefaultComboBoxModel(EBICRMInvoiceView.invoiceStatus));
+                    EBISystem.gui().combo("categoryText", "Invoice").setModel(new DefaultComboBoxModel(EBICRMInvoiceView.invoiceCategory));
+                }
                 return true;
             }
         });
 
-        if(reload){
+        if (reload) {
             //reload combos values
             if (EBISystem.gui().existView("Company")) {
                 EBISystem.gui().combo("companyCategoryText", "Summary").setModel(new DefaultComboBoxModel(EBICRMCompanyView.categories));
@@ -247,22 +276,18 @@ public final class EBICRMDynamicFunctionalityMethods {
             }
 
         }
-
         EBISystem.canRelease = haveModuleChange;
     }
 
     public final boolean findCustomerNumber(final String Nr) {
-
         boolean found = false;
         ResultSet set = null;
-
         try {
             set = EBISystem.db().execute("SELECT COMPANYID FROM COMPANY WHERE CUSTOMERNR='" + Nr + "'");
             set.last();
             if (set.getRow() > 0) {
                 found = true;
             }
-
         } catch (final SQLException e) {
             e.printStackTrace();
         } finally {
@@ -272,21 +297,16 @@ public final class EBICRMDynamicFunctionalityMethods {
                 e.printStackTrace();
             }
         }
-
         return found;
     }
 
     public final String getCompanyNameFromID(final int id) {
-
         String sCompany = "";
-
         ResultSet set = null;
         PreparedStatement ps = null;
         try {
-
             ps = EBISystem.getInstance().iDB().initPreparedStatement("select NAME from COMPANY where COMPANYID=? order by NAME ");
             ps.setInt(1, id);
-
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps);
             set.last();
             if (set.getRow() > 0) {
@@ -295,7 +315,6 @@ public final class EBICRMDynamicFunctionalityMethods {
                     sCompany = set.getString("TEMPLATE");
                 }
             }
-
         } catch (final SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -306,18 +325,14 @@ public final class EBICRMDynamicFunctionalityMethods {
                 e.printStackTrace();
             }
         }
-
         return sCompany;
     }
 
     public final String getEMailTemplate(final String name) {
-
         String strTemplate = "";
-
         ResultSet set = null;
         PreparedStatement ps = null;
         try {
-
             ps = EBISystem.getInstance().iDB().initPreparedStatement("select TEMPLATE from MAIL_TEMPLATE where NAME=? order by NAME");
             ps.setString(1, name);
 
@@ -329,7 +344,6 @@ public final class EBICRMDynamicFunctionalityMethods {
                     strTemplate = set.getString("TEMPLATE");
                 }
             }
-
         } catch (final SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -340,7 +354,6 @@ public final class EBICRMDynamicFunctionalityMethods {
                 e.printStackTrace();
             }
         }
-
         return strTemplate;
     }
 
@@ -363,17 +376,13 @@ public final class EBICRMDynamicFunctionalityMethods {
                 } catch (final NumberFormatException ex) {
                     ex.printStackTrace();
                 }
-                
                 final BigDecimal bd = new BigDecimal(nVal);
                 final BigDecimal bd_round = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
-                
                 retValue = bd_round.doubleValue();
             }
-
         } catch (final Exception e) {
             e.printStackTrace();
         }
-
         return retValue;
     }
 
@@ -418,13 +427,10 @@ public final class EBICRMDynamicFunctionalityMethods {
     }
 
     public final String[] getStatusProperties(final String Tab) {
-
         PreparedStatement ps = null;
         ResultSet set = null;
         String[] BUFF = null;
-
         try {
-
             ps = EBISystem.db().initPreparedStatement("SELECT * FROM " + Tab + " order by NAME");
             set = ps.executeQuery();
             BUFF = new String[1];

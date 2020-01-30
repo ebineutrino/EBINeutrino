@@ -24,7 +24,6 @@ import java.awt.event.MouseAdapter;
 import lombok.Getter;
 import lombok.Setter;
 import org.sdk.gui.component.EBIJTextFieldNumeric;
-import org.sdk.utils.JTextFieldLimit;
 
 public class EBICRMCompanyActivityView implements ChangeListener {
 
@@ -50,7 +49,6 @@ public class EBICRMCompanyActivityView implements ChangeListener {
 
     public void initializeAction() {
 
-        
         EBISystem.gui().textField("dueH", "Activity").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.HOUR));
         EBISystem.gui().textField("dueMin", "Activity").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.MINUTE));
         
@@ -280,7 +278,6 @@ public class EBICRMCompanyActivityView implements ChangeListener {
         Integer id = dataControlActivity.dataStore();
         dataControlActivity.dataShow(id);
         dataControlActivity.dataShowDoc();
-        dataControlActivity.isEdit = true;
         EBISystem.gui().table("tableActivity", "Activity").changeSelection(row, 0, false, false);
         return true;
     }

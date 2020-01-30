@@ -390,7 +390,6 @@ public class EBICRMCampaignView {
         dataControlCampaign.dataShowProduct();
         dataControlCampaign.dataShowProperties();
         dataControlCampaign.dataShowReciever();
-        dataControlCampaign.isEdit = true;
         return true;
     }
 

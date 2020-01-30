@@ -107,9 +107,14 @@ public class ControlActivity {
                 EBISystem.gui().vpanel("Activity").setID(companyActivity.getActivityid());
             }
             activityID = companyActivity.getActivityid();
+            isEdit = true;
         } catch (final HibernateException e) {
+            EBISystem.hibernate().session("EBICRM_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBISystem.hibernate().session("EBICRM_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return activityID;
@@ -170,8 +175,10 @@ public class ControlActivity {
                 activityID = compAct.getActivityid();
             }
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return activityID;
@@ -272,8 +279,10 @@ public class ControlActivity {
                 EBISystem.getInstance().getDataStore("Activity", "ebiDelete");
             }
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -337,6 +346,7 @@ public class ControlActivity {
             }
 
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -445,24 +455,32 @@ public class ControlActivity {
         final Iterator iter = this.companyActivity.getCompanyactivitiesdocses().iterator();
         while (iter.hasNext()) {
             final Companyactivitiesdocs doc = (Companyactivitiesdocs) iter.next();
-            if (id == doc.getActivitydocid()) {
+            if (doc.getActivitydocid() != null && id == doc.getActivitydocid()) {
                 this.companyActivity.getCompanyactivitiesdocses().remove(doc);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
-                EBISystem.hibernate().session("EBICRM_SESSION").delete(doc);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                    EBISystem.hibernate().session("EBICRM_SESSION").delete(doc);
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                }
                 break;
             }
         }
     }
 
     public void dataShowDoc() {
+        
         if (this.companyActivity.getCompanyactivitiesdocses() != null
                 && this.companyActivity.getCompanyactivitiesdocses().size() > 0) {
+            
             EBISystem.getModule().getActivitiesPane().getTabActDoc().data = new Object[this.companyActivity.getCompanyactivitiesdocses().size()][4];
             final Iterator itr = this.companyActivity.getCompanyactivitiesdocses().iterator();
             int i = 0;
             while (itr.hasNext()) {
                 final Companyactivitiesdocs obj = (Companyactivitiesdocs) itr.next();
+                
+                if(obj.getActivitydocid() == null){
+                    obj.setActivitydocid((i + 1) * -1);
+                }
                 EBISystem.getModule().getActivitiesPane().getTabActDoc().data[i][0] = obj.getName() == null ? "" : obj.getName();
                 EBISystem.getModule().getActivitiesPane().getTabActDoc().data[i][1] = EBISystem.getInstance().getDateToString(obj.getCreateddate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getCreateddate());
                 EBISystem.getModule().getActivitiesPane().getTabActDoc().data[i][2] = obj.getCreatedfrom() == null ? "" : obj.getCreatedfrom();
@@ -480,7 +498,7 @@ public class ControlActivity {
         final Iterator iter = this.companyActivity.getCompanyactivitiesdocses().iterator();
         while (iter.hasNext()) {
             final Companyactivitiesdocs doc = (Companyactivitiesdocs) iter.next();
-            if (id == doc.getActivitydocid()) {
+            if (doc.getActivitydocid() != null && id == doc.getActivitydocid()) {
                 // Get the BLOB inputstream
                 final String file = doc.getName().replaceAll(" ", "_");
                 final byte buffer[] = doc.getFiles();

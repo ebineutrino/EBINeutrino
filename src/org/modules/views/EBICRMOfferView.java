@@ -336,7 +336,6 @@ public class EBICRMOfferView {
         dataControlOffer.dataShowProduct();
         dataControlOffer.dataShowDoc();
         dataControlOffer.dataShowReceiver();
-        dataControlOffer.isEdit = true;
         EBISystem.gui().table("companyOfferTable", "Offer").changeSelection(row, 0, false, false);
         return true;
     }
@@ -374,6 +373,7 @@ public class EBICRMOfferView {
             dataControlOffer.dataShow(-1);
             dataControlOffer.dataShowProduct();
             dataControlOffer.dataShowReceiver();
+            dataControlOffer.dataShowDoc();
             dataControlOffer.isEdit = false;
         }
     }

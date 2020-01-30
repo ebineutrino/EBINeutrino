@@ -85,9 +85,14 @@ public class ControlMeetingProtocol {
                 EBISystem.gui().vpanel("MeetingCall").setID(meetingProtocol.getMeetingprotocolid());
             }
             meetingID = meetingProtocol.getMeetingprotocolid();
+            isEdit = true;
         } catch (final HibernateException e) {
+            EBISystem.hibernate().session("EBICRM_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBISystem.hibernate().session("EBICRM_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return meetingID;
@@ -172,8 +177,10 @@ public class ControlMeetingProtocol {
                 meetingID = mPro.getMeetingprotocolid();
             }
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return meetingID;
@@ -346,7 +353,6 @@ public class ControlMeetingProtocol {
         }
 
         EBISystem.getModule().hcreator.setDataToCreate(new EBICRMHistoryDataUtil(com.getCompanyid(), "Meeting", list));
-
     }
 
     public void dataAddContact() {
@@ -376,8 +382,10 @@ public class ControlMeetingProtocol {
             meetingProtocol.getCompanymeetingcontactses().add(contact);
 
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -390,7 +398,7 @@ public class ControlMeetingProtocol {
 
             final Companymeetingcontacts contact = (Companymeetingcontacts) iter.next();
 
-            if (contact.getMeetingcontactid() == id) {
+            if (contact.getMeetingcontactid() != null && contact.getMeetingcontactid() == id) {
                 final EBIMeetingAddContactDialog newContact = new EBIMeetingAddContactDialog(true, contact, null, true);
                 newContact.setGenderText(contact.getGender());
                 newContact.setSurnameText(contact.getSurname());
@@ -420,11 +428,13 @@ public class ControlMeetingProtocol {
         final Iterator iter = meetingProtocol.getCompanymeetingcontactses().iterator();
         while (iter.hasNext()) {
             final Companymeetingcontacts con = (Companymeetingcontacts) iter.next();
-            if (con.getMeetingcontactid() == id) {
+            if (con.getMeetingcontactid() != null && con.getMeetingcontactid() == id) {
                 meetingProtocol.getCompanymeetingcontactses().remove(con);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
-                EBISystem.hibernate().session("EBICRM_SESSION").delete(con);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                    EBISystem.hibernate().session("EBICRM_SESSION").delete(con);
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                }
                 break;
             }
         }
@@ -438,6 +448,11 @@ public class ControlMeetingProtocol {
             int i = 0;
             while (itr.hasNext()) {
                 final Companymeetingcontacts obj = (Companymeetingcontacts) itr.next();
+                
+                if(obj.getMeetingcontactid() == null){
+                    obj.setMeetingcontactid((i+1) * -1);
+                }
+                
                 EBISystem.getModule().getMeetingProtocol().getTabModelContact().data[i][0] = obj.getPosition() == null ? "" : obj.getPosition();
                 EBISystem.getModule().getMeetingProtocol().getTabModelContact().data[i][1] = obj.getGender() == null ? "" : obj.getGender();
                 EBISystem.getModule().getMeetingProtocol().getTabModelContact().data[i][2] = obj.getSurname() == null ? "" : obj.getSurname();
@@ -483,7 +498,7 @@ public class ControlMeetingProtocol {
         final Iterator iter = this.meetingProtocol.getCompanymeetingdocs().iterator();
         while (iter.hasNext()) {
             final Companymeetingdoc doc = (Companymeetingdoc) iter.next();
-            if (id == doc.getMeetingdocid()) {
+            if (doc.getMeetingdocid() != null && id == doc.getMeetingdocid()) {
                 // Get the BLOB inputstream
                 final String file = doc.getName().replaceAll(" ", "_");
                 final byte buffer[] = doc.getFiles();
@@ -497,11 +512,13 @@ public class ControlMeetingProtocol {
         final Iterator iter = this.meetingProtocol.getCompanymeetingdocs().iterator();
         while (iter.hasNext()) {
             final Companymeetingdoc doc = (Companymeetingdoc) iter.next();
-            if (id == doc.getMeetingdocid()) {
+            if (doc.getMeetingdocid() != null && id == doc.getMeetingdocid()) {
                 this.meetingProtocol.getCompanymeetingdocs().remove(doc);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
-                EBISystem.hibernate().session("EBICRM_SESSION").delete(doc);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                    EBISystem.hibernate().session("EBICRM_SESSION").delete(doc);
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                }
                 break;
             }
         }
@@ -515,6 +532,9 @@ public class ControlMeetingProtocol {
             int i = 0;
             while (itr.hasNext()) {
                 final Companymeetingdoc obj = (Companymeetingdoc) itr.next();
+                if(obj.getMeetingdocid() == null){
+                    obj.setMeetingdocid((i + 1) * -1);
+                }
                 EBISystem.getModule().getMeetingProtocol().getTabmeetingDoc().data[i][0] = obj.getName() == null ? "" : obj.getName();
                 EBISystem.getModule().getMeetingProtocol().getTabmeetingDoc().data[i][1] = EBISystem.getInstance().getDateToString(obj.getCreateddate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getCreateddate());
                 EBISystem.getModule().getMeetingProtocol().getTabmeetingDoc().data[i][2] = obj.getCreatedfrom() == null ? "" : obj.getCreatedfrom();

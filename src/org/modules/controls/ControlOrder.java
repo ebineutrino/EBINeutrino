@@ -116,7 +116,10 @@ public class ControlOrder {
                 EBISystem.gui().vpanel("Order").setID(compOrder.getOrderid());
             }
             orderID = compOrder.getOrderid();
+            isEdit = true;
         } catch (final Exception e) {
+            EBISystem.hibernate().session("EBICRM_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return orderID;
@@ -229,6 +232,7 @@ public class ControlOrder {
                 orderID = ordnew.getOrderid();
             }
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return orderID;
@@ -272,8 +276,8 @@ public class ControlOrder {
             EBISystem.gui().textField("orderNameText", "Order").setText(compOrder.getName());
             EBISystem.gui().textField("orderNrText", "Order").setText(compOrder.getOrdernr() == null ? "" : compOrder.getOrdernr());
 
-            EBISystem.gui().getCheckBox("ordPurchase", "order").setSelected(compOrder.getIsrecieved() != null ? compOrder.getIsrecieved() : false);
-            
+            EBISystem.gui().getCheckBox("ordPurchase", "Order").setSelected(compOrder.getIsrecieved() != null ? compOrder.getIsrecieved() : false);
+
             if (compOrder.getStatus() != null) {
                 EBISystem.gui().combo("orderStatusText", "Order").setSelectedItem(compOrder.getStatus());
             }
@@ -638,7 +642,7 @@ public class ControlOrder {
 
         } catch (final Exception ex) {
             ex.printStackTrace();
-            EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
         }
 
         return fileName;
@@ -741,6 +745,7 @@ public class ControlOrder {
         try {
             EBISystem.getModule().hcreator.setDataToCreate(new EBICRMHistoryDataUtil(com.getCompanyid(), "Order", list));
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -769,7 +774,7 @@ public class ControlOrder {
         final Iterator iter = this.compOrder.getCompanyorderdocses().iterator();
         while (iter.hasNext()) {
             final Companyorderdocs doc = (Companyorderdocs) iter.next();
-            if (id == doc.getOrderdocid()) {
+            if (doc.getOrderdocid() != null && id == doc.getOrderdocid()) {
                 final String file = doc.getName().replaceAll(" ", "_");
                 final byte buffer[] = doc.getFiles();
 
@@ -787,6 +792,11 @@ public class ControlOrder {
             int i = 0;
             while (itr.hasNext()) {
                 final Companyorderdocs obj = (Companyorderdocs) itr.next();
+                
+                if(obj.getOrderdocid() == null){
+                    obj.setOrderdocid((i + 1) * -1);
+                }
+                
                 EBISystem.getModule().getOrderPane().getTabModDoc().data[i][0] = obj.getName() == null ? "" : obj.getName();
                 EBISystem.getModule().getOrderPane().getTabModDoc().data[i][1] = EBISystem.getInstance().getDateToString(obj.getCreateddate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getCreateddate());
                 EBISystem.getModule().getOrderPane().getTabModDoc().data[i][2] = obj.getCreatedfrom() == null ? "" : obj.getCreatedfrom();
@@ -812,6 +822,11 @@ public class ControlOrder {
 
             while (itr.hasNext()) {
                 final Companyorderpositions obj = (Companyorderpositions) itr.next();
+                
+                if(obj.getPositionid() == null){
+                    obj.setPositionid((i + 1) * -1);
+                }
+                
                 EBISystem.getModule().getOrderPane().getTabModProduct().data[i][0] = String.valueOf(obj.getQuantity());
                 EBISystem.getModule().getOrderPane().getTabModProduct().data[i][1] = obj.getProductnr();
                 EBISystem.getModule().getOrderPane().getTabModProduct().data[i][2] = obj.getProductname() == null ? "" : obj.getProductname();
@@ -836,6 +851,11 @@ public class ControlOrder {
             int i = 0;
             while (itr.hasNext()) {
                 final Companyorderreceiver obj = (Companyorderreceiver) itr.next();
+                
+                if(obj.getReceiverid() == null){
+                    obj.setReceiverid(( i + 1 ) * -1);
+                }
+                
                 EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][0] = obj.getReceivervia() == null ? "" : obj.getReceivervia();
                 EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][1] = obj.getGender() == null ? "" : obj.getGender();
                 EBISystem.getModule().getOrderPane().getTabModReceiver().data[i][2] = obj.getSurname() == null ? "" : obj.getSurname();
@@ -862,11 +882,13 @@ public class ControlOrder {
 
             final Companyorderdocs doc = (Companyorderdocs) iter.next();
 
-            if (doc.getOrderdocid() == id) {
+            if (doc.getOrderdocid() != null && doc.getOrderdocid() == id) {
                 this.compOrder.getCompanyorderdocses().remove(doc);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
-                EBISystem.hibernate().session("EBICRM_SESSION").delete(doc);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                    EBISystem.hibernate().session("EBICRM_SESSION").delete(doc);
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                }
                 break;
             }
         }
@@ -876,11 +898,13 @@ public class ControlOrder {
         final Iterator iter = this.compOrder.getCompanyorderreceivers().iterator();
         while (iter.hasNext()) {
             final Companyorderreceiver orderrec = (Companyorderreceiver) iter.next();
-            if (orderrec.getReceiverid() == id) {
+            if (orderrec.getReceiverid() != null && orderrec.getReceiverid() == id) {
                 this.compOrder.getCompanyorderreceivers().remove(orderrec);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
-                EBISystem.hibernate().session("EBICRM_SESSION").delete(orderrec);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                    EBISystem.hibernate().session("EBICRM_SESSION").delete(orderrec);
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                }
                 break;
             }
         }
@@ -890,7 +914,7 @@ public class ControlOrder {
         final Iterator iter = this.compOrder.getCompanyorderreceivers().iterator();
         while (iter.hasNext()) {
             final Companyorderreceiver orderrec = (Companyorderreceiver) iter.next();
-            if (orderrec.getReceiverid() == id) {
+            if (orderrec.getReceiverid() != null && orderrec.getReceiverid() == id) {
                 final EBICRMAddContactAddressType addCo = new EBICRMAddContactAddressType(this, orderrec);
                 addCo.setVisible();
                 break;
@@ -902,11 +926,13 @@ public class ControlOrder {
         final Iterator iter = this.compOrder.getCompanyorderpositionses().iterator();
         while (iter.hasNext()) {
             final Companyorderpositions orderpro = (Companyorderpositions) iter.next();
-            if (orderpro.getPositionid() == id) {
+            if (orderpro.getPositionid() != null && orderpro.getPositionid() == id) {
                 this.compOrder.getCompanyorderpositionses().remove(orderpro);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
-                EBISystem.hibernate().session("EBICRM_SESSION").delete(orderpro);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                    EBISystem.hibernate().session("EBICRM_SESSION").delete(orderpro);
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                }
                 break;
             }
         }

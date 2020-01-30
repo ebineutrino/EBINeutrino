@@ -123,7 +123,10 @@ public class ControlLeads {
                 EBISystem.gui().vpanel("Leads").setID(company.getCompanyid());
             }
             leadID = company.getCompanyid();
+            isEdit = true;
         } catch (final Exception ex) {
+            EBISystem.hibernate().session("EBICRM_SESSION").clear();
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return leadID;
@@ -203,6 +206,7 @@ public class ControlLeads {
             }
 
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return leadID;
@@ -298,6 +302,7 @@ public class ControlLeads {
             EBISystem.gui().getPanel("businessCard", "Leads").updateUI();
 
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
             isEdit = false;
         }
@@ -319,6 +324,7 @@ public class ControlLeads {
             }
 
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
             return false;
         }
@@ -379,6 +385,7 @@ public class ControlLeads {
                     {EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", "", "", "", "", "", ""}};
             }
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         } finally {
             EBISystem.getModule().getLeadPane().getTabModel().fireTableDataChanged();
@@ -387,6 +394,7 @@ public class ControlLeads {
                     set.close();
                     ps1.close();
                 } catch (final SQLException e) {
+                    EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
                     e.printStackTrace();
                 }
             }
@@ -499,6 +507,7 @@ public class ControlLeads {
                         ""}};
             }
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         } finally {
             EBISystem.getModule().getLeadPane().getTabModel().fireTableDataChanged();
@@ -507,6 +516,7 @@ public class ControlLeads {
                     set.close();
                     ps1.close();
                 } catch (final SQLException e) {
+                    EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
                     e.printStackTrace();
                 }
             }

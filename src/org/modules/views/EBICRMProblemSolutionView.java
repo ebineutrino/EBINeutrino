@@ -289,7 +289,6 @@ public class EBICRMProblemSolutionView {
         dataControlProsol.dataShow(id);
         dataControlProsol.dataShowDoc();
         dataControlProsol.dataShowProduct();
-        dataControlProsol.isEdit = true;
         return true;
     }
 
@@ -330,6 +329,8 @@ public class EBICRMProblemSolutionView {
             dataControlProsol.dataDelete(Integer.parseInt(tabModProsol.data[selectedprosolRow][7].toString()));
             dataControlProsol.dataNew();
             dataControlProsol.dataShow(-1);
+            dataControlProsol.dataShowDoc();
+            dataControlProsol.dataShowProduct();
             dataControlProsol.isEdit = false;
         }
     }

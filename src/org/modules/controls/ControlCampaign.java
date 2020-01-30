@@ -125,9 +125,14 @@ public class ControlCampaign {
                 EBISystem.gui().vpanel("Campaign").setID(campaign.getCampaignid());
             }
             campaignID = campaign.getCampaignid();
+            isEdit = true;
         } catch (final HibernateException e) {
+            EBISystem.hibernate().session("CAMPAIGN_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBISystem.hibernate().session("CAMPAIGN_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return campaignID;
@@ -251,8 +256,10 @@ public class ControlCampaign {
                 campID = ncamp.getCampaignid();
             }
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return campID;
@@ -312,8 +319,10 @@ public class ControlCampaign {
             }
 
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } finally {
             EBISystem.gui().vpanel("Campaign").setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -336,6 +345,7 @@ public class ControlCampaign {
             }
 
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
 
@@ -377,6 +387,7 @@ public class ControlCampaign {
             EBISystem.getModule().getEBICRMCampaign().getTabModelCampaign().fireTableDataChanged();
 
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         } finally {
             if (set != null) {
@@ -384,6 +395,7 @@ public class ControlCampaign {
                     ps1.close();
                     set.close();
                 } catch (final SQLException e) {
+                    EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
                     e.printStackTrace();
                 }
             }
@@ -432,8 +444,10 @@ public class ControlCampaign {
             }
 
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return fileName;
@@ -461,8 +475,10 @@ public class ControlCampaign {
 
             }
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -494,6 +510,11 @@ public class ControlCampaign {
             int i = 0;
             while (itr.hasNext()) {
                 final Crmcampaignreceiver obj = (Crmcampaignreceiver) itr.next();
+                
+                if(obj.getReceiverid() == null){
+                    obj.setReceiverid(( i + 1) * -1);
+                }
+                
                 EBISystem.getModule().getEBICRMCampaign().getTabModReceiver().data[i][0] = obj.getReceivervia() == null ? "" : obj.getReceivervia();
                 EBISystem.getModule().getEBICRMCampaign().getTabModReceiver().data[i][1] = obj.getCompanynumber() == null ? "" : obj.getCompanynumber();
                 EBISystem.getModule().getEBICRMCampaign().getTabModReceiver().data[i][2] = obj.getCompanyname() == null ? "" : obj.getCompanyname();
@@ -511,9 +532,9 @@ public class ControlCampaign {
                 i++;
             }
         } else {
-            EBISystem.getModule().getEBICRMCampaign().getTabModReceiver().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", "", "", "", "",""}};
+            EBISystem.getModule().getEBICRMCampaign().getTabModReceiver().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", "", "", "", "", ""}};
         }
-        
+
         EBISystem.getModule().getEBICRMCampaign().getTabModReceiver().fireTableDataChanged();
     }
 
@@ -528,6 +549,10 @@ public class ControlCampaign {
             while (itr.hasNext()) {
 
                 final Crmcampaignposition obj = (Crmcampaignposition) itr.next();
+                
+                if(obj.getPositionid() == null){
+                    obj.setPositionid(( i + 1) * -1);
+                }
 
                 EBISystem.getModule().getEBICRMCampaign().getTabModProduct().data[i][0] = obj.getQuantity();
                 EBISystem.getModule().getEBICRMCampaign().getTabModProduct().data[i][1] = obj.getProductnr();
@@ -623,9 +648,7 @@ public class ControlCampaign {
         }
 
         if (!campaign.getCrmcampaignprops().isEmpty()) {
-
             final Iterator iter = campaign.getCrmcampaignprops().iterator();
-
             while (iter.hasNext()) {
                 final Crmcampaignprop dim = (Crmcampaignprop) iter.next();
                 if (dim.getPropertiesid() != null && dim.getPropertiesid() > -1) {
@@ -648,7 +671,7 @@ public class ControlCampaign {
         final Iterator iter = this.campaign.getCrmcampaignprops().iterator();
         while (iter.hasNext()) {
             final Crmcampaignprop properties = (Crmcampaignprop) iter.next();
-            if (id == properties.getPropertiesid()) {
+            if (properties.getPropertiesid() != null && id == properties.getPropertiesid()) {
                 final EBIDialogProperties dim = new EBIDialogProperties(campaign, properties);
                 dim.setVisible();
                 break;
@@ -662,17 +685,13 @@ public class ControlCampaign {
 
             final Crmcampaignprop properties = (Crmcampaignprop) iter.next();
 
-            if (id == properties.getPropertiesid()) {
-                if (id >= 0) {
-                    try {
-                        EBISystem.hibernate().transaction("CAMPAIGN_SESSION").begin();
-                        EBISystem.hibernate().session("CAMPAIGN_SESSION").delete(properties);
-                        EBISystem.hibernate().transaction("CAMPAIGN_SESSION").commit();
-                    } catch (final Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+            if (properties.getPropertiesid() != null && id == properties.getPropertiesid()) {
                 campaign.getCrmcampaignprops().remove(properties);
+                if (id > 0) {
+                    EBISystem.hibernate().transaction("CAMPAIGN_SESSION").begin();
+                    EBISystem.hibernate().session("CAMPAIGN_SESSION").delete(properties);
+                    EBISystem.hibernate().transaction("CAMPAIGN_SESSION").commit();
+                }
                 break;
             }
         }
@@ -685,6 +704,11 @@ public class ControlCampaign {
             int i = 0;
             while (iter.hasNext()) {
                 final Crmcampaignprop dim = (Crmcampaignprop) iter.next();
+                
+                if(dim.getPropertiesid() == null){
+                    dim.setPropertiesid((i + 1) * -1);
+                }
+                
                 EBISystem.getModule().getEBICRMCampaign().getTabModProperties().data[i][0] = dim.getName() == null ? "" : dim.getName();
                 EBISystem.getModule().getEBICRMCampaign().getTabModProperties().data[i][1] = dim.getValue() == null ? "" : dim.getValue();
                 EBISystem.getModule().getEBICRMCampaign().getTabModProperties().data[i][2] = dim.getPropertiesid();
@@ -723,6 +747,11 @@ public class ControlCampaign {
             int i = 0;
             while (itr.hasNext()) {
                 final Crmcampaigndocs obj = (Crmcampaigndocs) itr.next();
+                
+                if(obj.getDocid() == null){
+                    obj.setDocid(( i + 1) * -1);
+                }
+                
                 EBISystem.getModule().getEBICRMCampaign().getTabModDoc().data[i][0] = obj.getName() == null ? "" : obj.getName();
                 EBISystem.getModule().getEBICRMCampaign().getTabModDoc().data[i][1] = EBISystem.getInstance().getDateToString(obj.getCreateddate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getCreateddate());
                 EBISystem.getModule().getEBICRMCampaign().getTabModDoc().data[i][2] = obj.getCreatedfrom() == null ? "" : obj.getCreatedfrom();
@@ -739,7 +768,7 @@ public class ControlCampaign {
         final Iterator iter = this.campaign.getCrmcampaigndocses().iterator();
         while (iter.hasNext()) {
             final Crmcampaigndocs doc = (Crmcampaigndocs) iter.next();
-            if (id == doc.getDocid()) {
+            if (doc.getDocid() != null && id == doc.getDocid()) {
                 // Get the BLOB inputstream 
                 final String file = doc.getName().replaceAll(" ", "_");
                 final byte buffer[] = doc.getFiles();
@@ -753,11 +782,13 @@ public class ControlCampaign {
         final Iterator iter = this.campaign.getCrmcampaigndocses().iterator();
         while (iter.hasNext()) {
             final Crmcampaigndocs doc = (Crmcampaigndocs) iter.next();
-            if (id == doc.getDocid()) {
+            if (doc.getDocid() != null && id == doc.getDocid()) {
                 this.campaign.getCrmcampaigndocses().remove(doc);
-                EBISystem.hibernate().transaction("CAMPAIGN_SESSION").begin();
-                EBISystem.hibernate().session("CAMPAIGN_SESSION").delete(doc);
-                EBISystem.hibernate().transaction("CAMPAIGN_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("CAMPAIGN_SESSION").begin();
+                    EBISystem.hibernate().session("CAMPAIGN_SESSION").delete(doc);
+                    EBISystem.hibernate().transaction("CAMPAIGN_SESSION").commit();
+                }
                 break;
             }
         }
@@ -767,11 +798,13 @@ public class ControlCampaign {
         final Iterator iter = this.campaign.getCrmcampaignreceivers().iterator();
         while (iter.hasNext()) {
             final Crmcampaignreceiver campRec = (Crmcampaignreceiver) iter.next();
-            if (campRec.getReceiverid() == id) {
+            if (campRec.getReceiverid() != null && campRec.getReceiverid() == id) {
                 campaign.getCrmcampaignreceivers().remove(campRec);
-                EBISystem.hibernate().transaction("CAMPAIGN_SESSION").begin();
-                EBISystem.hibernate().session("CAMPAIGN_SESSION").delete(campRec);
-                EBISystem.hibernate().transaction("CAMPAIGN_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("CAMPAIGN_SESSION").begin();
+                    EBISystem.hibernate().session("CAMPAIGN_SESSION").delete(campRec);
+                    EBISystem.hibernate().transaction("CAMPAIGN_SESSION").commit();
+                }
                 break;
             }
         }
@@ -781,7 +814,7 @@ public class ControlCampaign {
         final Iterator iter = this.campaign.getCrmcampaignreceivers().iterator();
         while (iter.hasNext()) {
             final Crmcampaignreceiver campRec = (Crmcampaignreceiver) iter.next();
-            if (campRec.getReceiverid() == id) {
+            if (campRec.getReceiverid() != null && campRec.getReceiverid() == id) {
                 final EBICRMAddContactAddressType addCo = new EBICRMAddContactAddressType(this, campRec);
                 addCo.setVisible();
                 break;
@@ -793,11 +826,13 @@ public class ControlCampaign {
         final Iterator iter = this.campaign.getCrmcampaignpositions().iterator();
         while (iter.hasNext()) {
             final Crmcampaignposition camPro = (Crmcampaignposition) iter.next();
-            if (camPro.getPositionid() == id) {
+            if (camPro.getPositionid() != null && camPro.getPositionid() == id) {
                 campaign.getCrmcampaignpositions().remove(camPro);
-                EBISystem.hibernate().transaction("CAMPAIGN_SESSION").begin();
-                EBISystem.hibernate().session("CAMPAIGN_SESSION").delete(camPro);
-                EBISystem.hibernate().transaction("CAMPAIGN_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("CAMPAIGN_SESSION").begin();
+                    EBISystem.hibernate().session("CAMPAIGN_SESSION").delete(camPro);
+                    EBISystem.hibernate().transaction("CAMPAIGN_SESSION").commit();
+                }
                 break;
             }
         }

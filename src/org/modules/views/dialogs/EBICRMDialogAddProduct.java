@@ -119,6 +119,7 @@ public class EBICRMDialogAddProduct {
                 EBISystem.gui().dialog("productInsertDialog").setVisible(false);
             }
         });
+        
         EBISystem.gui().button("applyButton", "productInsertDialog").setEnabled(false);
         EBISystem.gui().button("applyButton", "productInsertDialog").setText(EBISystem.i18n("EBI_LANG_SAVE"));
         EBISystem.gui().button("applyButton", "productInsertDialog").addActionListener(new java.awt.event.ActionListener() {
@@ -262,7 +263,6 @@ public class EBICRMDialogAddProduct {
             if (isInvoice) {
                 saveInvoicePosition();
             }
-            canSave = false;
         }
     }
 
@@ -305,7 +305,6 @@ public class EBICRMDialogAddProduct {
         invoicePosition.setNetamount(invoicePosition.getNetamount());
         invoice.getCrminvoicepositions().add(invoicePosition);
         EBISystem.getModule().getInvoicePane().dataShowProduct();
-
         resetFields();
     }
 
@@ -350,7 +349,7 @@ public class EBICRMDialogAddProduct {
         try {
             Integer.parseInt(EBISystem.gui().textField("quantityText", "productInsertDialog").getText().replace(',', '.'));
         } catch (final NumberFormatException ex) {
-            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_VALID_NUMBER")).Show(EBIMessage.ERROR_MESSAGE);
+            EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_VALID_NUMBER")+" : "+EBISystem.i18n("EBI_LANG_QUANTITY")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -390,6 +389,7 @@ public class EBICRMDialogAddProduct {
         buffer.append("</table></body>");
         EBISystem.gui().getEditor("productText", "productInsertDialog").setText(buffer.toString());
         EBISystem.gui().button("applyButton", "productInsertDialog").setEnabled(false);
+        canSave = false;
     }
 
     public void fillHTMLForm() {

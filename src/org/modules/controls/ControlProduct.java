@@ -101,17 +101,6 @@ public class ControlProduct {
                 }
             }
 
-            //show first pic to image view
-            if (!product.getCrmproductdocses().isEmpty()) {
-                final Iterator iter = product.getCrmproductdocses().iterator();
-                while (iter.hasNext()) {
-                    final Crmproductdocs docs = (Crmproductdocs) iter.next();
-                    if (loadIfImage(docs)) {
-                        break;
-                    }
-                }
-            }
-
             if (!product.getCrmproductdependencies().isEmpty()) {
                 final Iterator itdip = product.getCrmproductdependencies().iterator();
                 while (itdip.hasNext()) {
@@ -126,12 +115,14 @@ public class ControlProduct {
 
             EBISystem.getInstance().getDataStore("Product", "ebiSave");
             EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").commit();
-
             if (!isEdit) {
                 EBISystem.gui().vpanel("Product").setID(product.getProductid());
             }
             productID = product.getProductid();
+            isEdit = true;
         } catch (final Exception e) {
+            EBISystem.hibernate().session("EBIPRODUCT_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return productID;
@@ -225,6 +216,7 @@ public class ControlProduct {
                 productID = pnew.getProductid();
             }
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return productID;
@@ -282,8 +274,10 @@ public class ControlProduct {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
             }
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
 
@@ -304,13 +298,14 @@ public class ControlProduct {
                 EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").commit();
             }
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
     }
 
     public void dataShow(Integer id) {
         ResultSet set = null;
-        int selRow = EBISystem.gui().table("companyProductTable", "Product").getSelectedRow() + id;
+        int selRow = EBISystem.gui().table("companyProductTable", "Product").getSelectedRow();
         PreparedStatement ps = null;
 
         try {
@@ -341,8 +336,10 @@ public class ControlProduct {
                 EBISystem.getModule().getEBICRMProductPane().getProductModel().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", ""}};
             }
         } catch (final SQLException ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         } finally {
             if (set != null) {
@@ -350,6 +347,7 @@ public class ControlProduct {
                     set.close();
                     ps.close();
                 } catch (final SQLException e) {
+                    EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
                     e.printStackTrace();
                 }
             }
@@ -448,6 +446,7 @@ public class ControlProduct {
         try {
             hcreator.setDataToCreate(new EBICRMHistoryDataUtil(pr.getProductid(), "Product", list));
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -476,7 +475,7 @@ public class ControlProduct {
         final Iterator iter = this.product.getCrmproductdocses().iterator();
         while (iter.hasNext()) {
             final Crmproductdocs doc = (Crmproductdocs) iter.next();
-            if (id == doc.getProductdocid()) {
+            if (doc.getProductdocid() != null && id == doc.getProductdocid()) {
                 loadIfImage(doc);
                 break;
             }
@@ -515,8 +514,10 @@ public class ControlProduct {
                 ret = true;
             }
         } catch (final FileNotFoundException exx) {
+            EBIExceptionDialog.getInstance(exx.getMessage(), exx.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_FILE_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
         } catch (final IOException exx1) {
+            EBIExceptionDialog.getInstance(exx1.getMessage(), exx1.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_LOADING_FILE")).Show(EBIMessage.INFO_MESSAGE);
         }
 
@@ -528,7 +529,7 @@ public class ControlProduct {
         final Iterator iter = this.product.getCrmproductdocses().iterator();
         while (iter.hasNext()) {
             final Crmproductdocs doc = (Crmproductdocs) iter.next();
-            if (id == doc.getProductdocid()) {
+            if (doc.getProductdocid() != null && id == doc.getProductdocid()) {
                 // Get the BLOB inputstream
                 final String file = doc.getName().replaceAll(" ", "_");
                 final byte buffer[] = doc.getFiles();
@@ -548,6 +549,11 @@ public class ControlProduct {
             while (itr.hasNext()) {
 
                 final Crmproductdocs obj = (Crmproductdocs) itr.next();
+                
+                if(obj.getProductdocid() == null){
+                    obj.setProductdocid((i + 1) * -1);
+                }
+                
                 EBISystem.getModule().getEBICRMProductPane().getTabModDoc().data[i][0] = obj.getName() == null ? "" : obj.getName();
                 EBISystem.getModule().getEBICRMProductPane().getTabModDoc().data[i][1] = EBISystem.getInstance().getDateToString(obj.getCreateddate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getCreateddate());
                 EBISystem.getModule().getEBICRMProductPane().getTabModDoc().data[i][2] = obj.getCreatedfrom() == null ? "" : obj.getCreatedfrom();
@@ -564,13 +570,18 @@ public class ControlProduct {
         final Iterator iter = this.product.getCrmproductdocses().iterator();
         while (iter.hasNext()) {
             final Crmproductdocs doc = (Crmproductdocs) iter.next();
-            if (doc.getProductdocid() == id) {
+            if (doc.getProductdocid() != null && doc.getProductdocid() == id) {
                 this.product.getCrmproductdocses().remove(doc);
-                EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").begin();
-                EBISystem.hibernate().session("EBIPRODUCT_SESSION").delete(doc);
-                EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").begin();
+                    EBISystem.hibernate().session("EBIPRODUCT_SESSION").delete(doc);
+                    EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").commit();
+                }
                 break;
             }
+        }
+        if(this.product.getCrmproductdocses().size() == 0){
+            EBISystem.getModule().getEBICRMProductPane().clearPicture();
         }
     }
 
@@ -584,11 +595,13 @@ public class ControlProduct {
         while (iter.hasNext()) {
 
             this.dependency = (Crmproductdependency) iter.next();
-            if (id == this.dependency.getDependencyid()) {
+            if (this.dependency.getDependencyid() != null && id == this.dependency.getDependencyid()) {
                 this.product.getCrmproductdependencies().remove(this.dependency);
-                EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").begin();
-                EBISystem.hibernate().session("EBIPRODUCT_SESSION").delete(this.dependency);
-                EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").begin();
+                    EBISystem.hibernate().session("EBIPRODUCT_SESSION").delete(this.dependency);
+                    EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").commit();
+                }
                 break;
             }
         }
@@ -601,6 +614,11 @@ public class ControlProduct {
             int i = 0;
             while (iter.hasNext()) {
                 final Crmproductdependency dip = (Crmproductdependency) iter.next();
+                
+                if(dip.getDependencyid() == null){
+                    dip.setDependencyid((i + 1) * -1);
+                }
+                
                 EBISystem.getModule().getEBICRMProductPane().getProductDependencyModel().data[i][0] = dip.getProductnr();
                 EBISystem.getModule().getEBICRMProductPane().getProductDependencyModel().data[i][1] = dip.getProductname();
                 EBISystem.getModule().getEBICRMProductPane().getProductDependencyModel().data[i][2] = dip.getDependencyid();
@@ -621,7 +639,7 @@ public class ControlProduct {
         final Iterator iter = product.getCrmproductdimensions().iterator();
         while (iter.hasNext()) {
             this.dimension = (Crmproductdimension) iter.next();
-            if (id == dimension.getDimensionid()) {
+            if (dimension.getDimensionid() != null && id == dimension.getDimensionid()) {
                 final EBIDialogProperties dim = new EBIDialogProperties(product, dimension);
                 dim.setVisible();
                 break;
@@ -633,11 +651,13 @@ public class ControlProduct {
         final Iterator iter = product.getCrmproductdimensions().iterator();
         while (iter.hasNext()) {
             this.dimension = (Crmproductdimension) iter.next();
-            if (id == dimension.getDimensionid()) {
-                EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").begin();
-                EBISystem.hibernate().session("EBIPRODUCT_SESSION").delete(dimension);
-                EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").commit();
+            if (dimension.getDimensionid() != null && id == dimension.getDimensionid()) {
                 this.product.getCrmproductdimensions().remove(dimension);
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").begin();
+                    EBISystem.hibernate().session("EBIPRODUCT_SESSION").delete(dimension);
+                    EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").commit();
+                }
                 break;
             }
         }
@@ -650,6 +670,11 @@ public class ControlProduct {
             int i = 0;
             while (iter.hasNext()) {
                 final Crmproductdimension dim = (Crmproductdimension) iter.next();
+                
+                if(dim.getDimensionid() == null){
+                    dim.setDimensionid((i + 1) * -1);
+                }
+                
                 EBISystem.getModule().getEBICRMProductPane().getProductModelDimension().data[i][0] = dim.getName();
                 EBISystem.getModule().getEBICRMProductPane().getProductModelDimension().data[i][1] = dim.getValue();
                 EBISystem.getModule().getEBICRMProductPane().getProductModelDimension().data[i][2] = dim.getDimensionid();
@@ -682,8 +707,10 @@ public class ControlProduct {
             }
 
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -708,8 +735,10 @@ public class ControlProduct {
             }
 
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -748,6 +777,7 @@ public class ControlProduct {
                 }
             }
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return name;
@@ -764,6 +794,7 @@ public class ControlProduct {
                 exist = true;
             }
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return exist;

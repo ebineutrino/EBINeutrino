@@ -18,7 +18,7 @@ public class EBIJTextFieldNumeric extends PlainDocument {
     public static final String NUMERIC_MINUS = NUMERIC + "-";
     public static final String ALPHA_NUMERIC = ALPHA + NUMERIC;
     public static final String PHONE = NUMERIC + "+"+" ";
-    public static final String EMAIL = ALPHA_NUMERIC + "@";
+    public static final String EMAIL = ALPHA_NUMERIC + ".@";
     public static final String HOUR = NUMERIC;
     public static final String MINUTE = NUMERIC;
     protected String acceptedChars = null;
@@ -71,8 +71,10 @@ public class EBIJTextFieldNumeric extends PlainDocument {
         }
         
         if(acceptedChars.equals(EMAIL)){
-            if(this.getText(0, offset).indexOf("@") == -1){
-                return;
+            if(this.getText(0, offset).indexOf(".") != -1){
+                if(this.getText(0, offset).indexOf("@") == -1){
+                    return;
+                }
             }
         }
 

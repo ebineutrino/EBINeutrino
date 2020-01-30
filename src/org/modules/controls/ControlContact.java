@@ -79,7 +79,10 @@ public class ControlContact {
             EBISystem.getInstance().getCompany().getCompanycontactses().add(contact);
             
             contactID = contact.getContactid();
+            isEdit = true;
         } catch (final Exception ex) {
+            EBISystem.hibernate().session("EBICRM_SESSION").clear();
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
 
@@ -153,6 +156,7 @@ public class ControlContact {
                 contactID = conx.getContactid();
             }
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return contactID;
@@ -427,6 +431,7 @@ public class ControlContact {
         try {
             EBISystem.getModule().hcreator.setDataToCreate(new EBICRMHistoryDataUtil(com.getCompanyid(), "Contact", list));
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -438,6 +443,11 @@ public class ControlContact {
             int i = 0;
             while (itr.hasNext()) {
                 final Companycontactaddress obj = (Companycontactaddress) itr.next();
+                
+                if(obj.getAddressid() == null){
+                    obj.setAddressid((i + 1) *-1);
+                }
+                
                 EBISystem.getModule().getContactPane().getAddressModel().data[i][0] = obj.getAddresstype() == null ? "" : obj.getAddresstype();
                 EBISystem.getModule().getContactPane().getAddressModel().data[i][1] = obj.getStreet() == null ? "" : obj.getStreet();
                 EBISystem.getModule().getContactPane().getAddressModel().data[i][2] = obj.getZip() == null ? "" : obj.getZip();
@@ -457,19 +467,17 @@ public class ControlContact {
 
     public void dataAddressDelete(final int id) {
         final Iterator iter = this.contact.getCompanycontactaddresses().iterator();
-        Companycontactaddress contactAddress = null;
         while (iter.hasNext()) {
             final Companycontactaddress address = (Companycontactaddress) iter.next();
-            if (address.getAddressid() == id) {
-                contactAddress = address;
+            if (address.getAddressid() != null && address.getAddressid() == id) {
+                contact.getCompanycontactaddresses().remove(address);
+                if (id > 0) {
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                    EBISystem.hibernate().session("EBICRM_SESSION").delete(address);
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                 }
                 break;
             }
-        }
-        if (contactAddress != null) {
-            EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
-            EBISystem.hibernate().session("EBICRM_SESSION").delete(contactAddress);
-            EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-            contact.getCompanycontactaddresses().remove(contactAddress);
         }
     }
 

@@ -236,7 +236,6 @@ public class EBICRMLeadsView {
         } else {
             controlLeads.dataShow(EBISystem.gui().textField("searchLeadsText", "Leads").getText());
         }
-        controlLeads.isEdit = true;
         EBISystem.gui().table("leadsTable", "Leads").changeSelection(row, 0, false, false);
         return true;
     }

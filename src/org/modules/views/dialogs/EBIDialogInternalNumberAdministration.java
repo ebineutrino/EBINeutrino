@@ -22,7 +22,6 @@ public class EBIDialogInternalNumberAdministration {
     private boolean isInvoice = false;
 
     public EBIDialogInternalNumberAdministration(final boolean isInvoice) {
-
         this.isInvoice = isInvoice;
         EBISystem.gui().loadGUI("CRMDialog/autoIncNrDialog.xml");
         tabModel = new ModelInternalNumber();
@@ -33,19 +32,14 @@ public class EBIDialogInternalNumberAdministration {
             fillComboCategory();
             showNumber();
         }
-
     }
 
     private void fillComboInvoiceCategory() {
-
         ResultSet set = null;
-
         try {
             final PreparedStatement ps = EBISystem.getInstance().iDB().initPreparedStatement("SELECT NAME FROM CRMINVOICECATEGORY ");
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps);
-
             EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").addItem(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"));
-
             set.last();
             if (set.getRow() > 0) {
                 set.beforeFirst();
@@ -53,7 +47,6 @@ public class EBIDialogInternalNumberAdministration {
                     EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").addItem(set.getString("NAME"));
                 }
             }
-
         } catch (final SQLException ex) {
             EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.NEUTRINO_DEBUG_MESSAGE);
         } finally {
@@ -68,9 +61,7 @@ public class EBIDialogInternalNumberAdministration {
     }
 
     private void fillComboCategory() {
-
         ResultSet set = null;
-
         try {
             final PreparedStatement ps = EBISystem.getInstance().iDB().initPreparedStatement("SELECT NAME FROM COMPANYCATEGORY ");
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps);
@@ -83,7 +74,6 @@ public class EBIDialogInternalNumberAdministration {
                     EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").addItem(set.getString("NAME"));
                 }
             }
-
         } catch (final SQLException ex) {
             EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.NEUTRINO_DEBUG_MESSAGE);
         } finally {

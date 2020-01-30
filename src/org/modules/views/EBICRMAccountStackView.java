@@ -380,12 +380,10 @@ public class EBICRMAccountStackView {
         if (!validateInput()) {
             return false;
         }
-
         EBISystem.showInActionStatus("Account");
         int row = EBISystem.gui().table("accountTable", "Account").getSelectedRow();
         Integer id = dataControlAccount.dataStore();
         dataControlAccount.dataShow(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString(), id);
-        dataControlAccount.isEdit = true;
         EBISystem.gui().table("accountTable", "Account").changeSelection(row, 0, false, false);
         return true;
     }
@@ -457,6 +455,7 @@ public class EBICRMAccountStackView {
         if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
             EBISystem.showInActionStatus("Account");
             dataControlAccount.dataDeleteCreditDebit(Integer.parseInt(creditDebitMod.data[selectedCDRow][2].toString()));
+            dataControlAccount.dataShowCreditDebit();
         }
     }
 

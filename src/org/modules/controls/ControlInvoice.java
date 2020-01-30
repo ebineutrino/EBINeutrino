@@ -29,7 +29,8 @@ public class ControlInvoice {
         Integer invoiceID = -1;
         try {
             EBISystem.hibernate().transaction("EBIINVOICE_SESSION").begin();
-            EBISystem.hibernate().transaction("EBIINVOICE_SESSION").begin();if (isEdit == false) {
+            EBISystem.hibernate().transaction("EBIINVOICE_SESSION").begin();
+            if (isEdit == false) {
                 invoice.setCreatedfrom(EBISystem.gui().vpanel("Invoice").getCreatedFrom());
                 invoice.setCreateddate(new Date());
             } else {
@@ -104,7 +105,10 @@ public class ControlInvoice {
                 EBISystem.gui().vpanel("Invoice").setID(invoice.getInvoiceid());
             }
             invoiceID = invoice.getInvoiceid();
+            isEdit = true;
         } catch (final Exception e) {
+            EBISystem.hibernate().session("EBIINVOICE_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return invoiceID;
@@ -185,8 +189,10 @@ public class ControlInvoice {
             EBISystem.hibernate().transaction("EBIINVOICE_SESSION").commit();
 
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -211,7 +217,7 @@ public class ControlInvoice {
     }
 
     public void dataShow(final String invoiceYear, final int showID) {
-        
+
         int srow = EBISystem.gui().table("tableTotalInvoice", "Invoice").getSelectedRow() + showID;
         final EBIAbstractTableModel model = (EBIAbstractTableModel) EBISystem.gui()
                 .table("tableTotalInvoice", "Invoice").getModel();
@@ -261,7 +267,7 @@ public class ControlInvoice {
                     model.data[i][7] = inv.getContactsurname() == null ? "" : inv.getContactsurname();
                     model.data[i][8] = inv.getDate() == null ? "" : EBISystem.getInstance().getDateToString(inv.getDate());
                     model.data[i][9] = inv.getInvoiceid();
-                    if(showID != -1 && showID == inv.getInvoiceid()){
+                    if (showID != -1 && showID == inv.getInvoiceid()) {
                         srow = 0;
                     }
                     i++;
@@ -272,9 +278,10 @@ public class ControlInvoice {
             model.fireTableDataChanged();
             EBISystem.hibernate().transaction("EBIINVOICE_SESSION").commit();
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
-        if(srow > -1){
+        if (srow > -1) {
             srow = EBISystem.gui().table("tableTotalInvoice", "Invoice").convertRowIndexToView(srow);
             EBISystem.gui().table("tableTotalInvoice", "Invoice").changeSelection(srow, 0, false, false);
         }
@@ -393,7 +400,7 @@ public class ControlInvoice {
             EBISystem.hibernate().transaction("EBIINVOICE_SESSION").commit();
         } catch (final Exception ex) {
             ex.printStackTrace();
-            EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
         }
         return fileName;
     }
@@ -579,6 +586,7 @@ public class ControlInvoice {
         try {
             EBISystem.getModule().hcreator.setDataToCreate(new EBICRMHistoryDataUtil(id, "Invoice", list));
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -593,6 +601,11 @@ public class ControlInvoice {
             final NumberFormat currency = NumberFormat.getCurrencyInstance();
             while (itr.hasNext()) {
                 final Crminvoiceposition obj = (Crminvoiceposition) itr.next();
+                
+                if(obj.getPositionid() == null){
+                    obj.setPositionid((i + 1) * -1);
+                }
+                
                 EBISystem.getModule().getInvoicePane().getTabModProduct().data[i][0] = String.valueOf(obj.getQuantity());
                 EBISystem.getModule().getInvoicePane().getTabModProduct().data[i][1] = obj.getProductnr();
                 EBISystem.getModule().getInvoicePane().getTabModProduct().data[i][2] = obj.getProductname() == null ? "" : obj.getProductname();
@@ -618,12 +631,13 @@ public class ControlInvoice {
 
             final Crminvoiceposition invpro = (Crminvoiceposition) iter.next();
 
-            if (invpro.getPositionid() == id) {
-                EBISystem.hibernate().transaction("EBIINVOICE_SESSION").begin();
-                EBISystem.hibernate().session("EBIINVOICE_SESSION").delete(invpro);
-                EBISystem.hibernate().transaction("EBIINVOICE_SESSION").commit();
+            if (invpro.getPositionid() != null && invpro.getPositionid() == id) {
                 invoice.getCrminvoicepositions().remove(invpro);
-                this.dataShowProduct();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBIINVOICE_SESSION").begin();
+                    EBISystem.hibernate().session("EBIINVOICE_SESSION").delete(invpro);
+                    EBISystem.hibernate().transaction("EBIINVOICE_SESSION").commit();
+                }
                 break;
             }
         }
@@ -652,6 +666,7 @@ public class ControlInvoice {
 
             }
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return name;
@@ -675,6 +690,7 @@ public class ControlInvoice {
             }
             EBISystem.hibernate().transaction("EBIINVOICE_SESSION").commit();
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
 
@@ -701,6 +717,7 @@ public class ControlInvoice {
             }
             EBISystem.hibernate().transaction("EBIINVOICE_SESSION").commit();
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return ret;
@@ -756,6 +773,7 @@ public class ControlInvoice {
                 val = tax.getTaxvalue();
             }
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return val;

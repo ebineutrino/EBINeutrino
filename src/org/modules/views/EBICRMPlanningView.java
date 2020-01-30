@@ -404,7 +404,6 @@ public class EBICRMPlanningView {
         int row = EBISystem.gui().table("projectTable", "Project").getSelectedRow();
         Integer id = dataControlProject.dataStore();
         dataControlProject.dataShow(id);
-        dataControlProject.isEdit = true;
         EBISystem.gui().table("projectTable", "Project").changeSelection(row, 0, false, false);
         return false;
     }

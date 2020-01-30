@@ -75,8 +75,6 @@ public class ControlPlanning {
 			 * project.setRemaincost(Double.parseDouble(EBISystem.getGUIRenderer().
 			 * getFormattedTextfield("remainingCost","Project").getValue().toString())); }
              */
-            
-
             if (!project.getCrmprojecttasks().isEmpty()) {
                 final Iterator iter = project.getCrmprojecttasks().iterator();
                 while (iter.hasNext()) {
@@ -113,17 +111,20 @@ public class ControlPlanning {
                     }
                 }
             }
-            
+
             EBISystem.hibernate().session("EBIPROJECT_SESSION").saveOrUpdate(project);
             EBISystem.getInstance().getDataStore("Project", "ebiSave");
             EBISystem.hibernate().transaction("EBIPROJECT_SESSION").commit();
-            
+
             if (!isEdit) {
                 EBISystem.gui().vpanel("Project").setID(project.getProjectid());
             }
-            
+
             plannID = project.getProjectid();
+            isEdit = true;
         } catch (final Exception e) {
+            EBISystem.hibernate().session("EBIPROJECT_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
             return plannID;
         }
@@ -132,7 +133,7 @@ public class ControlPlanning {
 
     public Integer dataCopy(final int id) {
         Query query;
-        Integer planID=-1;
+        Integer planID = -1;
         try {
 
             query = EBISystem.hibernate().session("EBIPROJECT_SESSION")
@@ -217,6 +218,7 @@ public class ControlPlanning {
                 planID = pnew.getProjectid();
             }
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return planID;
@@ -324,8 +326,10 @@ public class ControlPlanning {
                         .Show(EBIMessage.INFO_MESSAGE);
             }
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -351,8 +355,8 @@ public class ControlPlanning {
         int selRow = EBISystem.gui().table("projectTable", "Project").getSelectedRow() + id;
 
         try {
-             EBISystem.hibernate().transaction("EBIPROJECT_SESSION").begin();
-            query = EBISystem.hibernate().session("EBIPROJECT_SESSION").createQuery("from Crmproject order by createddate desc "); 
+            EBISystem.hibernate().transaction("EBIPROJECT_SESSION").begin();
+            query = EBISystem.hibernate().session("EBIPROJECT_SESSION").createQuery("from Crmproject order by createddate desc ");
             final Iterator iter = query.iterate();
 
             final EBIAbstractTableModel tabMod = (EBIAbstractTableModel) EBISystem.gui().table("projectTable", "Project").getModel();
@@ -375,7 +379,7 @@ public class ControlPlanning {
                     tabMod.data[i][7] = pro.getActualcost() == null ? 0.0 : currency.format(pro.getActualcost());
                     tabMod.data[i][8] = "";
                     tabMod.data[i][9] = pro.getProjectid();
-                    if(id != -1 && id == pro.getProjectid()){
+                    if (id != -1 && id == pro.getProjectid()) {
                         selRow = i;
                     }
                     i++;
@@ -386,11 +390,13 @@ public class ControlPlanning {
             tabMod.fireTableDataChanged();
             EBISystem.hibernate().transaction("EBIPROJECT_SESSION").begin();
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
-        if(selRow > -1){
+        if (selRow > -1) {
             selRow = EBISystem.gui().table("projectTable", "Project").convertRowIndexToView(selRow);
             EBISystem.gui().table("projectTable", "Project").changeSelection(selRow, 0, false, false);
         }
@@ -548,8 +554,10 @@ public class ControlPlanning {
                 EBISystem.getModule().hcreator.setDataToCreate(new EBICRMHistoryDataUtil(id, "Project", list));
             }
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -587,6 +595,7 @@ public class ControlPlanning {
             }
 
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
     }

@@ -394,7 +394,6 @@ public class EBICRMOpportunityView {
         dataOpportuniyControl.dataShow(id);
         dataOpportuniyControl.dataShowDoc();
         dataOpportuniyControl.showOpportunityContacts();
-        dataOpportuniyControl.isEdit = true;
         EBISystem.gui().table("companyOpportunityTable", "Opportunity").changeSelection(row, 0, false, false);
         return true;
     }
@@ -444,6 +443,8 @@ public class EBICRMOpportunityView {
             dataOpportuniyControl.dataDelete(Integer.parseInt(tabModel.data[selectedOpportunityRow][tabModel.columnNames.length].toString()));
             dataOpportuniyControl.dataNew();
             dataOpportuniyControl.dataShow(-1);
+            dataOpportuniyControl.showOpportunityContacts();
+            dataOpportuniyControl.dataShowDoc();
             dataOpportuniyControl.isEdit = false;
         }
     }

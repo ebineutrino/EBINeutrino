@@ -123,7 +123,10 @@ public class ControlOpportunity {
                 EBISystem.gui().vpanel("Opportunity").setID(opportunity.getOpportunityid());
             }
             opportunityID = opportunity.getOpportunityid();
+            isEdit = true;
         } catch (final Exception ex) {
+            EBISystem.hibernate().session("EBICRM_SESSION").clear();
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return opportunityID;
@@ -226,6 +229,7 @@ public class ControlOpportunity {
                 oppID = opnew.getOpportunityid();
             }
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return oppID;
@@ -367,7 +371,6 @@ public class ControlOpportunity {
 
         if (EBISystem.getInstance().getCompany().getCompanyopportunities().size() > 0) {
 
-            Companyopportunity opp = null;
             for (Companyopportunity oprtObj : EBISystem.getInstance().getCompany().getCompanyopportunities()) {
                 if (oprtObj.getOpportunityid() == id) {
                     opportunity = oprtObj;
@@ -476,7 +479,7 @@ public class ControlOpportunity {
 
         } catch (final Exception ex) {
             ex.printStackTrace();
-            EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
         }
 
         return fileName;
@@ -493,9 +496,13 @@ public class ControlOpportunity {
         final Iterator iter = this.opportunity.getCompanyopportunitycontacts().iterator();
         while (iter.hasNext()) {
             final Companyopportunitycontact con = (Companyopportunitycontact) iter.next();
-            if (con.getOpportunitycontactid() == id) {
+            if (con.getOpportunitycontactid() != null && con.getOpportunitycontactid() == id) {
                 this.opportunity.getCompanyopportunitycontacts().remove(con);
-                this.showOpportunityContacts();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                    EBISystem.hibernate().session("EBICRM_SESSION").delete(con);
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                }
                 break;
             }
         }
@@ -508,7 +515,7 @@ public class ControlOpportunity {
 
             contact = (Companyopportunitycontact) iter.next();
 
-            if (contact.getOpportunitycontactid() == id) {
+            if (contact.getOpportunitycontactid() != null && contact.getOpportunitycontactid() == id) {
                 final EBIMeetingAddContactDialog newContact = new EBIMeetingAddContactDialog(false, null, contact, true);
                 newContact.setGenderText(contact.getGender());
                 newContact.setSurnameText(contact.getSurname());
@@ -565,6 +572,11 @@ public class ControlOpportunity {
             int i = 0;
             while (itr.hasNext()) {
                 final Companyopportunitycontact obj = (Companyopportunitycontact) itr.next();
+                
+                if(obj.getOpportunitycontactid() == null){
+                    obj.setOpportunitycontactid((i +1) * -1);
+                }
+                
                 EBISystem.getModule().getOpportunityPane().getTabModelContact().data[i][0] = obj.getPosition() == null ? "" : obj.getPosition();
                 EBISystem.getModule().getOpportunityPane().getTabModelContact().data[i][1] = obj.getGender() == null ? "" : obj.getGender();
                 EBISystem.getModule().getOpportunityPane().getTabModelContact().data[i][2] = obj.getSurname() == null ? "" : obj.getSurname();
@@ -586,11 +598,13 @@ public class ControlOpportunity {
         final Iterator iter = this.opportunity.getCompanyopporunitydocses().iterator();
         while (iter.hasNext()) {
             final Companyopporunitydocs doc = (Companyopporunitydocs) iter.next();
-            if (id == doc.getDocid()) {
+            if (doc.getDocid() != null && id == doc.getDocid()) {
                 this.opportunity.getCompanyopporunitydocses().remove(doc);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
-                EBISystem.hibernate().session("EBICRM_SESSION").delete(doc);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                    EBISystem.hibernate().session("EBICRM_SESSION").delete(doc);
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                }
                 break;
             }
         }
@@ -605,6 +619,9 @@ public class ControlOpportunity {
             int i = 0;
             while (itr.hasNext()) {
                 final Companyopporunitydocs obj = (Companyopporunitydocs) itr.next();
+                if(obj.getDocid() == null){
+                    obj.setDocid((i + 1) * -1);
+                }
                 EBISystem.getModule().getOpportunityPane().getTabOpportunityDoc().data[i][0] = obj.getName() == null ? "" : obj.getName();
                 EBISystem.getModule().getOpportunityPane().getTabOpportunityDoc().data[i][1] = EBISystem.getInstance().getDateToString(obj.getCreateddate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getCreateddate());
                 EBISystem.getModule().getOpportunityPane().getTabOpportunityDoc().data[i][2] = obj.getCreatedfrom() == null ? "" : obj.getCreatedfrom();
@@ -622,7 +639,7 @@ public class ControlOpportunity {
         final Iterator iter = this.opportunity.getCompanyopporunitydocses().iterator();
         while (iter.hasNext()) {
             final Companyopporunitydocs doc = (Companyopporunitydocs) iter.next();
-            if (id == doc.getDocid()) {
+            if (doc.getDocid() != null && id == doc.getDocid()) {
                 // Get the BLOB inputstream
                 final String file = doc.getName().replaceAll(" ", "_");
                 final byte buffer[] = doc.getFiles();
@@ -704,6 +721,7 @@ public class ControlOpportunity {
         try {
             EBISystem.getModule().hcreator.setDataToCreate(new EBICRMHistoryDataUtil(com.getCompanyid(), "Opportunity", list));
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }

@@ -106,7 +106,10 @@ public class ControlService {
                 EBISystem.gui().vpanel("Service").setID(compService.getServiceid());
             }
             serviceID = compService.getServiceid();
+            isEdit = true;
         } catch (final Exception e) {
+            EBISystem.hibernate().session("EBICRM_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return serviceID;
@@ -205,6 +208,7 @@ public class ControlService {
                 serviceID = serv.getServiceid();
             }
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return serviceID;
@@ -485,6 +489,7 @@ public class ControlService {
             EBISystem.getModule().hcreator
                     .setDataToCreate(new EBICRMHistoryDataUtil(com.getCompanyid(), "Service", list));
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -508,12 +513,12 @@ public class ControlService {
             }
         }
     }
-    
+
     public void dataViewDoc(final int id) {
         final Iterator iter = this.compService.getCompanyservicedocses().iterator();
         while (iter.hasNext()) {
             final Companyservicedocs doc = (Companyservicedocs) iter.next();
-            if (id == doc.getServicedocid()) {
+            if (doc.getServicedocid() != null && id == doc.getServicedocid()) {
                 // Get the BLOB inputstream
                 final String file = doc.getName().replaceAll(" ", "_");
                 final byte buffer[] = doc.getFiles();
@@ -530,6 +535,11 @@ public class ControlService {
             int i = 0;
             while (itr.hasNext()) {
                 final Companyservicedocs obj = (Companyservicedocs) itr.next();
+                
+                if( obj.getServicedocid() == null){
+                     obj.setServicedocid((i + 1) * -1);
+                }
+                
                 EBISystem.getModule().getServicePane().getTabModDoc().data[i][0] = obj.getName() == null ? "" : obj.getName();
                 EBISystem.getModule().getServicePane().getTabModDoc().data[i][1] = EBISystem.getInstance().getDateToString(obj.getCreateddate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getCreateddate());
                 EBISystem.getModule().getServicePane().getTabModDoc().data[i][2] = obj.getCreatedfrom() == null ? "" : obj.getCreatedfrom();
@@ -551,6 +561,11 @@ public class ControlService {
 
             while (itr.hasNext()) {
                 final Companyservicepositions obj = (Companyservicepositions) itr.next();
+                
+                if(obj.getPositionid() == null){
+                    obj.setPositionid(( i + 1 ) * -1);
+                }
+                
                 EBISystem.getModule().getServicePane().getTabModProduct().data[i][0] = String.valueOf(obj.getQuantity());
                 EBISystem.getModule().getServicePane().getTabModProduct().data[i][1] = obj.getProductnr();
                 EBISystem.getModule().getServicePane().getTabModProduct().data[i][2] = obj.getProductname() == null ? "" : obj.getProductname();
@@ -579,6 +594,11 @@ public class ControlService {
             int i = 0;
             while (itr.hasNext()) {
                 final Companyservicepsol obj = (Companyservicepsol) itr.next();
+                
+                if(obj.getProsolid() == null){
+                    obj.setProsolid(( i + 1 ) * -1);
+                }
+                
                 EBISystem.getModule().getServicePane().getTabModProsol().data[i][0] = obj.getSolutionnr() == null ? "" : obj.getSolutionnr();
                 EBISystem.getModule().getServicePane().getTabModProsol().data[i][1] = obj.getName() == null ? "" : obj.getName();
                 EBISystem.getModule().getServicePane().getTabModProsol().data[i][2] = obj.getClassification() == null ? "" : obj.getClassification();
@@ -599,11 +619,13 @@ public class ControlService {
         final Iterator iter = compService.getCompanyservicedocses().iterator();
         while (iter.hasNext()) {
             final Companyservicedocs doc = (Companyservicedocs) iter.next();
-            if (doc.getServicedocid() == id) {
+            if (doc.getServicedocid() != null && doc.getServicedocid() == id) {
                 compService.getCompanyservicedocses().remove(doc);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
-                EBISystem.hibernate().session("EBICRM_SESSION").delete(doc);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                    EBISystem.hibernate().session("EBICRM_SESSION").delete(doc);
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                }
                 break;
             }
         }
@@ -613,11 +635,13 @@ public class ControlService {
         final Iterator iter = compService.getCompanyservicepsols().iterator();
         while (iter.hasNext()) {
             final Companyservicepsol servicerec = (Companyservicepsol) iter.next();
-            if (servicerec.getProsolid() == id) {
+            if (servicerec.getProsolid() != null && servicerec.getProsolid() == id) {
                 compService.getCompanyservicepsols().remove(servicerec);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
-                EBISystem.hibernate().session("EBICRM_SESSION").delete(servicerec);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                    EBISystem.hibernate().session("EBICRM_SESSION").delete(servicerec);
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                }
                 break;
             }
         }
@@ -627,11 +651,13 @@ public class ControlService {
         final Iterator iter = compService.getCompanyservicepositionses().iterator();
         while (iter.hasNext()) {
             final Companyservicepositions servicepro = (Companyservicepositions) iter.next();
-            if (servicepro.getPositionid() == id) {
+            if (servicepro.getPositionid() != null && servicepro.getPositionid() == id) {
                 compService.getCompanyservicepositionses().remove(servicepro);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
-                EBISystem.hibernate().session("EBICRM_SESSION").delete(servicepro);
-                EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                    EBISystem.hibernate().session("EBICRM_SESSION").delete(servicepro);
+                    EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                }
                 break;
             }
         }

@@ -21,21 +21,28 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class EBIMeetingProtocolView {
-    
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private ControlMeetingProtocol dataMeetingControl = new ControlMeetingProtocol();
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelCRMProtocol tableModel = null;
     public static String[] art = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelCRMContact tabModelContact = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelDoc tabmeetingDoc = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedProtocolRow = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedContactRow = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedDocRow = -1;
 
     public void initializeAction() {
@@ -47,9 +54,13 @@ public class EBIMeetingProtocolView {
             }
         });
 
-        /***********************************************************************************/
+        /**
+         * ********************************************************************************
+         */
         // BEGIN OF TABLE MEETING DOCUMENT
-        /***********************************************************************************/
+        /**
+         * ********************************************************************************
+         */
         EBISystem.gui().table("meetingDoc", "MeetingCall").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         EBISystem.gui().table("meetingDoc", "MeetingCall").addSelectionListener(new EBIUICallback() {
             @Override
@@ -72,9 +83,13 @@ public class EBIMeetingProtocolView {
             }
         });
 
-        /***********************************************************************************/
+        /**
+         * ********************************************************************************
+         */
         // BEGIN OF TABLE MEETING CONTACT
-        /***********************************************************************************/
+        /**
+         * ********************************************************************************
+         */
         EBISystem.gui().table("meetingContact", "MeetingCall").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         EBISystem.gui().table("meetingContact", "MeetingCall").addSelectionListener(new EBIUICallback() {
             @Override
@@ -96,10 +111,13 @@ public class EBIMeetingProtocolView {
             }
         });
 
-
-        /***********************************************************************************/
+        /**
+         * ********************************************************************************
+         */
         // BEGIN OF TABLE AVAILABLE MEETING 
-        /***********************************************************************************/
+        /**
+         * ********************************************************************************
+         */
         EBISystem.gui().table("companyMeetings", "MeetingCall").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         EBISystem.gui().table("companyMeetings", "MeetingCall").addSelectionListener(new EBIUICallback() {
             @Override
@@ -207,7 +225,6 @@ public class EBIMeetingProtocolView {
         dataMeetingControl.dataShow(id);
         dataMeetingControl.dataShowContact();
         dataMeetingControl.dataShowDoc();
-        dataMeetingControl.isEdit = true;
         return true;
     }
 
@@ -328,21 +345,21 @@ public class EBIMeetingProtocolView {
                 equals(tabmeetingDoc.data[selectedDocRow][0].toString())) {
             return;
         }
-        if(EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
+        if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
             dataMeetingControl.dataDeleteDoc(Integer.parseInt(tabmeetingDoc.data[selectedDocRow][3].toString()));
             EBISystem.showInActionStatus("MeetingCall");
             dataMeetingControl.dataShowDoc();
         }
     }
 
-    public void reportMeeting(){
+    public void reportMeeting() {
         if (selectedProtocolRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                 equals(tableModel.data[selectedProtocolRow][0].toString())) {
             return;
         }
         boolean pass;
-        if (EBISystem.getInstance().getIEBISystemUserRights().isCanPrint() ||
-                EBISystem.getInstance().getIEBISystemUserRights().isAdministrator()) {
+        if (EBISystem.getInstance().getIEBISystemUserRights().isCanPrint()
+                || EBISystem.getInstance().getIEBISystemUserRights().isAdministrator()) {
             pass = true;
         } else {
             pass = EBISystem.getInstance().getIEBISecurityInstance().secureModule();
@@ -358,10 +375,8 @@ public class EBIMeetingProtocolView {
         }
     }
 
-
-    public void historyMeeting(){
+    public void historyMeeting() {
         new EBICRMHistoryView(EBISystem.getModule().hcreator.retrieveDBHistory(EBISystem.getInstance().getCompany().getCompanyid(), "Meeting")).setVisible();
     }
-
 
 }

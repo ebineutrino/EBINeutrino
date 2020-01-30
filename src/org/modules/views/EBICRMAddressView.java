@@ -187,7 +187,6 @@ public class EBICRMAddressView {
         EBISystem.showInActionStatus("Address");
         int row = EBISystem.gui().table("companyAddess", "Address").getSelectedRow();
         Integer id = addressDataControl.dataStore();
-        addressDataControl.isEdit = true;
         addressDataControl.dataShow(id);
         EBISystem.gui().table("companyAddess", "Address").changeSelection(row, 0, false, false);
         return true;

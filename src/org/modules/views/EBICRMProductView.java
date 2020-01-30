@@ -267,14 +267,7 @@ public class EBICRMProductView {
             EBISystem.gui().table("companyProductTable", "Product").setModel(productModel);
         }
 
-        final JLabel lab = new JLabel();
-        lab.setHorizontalAlignment(SwingConstants.CENTER);
-        lab.setHorizontalTextPosition(SwingConstants.CENTER);
-        lab.setText(EBISystem.i18n("EBI_LANG_PICTURE"));
-        EBISystem.gui().getPanel("picturePanel", "Product").setLayout(new BorderLayout());
-        EBISystem.gui().getPanel("picturePanel", "Product").removeAll();
-        EBISystem.gui().getPanel("picturePanel", "Product").add(lab, BorderLayout.CENTER);
-        EBISystem.gui().getPanel("picturePanel", "Product").updateUI();
+        clearPicture();
 
         EBISystem.gui().button("productShowImage", "Product").setEnabled(false);
         EBISystem.gui().button("deleteProperties", "Product").setEnabled(false);
@@ -310,6 +303,18 @@ public class EBICRMProductView {
         EBISystem.gui().FormattedField("salePriceText", "Product").setValue(null);
     }
 
+    public void clearPicture(){
+        final JLabel lab = new JLabel();
+        lab.setHorizontalAlignment(SwingConstants.CENTER);
+        lab.setHorizontalTextPosition(SwingConstants.CENTER);
+        lab.setText(EBISystem.i18n("EBI_LANG_PICTURE"));
+        EBISystem.gui().getPanel("picturePanel", "Product").setLayout(new BorderLayout());
+        EBISystem.gui().getPanel("picturePanel", "Product").removeAll();
+        EBISystem.gui().getPanel("picturePanel", "Product").add(lab, BorderLayout.CENTER);
+        EBISystem.gui().getPanel("picturePanel", "Product").updateUI();
+    }
+    
+    
     /**
      * *************************************************************************
      * *
@@ -366,7 +371,6 @@ public class EBICRMProductView {
         dataControlProduct.dataShowDoc();
         dataControlProduct.dataShowDependency();
         dataControlProduct.dataShowDimension();
-        dataControlProduct.isEdit = true;
         EBISystem.gui().table("companyProductTable", "Product").changeSelection(row, 0, false, false);
         return true;
     }
@@ -410,6 +414,9 @@ public class EBICRMProductView {
             dataControlProduct.dataDelete(Integer.parseInt(productModel.data[selectedProductRow][5].toString()));
             dataControlProduct.dataNew();
             dataControlProduct.dataShow(-1);
+            dataControlProduct.dataShowDependency();
+            dataControlProduct.dataShowDimension();
+            dataControlProduct.dataShowDoc();
             dataControlProduct.isEdit = false;
         }
     }

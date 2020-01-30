@@ -59,7 +59,10 @@ public class ControlAddress {
                 EBISystem.getInstance().loadStandardCompanyData();
             }
             addressID = address.getAddressid();
+            isEdit = true;
         } catch (final Exception ex) {
+            EBISystem.hibernate().session("EBICRM_SESSION").clear();
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
 
@@ -96,6 +99,7 @@ public class ControlAddress {
                 addressID = adrsn.getAddressid();
             }
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return addressID;

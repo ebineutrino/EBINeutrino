@@ -26,33 +26,43 @@ import lombok.Setter;
 
 public class EBICRMServiceView {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelDoc tabModDoc = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelProblemSolution tabModProsol = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelCRMProduct tabModProduct = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ModelService tabModService = null;
 
     public static String[] serviceStatus = null;
     public static String[] serviceType = null;
     public static String[] serviceCategory = null;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ControlService dataControlService = new ControlService();
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedServiceRow = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedDocRow = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedProsolRow = -1;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int selectedProductRow = -1;
 
     public void initializeAction() {
         EBISystem.gui().textField("filterTableText", "Service").addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(final KeyEvent e) {}
+            public void keyTyped(final KeyEvent e) {
+            }
 
             @Override
             public void keyPressed(final KeyEvent e) {
@@ -316,7 +326,6 @@ public class EBICRMServiceView {
         dataControlService.dataShowDoc();
         dataControlService.dataShowProduct();
         dataControlService.dataShowProblemSolution();
-        dataControlService.isEdit = true;
         EBISystem.gui().table("companyServiceTable", "Service").changeSelection(row, 0, false, false);
         return true;
     }

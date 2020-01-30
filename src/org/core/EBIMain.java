@@ -67,12 +67,12 @@ public class EBIMain extends JFrame {
     private String resourceLoggerPath = System.getProperty("user.dir")
             + File.separator + "resources"
             + File.separator;
-    
+
     public static void main(final String[] args) throws Exception {
         try {
-            
+
             final EBIMain application = new EBIMain();
-            
+
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -167,7 +167,7 @@ public class EBIMain extends JFrame {
             SwingUtilities.updateComponentTreeUI(this);
 
             EBISystem.getInstance().addMainFrame(this);
-            
+
             splash = new EBISplashScreen();
             PropertyConfigurator.configure(resourceLoggerPath + "config/ebiLogger.config");
             splash.setVisible(true);
@@ -217,7 +217,9 @@ public class EBIMain extends JFrame {
         EBISystem.getInstance().setIEBIModule(ebiModule);
         mng = new EBIModuleHandler(EBIMain.this, ebiModule);
 
-        /********************/
+        /**
+         * *****************
+         */
         // Initialize report system
         new Thread(new Runnable() {
             @Override

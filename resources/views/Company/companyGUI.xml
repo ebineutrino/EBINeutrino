@@ -3,7 +3,7 @@
     <panel name="companyDataPanel" title="EBI_LANG_C_COMPANY_DATA" Location="11,14" Size="394,466">
         <label name="comRoot" title="EBI_LANG_C_COMPANY_PARTNER" Location="10,20" Size="94,25"/>
         <button name="selectRoot" i18ntooltip="EBI_LANG_C_TOOL_TIP_ADD_PARENT" Location="309,20" Size="35,25"
-                        actionListener="org.modules.views.org.modules.views.EBICRMCompanyView.selectRoot" icon="find.png"/>
+                        actionListener="org.modules.views.EBICRMCompanyView.selectRoot" icon="find.png"/>
         <textfield name="rootText" tabindex="1" Location="105,20" Size="200,25"/>
         <label name="comCustNr" title="EBI_LANG_C_COMPANY_CUSTOMER_NUMBER" Location="10,50" Size="94,25"/>
         <textfield name="custNrText" tabindex="2" Location="105,50" Size="265,25"/>

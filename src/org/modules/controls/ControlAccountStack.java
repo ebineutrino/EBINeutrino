@@ -79,7 +79,10 @@ public class ControlAccountStack {
             EBISystem.hibernate().session("EBIACCOUNT_SESSION").saveOrUpdate(actStack);
             EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").commit();
             acccoundID = actStack.getAcstackid();
+            isEdit = true;
         } catch (final Exception ex) {
+            EBISystem.hibernate().session("EBIACCOUNT_SESSION").clear();
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return acccoundID;
@@ -133,8 +136,10 @@ public class ControlAccountStack {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_RECORD_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
             }
         } catch (final HibernateException e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -147,11 +152,11 @@ public class ControlAccountStack {
             final Iterator iter = query.iterate();
             if (iter.hasNext()) {
                 final Accountstack act = (Accountstack) iter.next();
-                if (act.getAcstackid() == id) {
+                if (act.getAcstackid() != null && act.getAcstackid() == id) {
                     try {
                         EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").begin();
-                        EBISystem.hibernate().session("EBIACCOUNT_SESSION").delete(act);
                         EBISystem.getInstance().getDataStore("Account", "ebiDelete");
+                        EBISystem.hibernate().session("EBIACCOUNT_SESSION").delete(act);
                         EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").commit();
                     } catch (final HibernateException e) {
                         e.printStackTrace();
@@ -161,6 +166,7 @@ public class ControlAccountStack {
                 }
             }
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
     }
@@ -344,11 +350,13 @@ public class ControlAccountStack {
         final Iterator iter = this.actStack.getAccountstackdocses().iterator();
         while (iter.hasNext()) {
             final Accountstackdocs doc = (Accountstackdocs) iter.next();
-            if (doc.getAccountdocid() == id) {
+            if (doc.getAccountdocid() != null && doc.getAccountdocid() == id) {
                 this.actStack.getAccountstackdocses().remove(doc);
-                EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").begin();
-                EBISystem.hibernate().session("EBIACCOUNT_SESSION").delete(doc);
-                EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").begin();
+                    EBISystem.hibernate().session("EBIACCOUNT_SESSION").delete(doc);
+                    EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").commit();
+                }
                 break;
             }
         }
@@ -379,7 +387,7 @@ public class ControlAccountStack {
         final Iterator iter = this.actStack.getAccountstackdocses().iterator();
         while (iter.hasNext()) {
             final Accountstackdocs doc = (Accountstackdocs) iter.next();
-            if (id == doc.getAccountdocid()) {
+            if (doc.getAccountdocid() != null && id == doc.getAccountdocid()) {
                 // Get the BLOB inputstream
                 final String file = doc.getName().replaceAll(" ", "_");
                 final byte buffer[] = doc.getFiles();
@@ -396,6 +404,11 @@ public class ControlAccountStack {
             int i = 0;
             while (itr.hasNext()) {
                 final Accountstackdocs obj = (Accountstackdocs) itr.next();
+                
+                if(obj.getAccountdocid() == null){
+                    obj.setAccountdocid(( i + 1 ) * -1);
+                }
+                
                 EBISystem.getModule().getAccountPane().getTabModDoc().data[i][0] = obj.getName() == null ? "" : obj.getName();
                 EBISystem.getModule().getAccountPane().getTabModDoc().data[i][1] = EBISystem.getInstance().getDateToString(obj.getCreateddate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getCreateddate());
                 EBISystem.getModule().getAccountPane().getTabModDoc().data[i][2] = obj.getCreatedfrom() == null ? "" : obj.getCreatedfrom();
@@ -488,7 +501,6 @@ public class ControlAccountStack {
                 EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").begin();
                 EBISystem.hibernate().session("EBIACCOUNT_SESSION").delete(actcd);
                 EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").commit();
-                dataShowCreditDebit();
             }
         } catch (final Exception e) {
             e.printStackTrace();
@@ -738,6 +750,11 @@ public class ControlAccountStack {
                 int i = 0;
                 while (it.hasNext()) {
                     final Accountstackcd acCD = (Accountstackcd) it.next();
+                    
+                    if(acCD.getAccountstackcdid() == null){
+                        acCD.setAccountstackcdid((i + 1) * -1);
+                    }
+                    
                     EBISystem.getModule().getAccountPane().getCreditDebitMod().data[i][0] = acCD.getCreditdebitnumber() == null ? "" : acCD.getCreditdebitnumber();
                     EBISystem.getModule().getAccountPane().getCreditDebitMod().data[i][1] = acCD.getCreditdebitname() == null ? "" : acCD.getCreditdebitname();
                     EBISystem.getModule().getAccountPane().getCreditDebitMod().data[i][2] = acCD.getAccountstackcdid();

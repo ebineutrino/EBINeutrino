@@ -96,7 +96,10 @@ public class ControlProblemSolution {
                 EBISystem.gui().vpanel("Prosol").setID(compProsol.getProsolid());
             }
             prosolID = compProsol.getProsolid();
+            isEdit = true;
         } catch (final Exception e) {
+            EBISystem.hibernate().session("PROSOL_SESSION").clear();
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return prosolID;
@@ -170,6 +173,7 @@ public class ControlProblemSolution {
                 prosolID = psoln.getProsolid();
             }
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return prosolID;
@@ -226,6 +230,7 @@ public class ControlProblemSolution {
             }
             EBISystem.hibernate().transaction("PROSOL_SESSION").commit();
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -248,6 +253,7 @@ public class ControlProblemSolution {
                 }
             }
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -295,6 +301,7 @@ public class ControlProblemSolution {
             }
 
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         } finally {
             if (set != null) {
@@ -302,6 +309,7 @@ public class ControlProblemSolution {
                     set.close();
                     ps1.close();
                 } catch (final SQLException e) {
+                    EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
                     e.printStackTrace();
                 }
             }
@@ -397,6 +405,7 @@ public class ControlProblemSolution {
         try {
             hcreator.setDataToCreate(new EBICRMHistoryDataUtil(compProsol.getProsolid(), "Prosol", list));
         } catch (final Exception e) {
+            EBIExceptionDialog.getInstance(e.getMessage(), e.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -426,7 +435,7 @@ public class ControlProblemSolution {
         final Iterator iter = this.compProsol.getCrmproblemsoldocses().iterator();
         while (iter.hasNext()) {
             final Crmproblemsoldocs doc = (Crmproblemsoldocs) iter.next();
-            if (id == doc.getSolutiondocid()) {
+            if (doc.getSolutiondocid() != null && id == doc.getSolutiondocid()) {
                 final String file = doc.getName().replaceAll(" ", "_");
                 final byte buffer[] = doc.getFiles();
                 EBISystem.getInstance().writeBlobToTmp(file, buffer);
@@ -443,6 +452,11 @@ public class ControlProblemSolution {
             int i = 0;
             while (itr.hasNext()) {
                 final Crmproblemsoldocs obj = (Crmproblemsoldocs) itr.next();
+                
+                if(obj.getSolutiondocid() == null){
+                    obj.setSolutiondocid((i + 1) * -1);
+                }
+                
                 EBISystem.getModule().getProsolPane().getTabModDoc().data[i][0] = obj.getName() == null ? "" : obj.getName();
                 EBISystem.getModule().getProsolPane().getTabModDoc().data[i][1] = EBISystem.getInstance().getDateToString(obj.getCreateddate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getCreateddate());
                 EBISystem.getModule().getProsolPane().getTabModDoc().data[i][2] = obj.getCreatedfrom() == null ? "" : obj.getCreatedfrom();
@@ -467,6 +481,10 @@ public class ControlProblemSolution {
             while (itr.hasNext()) {
 
                 final Crmproblemsolposition obj = (Crmproblemsolposition) itr.next();
+                if(obj.getProductid() == null){
+                    obj.setProductid((i + 1) * -1);
+                }
+                
                 EBISystem.getModule().getProsolPane().getTabModProduct().data[i][0] = obj.getProductnr();
                 EBISystem.getModule().getProsolPane().getTabModProduct().data[i][1] = obj.getProductname() == null ? "" : obj.getProductname();
                 EBISystem.getModule().getProsolPane().getTabModProduct().data[i][2] = obj.getCategory() == null ? "" : obj.getCategory();
@@ -486,11 +504,13 @@ public class ControlProblemSolution {
         final Iterator iter = this.compProsol.getCrmproblemsoldocses().iterator();
         while (iter.hasNext()) {
             final Crmproblemsoldocs doc = (Crmproblemsoldocs) iter.next();
-            if (doc.getSolutiondocid() == id) {
+            if (doc.getSolutiondocid() != null && doc.getSolutiondocid() == id) {
                 this.compProsol.getCrmproblemsoldocses().remove(doc);
-                EBISystem.hibernate().transaction("PROSOL_SESSION").begin();
-                EBISystem.hibernate().session("PROSOL_SESSION").delete(doc);
-                EBISystem.hibernate().transaction("PROSOL_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("PROSOL_SESSION").begin();
+                    EBISystem.hibernate().session("PROSOL_SESSION").delete(doc);
+                    EBISystem.hibernate().transaction("PROSOL_SESSION").commit();
+                }
                 break;
             }
         }
@@ -500,11 +520,13 @@ public class ControlProblemSolution {
         final Iterator iter = this.compProsol.getCrmproblemsolpositions().iterator();
         while (iter.hasNext()) {
             final Crmproblemsolposition prosolpro = (Crmproblemsolposition) iter.next();
-            if (prosolpro.getProductid() == id) {
+            if (prosolpro.getProductid() != null && prosolpro.getProductid() == id) {
                 this.compProsol.getCrmproblemsolpositions().remove(prosolpro);
-                EBISystem.hibernate().transaction("PROSOL_SESSION").begin();
-                EBISystem.hibernate().session("PROSOL_SESSION").delete(prosolpro);
-                EBISystem.hibernate().transaction("PROSOL_SESSION").commit();
+                if(id > 0){
+                    EBISystem.hibernate().transaction("PROSOL_SESSION").begin();
+                    EBISystem.hibernate().session("PROSOL_SESSION").delete(prosolpro);
+                    EBISystem.hibernate().transaction("PROSOL_SESSION").commit();
+                }
                 break;
             }
         }
@@ -544,8 +566,8 @@ public class ControlProblemSolution {
                 }
             }
             EBISystem.hibernate().transaction("PROSOL_SESSION").commit();
-
         } catch (final Exception ex) {
+            EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
             ex.printStackTrace();
         }
         return name;

@@ -161,7 +161,6 @@ public class EBICRMBankView {
         int row = EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow();
         Integer id = bankDataControl.dataStore();
         bankDataControl.dataShow(id);
-        bankDataControl.setEdit(true);
         EBISystem.gui().table("companyBankTable", "Bank").changeSelection(row, 0, false, false);
         return true;
     }

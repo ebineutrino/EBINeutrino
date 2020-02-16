@@ -661,7 +661,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 if (!"".equals(bean.getI18NToolTip())) {
                     box.setToolTipText(EBISystem.i18n(bean.getI18NToolTip()));
                 }
-                
+
                 if (bean.getTabIndex() != -1) {
                     if (bean.getTabIndex() == 1) {
                         box.addComponentListener(new ComponentAdapter() {
@@ -988,7 +988,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 }
 
             } else if ("timepicker".equals(bean.getType())) {
-                
+
                 final JXDatePicker timePicker = new JXDatePicker();
                 timePicker.setName(nameSpace);
                 timePicker.setEnabled(bean.isEnabled());
@@ -1449,7 +1449,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             } catch (final NoClassDefFoundError e) {
                                 EBIExceptionDialog.getInstance(e.getMessage()).Show(EBIMessage.ERROR_MESSAGE);
                                 e.printStackTrace();
-                            } 
+                            }
                         }
                     });
 

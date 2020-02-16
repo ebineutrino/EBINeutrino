@@ -1,8 +1,10 @@
 package org.sdk.model.hibernate;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -64,7 +66,7 @@ public class Companymeetingprotocol implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date changeddate;
     @OneToMany(mappedBy = "companymeetingprotocol")
-    private Set<Companymeetingcontacts> companymeetingcontactsSet  = new HashSet();
+    private List<Companymeetingcontacts> companymeetingcontactsSet  = new ArrayList();
     @OneToMany(mappedBy = "companymeetingprotocol")
     private Set<Companymeetingdoc> companymeetingdocSet  = new HashSet();
     @JoinColumn(name = "COMPANYID", referencedColumnName = "COMPANYID")
@@ -150,11 +152,11 @@ public class Companymeetingprotocol implements Serializable {
     }
 
     @XmlTransient
-    public Set<Companymeetingcontacts> getCompanymeetingcontactses() {
+    public List<Companymeetingcontacts> getCompanymeetingcontactses() {
         return companymeetingcontactsSet;
     }
 
-    public void setCompanymeetingcontactsSet(Set<Companymeetingcontacts> companymeetingcontactsSet) {
+    public void setCompanymeetingcontactsSet(List<Companymeetingcontacts> companymeetingcontactsSet) {
         this.companymeetingcontactsSet = companymeetingcontactsSet;
     }
 

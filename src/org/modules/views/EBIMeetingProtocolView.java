@@ -104,7 +104,7 @@ public class EBIMeetingProtocolView {
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.gui().button("deleteMeetingContact", "MeetingCall").setEnabled(false);
                     EBISystem.gui().button("editMeetingContact", "MeetingCall").setEnabled(false);
-                } else if (!tabModelContact.data[selectedContactRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
+                } else if (!"".equals(tabModelContact.getValueAt(selectedContactRow, 0))) {
                     EBISystem.gui().button("deleteMeetingContact", "MeetingCall").setEnabled(true);
                     EBISystem.gui().button("editMeetingContact", "MeetingCall").setEnabled(true);
                 }
@@ -192,7 +192,7 @@ public class EBIMeetingProtocolView {
     public void initialize(boolean reload) {
 
         if (reload) {
-            tabModelContact = new ModelCRMContact();
+            tabModelContact = new ModelCRMContact(ModelCRMContact.MEETING_CONTACT);
             tableModel = new ModelCRMProtocol();
             tabmeetingDoc = new ModelDoc();
 
@@ -306,22 +306,22 @@ public class EBIMeetingProtocolView {
     }
 
     public void editContact() {
-        if (selectedContactRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
-                equals(tabModelContact.data[selectedContactRow][0].toString())) {
+        if (selectedContactRow < 0 || "".
+                equals(tabModelContact.getValueAt(selectedContactRow, 0))) {
             return;
         }
-        dataMeetingControl.dataEditContact(Integer.parseInt(tabModelContact.data[selectedContactRow][tabModelContact.columnNames.length].toString()));
+        dataMeetingControl.dataEditContact(tabModelContact.getId(selectedContactRow));
         EBISystem.showInActionStatus("MeetingCall");
         dataMeetingControl.dataShowContact();
     }
 
     public void deleteContact() {
-        if (selectedContactRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
-                equals(tabModelContact.data[selectedContactRow][0].toString())) {
+        if (selectedContactRow < 0 ||"".
+                equals(tabModelContact.getValueAt(selectedContactRow, 0))) {
             return;
         }
         if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
-            dataMeetingControl.dataDeleteContact(Integer.parseInt(tabModelContact.data[selectedContactRow][tabModelContact.columnNames.length].toString()));
+            dataMeetingControl.dataDeleteContact(tabModelContact.getId(selectedContactRow));
             EBISystem.showInActionStatus("MeetingCall");
             dataMeetingControl.dataShowContact();
         }

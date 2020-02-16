@@ -90,7 +90,7 @@ public class EBISystem {
     private IEBISystemUserRights iuserRights = null;
     @Getter
     @Setter
-    private EBIExceptionDialog dialogMessage = null;
+    public EBIExceptionDialog message = null;
     private EBIDBLocking plock = null;
     private Hashtable<String, Script> storableFactory = null;
     public static List registeredModule = new ArrayList<String>();
@@ -121,7 +121,7 @@ public class EBISystem {
         calendar = new GregorianCalendar();
         plock = new EBIDBLocking();
         storableFactory = new Hashtable<String, Script>();
-        dialogMessage = EBIExceptionDialog.getInstance();
+        message = EBIExceptionDialog.getInstance();
         fileDialog = new JFileChooser();
     }
 
@@ -731,25 +731,38 @@ public class EBISystem {
     }
 
     public static boolean isWindows() {
-
         final String os = System.getProperty("os.name").toLowerCase();
         // windows
         return (os.indexOf("win") >= 0);
     }
 
     public static boolean isMac() {
-
         final String os = System.getProperty("os.name").toLowerCase();
         // Mac
         return (os.indexOf("mac") >= 0);
     }
 
     public static boolean isUnix() {
-
         final String os = System.getProperty("os.name").toLowerCase();
         // linux or unix
         return (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0);
     }
+    
+    
+    public static boolean isWindows(String value) {
+        // windows
+        return (value.indexOf("win") >= 0);
+    }
+
+    public static boolean isMac(String value) {
+        return (value.indexOf("mac") >= 0);
+    }
+
+    public static boolean isUnix(String value) {
+        return (value.indexOf("nix") >= 0 || value.indexOf("nux") >= 0);
+    }
+    
+    
 
     public String convertReportCategoryToIndex(final String category) {
         String index = "0";

@@ -16,37 +16,37 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 public class EBIContactSelectionDialog {
 
     private EBIModule ebiModule = null;
     private ModelCRMContact tabModel = null;
-    private Set<Companycontacts> contactList = null;
+    private List<Companycontacts> contactList = null;
     private Companymeetingprotocol meetingProtocol = null;
     private Companyopportunity opportunity = null;
     private boolean isOpportunity = false;
     private int selRow = -1;
 
-    public EBIContactSelectionDialog(final EBIModule module, final Set<Companycontacts> list, final Companymeetingprotocol meetpro) {
+    public EBIContactSelectionDialog(final EBIModule module, final List<Companycontacts> list, final Companymeetingprotocol meetpro) {
         super();
         ebiModule = module;
         EBISystem.gui().loadGUI("CRMDialog/crmSelectionDialog.xml");
 
-        tabModel = new ModelCRMContact();
+        tabModel = new ModelCRMContact(ModelCRMContact.MEETING_CONTACT);
         contactList = list;
         meetingProtocol = meetpro;
         isOpportunity = false;
         showCollectionList();
     }
 
-    public EBIContactSelectionDialog(final EBIModule module, final Set<Companycontacts> list, final Companyopportunity opport) {
+    public EBIContactSelectionDialog(final EBIModule module, final List<Companycontacts> list, final Companyopportunity opport) {
         super();
         ebiModule = module;
 
         EBISystem.gui().loadGUI("CRMDialog/crmSelectionDialog.xml");
 
-        tabModel = new ModelCRMContact();
+        tabModel = new ModelCRMContact(ModelCRMContact.OPPORTUNITY_CONTACT);
         contactList = list;
         this.opportunity = opport;
         isOpportunity = true;
@@ -64,12 +64,14 @@ public class EBIContactSelectionDialog {
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));
+                EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.
+                        regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));
+                EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.
+                        regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));
             }
         });
 
@@ -90,7 +92,7 @@ public class EBIContactSelectionDialog {
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.gui().button("applyButton", "abstractSelectionDialog").setEnabled(false);
                     selRow = -1;
-                } else if (!tabModel.getRow(0)[0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
+                } else if (!"".equals(tabModel.getValueAt(0,0).toString())) {
                     selRow = lsm.getMinSelectionIndex();
                     EBISystem.gui().button("applyButton", "abstractSelectionDialog").setEnabled(true);
                 }
@@ -105,8 +107,8 @@ public class EBIContactSelectionDialog {
                 }
                 if (e.getClickCount() == 2) {
 
-                    if (selRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
-                            equals(tabModel.data[selRow][0].toString())) {
+                    if (selRow < 0 || "".
+                        equals(tabModel.getValueAt(selRow, 0))) {
                         return;
                     }
                     EBISystem.gui().dialog("abstractSelectionDialog").setVisible(false);
@@ -122,34 +124,30 @@ public class EBIContactSelectionDialog {
 
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                if (selRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
-                        equals(tabModel.data[selRow][0].toString())) {
+                if (selRow < 0 || "".
+                        equals(tabModel.getValueAt(selRow, 0))) {
                     return;
                 }
                 fillCollection();
                 EBISystem.gui().dialog("abstractSelectionDialog").setVisible(false);
-
             }
         });
 
         EBISystem.gui().button("closeButton", "abstractSelectionDialog").setText(EBISystem.i18n("EBI_LANG_CANCEL"));
         EBISystem.gui().button("closeButton", "abstractSelectionDialog").addActionListener(new java.awt.event.ActionListener() {
-
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
                 EBISystem.gui().dialog("abstractSelectionDialog").setVisible(false);
             }
         });
-
         EBISystem.gui().showGUI();
-
     }
 
     private void fillCollection() {
-
         final int[] rows = EBISystem.gui().table("abstractTable", "abstractSelectionDialog").getSelectedRows();
         for (int i = 0; i < rows.length; i++) {
-            copyCollection(Integer.parseInt(tabModel.data[EBISystem.gui().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(rows[i])][6].toString()));
+            copyCollection(tabModel.getId(EBISystem.gui().table("abstractTable", 
+                    "abstractSelectionDialog").convertRowIndexToModel(rows[i])));
         }
     }
 
@@ -224,27 +222,7 @@ public class EBIContactSelectionDialog {
     }
 
     private void showCollectionList() {
-
-        tabModel.data = new Object[this.contactList.size()][9];
-        if (this.contactList.size() > 0) {
-            final Iterator itr = this.contactList.iterator();
-            int i = 0;
-            while (itr.hasNext()) {
-                final Companycontacts obj = (Companycontacts) itr.next();
-                tabModel.data[i][0] = obj.getPosition() == null ? "" : obj.getPosition();
-                tabModel.data[i][1] = obj.getGender() == null ? "" : obj.getGender();
-                tabModel.data[i][2] = obj.getSurname() == null ? "" : obj.getSurname();
-                tabModel.data[i][3] = obj.getName() == null ? "" : obj.getName();
-                tabModel.data[i][4] = obj.getPhone() == null ? "" : obj.getPhone();
-                tabModel.data[i][5] = obj.getMobile() == null ? "" : obj.getMobile();
-                tabModel.data[i][6] = obj.getMobile() == null ? "" : obj.getMobile();
-                tabModel.data[i][7] = obj.getMobile() == null ? "" : obj.getMobile();
-                tabModel.data[i][8] = obj.getContactid();
-                i++;
-            }
-        } else {
-            tabModel.data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
-        }
+        tabModel.setAvailableContacts(this.contactList);
         tabModel.fireTableDataChanged();
     }
 }

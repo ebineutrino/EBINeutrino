@@ -441,32 +441,8 @@ public class ControlMeetingProtocol {
     }
 
     public void dataShowContact() {
-        if (!this.meetingProtocol.getCompanymeetingcontactses().isEmpty()) {
-            EBISystem.getModule().getMeetingProtocol().getTabModelContact().data = new Object[this.meetingProtocol.getCompanymeetingcontactses().size()][9];
-
-            final Iterator itr = this.meetingProtocol.getCompanymeetingcontactses().iterator();
-            int i = 0;
-            while (itr.hasNext()) {
-                final Companymeetingcontacts obj = (Companymeetingcontacts) itr.next();
-                
-                if(obj.getMeetingcontactid() == null){
-                    obj.setMeetingcontactid((i+1) * -1);
-                }
-                
-                EBISystem.getModule().getMeetingProtocol().getTabModelContact().data[i][0] = obj.getPosition() == null ? "" : obj.getPosition();
-                EBISystem.getModule().getMeetingProtocol().getTabModelContact().data[i][1] = obj.getGender() == null ? "" : obj.getGender();
-                EBISystem.getModule().getMeetingProtocol().getTabModelContact().data[i][2] = obj.getSurname() == null ? "" : obj.getSurname();
-                EBISystem.getModule().getMeetingProtocol().getTabModelContact().data[i][3] = obj.getName() == null ? "" : obj.getName();
-                EBISystem.getModule().getMeetingProtocol().getTabModelContact().data[i][4] = obj.getPhone() == null ? "" : obj.getPhone();
-                EBISystem.getModule().getMeetingProtocol().getTabModelContact().data[i][5] = obj.getMobile() == null ? "" : obj.getMobile();
-                EBISystem.getModule().getMeetingProtocol().getTabModelContact().data[i][6] = obj.getEmail() == null ? "" : obj.getEmail();
-                EBISystem.getModule().getMeetingProtocol().getTabModelContact().data[i][7] = obj.getDescription() == null ? "" : obj.getDescription();
-                EBISystem.getModule().getMeetingProtocol().getTabModelContact().data[i][8] = obj.getMeetingcontactid();
-                i++;
-            }
-        } else {
-            EBISystem.getModule().getMeetingProtocol().getTabModelContact().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
-        }
+        EBISystem.getModule().getMeetingProtocol().
+                    getTabModelContact().setAvailableMeetingContacts(this.meetingProtocol.getCompanymeetingcontactses());
         EBISystem.getModule().getMeetingProtocol().getTabModelContact().fireTableDataChanged();
     }
 
@@ -551,7 +527,7 @@ public class ControlMeetingProtocol {
         return EBISystem.getInstance().getCompany().getCompanymeetingprotocols();
     }
 
-    public Set<Companymeetingcontacts> getMeetingContactlist() {
+    public List<Companymeetingcontacts> getMeetingContactlist() {
         return meetingProtocol.getCompanymeetingcontactses();
     }
 

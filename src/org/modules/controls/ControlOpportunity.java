@@ -409,15 +409,20 @@ public class ControlOpportunity {
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][1] = obj.getSalestage() == null ? "" : obj.getSalestage();
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][2] = obj.getProbability() == null ? "" : obj.getProbability();
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][3] = obj.getBusinesstype() == null ? "" : obj.getBusinesstype();
-                EBISystem.getModule().getOpportunityPane().getTabModel().data[i][4] = currency.format(obj.getOpportunityvalue()).equals("0") ? "" : currency.format(obj.getOpportunityvalue());
+                EBISystem.getModule().getOpportunityPane().getTabModel().data[i][4] = 
+                        obj.getOpportunityvalue() == null || "0".equals(obj.getOpportunityvalue().toString())
+                            ? "" : currency.format(obj.getOpportunityvalue());
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][5] = obj.getIsclose() == null ? "" : obj.getIsclose();
-                EBISystem.getModule().getOpportunityPane().getTabModel().data[i][6] = EBISystem.getInstance().getDateToString(obj.getClosedate()) == null ? "" : EBISystem.getInstance().getDateToString(obj.getClosedate());
+                EBISystem.getModule().getOpportunityPane().getTabModel().data[i][6] = obj.getClosedate() == null ? "" : EBISystem.getInstance().getDateToString(obj.getClosedate());
                 EBISystem.getModule().getOpportunityPane().getTabModel().data[i][7] = obj.getOpportunityid();
                 if (id != -1 && id == obj.getOpportunityid()) {
                     selRow = i;
                 }
                 i++;
             }
+            
+            
+            
         } else {
             EBISystem.getModule().getOpportunityPane().getTabModel().data
                     = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
@@ -566,31 +571,8 @@ public class ControlOpportunity {
     }
 
     public void showOpportunityContacts() {
-        if (this.opportunity.getCompanyopportunitycontacts().size() > 0) {
-            EBISystem.getModule().getOpportunityPane().getTabModelContact().data = new Object[this.opportunity.getCompanyopportunitycontacts().size()][9];
-            final Iterator itr = this.opportunity.getCompanyopportunitycontacts().iterator();
-            int i = 0;
-            while (itr.hasNext()) {
-                final Companyopportunitycontact obj = (Companyopportunitycontact) itr.next();
-                
-                if(obj.getOpportunitycontactid() == null){
-                    obj.setOpportunitycontactid((i +1) * -1);
-                }
-                
-                EBISystem.getModule().getOpportunityPane().getTabModelContact().data[i][0] = obj.getPosition() == null ? "" : obj.getPosition();
-                EBISystem.getModule().getOpportunityPane().getTabModelContact().data[i][1] = obj.getGender() == null ? "" : obj.getGender();
-                EBISystem.getModule().getOpportunityPane().getTabModelContact().data[i][2] = obj.getSurname() == null ? "" : obj.getSurname();
-                EBISystem.getModule().getOpportunityPane().getTabModelContact().data[i][3] = obj.getName() == null ? "" : obj.getName();
-                EBISystem.getModule().getOpportunityPane().getTabModelContact().data[i][4] = obj.getPhone() == null ? "" : obj.getPhone();
-                EBISystem.getModule().getOpportunityPane().getTabModelContact().data[i][5] = obj.getMobile() == null ? "" : obj.getMobile();
-                EBISystem.getModule().getOpportunityPane().getTabModelContact().data[i][6] = obj.getEmail() == null ? "" : obj.getEmail();
-                EBISystem.getModule().getOpportunityPane().getTabModelContact().data[i][7] = obj.getDescription() == null ? "" : obj.getDescription();
-                EBISystem.getModule().getOpportunityPane().getTabModelContact().data[i][8] = obj.getOpportunitycontactid();
-                i++;
-            }
-        } else {
-            EBISystem.getModule().getOpportunityPane().getTabModelContact().data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
-        }
+        EBISystem.getModule().getOpportunityPane().getTabModelContact().
+                    setAvailableOpportunityContacts(this.opportunity.getCompanyopportunitycontacts());
         EBISystem.getModule().getOpportunityPane().getTabModelContact().fireTableDataChanged();
     }
 

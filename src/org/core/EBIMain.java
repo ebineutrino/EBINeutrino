@@ -27,6 +27,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import org.core.run.update.EBISocketDownloader;
+
 
 /**
  * This program is free software; you can redistribute it and/or modify it under
@@ -88,63 +90,14 @@ public class EBIMain extends JFrame {
                     application.setExtendedState(Frame.MAXIMIZED_BOTH);
                 }
             });
-            // Try to read the update xml file from a server for checking if a new version
-            // is available
-            /*
-			 * EBISocketDownloader fileLoader = new EBISocketDownloader();
-			 * fileLoader.SysPath = EBIPGFactory.updateServer; fileLoader.setConnection();
-			 * 
-			 * if(fileLoader.readConfig()){ // ONLINE UPDATE FUNCTIONALITY
-			 * 
-			 * final EBIDialogExt ext = new EBIDialogExt(null);
-			 * ext.setName("SystemUpdateDialog"); ext.storeLocation(true);
-			 * ext.storeSize(true);
-			 * ext.setTitle(EBIPGFactory.getLANG("EBI_LANG_SYSTEM_UPDATE_DIALOG"));
-			 * ext.setModal(true); ext.setSize(200,150); ext.setLayout(null);
-			 * 
-			 * JLabel title = new JLabel("<html><body><b>"+EBIPGFactory.getLANG(
-			 * "EBI_LANG_UPDATE_FOR_SYSTEM_AVAILABLE")+"</b></body></html>");
-			 * title.setBounds(170,10,260,30); ext.add(title,null);
-			 * 
-			 * JLabel body = new
-			 * JLabel("<html><body>"+EBIPGFactory.getLANG("EBI_LANG_NEW_VERSION_AVAILABLE")+
-			 * "" + "<br><br>" +
-			 * ""+EBIPGFactory.getLANG("EBI_LANG_LOCAL_VERSION")+": "+fileLoader.localVer+
-			 * "<br>" +
-			 * ""+EBIPGFactory.getLANG("EBI_LANG_ONLINE_VERSION")+": "+fileLoader.onlineVer+
-			 * "<br><br>" +
-			 * ""+EBIPGFactory.getLANG("EBI_LANG_WOULD_YOU_UPDATE_YOUR_SYSTEM")+
-			 * "</body></html>"); body.setBounds(170,20,260,180); ext.add(body,null);
-			 * 
-			 * 
-			 * JLabel img = new JLabel(new ImageIcon("images/update.png"));
-			 * img.setBounds(10,30, 120, 120); ext.add(img, null);
-			 * 
-			 * // Action Yes no JButton yes = new
-			 * JButton(EBIPGFactory.getLANG("EBI_LANG_YES")); yes.setBounds(220,200,100,25);
-			 * yes.addActionListener(new ActionListener(){ public void
-			 * actionPerformed(ActionEvent e){ try {
-			 * 
-			 * if(EBIPGFactory.isWindows()){
-			 * Runtime.getRuntime().exec("update/updateNeutrinoWindows.bat "+EBIPGFactory.
-			 * updateServer); }else if(EBIPGFactory.isMac()){
-			 * Runtime.getRuntime().exec("update/updateNeutrinoMAC.sh "+EBIPGFactory.
-			 * updateServer); }else if(EBIPGFactory.isUnix()){
-			 * Runtime.getRuntime().exec("update/updateNeutrinoLinux.sh "+EBIPGFactory.
-			 * updateServer); }
-			 * 
-			 * } catch (IOException e1) { e1.printStackTrace(); } System.exit(0); } });
-			 * ext.add(yes, null);
-			 * 
-			 * JButton no = new JButton(EBIPGFactory.getLANG("EBI_LANG_NO"));
-			 * no.setBounds(325,200,100,25); no.addActionListener(new ActionListener(){
-			 * public void actionPerformed(ActionEvent e){ ext.setVisible(false); } });
-			 * ext.add(no, null); ext.setVisible(true);
-			 * 
-			 * }
-             */
-            // SwingUtilities.updateComponentTreeUI(application);
-            // Load CRM module ebiCRM.jar
+            
+            //check for update
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    EBISocketDownloader.getInstance().canUpdate();
+                }
+            });
 
         } catch (final Exception exx) {
             exx.printStackTrace();
@@ -153,7 +106,6 @@ public class EBIMain extends JFrame {
             EBIExceptionDialog.getInstance(EBISystem.printStackTrace(exx)).Show(EBIMessage.NEUTRINO_DEBUG_MESSAGE);
             System.exit(1);
         }
-
     }
 
     /**
@@ -165,7 +117,7 @@ public class EBIMain extends JFrame {
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
             MetalLookAndFeel.setCurrentTheme(new MoodyBlueTheme());
             SwingUtilities.updateComponentTreeUI(this);
-
+           
             EBISystem.getInstance().addMainFrame(this);
 
             splash = new EBISplashScreen();
@@ -182,7 +134,7 @@ public class EBIMain extends JFrame {
             }
         } catch (final Exception ex) {
             ex.printStackTrace();
-            EBISystem.getInstance().getDialogMessage().debug(EBISystem.printStackTrace(ex));
+            EBISystem.getInstance().getMessage().debug(EBISystem.printStackTrace(ex));
             logger.error("Exception", ex.fillInStackTrace());
         }
     }

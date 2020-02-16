@@ -14,9 +14,12 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.EventObject;
+import javax.swing.table.TableCellEditor;
 
 public class EBITableExt extends JXTable implements MouseListener {
 
@@ -96,6 +99,24 @@ public class EBITableExt extends JXTable implements MouseListener {
     }
 
     @Override
+    public TableCellEditor getDefaultEditor(Class<?> columnClass) {
+        return new DefaultCellEditor(new JTextField()) {
+            @Override
+            public boolean isCellEditable(EventObject anEvent) {
+                if (anEvent instanceof KeyEvent) {
+                    KeyEvent ke = (KeyEvent) anEvent;
+                    if ((ke.getKeyCode() == KeyEvent.VK_Z 
+                            || ke.getKeyCode() == KeyEvent.VK_Y || ke.getKeyCode() == KeyEvent.VK_S)
+                            && (ke.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) == KeyEvent.CTRL_DOWN_MASK) {
+                        return false;
+                    }
+                }
+                return super.isCellEditable(anEvent);
+            }
+        };
+    }
+
+    @Override
     public final Component prepareRenderer(final TableCellRenderer renderer, final int rowIndex, final int vColIndex) {
         Component c = null;
         try {
@@ -114,16 +135,17 @@ public class EBITableExt extends JXTable implements MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent mouseEvent) {}
+    public void mouseClicked(MouseEvent mouseEvent) {
+    }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
         if (mouseCallback != null) {
-            
+
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    
+
                     mouseCallback.mousePressed(mouseEvent);
                 }
             });

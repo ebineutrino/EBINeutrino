@@ -16,7 +16,7 @@ public class EBISecurityManagement implements IEBISecurity {
      * @return : boolean
      */
     @Override
-	public boolean checkCanReleaseModules() {
+    public boolean checkCanReleaseModules() {
         boolean canProceed;
         iuserRights = EBISystem.getInstance().getIEBISystemUserRights();
         try {
@@ -29,7 +29,7 @@ public class EBISecurityManagement implements IEBISecurity {
                     }
                     if (canProceed) {
                         if (EBISystem.getModule().storeAutomate.storeFromSelectedTab()) {
-                           EBISystem.canRelease = true;
+                            EBISystem.canRelease = true;
                         }
                     } else {
                         EBISystem.canRelease = false;
@@ -50,7 +50,7 @@ public class EBISecurityManagement implements IEBISecurity {
      * @return boolean
      */
     @Override
-	public boolean secureModule() {
+    public boolean secureModule() {
         boolean passing;
         iuserRights = EBISystem.getInstance().getIEBISystemUserRights();
         if (!this.iuserRights.isAdministrator()) {

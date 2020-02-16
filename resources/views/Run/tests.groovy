@@ -1,7 +1,7 @@
-package EBICRM.Run
+package Run
 
-import EBICRM.Run.tests.CompanyTest
-import EBICRM.Run.tests.ContactTest
+import Run.tests.CompanyTest
+import Run.tests.ContactTest
 
 import javax.swing.*
 
@@ -15,13 +15,11 @@ def execTests(nmsp) {
             SwingUtilities.invokeLater {
                 system.getMainFrame().requestFocusInWindow();
                 done = new CompanyTest(system, this).done();
-
             }
             break;
         case "Contact":
             SwingUtilities.invokeLater {
                 system.getMainFrame().requestFocusInWindow();
-                system.message.info(this.class.getName());
                 done = new ContactTest(system, this).done();
             }
             break;
@@ -43,3 +41,4 @@ def execTests(nmsp) {
 
 execTests(namespace);
 system.getMainFrame().requestFocusInWindow();
+//execTests("Contact");

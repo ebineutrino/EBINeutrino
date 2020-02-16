@@ -78,7 +78,9 @@ public class MoodyBlueTheme extends DefaultMetalTheme {
         final CompoundBorder border2 = new CompoundBorder(line2, empty2);
 
         while (e.hasMoreElements()) {
+            
             final Object key = e.nextElement();
+            
             if (key instanceof String) {
 
                 String kl = ((String) key).toLowerCase();
@@ -93,7 +95,7 @@ public class MoodyBlueTheme extends DefaultMetalTheme {
                     UIManager.put(key, new Color(41, 47, 54));
                 } else if (kl.indexOf("foreground") != -1) {
                     UIManager.put(key, new Color(192, 192, 192));
-                } else if (kl.indexOf("Highlight") != -1 && kl.indexOf("focusCellHighlightBorder") == -1) {
+                } else if (kl.indexOf("highlight") != -1 && kl.indexOf("focuscellhighlightborder") == -1) {
                     UIManager.put(key, new Color(34, 34, 34));
                 } else if (kl.indexOf("color") != -1 && kl.indexOf("title") != -1) {
                     UIManager.put(key, new Color(95, 101, 101));
@@ -110,13 +112,24 @@ public class MoodyBlueTheme extends DefaultMetalTheme {
                     } else {
                         UIManager.put(key, border1);
                     }
-
                 }
-
-                if (kl.indexOf("selectionbackground") != -1) {
-                    UIManager.put(key, new Color(104, 107, 155));
+                
+                if (kl.indexOf("select") != -1 && UIManager.get("select") instanceof Color) {
+                     UIManager.put(key, new Color(74, 79, 79));
                 }
-
+                
+                if (kl.indexOf("button.select") != -1) {
+                     UIManager.put(key, new Color(74, 79, 79));
+                }
+                
+                if (kl.toLowerCase().indexOf("selectionforeground") != -1 ) {
+                    UIManager.put(key, new Color(50, 50, 50));
+                }
+                
+                if (kl.toLowerCase().indexOf("selectionbackground") != -1) {
+                    UIManager.put(key, new Color(200, 200, 200));
+                }
+                
                 if (kl.indexOf("insets") != -1 && kl.indexOf("table") == -1) {
                     UIManager.put(key, new Insets(10, 10, 10, 10));
                 }

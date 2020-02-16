@@ -147,7 +147,7 @@ public class EBICRMOpportunityView {
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.gui().button("editOppContact", "Opportunity").setEnabled(false);
                     EBISystem.gui().button("deleteOppContact", "Opportunity").setEnabled(false);
-                } else if (!tabModelContact.data[selectedContactRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
+                } else if (!"".equals(tabModelContact.getValueAt(selectedContactRow, 0))) {
                     EBISystem.gui().button("editOppContact", "Opportunity").setEnabled(true);
                     EBISystem.gui().button("deleteOppContact", "Opportunity").setEnabled(true);
                 }
@@ -274,7 +274,7 @@ public class EBICRMOpportunityView {
 
         if (reload) {
             tabModel = new ModelOpportunity();
-            tabModelContact = new ModelCRMContact();
+            tabModelContact = new ModelCRMContact(ModelCRMContact.OPPORTUNITY_CONTACT);
             tabOpportunityDoc = new ModelDoc();
             EBISystem.gui().table("contactTableOpportunity", "Opportunity").setModel(tabModelContact);
             EBISystem.gui().table("companyOpportunityTable", "Opportunity").setModel(tabModel);
@@ -355,23 +355,23 @@ public class EBICRMOpportunityView {
     }
 
     public void editContact() {
-        if (selectedContactRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
-                equals(tabModelContact.data[selectedContactRow][0].toString())) {
+        if (selectedContactRow < 0 || "".
+                equals(tabModelContact.getValueAt(selectedContactRow, 0))) {
             return;
         }
         EBISystem.showInActionStatus("Opportunity");
-        dataOpportuniyControl.dataEditContact(Integer.parseInt(tabModelContact.data[selectedContactRow][tabModelContact.columnNames.length].toString()));
+        dataOpportuniyControl.dataEditContact(tabModelContact.getId(selectedContactRow));
         dataOpportuniyControl.showOpportunityContacts();
     }
 
     public void deleteContact() {
-        if (selectedContactRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
-                equals(tabModelContact.data[selectedContactRow][0].toString())) {
+        if (selectedContactRow < 0 || "".
+                equals(tabModelContact.getValueAt(selectedContactRow, 0))) {
             return;
         }
         if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
             EBISystem.showInActionStatus("Opportunity");
-            dataOpportuniyControl.dataRemoveContact(Integer.parseInt(tabModelContact.data[selectedContactRow][tabModelContact.columnNames.length].toString()));
+            dataOpportuniyControl.dataRemoveContact(tabModelContact.getId(selectedContactRow));
             dataOpportuniyControl.showOpportunityContacts();
         }
     }

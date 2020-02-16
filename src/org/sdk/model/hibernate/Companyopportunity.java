@@ -1,8 +1,10 @@
 package org.sdk.model.hibernate;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -107,7 +109,7 @@ public class Companyopportunity implements Serializable {
     @ManyToOne
     private Company company;
     @OneToMany(mappedBy = "companyopportunity")
-    private Set<Companyopportunitycontact> companyopportunitycontactSet = new HashSet();
+    private List<Companyopportunitycontact> companyopportunitycontactSet = new ArrayList();
 
     public Companyopportunity() { }
 
@@ -293,11 +295,11 @@ public class Companyopportunity implements Serializable {
     }
 
     @XmlTransient
-    public Set<Companyopportunitycontact> getCompanyopportunitycontacts() {
+    public List<Companyopportunitycontact> getCompanyopportunitycontacts() {
         return companyopportunitycontactSet;
     }
 
-    public void setCompanyopportunitycontacts(Set<Companyopportunitycontact> companyopportunitycontactSet) {
+    public void setCompanyopportunitycontacts(List<Companyopportunitycontact> companyopportunitycontactSet) {
         this.companyopportunitycontactSet = companyopportunitycontactSet;
     }
 

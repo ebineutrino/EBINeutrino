@@ -25,15 +25,18 @@ public class EBICRMCompanyView {
     public static String[] categories = null;
     public static String[] cooperations = null;
     public static String[] classification = null;
-    @Getter @Setter
-    private ModelCRMAddress tabModel = null;
+   
     private Companyhirarchie hComp = null;
     public Set<Companyhirarchie> listH = null;
+    
+    @Getter @Setter
+    private ModelCRMAddress tabModel = null;
+    @Getter @Setter
     public ModelCRMContact ctabModel = null;
 
     public void initializeAction() {
         tabModel = new ModelCRMAddress();
-        ctabModel = new ModelCRMContact();
+        ctabModel = new ModelCRMContact(ModelCRMContact.CRM_CONTACT);
 
         EBISystem.gui().textField("telephoneText", "Company").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
         EBISystem.gui().textField("faxText", "Company").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
@@ -122,7 +125,7 @@ public class EBICRMCompanyView {
         EBISystem.gui().table("companyTableAddressView", "Company").setModel(tabModel);
         EBISystem.gui().table("companyTableAddressView", "Company").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        ctabModel = new ModelCRMContact();
+        ctabModel = new ModelCRMContact(ModelCRMContact.CRM_CONTACT);
         ctabModel.fireTableDataChanged();
 
         EBISystem.gui().table("companyTableContactViewX", "Company").setModel(ctabModel);

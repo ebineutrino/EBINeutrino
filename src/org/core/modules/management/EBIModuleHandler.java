@@ -115,7 +115,6 @@ public class EBIModuleHandler {
 
     public boolean showModule(final Object module, final Object o, final boolean resetToolBar) {
         try {
-
             ebiMain.container.removeAllFromContainer();
             if (module != null) {
                 ((IEBIExtension) module).onLoad();

@@ -1,4 +1,4 @@
-package EBICRM.Run.tests
+package Run.tests
 
 import java.awt.*
 import java.awt.event.KeyEvent
@@ -6,10 +6,9 @@ import java.awt.event.KeyEvent
 class ContactTest{
     boolean done = false;
     ContactTest(def system, def context){
-
-        system.getMainFrame().requestFocusInWindow();
+ 
         //context.genderTex.selectedIndex = 2;
-        //context.titleText="Prf.";
+         
 
         system.getMainFrame().requestFocusInWindow();
         Robot robot = new Robot();

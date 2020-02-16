@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ebineutrino version="6.9">
+    <file os="macos" name="EBINeutrinoMacOS" filename="EBINeutrinoMacOS.zip"></file>
+    <file os="linux" name="EBINeutrinoLinux" filename="EBINeutrinoLinux.zip"></file>
+    <file os="windows" name="EBINeutrinoWindows" filename="EBINeutrinoWindows.zip"></file>
+</ebineutrino>

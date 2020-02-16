@@ -242,40 +242,14 @@ public class ControlContact {
         final int size = EBISystem.getInstance().getCompany().getCompanycontactses().size();
 
         if (size > 0) {
-            EBISystem.getModule().getContactPane().getTableModel().data = new Object[size][9];
-
-            final Iterator<Companycontacts> itr = EBISystem.getInstance().getCompany().getCompanycontactses().iterator();
-            int i = 0;
-            String mainContactMarker;
-            
-            while (itr.hasNext()) {
-                final Companycontacts obj = itr.next();
-                if (obj.getMaincontact() != null && obj.getMaincontact() == true) {
-                    mainContactMarker = "**";
-                } else {
-                    mainContactMarker = "";
-                }
-                EBISystem.getModule().getContactPane().getTableModel().data[i][0] = obj.getPosition() == null ? "" : obj.getPosition();
-                EBISystem.getModule().getContactPane().getTableModel().data[i][1] = obj.getGender() == null ? "" : mainContactMarker + obj.getGender();
-                EBISystem.getModule().getContactPane().getTableModel().data[i][2] = obj.getSurname() == null ? "" : obj.getSurname();
-                EBISystem.getModule().getContactPane().getTableModel().data[i][3] = obj.getName() == null ? "" : obj.getName();
-                EBISystem.getModule().getContactPane().getTableModel().data[i][4] = obj.getPhone() == null ? "" : obj.getPhone();
-                EBISystem.getModule().getContactPane().getTableModel().data[i][5] = obj.getMobile() == null ? "" : obj.getMobile();
-                EBISystem.getModule().getContactPane().getTableModel().data[i][6] = obj.getEmail() == null ? "" : obj.getEmail();
-                EBISystem.getModule().getContactPane().getTableModel().data[i][7] = obj.getDescription() == null ? "" : obj.getDescription();
-                EBISystem.getModule().getContactPane().getTableModel().data[i][EBISystem.getModule().getContactPane().getTableModel().columnNames.length] = obj.getContactid();
-                if(id != -1 && id == obj.getContactid()){
-                   selRow = i;
-                }
-                i++;
-            }
-        } else {
-            EBISystem.getModule().getContactPane().getTableModel().data 
-                    = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", ""}};
+         
+             EBISystem.getModule().getContactPane().getTableModel().setAvailableContacts(EBISystem.getInstance().getCompany().getCompanycontactses());
         }
 
         if (EBISystem.getModule().getCompanyPane() != null) {
-            EBISystem.getModule().getCompanyPane().ctabModel.data = EBISystem.getModule().getContactPane().getTableModel().data;
+            EBISystem.getModule().getCompanyPane().
+                    ctabModel.setAvailableContacts(EBISystem.getModule()
+                        .getContactPane().getTableModel().getAvailableContacts());
             EBISystem.getModule().getCompanyPane().ctabModel.fireTableDataChanged();
             EBISystem.getModule().getContactPane().getTableModel().fireTableDataChanged();
         }
@@ -485,7 +459,7 @@ public class ControlContact {
         return contact;
     }
 
-    public Set<Companycontacts> getContactList() {
+    public List<Companycontacts> getContactList() {
         return EBISystem.getInstance().getCompany().getCompanycontactses();
     }
 

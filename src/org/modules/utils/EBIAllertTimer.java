@@ -2,7 +2,6 @@ package org.modules.utils;
 
 import org.sdk.EBISystem;
 
-import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.SwingUtilities;
 
 public class EBIAllertTimer extends TimerTask {
 
@@ -17,7 +17,7 @@ public class EBIAllertTimer extends TimerTask {
     private EBICRMTaskItem taskItem = null;
     private int countTask = 0;
 
-    public void setUpAvailableTimer() {
+    public synchronized void setUpAvailableTimer() {
         ResultSet set = null;
         final Calendar date1 = Calendar.getInstance();
         date1.setTime(new Date());
@@ -29,12 +29,17 @@ public class EBIAllertTimer extends TimerTask {
 
         try {
             //reset taskbar panel
-            EBISystem.getInstance().getMainFrame().panAllert.removeAll();
-            EBISystem.getInstance().getMainFrame().panAllert.add(new JLabel(new ImageIcon("images/mieten.png")));
-            EBISystem.getInstance().getMainFrame().pallert.setVisible(false);
-            EBISystem.getInstance().getMainFrame().panAllert.setVisible(false);
-            EBISystem.getInstance().getMainFrame().pallert.updateUI();
-            EBISystem.getInstance().getMainFrame().panAllert.updateUI();
+
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    EBISystem.getInstance().getMainFrame().panAllert.removeAll();
+                    EBISystem.getInstance().getMainFrame().pallert.setVisible(false);
+                    EBISystem.getInstance().getMainFrame().panAllert.setVisible(false);
+                    EBISystem.getInstance().getMainFrame().pallert.updateUI();
+                    EBISystem.getInstance().getMainFrame().panAllert.updateUI();
+                }
+            });
 
             if (timer != null) {
                 timer.purge();
@@ -93,49 +98,53 @@ public class EBIAllertTimer extends TimerTask {
     }
 
     @Override
-	public void run() {
+    public void run() {
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if (!EBISystem.getInstance().getMainFrame().panAllert.isVisible()) {
-            EBISystem.getInstance().getMainFrame().panAllert.setVisible(true);
-            EBISystem.getInstance().getMainFrame().pallert.setVisible(true);
-        }
-        if (EBISystem.getInstance().getMainFrame() != null && EBISystem.getInstance().getMainFrame().panAllert != null) {
-            if (getTaskItem() != null) {
-                EBISystem.getInstance().getMainFrame().panAllert.add(getTaskItem());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (!EBISystem.getInstance().getMainFrame().panAllert.isVisible()) {
+                    EBISystem.getInstance().getMainFrame().panAllert.setVisible(true);
+                    EBISystem.getInstance().getMainFrame().pallert.setVisible(true);
+                }
+                if (EBISystem.getInstance().getMainFrame() != null && EBISystem.getInstance().getMainFrame().panAllert != null) {
+                    if (getTaskItem() != null) {
+                        EBISystem.getInstance().getMainFrame().panAllert.add(getTaskItem());
+                    }
+                }
+                EBISystem.getInstance().getMainFrame().stat.updateUI();
+                EBISystem.getInstance().getMainFrame().stat.repaint();
+                EBISystem.getInstance().getMainFrame().panAllert.updateUI();
+                EBISystem.getInstance().getMainFrame().panAllert.repaint();
             }
-        }
-
-        EBISystem.getInstance().getMainFrame().stat.updateUI();
-        EBISystem.getInstance().getMainFrame().stat.repaint();
-        EBISystem.getInstance().getMainFrame().panAllert.updateUI();
-        EBISystem.getInstance().getMainFrame().panAllert.repaint();
+        });
     }
 
-    public Timer getTimer() {
+    public synchronized Timer getTimer() {
         return timer;
     }
 
-    public void setTimer(final Timer timer) {
+    public synchronized void setTimer(final Timer timer) {
         this.timer = timer;
     }
 
-    public EBICRMTaskItem getTaskItem() {
+    public synchronized EBICRMTaskItem getTaskItem() {
         return taskItem;
     }
 
-    public void setTaskItem(final EBICRMTaskItem taskItem) {
+    public synchronized void setTaskItem(final EBICRMTaskItem taskItem) {
         this.taskItem = taskItem;
     }
 
-    public int getCountTask() {
+    public synchronized int getCountTask() {
         return countTask;
     }
 
-    public void setCountTask(final int countTask) {
+    public synchronized void setCountTask(final int countTask) {
         this.countTask = countTask;
     }
 }

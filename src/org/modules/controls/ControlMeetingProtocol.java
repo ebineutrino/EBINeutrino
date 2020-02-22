@@ -330,7 +330,7 @@ public class ControlMeetingProtocol {
                 list.add(EBISystem.i18n("EBI_LANG_C_MITTEL_NAME") + ": " + contact.getMittelname());
                 list.add(EBISystem.i18n("EBI_LANG_C_POSITION") + ": " + contact.getPosition());
 
-                list.add(EBISystem.i18n("EBI_LANG_C_BIRDDATE") + ": " + EBISystem.getInstance().getDateToString(contact.getBirddate()));
+                list.add(EBISystem.i18n("EBI_LANG_C_BIRTHDATE") + ": " + EBISystem.getInstance().getDateToString(contact.getBirddate()));
                 list.add(EBISystem.i18n("EBI_LANG_C_TELEPHONE") + ": " + contact.getPhone());
                 list.add(EBISystem.i18n("EBI_LANG_C_FAX") + ": " + contact.getFax());
                 list.add(EBISystem.i18n("EBI_LANG_C_MOBILE_PHONE") + ": " + contact.getMobile());

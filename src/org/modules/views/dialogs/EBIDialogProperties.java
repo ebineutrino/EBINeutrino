@@ -162,7 +162,6 @@ public class EBIDialogProperties {
         });
 
         EBISystem.gui().button("applyButton", pack).setText(EBISystem.i18n("EBI_LANG_APPLY"));
-
         if (!isEdit) {
             EBISystem.gui().button("applyButton", pack).setEnabled(false);
         }
@@ -234,7 +233,6 @@ public class EBIDialogProperties {
             if (query != null) {
                 properties = new String[query.list().size() + 1];
                 final Iterator it = query.iterate();
-                properties[0] = EBISystem.i18n("EBI_LANG_PLEASE_SELECT");
                 int i = 1;
                 while (it.hasNext()) {
                     final Crmprojectprops prop = (Crmprojectprops) it.next();
@@ -242,7 +240,10 @@ public class EBIDialogProperties {
                     properties[i] = prop.getName();
                     i++;
                 }
+            }else{
+                properties = new String[1];
             }
+            properties[0] = EBISystem.i18n("EBI_LANG_PLEASE_SELECT");
         } catch (final HibernateException e) {
             e.printStackTrace();
         } catch (final Exception e) {
@@ -265,14 +266,15 @@ public class EBIDialogProperties {
                 if (size > 0) {
                     set.beforeFirst();
                     properties = new String[size + 1];
-                    properties[0] = EBISystem.i18n("EBI_LANG_PLEASE_SELECT");
-
                     int i = 1;
                     while (set.next()) {
                         properties[i] = set.getString("NAME");
                         i++;
                     }
+                }else{
+                    properties = new String[1];
                 }
+                properties[0] = EBISystem.i18n("EBI_LANG_PLEASE_SELECT");
             }
         } catch (final SQLException e) {
             e.printStackTrace();

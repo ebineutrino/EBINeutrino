@@ -61,7 +61,6 @@ public class EBIVisualPanel extends JPanel {
             g2.drawImage(buffImgHeader, null, 0, 0);
             g2.drawImage(moduleIcon.getImage(), 2, 2, null);
             
-            
             if (drawProgressView) {
                 g2.setPaint(new Color(255, 66, 41));
                 g2.fill3DRect(0, drawHeight - 3, progressWidth, 3, true);
@@ -281,8 +280,8 @@ public class EBIVisualPanel extends JPanel {
         ID = id;
         if (id == -1) {
             moduleTitle.setText(oldText);
-        } else {
-            moduleTitle.setText(moduleTitle.getText() + " ID:" + id);
+        } else {     
+            moduleTitle.setText(oldText + " ID:" + id);
         }
     }
 

@@ -73,11 +73,9 @@ public class ControlContact {
             EBISystem.getInstance().getDataStore("Contact", "ebiSave");
             if (!isEdit) {
                 EBISystem.gui().vpanel("Contact").setID(contact.getContactid());
+                EBISystem.getInstance().getCompany().getCompanycontactses().add(contact);
             }
-
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-            EBISystem.getInstance().getCompany().getCompanycontactses().add(contact);
-            
             contactID = contact.getContactid();
             isEdit = true;
         } catch (final Exception ex) {
@@ -236,27 +234,30 @@ public class ControlContact {
         }
     }
 
-    public void dataShow(Integer id) {
+    public void dataShow(boolean newRecord) {
         
-        int selRow = EBISystem.gui().table("companyContacts", "Contact").getSelectedRow() + id;
+        int row = EBISystem.gui().table("companyContacts", "Contact").getSelectedRow();
         final int size = EBISystem.getInstance().getCompany().getCompanycontactses().size();
-
         if (size > 0) {
-         
              EBISystem.getModule().getContactPane().getTableModel().setAvailableContacts(EBISystem.getInstance().getCompany().getCompanycontactses());
         }
-
         if (EBISystem.getModule().getCompanyPane() != null) {
             EBISystem.getModule().getCompanyPane().
                     ctabModel.setAvailableContacts(EBISystem.getModule()
                         .getContactPane().getTableModel().getAvailableContacts());
+            
             EBISystem.getModule().getCompanyPane().ctabModel.fireTableDataChanged();
             EBISystem.getModule().getContactPane().getTableModel().fireTableDataChanged();
+            
+            if( newRecord ){
+                row = EBISystem.gui().table("companyContacts", "Contact").convertRowIndexToView(EBISystem.getModule()
+                        .getContactPane().getTableModel().getAvailableContacts().size()-1);
+               
+            }
         }
-
-        if(selRow > -1){
-            selRow = EBISystem.gui().table("companyContacts", "Contact").convertRowIndexToView(selRow);
-            EBISystem.gui().table("companyContacts", "Contact").changeSelection(selRow, 0, false, false);
+        
+        if(row > -1){
+             EBISystem.gui().table("companyContacts", "Contact").changeSelection(row, 0, false, false);
         }
     }
 
@@ -328,7 +329,7 @@ public class ControlContact {
                     : contact.getTitle() + "$"));
         }
         if (contact.getBirddate() != null) {
-            list.add(EBISystem.i18n("EBI_LANG_C_BIRDDATE") + ": "
+            list.add(EBISystem.i18n("EBI_LANG_C_BIRTHDATE") + ": "
                     + (EBISystem.getInstance().getDateToString(contact.getBirddate())
                             .equals(EBISystem.gui().timePicker("birthdateText", "Contact").getEditor()
                                     .getText()) == true ? EBISystem.getInstance().getDateToString(contact.getBirddate())

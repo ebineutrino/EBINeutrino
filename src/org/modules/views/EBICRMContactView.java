@@ -184,11 +184,10 @@ public class EBICRMContactView {
             return false;
         }
         EBISystem.showInActionStatus("Contact");
-        int row = EBISystem.gui().table("companyContacts", "Contact").getSelectedRow();
-        Integer id = controlContact.dataStore();
-        controlContact.dataShow(id);
+        boolean newRecord = controlContact.isEdit ? false : true;
+        controlContact.dataStore();
+        controlContact.dataShow(newRecord);
         controlContact.showCompanyContactAddress();
-        EBISystem.gui().table("companyContacts", "Contact").changeSelection(row, 0, false, false);
         return true;
     }
 
@@ -221,7 +220,7 @@ public class EBICRMContactView {
         EBISystem.showInActionStatus("Contact");
         Integer id = controlContact.dataCopy(tableModel.getId(selectedContactRow));
         controlContact.dataEdit(id);
-        controlContact.dataShow(id);
+        controlContact.dataShow(true);
         controlContact.showCompanyContactAddress();
         controlContact.isEdit = true;
     }
@@ -234,7 +233,7 @@ public class EBICRMContactView {
         if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
             EBISystem.showInActionStatus("Contact");
             controlContact.dataDelete(tableModel.getId(selectedContactRow));
-            controlContact.dataShow(-1);
+            controlContact.dataShow(true);
             controlContact.showCompanyContactAddress();
             controlContact.dataNew();
             controlContact.isEdit = false;
@@ -244,7 +243,7 @@ public class EBICRMContactView {
     public void newContact() {
         EBISystem.showInActionStatus("Contact");
         controlContact.dataNew();
-        controlContact.dataShow(-1);
+        controlContact.dataShow(false);
         controlContact.showCompanyContactAddress();
         controlContact.isEdit = false;
     }

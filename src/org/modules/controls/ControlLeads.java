@@ -228,7 +228,9 @@ public class ControlLeads {
                 final Iterator cit = company.getCompanycontactses().iterator();
                 while (cit.hasNext()) {
                     contact = (Companycontacts) cit.next();
-                    if (Integer.parseInt(EBISystem.getModule().getLeadPane().getTabModel().data[EBISystem.getModule().getLeadPane().getSelectedRow()][12].toString()) == contact.getContactid()) {
+                    if (Integer.parseInt(EBISystem.getModule().getLeadPane()
+                            .getTabModel().data[EBISystem.getModule().
+                                getLeadPane().getSelectedRow()][12].toString()) == contact.getContactid()) {
 
                         String cName = contact.getGender() == null ? "" : contact.getGender() + " ";
                         cName += contact.getTitle() == null ? "" : contact.getTitle() + " ";
@@ -371,7 +373,7 @@ public class ControlLeads {
                         EBISystem.getModule().getLeadPane().getTabModel().data[i][11] = set.getInt("COMPANY.COMPANYID") == 0 ? 0 : set.getInt("COMPANY.COMPANYID");
                         EBISystem.getModule().getLeadPane().getTabModel().data[i][12] = set.getString("COMPANYCONTACTS.CONTACTID") == null ? "" : set.getString("COMPANYCONTACTS.CONTACTID");
                         EBISystem.getModule().getLeadPane().getTabModel().data[i][13] = set.getString("COMPANYADDRESS.ADDRESSID") == null ? "" : set.getString("COMPANYADDRESS.ADDRESSID");
-                        if(id != -1 && id == set.getInt("COMPANY.COMPANYID") ){
+                        if (id != -1 && id == set.getInt("COMPANY.COMPANYID")) {
                             selRow = i;
                         }
                         i++;
@@ -399,8 +401,8 @@ public class ControlLeads {
                 }
             }
         }
-        
-        if(selRow > -1){
+
+        if (selRow > -1) {
             selRow = EBISystem.gui().table("leadsTable", "Leads").convertRowIndexToView(selRow);
             EBISystem.gui().table("leadsTable", "Leads").changeSelection(selRow, 0, false, false);
         }
@@ -525,12 +527,12 @@ public class ControlLeads {
         EBISystem.gui().table("leadsTable", "Leads").changeSelection(srow, 0, false, false);
     }
 
-    public void dataNew() {
+    public void dataNew(boolean reload) {
         company = new Company();
         contact = new Companycontacts();
         address = new Companyaddress();
         isEdit = false;
-        EBISystem.getModule().getLeadPane().initialize();
+        EBISystem.getModule().getLeadPane().initialize(reload);
         EBISystem.getInstance().getDataStore("Leads", "ebiNew");
     }
 }

@@ -470,7 +470,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
     public EBICRMLeadsView getLeadPane() {
         if (leadsPane == null) {
             leadsPane = (EBICRMLeadsView) EBISystem.getInstance().getMappedBean(EBICRMLeadsView.class);
-            leadsPane.initialize();
+            leadsPane.initialize(true);
             leadsPane.initializeAction();
         }
         return leadsPane;
@@ -613,7 +613,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                     getSummaryPane().initialize();
                 }
                 if (EBISystem.gui().existView("Leads")) {
-                    getLeadPane().initialize();
+                    getLeadPane().initialize(true);
                 }
             }
 
@@ -1143,7 +1143,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                contactPane.getControlContact().dataShow(-1);
+                contactPane.getControlContact().dataShow(false);
                 EBISystem.gui().combo("genderTex", "Contact").grabFocus();
             }
         });

@@ -33,20 +33,24 @@ public class EBICRMLeadsView {
         controlLeads = new ControlLeads();
     }
 
-    public void initialize() {
+    public void initialize(boolean reload) {
         tabModel = (EBIAbstractTableModel) EBISystem.gui().table("leadsTable", "Leads").getModel();
         EBISystem.gui().label("compNameLabel", "Leads").setFont(new Font("Arial", Font.BOLD, 18));
         EBISystem.gui().label("cName", "Leads").setFont(new Font("Arial", Font.BOLD, 10));
+        
         try {
-            if (!"null".equals(EBIPropertiesRW.getEBIProperties().getValue("LEADSSEARCH_TEXT")) && !"".equals(EBIPropertiesRW.getEBIProperties().getValue("LEADSSEARCH_TEXT"))) {
-                EBISystem.gui().textField("searchLeadsText", "Leads").setText(EBIPropertiesRW.getEBIProperties().getValue("LEADSSEARCH_TEXT"));
-                controlLeads.dataShow(EBIPropertiesRW.getEBIProperties().getValue("LEADSSEARCH_TEXT"));
-            } else {
-                controlLeads.dataShow(-1);
+            if(reload){
+                if (!"null".equals(EBIPropertiesRW.getEBIProperties().getValue("LEADSSEARCH_TEXT")) && !"".equals(EBIPropertiesRW.getEBIProperties().getValue("LEADSSEARCH_TEXT"))) {
+                    EBISystem.gui().textField("searchLeadsText", "Leads").setText(EBIPropertiesRW.getEBIProperties().getValue("LEADSSEARCH_TEXT"));
+                    controlLeads.dataShow(EBIPropertiesRW.getEBIProperties().getValue("LEADSSEARCH_TEXT"));
+                } else {
+                    controlLeads.dataShow(-1);
+                }
             }
         } catch (final Exception e) {
             e.printStackTrace();
         }
+        
 
         EBISystem.gui().vpanel("Leads").setID(-1);
         EBISystem.gui().vpanel("Leads").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
@@ -247,7 +251,7 @@ public class EBICRMLeadsView {
         if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
             EBISystem.showInActionStatus("Leads");
             controlLeads.dataDelete(Integer.parseInt(tabModel.data[selectedRow][11].toString()));
-            controlLeads.dataNew();
+            controlLeads.dataNew(true);
             controlLeads.dataShow(-1);
             if (EBISystem.getInstance().getCompany() != null) {
                 EBISystem.getModule().resetUI(false, true);
@@ -261,16 +265,17 @@ public class EBICRMLeadsView {
                 .equals(tabModel.data[selectedRow][0].toString())) {
             return;
         }
+        int row = EBISystem.gui().table("leadsTable", "Leads").getSelectedRow();
         EBISystem.showInActionStatus("Leads");
-        controlLeads.dataNew();
+        controlLeads.dataNew(false);
         controlLeads.dataEdit(Integer.parseInt(tabModel.data[selectedRow][11].toString()));
-        controlLeads.isEdit = true;
+        EBISystem.gui().table("leadsTable", "Leads").changeSelection(row, 0, false, false);
     }
 
     public void newLead() {
         EBISystem.gui().textField("compNameText", "Leads").requestFocus();
         EBISystem.showInActionStatus("Leads");
-        controlLeads.dataNew();
+        controlLeads.dataNew(true);
         controlLeads.isEdit = false;
     }
 

@@ -478,19 +478,25 @@ public class EBICRMAccountStackView {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
+                
                 if (((JComboBox) e.getSource()).getSelectedIndex() == 3) {
                     EBISystem.gui().label("vale", "creditDebitDialog").setVisible(true);
                     EBISystem.gui().label("taxType", "creditDebitDialog").setVisible(false);
-                    EBISystem.gui().label("vale", "creditDebitDialog").setLocation(10, 69);
+                    EBISystem.gui().label("vale", "creditDebitDialog").setLocation(10, 90);
+                    
                     EBISystem.gui().FormattedField("valueText", "creditDebitDialog").setVisible(true);
-                    EBISystem.gui().FormattedField("valueText", "creditDebitDialog").setLocation(110, 69);
+                    EBISystem.gui().FormattedField("valueText", "creditDebitDialog").setLocation(110, 90);
+                    
                     EBISystem.gui().combo("taxTypeText", "creditDebitDialog").setVisible(false);
                     EBISystem.gui().label("taxValue", "creditDebitDialog").setVisible(false);
+                    
                 } else {
                     EBISystem.gui().label("vale", "creditDebitDialog").setVisible(false);
                     EBISystem.gui().label("taxType", "creditDebitDialog").setVisible(true);
+                    
                     EBISystem.gui().FormattedField("valueText", "creditDebitDialog").setVisible(false);
                     EBISystem.gui().combo("taxTypeText", "creditDebitDialog").setVisible(true);
+                    
                     EBISystem.gui().label("taxValue", "creditDebitDialog").setVisible(true);
                 }
             }

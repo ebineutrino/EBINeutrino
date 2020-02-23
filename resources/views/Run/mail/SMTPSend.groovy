@@ -13,8 +13,7 @@ class SMTPSend{
     SMTPAuthenticator auth = new SMTPAuthenticator();
     Session session = null;
     def system
-    
-	 
+     
     String smtpEMailUser = ""; // ex email@gmail.com
     String smtpPassword = ""; // password111
     String smtpHost = ""; // smtp.gmail.com
@@ -70,10 +69,10 @@ class SMTPSend{
             
         }catch(Exception ex) {
             ex.printStackTrace();
-            system.dialogMessage.error(ex.getMessage());
+            system.message.error(ex.getMessage());
             ret = false;
         }catch (java.net.UnknownHostException ex) {
-            system.dialogMessage.error(ex.getMessage());
+            system.message.error(ex.getMessage());
             ex.printStackTrace();
             ret = false;
         }

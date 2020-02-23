@@ -53,11 +53,19 @@ public class EBIReportSystem implements IEBIReportSystem {
             + File.separator;
 
     public void buildReport(final File reportFile) {
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                wait.setVisible(true);
+            }
+        });
+
         final Thread cmplRep = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (reportFile.isFile() && reportFile.getName().endsWith(".jrxml")) {
-                    wait.setVisible(true);
+
                     final String jsprFile = reportFile.getAbsolutePath().replace(".jrxml", ".jasper");
                     wait.setString("Compile Report:" + jsprFile);
                     try {
@@ -230,17 +238,23 @@ public class EBIReportSystem implements IEBIReportSystem {
      */
     public void useReportSystemExt(final Map<String, Object> map) {
 
-        wait.setVisible(true);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                wait.setVisible(true);
+            }
+        });
+
         final Runnable run = new Runnable() {
 
             @Override
             public void run() {
-                
+
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            
+
                             if (!"".equals(report[0])) {
 
                                 // if no report was selected release this method
@@ -290,7 +304,7 @@ public class EBIReportSystem implements IEBIReportSystem {
     // overloading Method 2
     @Override
     public void useReportSystem(final Map<String, Object> map, final String category, final String fileName) {
-        
+
         this.map = map;
         EBIReportSystem.fileName = fileName;
         report = checkForReport(map, category);
@@ -311,13 +325,17 @@ public class EBIReportSystem implements IEBIReportSystem {
     public void useReportSystemExt(final Map<String, Object> map, final String category,
             final String fileName) {
 
-        final Runnable run = new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                wait.setVisible(true);
+            }
+        });
 
+        final Runnable run = new Runnable() {
             @Override
             public void run() {
                 try {
-                    wait.setVisible(true);
-
                     if (!"".equals(report[0])) {
 
                         // if no report was selected release this method
@@ -407,7 +425,12 @@ public class EBIReportSystem implements IEBIReportSystem {
 
         String fileToRet;
         try {
-            wait.setVisible(true);
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    wait.setVisible(true);
+                }
+            });
             if (report != null && !"".equals(report[0])) {
 
                 // if no report was selected release this method

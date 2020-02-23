@@ -25,7 +25,6 @@ public class EBISystemSettingPanel extends JPanel {
     private JTextField jtextPDFPath = null;
     private JButton jButtonSelectPath = null;
     private JTextField jtextBrowserPath = null;
-    private JComboBox<String> comboForUser = null;
     private JButton jButtonBrowserPath = null;
     private JPanel generalSettings = null;
     private JPanel jPanelEmailSetting = null;
@@ -42,7 +41,6 @@ public class EBISystemSettingPanel extends JPanel {
     private JPasswordField jTextpopPassword = null;
     private JComboBox jComboBoxLanguage = null;
     private JComboBox jComboDateFormat = null;
-    private JCheckBox deleteMessage = null;
     private JLabel jLabel10 = null;
     private JLabel jLabel9 = null;
     private JLabel jLabel8 = null;
@@ -306,18 +304,17 @@ public class EBISystemSettingPanel extends JPanel {
             if ("INSERT".equals(iuSQL)) {
                 sql = "INSERT INTO MAIL_ACCOUNT SET " + "CREATEFROM=?," + "CREATEDATE=?," + "ACCOUNTNAME=?,"
                         + "SMTP_SERVER=?," + "SMTP_USER=?," + "SMTP_PASSWORD=?," + "EMAILADRESS=?," + "POP_SERVER=?,"
-                        + "POP_USER=?," + "POP_PASSWORD=?," + "EMAILS_TITLE=?, " + "DELETE_MESSAGE=?, "
+                        + "POP_USER=?," + "POP_PASSWORD=?," + "EMAILS_TITLE=?, "
                         + "FOLDER_NAME=? ";
             } else {
                 sql = "UPDATE MAIL_ACCOUNT SET " + "CREATEFROM=?," + "CREATEDATE=?," + "ACCOUNTNAME=?,"
                         + "SMTP_SERVER=?," + "SMTP_USER=?," + "SMTP_PASSWORD=?," + "EMAILADRESS=?," + "POP_SERVER=?,"
-                        + "POP_USER=?," + "POP_PASSWORD=?," + "EMAILS_TITLE=?, " + "DELETE_MESSAGE=?, "
+                        + "POP_USER=?," + "POP_PASSWORD=?," + "EMAILS_TITLE=?, "
                         + "FOLDER_NAME=? " + "WHERE ID = 1";
             }
 
             final PreparedStatement ps = EBISystem.getInstance().iDB().initPreparedStatement(sql);
-            ps.setString(1, comboForUser.getSelectedItem() == null ? EBISystem.ebiUser
-                    : comboForUser.getSelectedItem().toString());
+            ps.setString(1,EBISystem.ebiUser);
             ps.setDate(2, new java.sql.Date(new java.util.Date().getTime()));
             ps.setString(3, this.jTextFromTitle.getText());
             ps.setString(4, this.jTextEMailhost.getText());
@@ -328,8 +325,7 @@ public class EBISystemSettingPanel extends JPanel {
             ps.setString(9, this.jTextpopUser.getText());
             ps.setString(10, String.valueOf(this.jTextpopPassword.getPassword()));
             ps.setString(11, this.jTextFromTitle.getText());
-            ps.setInt(12, this.deleteMessage.isSelected() == true ? 1 : 0);
-            ps.setString(13, jcomboEMailProtocol.getSelectedItem().toString());
+            ps.setString(12, jcomboEMailProtocol.getSelectedItem().toString());
 
             EBISystem.getInstance().iDB().executePreparedStmt(ps);
             EBISystem.getInstance().reloadEMailSetting();
@@ -354,15 +350,13 @@ public class EBISystemSettingPanel extends JPanel {
 
             final PreparedStatement ps1 = EBISystem.getInstance().iDB()
                     .initPreparedStatement("SELECT * FROM MAIL_ACCOUNT WHERE CREATEFROM=?");
-            ps1.setString(1, comboForUser.getSelectedItem() == null ? EBISystem.ebiUser
-                    : comboForUser.getSelectedItem().toString());
+            ps1.setString(1, EBISystem.ebiUser);
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps1);
 
             set.last();
             if (set.getRow() > 0) {
                 set.beforeFirst();
                 while (set.next()) {
-                    this.comboForUser.setSelectedItem(set.getString("CREATEFROM"));
                     this.jTextFromTitle.setText(set.getString("EMAILS_TITLE"));
                     this.jTextEMailhost.setText(set.getString("SMTP_SERVER"));
                     this.jTextEMailBenutzer.setText(set.getString("SMTP_USER"));
@@ -372,7 +366,6 @@ public class EBISystemSettingPanel extends JPanel {
                     this.jTextpopUser.setText(set.getString("POP_USER"));
                     this.jTextpopPassword.setText(set.getString("POP_PASSWORD"));
                     this.jTextFromTitle.setText(set.getString("EMAILS_TITLE"));
-                    this.deleteMessage.setSelected(set.getInt("DELETE_MESSAGE") == 1 ? true : false);
                     this.jcomboEMailProtocol.setSelectedItem(set.getString("FOLDER_NAME"));
                 }
             } else {
@@ -490,9 +483,7 @@ public class EBISystemSettingPanel extends JPanel {
             jPanelEmailSetting.add(getJTextEMailBenutzer(), null);
             jPanelEmailSetting.add(getJTextEMailpassword(), null);
             jPanelEmailSetting.add(jLabely7, null);
-            jPanelEmailSetting.add(getDeleteMessage(), null);
             jPanelEmailSetting.add(getJTextEmailfrom(), null);
-            jPanelEmailSetting.add(emailForUser(), null);
             jPanelEmailSetting.add(jLabely8, null);
             jPanelEmailSetting.add(getJTextFromTitle(), null);
             jPanelEmailSetting.add(jLabel7, null);
@@ -615,35 +606,7 @@ public class EBISystemSettingPanel extends JPanel {
         return jTextEmailfrom;
     }
 
-    private JComboBox emailForUser() {
-        if (comboForUser == null) {
-            comboForUser = new JComboBox();
-            if (EBISystem.systemUsers != null) {
-                comboForUser.setModel(new DefaultComboBoxModel<String>(EBISystem.systemUsers));
-            }
-            comboForUser.setBounds(new Rectangle(384, 26, 175, 25));
-            comboForUser.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(final ActionEvent e) {
-                    loadEMailSetting();
-                }
-            });
-        }
-        return comboForUser;
-    }
-
-    private JCheckBox getDeleteMessage() {
-        if (deleteMessage == null) {
-            deleteMessage = new JCheckBox();
-            deleteMessage.setBounds(new Rectangle(384, 59, 175, 20));
-            deleteMessage.setText(EBISystem.i18n("EBI_LANG_DELETE_EMAIL_MESSAGE"));
-            deleteMessage.setFocusTraversalKeysEnabled(false);
-            deleteMessage.setOpaque(false);
-            deleteMessage.setFont(new Font("Dialog", Font.PLAIN, 12));
-        }
-        return deleteMessage;
-    }
-
+     
     private void enableEMailFields(final boolean enabled) {
         this.jTextFromTitle.setEnabled(enabled ? false : true);
         this.jTextEMailhost.setEnabled(enabled ? false : true);
@@ -654,7 +617,6 @@ public class EBISystemSettingPanel extends JPanel {
         this.jTextpopUser.setEnabled(enabled ? false : true);
         this.jTextpopPassword.setEnabled(enabled ? false : true);
         this.jTextFromTitle.setEnabled(enabled ? false : true);
-        this.deleteMessage.setEnabled(enabled ? false : true);
         this.jcomboEMailProtocol.setEnabled(enabled ? false : true);
     }
 
@@ -858,9 +820,8 @@ public class EBISystemSettingPanel extends JPanel {
 
     public boolean validateInput() {
         if (!"".equals(this.jTextEmailfrom.getText()) && !"".equals(this.jTextFromTitle.getText())
-                && !"".equals(this.jTextEMailhost.getText()) && !"".equals(this.jTextEMailBenutzer.getText())
-                && !"".equals(String.valueOf(this.jTextEMailpassword.getPassword())) && !"".equals(this.jTextpopServer.getText())
-                && !"".equals(this.jTextpopUser.getText()) && !"".equals(String.valueOf(this.jTextpopPassword.getPassword()))) {
+                || !"".equals(this.jTextEMailhost.getText()) && !"".equals(this.jTextEMailBenutzer.getText())
+                || !"".equals(String.valueOf(this.jTextEMailpassword.getPassword()))) {
 
             if ("".equals(this.jTextEmailfrom.getText())) {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_EMAIL"))
@@ -884,21 +845,6 @@ public class EBISystemSettingPanel extends JPanel {
             }
             if ("".equals(this.jTextEMailpassword.getText())) {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_EMAIL_SMTP_PASSWORD"))
-                        .Show(EBIMessage.ERROR_MESSAGE);
-                return false;
-            }
-            if ("".equals(this.jTextpopServer.getText())) {
-                EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_EMAIL_POP_SERVER"))
-                        .Show(EBIMessage.ERROR_MESSAGE);
-                return false;
-            }
-            if ("".equals(this.jTextpopUser.getText())) {
-                EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_EMAIL_POP_USER"))
-                        .Show(EBIMessage.ERROR_MESSAGE);
-                return false;
-            }
-            if ("".equals(this.jTextpopPassword.getText())) {
-                EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_EMAIL_POP_PASSWORD"))
                         .Show(EBIMessage.ERROR_MESSAGE);
                 return false;
             }

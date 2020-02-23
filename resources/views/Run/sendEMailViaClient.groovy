@@ -25,19 +25,19 @@ if (iter.hasNext()) {
         send = sendEMail.sendMessage(_TO, _SUBJECT, _BODY, _ATTACHMENT);
     }catch(Exception ex) {
         ex.printStackTrace();
-        system.dialogMessage.error(ex.getCause()+" : "+ex.getMessage());
+        system.message.error(ex.getCause()+" : "+ex.getMessage());
     }catch(java.net.UnknownHostException ex) {
         ex.printStackTrace();
-        system.dialogMessage.error(ex.getCause()+" : "+ex.getMessage());
+        system.message.error(ex.getCause()+" : "+ex.getMessage());
     }catch(com.sun.mail.util.MailConnectException ex) {
         ex.printStackTrace();
-        system.dialogMessage.error(ex.getCause()+" : "+ex.getMessage());
+        system.message.error(ex.getCause()+" : "+ex.getMessage());
     }finally {
         if(send) {
-            system.dialogMessage.info("EMail successfully send!");
+            system.message.info("EMail successfully send!");
         }
     }
 }else{
-    system.dialogMessage.info("Please configure an email account using system settings");
+    system.message.info("Please configure an email account using system settings");
 }
 system.hibernate().transaction("EMAIL_SETTINGS").commit();

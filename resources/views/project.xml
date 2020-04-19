@@ -12,4 +12,5 @@
  <includeGUI Name="Order" enabled="false" Path="Order/orderGUI.xml"/>
  <includeGUI Name="Service" enabled="false" Path="CRMService/serviceGUI.xml"/>
  <includeToolbar Name="ebiToolBar" Path="CRMToolbar/crmToolbar.xml"/>
+ <codecontrol name="groovy" path="Run/webServer/startServer.groovy"/>
 </BusinessModule>

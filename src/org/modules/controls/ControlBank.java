@@ -48,9 +48,9 @@ public class ControlBank {
             EBISystem.getInstance().getDataStore("Bank", "ebiSave");
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(companyBank);
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-            
+
             EBISystem.getInstance().getCompany().getCompanybanks().add(companyBank);
-            
+
             if (!isEdit) {
                 EBISystem.gui().vpanel("Bank").setID(companyBank.getBankid());
             }
@@ -77,7 +77,7 @@ public class ControlBank {
                         bank = bankObj;
                     }
                 }
-                
+
                 EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
                 final Companybank compbank = new Companybank();
                 compbank.setCreateddate(new Date());
@@ -90,10 +90,10 @@ public class ControlBank {
                 compbank.setBankbic(bank.getBankbic());
                 compbank.setBankiban(bank.getBankiban());
                 compbank.setBankcountry(bank.getBankcountry());
-                
+
                 EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(compbank);
                 EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-                
+
                 EBISystem.getInstance().getCompany().getCompanybanks().add(compbank);
                 bankID = compbank.getBankid();
             }
@@ -117,7 +117,8 @@ public class ControlBank {
                     break;
                 }
             }
-
+ 
+            
             EBISystem.gui().vpanel("Bank").setID(companyBank.getBankid());
             EBISystem.gui().textField("bankNameText", "Bank").setText(companyBank.getBankname());
             EBISystem.gui().textField("abaNrText", "Bank").setText(companyBank.getBankbsb());
@@ -193,7 +194,7 @@ public class ControlBank {
         }
 
         EBISystem.getModule().getBankdataPane().getTabModel().fireTableDataChanged();
-        if(selRow > -1){
+        if (selRow > -1) {
             selRow = EBISystem.gui().table("companyBankTable", "Bank").convertRowIndexToView(selRow);
             EBISystem.gui().table("companyBankTable", "Bank").changeSelection(selRow, 0, false, false);
         }

@@ -11,6 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jfx-version>8</jfx-version>
         <jdk-version>8</jdk-version>
+        <tomcat.version>9.0.33</tomcat.version>
     </properties>
     <build>
         <sourceDirectory>src</sourceDirectory>
@@ -48,26 +49,26 @@
             </plugin>
             
             <plugin>
-              <artifactId>maven-resources-plugin</artifactId>
-              <version>3.1.0</version>
-              <executions>
-                <execution>
-                  <id>copy-resources</id>
-                  <phase>validate</phase>
-                  <goals>
-                    <goal>copy-resources</goal>
-                  </goals>
-                  <configuration>
-                    <outputDirectory>${project.build.directory}/EBINeutrino/resources</outputDirectory>
-                    <resources>
-                      <resource>
-                        <directory>resources</directory>
-                        <filtering>true</filtering>
-                      </resource>
-                    </resources>              
-                  </configuration>
-                </execution>
-              </executions>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/EBINeutrino/resources</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>resources</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>              
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             
             <plugin>
@@ -98,6 +99,41 @@
         </plugins>
     </build>
     <dependencies>
+        
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jasper</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jasper-el</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jsp-api</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        
+        <dependency>
+    <groupId>org.glassfish.jaxb</groupId>
+    <artifactId>jaxb-runtime</artifactId>
+    <version>3.0.0-M1</version>
+</dependency>
+
+        
+        
         <dependency>
             <groupId>antlr</groupId>
             <artifactId>antlr</artifactId>

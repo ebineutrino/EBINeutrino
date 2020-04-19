@@ -1,12 +1,13 @@
-package org.sdk;
+package org.modules.data;
 
 import org.core.guiRenderer.EBIGUIWidgetsBean;
 
 import java.util.Iterator;
+import org.sdk.EBISystem;
 
-public class EBIDataManager {
+public class EBIDataManagerFGUI {
     
-    public void STORE(final String packg, final String TABLE) {
+    public void packageData(final String packg) {
         final EBIGUIWidgetsBean mainWidget = EBISystem.getInstance().getIEBIGUIRendererInstance().getGUIComponents(packg);
         iterateWidget(mainWidget.getSubWidgets().iterator());
     }

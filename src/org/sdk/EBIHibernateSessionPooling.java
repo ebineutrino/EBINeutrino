@@ -27,7 +27,6 @@ public class EBIHibernateSessionPooling implements IEBIHibernate {
         this.cfg = cfg;
         sessionList = new TreeMap();
         final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
-
         sessionFactory = cfg.buildSessionFactory(serviceRegistry);
     }
 

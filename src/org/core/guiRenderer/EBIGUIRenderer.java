@@ -118,13 +118,20 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
             while (ix.hasNext()) {
                 final EBIGUIWidgetsBean bx = (EBIGUIWidgetsBean) ix.next();
-
                 if (bx.getType().toLowerCase().equals("includetoolbar")) {
                     if (EBISystem.getUserRight().isAdministrator()) {
                         addXMLToolBarGUI(bx);
                     } else if (EBISystem.registeredModule.contains(bx.getPath())) {
                         addXMLToolBarGUI(bx);
                     }
+                }else if ("codecontrol".equals(bx.getType().toLowerCase())) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            addScriptBean(bx.getName(), bx.getPath(), bx.getName(), bx.getClassName(), "Startup");
+                            excScript("Startup", null );
+                        }
+                    }).start();
                 } else {
                     if (EBISystem.getUserRight().isAdministrator()) {
                         addXMLGUI(bx, path);
@@ -208,7 +215,6 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
             resizeContainer.put(componentNamespace, toResize);
 
             if (!"ebibar".equals(xmlGui.getCompObjects().getType().toLowerCase())) {
-
                 renderGUI(null, null);
                 if (xmlGui.getCompObjects().getType().toLowerCase().equals("visualpanel")) {
                     fileToTabPath = path;
@@ -1390,9 +1396,9 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 final EBIGUIScripts script = scriptContainer.get(cmpNamespace).get(iter.next());
 
                 if ("groovy".equals(script.getType())) {
-                    SwingUtilities.invokeLater(new Runnable() {
+                    /*SwingUtilities.invokeLater(new Runnable() {
                         @Override
-                        public final void run() {
+                        public final void run() {*/
                             try {
 
                                 Iterator ixt;
@@ -1450,8 +1456,8 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                                 EBIExceptionDialog.getInstance(e.getMessage()).Show(EBIMessage.ERROR_MESSAGE);
                                 e.printStackTrace();
                             }
-                        }
-                    });
+                      //  }
+                    //});
 
                 } else if ("java".equals(script.getType())) {
 
@@ -1940,6 +1946,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 widgetBean = res.getBean();
             }
         }
+        
         return widgetBean;
     }
 

@@ -1,5 +1,6 @@
 package org.core;
 
+
 import org.modules.EBIModule;
 import org.core.guiRenderer.EBIGUIRenderer;
 import org.core.gui.dialogs.EBISplashScreen;
@@ -28,7 +29,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import org.core.run.update.EBISocketDownloader;
-
 
 /**
  * This program is free software; you can redistribute it and/or modify it under
@@ -90,7 +90,8 @@ public class EBIMain extends JFrame {
                     application.setExtendedState(Frame.MAXIMIZED_BOTH);
                 }
             });
-            
+
+
             //check for update
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -117,7 +118,7 @@ public class EBIMain extends JFrame {
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
             MetalLookAndFeel.setCurrentTheme(new MoodyBlueTheme());
             SwingUtilities.updateComponentTreeUI(this);
-           
+
             EBISystem.getInstance().addMainFrame(this);
 
             splash = new EBISplashScreen();

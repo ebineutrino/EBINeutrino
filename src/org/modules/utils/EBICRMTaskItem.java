@@ -32,7 +32,6 @@ public class EBICRMTaskItem extends EBIButton {
             public void actionPerformed(final ActionEvent e) {
                 final EBIAllertTimerDialog dialog = new EBIAllertTimerDialog();
                 dialog.setVisible(getId(), getCompanyId(), getTaskName(), getDueDate(), getDuration(), getTaskMessage());
-
             }
         });
 

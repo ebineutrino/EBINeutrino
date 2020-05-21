@@ -235,14 +235,11 @@ public class EBIModuleHandler {
     }
 
     public void reloadSelectedModule() {
-        ebiMain.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        final int selectedTab = ebiMain.container.getSelectedTab();
+        ebiMain.setCursor(new Cursor(Cursor.WAIT_CURSOR));     
         final Object obj = getActiveModule();
         //Return object to restore
         final Object restore = releaseModule(obj);
-
         showModule(obj, restore, false);
-        ebiMain.container.setSelectedTab(selectedTab);
         ebiMain.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 

@@ -13,11 +13,12 @@ public class ModelCRMAccount extends AbstractTableModel {
         EBISystem.i18n("EBI_LANG_NUMBER"),
         EBISystem.i18n("EBI_LANG_NAME"),
         EBISystem.i18n("EBI_LANG_TOTAL_AMOUNT"),
+        EBISystem.i18n("EBI_LANG_TAX"),
         EBISystem.i18n("EBI_LANG_DEBIT"),
         EBISystem.i18n("EBI_LANG_CREDIT"),
     };
 
-    public Object[][] data = {{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", ""}};
+    public Object[][] data = {{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
 
     public Object[] getRow(final int row) {
         if (row < 0 || row > data.length - 1) {

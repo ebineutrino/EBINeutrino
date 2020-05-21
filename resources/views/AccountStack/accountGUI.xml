@@ -1,31 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <visualpanel name="Account" title="EBI_LANG_C_TAB_ACCOUNT" Location="0,0" Size="1200,850"
              visualproperties="true" assignable="false" checkable="true" bean="org.modules.views.EBICRMAccountStackView" >
-    
     <panel name="generalAccount" title="EBI_LANG_C_ACCOUNT_DATA" Location="12,17" Size="565,413">
-        <button name="saveAccount" tabindex="8" title="EBI_LANG_SAVE" Location="418,370" Size="122,29" actionListener="org.modules.views.EBICRMAccountStackView.saveAccount"/>
+        
+        <button name="saveAccount" tabindex="8" 
+                title="EBI_LANG_SAVE" Location="418,370" Size="122,29" 
+                    actionListener="org.modules.views.EBICRMAccountStackView.saveAccount"/>
+
         <label name="date" title="EBI_LANG_DATE" Location="20,30" Size="100,20"/>
-        <label name="number" title="EBI_LANG_NUMBER" Location="201,31" Size="100,20"/>
-        <label name="name" title="EBI_LANG_NAME" Location="20,130" Size="100,25"/>
-        <label name="amount" title="EBI_LANG_TOTAL_AMOUNT" Location="311,130" Size="147,25"/>
+        <label name="number" title="EBI_LANG_NUMBER" Location="170,31" Size="100,20"/>
+        <label name="account" title="EBI_LANG_ACCOUNT" Location="335,31" Size="100,20"/>
+        
+        <timepicker name="dateText" tabindex="1" Location="20,52" Size="140,25"/>
+        <textfield name="numberText" tabindex="2" Location="170,52" Size="155,25"/>
+        <combobox name="accountTypeText" Location="335,52" Size="203,25"/>
+        
+        <label name="name" title="EBI_LANG_NAME" Location="20,90" Size="100,25"/>
+        <label name="amount" title="EBI_LANG_TOTAL_AMOUNT" Location="335,90" Size="147,25"/>
+        
+        <textfield name="nameText" tabindex="3" Location="20,115" Size="305,25"/>
+        <formattedtextfield name="amountText" tabindex="4" Location="334,115" Size="205,25"/>
+        
+        <label name="tax" title="EBI_LANG_TAX" Location="335,150" Size="147,25"/>
+        <formattedtextfield name="taxText" enabled="false" Location="390,150" Size="149,25"/>
+        
         <label name="debit" title="EBI_LANG_DEBIT" Location="20,200" Size="100,25"/>
         <label name="credit" title="EBI_LANG_CREDIT" Location="20,230" Size="100,25"/>
-        <textarea name="descriptionText" tabindex="7" Location="19,270" Size="521,85"/>
-        <timepicker name="dateText" tabindex="1" Location="20,52" Size="158,25"/>
-        <textfield name="numberText" tabindex="2" Location="200,52" Size="232,25"/>
-        <textfield name="nameText" tabindex="3" Location="20,160" Size="261,25"/>
-        <formattedtextfield name="amountText" tabindex="4" Location="311,160" Size="229,25"/>
+        
         <textfield name="debitText" tabindex="5" Location="126,200" Size="77,25"/>
         <textfield name="creditText" tabindex="6" Location="126,230" Size="77,25"/>
 
-        <button name="selectDebit" Location="205,200" Size="31,27" actionListener="org.modules.views.EBICRMAccountStackView.showCreditDebitListDialog" icon="find.png"/>
-        <button name="selectCredit" Location="205,230" Size="31,27" actionListener="org.modules.views.EBICRMAccountStackView.showCreditDebitListDialog" icon="find.png"/>
+        <button name="selectDebit" Location="205,200" Size="31,27" 
+                actionListener="org.modules.views.EBICRMAccountStackView.showCreditDebitListDialog" icon="find.png"/>
+        
+        <button name="selectCredit" Location="205,230" Size="31,27" 
+                actionListener="org.modules.views.EBICRMAccountStackView.showCreditDebitListDialog" icon="find.png"/>
 
         <textfield name="descriptionDebit" background="#ebebfe" Location="240,200" Size="197,25"/>
         <textfield name="descriptionCredit" background="#ebebfe" Location="240,230" Size="197,25"/>
         <formattedtextfield name="debitCal" Location="440,200" Size="100,25"/>
         <formattedtextfield name="creditCal" Location="440,230" Size="100,25"/>
-        <combobox name="accountTypeText" Location="20,95" Size="158,25"/>
+        
+        
+        
+        <textarea name="descriptionText" tabindex="7" Location="19,270" Size="521,85"/>
     </panel>
     <panel name="avAccount" title="EBI_LANG_C_AVAILABLE_ACCOUNT_DATA" resizewidth="true" resizeheight="true" Location="11,439" Size="1176,405">
         
@@ -35,7 +53,7 @@
         <button name="editAccount" i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="46,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMAccountStackView.editAccount" icon="edit.png"/>
         <button name="deleteAccount" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="83,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMAccountStackView.deleteAccount" icon="delete.png"/>
         <button name="historyAccount" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="126,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMAccountStackView.historyAccount" icon="historysearch.png"/>
-        <button name="reportAccount" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_REPORT" Location="161,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMAccountStackView.showAccountReport" icon="chart.png"/>
+        <button name="reportAccount" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_REPORT" Location="161,20" Size="31,27" enabled="true" actionListener="org.modules.views.EBICRMAccountStackView.showAccountReport" icon="chart.png"/>
 
         <textfield name="filterTableText" Location="280,18" Size="400,30" placeHolder="EBI_LANG_FILTER"/>
         

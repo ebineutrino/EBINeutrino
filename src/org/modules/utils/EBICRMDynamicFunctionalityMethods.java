@@ -195,7 +195,7 @@ public final class EBICRMDynamicFunctionalityMethods {
 
                 EBICRMProductView.category = getStatusProperties("COMPANYPRODUCTCATEGORY");
                 EBICRMProductView.type = getStatusProperties("COMPANYPRODUCTTYPE");
-                EBICRMProductView.taxType = getStatusProperties("COMPANYPRODUCTTAXVALUE");
+                EBICRMProductView.taxType = getStatusProperties("COMPANYPRODUCTTAX");
 
                 if (EBISystem.gui().existView("Product")) {
                     EBISystem.gui().combo("ProductCategoryText", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.category));

@@ -76,6 +76,9 @@ public class EBICRMAccountStackView {
     @Getter
     @Setter
     private String accountDebitTaxName = "";
+    @Getter
+    @Setter
+    private String accountCreditTaxName = "";
 
     public static int DEBIT = 1;
     public static int CREDIT = 2;
@@ -360,6 +363,10 @@ public class EBICRMAccountStackView {
         EBISystem.gui().FormattedField("amountText", "Account").setValue(null);
         EBISystem.gui().FormattedField("amountText", "Account").setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(taxFormat)));
         EBISystem.gui().FormattedField("amountText", "Account").setHorizontalAlignment(SwingConstants.RIGHT);
+        
+        EBISystem.gui().FormattedField("taxText", "Account").setValue(null);
+        EBISystem.gui().FormattedField("taxText", "Account").setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(taxFormat)));
+        EBISystem.gui().FormattedField("taxText", "Account").setHorizontalAlignment(SwingConstants.RIGHT);
 
         EBISystem.gui().FormattedField("debitCal", "Account").setValue(null);
         EBISystem.gui().FormattedField("debitCal", "Account").setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(taxFormat)));
@@ -395,7 +402,7 @@ public class EBICRMAccountStackView {
         }
         if (EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.WARNING_MESSAGE_YESNO) == true) {
             EBISystem.showInActionStatus("Account");
-            dataControlAccount.dataDelete(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][7].toString()));
+            dataControlAccount.dataDelete(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][8].toString()));
             dataControlAccount.dataNew();
             dataControlAccount.dataShow(EBISystem.gui().combo("invoiceYearText", "Account").getEditor().getItem().toString(), -1);
             dataControlAccount.isEdit = false;
@@ -409,7 +416,7 @@ public class EBICRMAccountStackView {
         }
         EBISystem.showInActionStatus("Account");
         dataControlAccount.dataNew();
-        dataControlAccount.dataEdit(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][7].toString()));
+        dataControlAccount.dataEdit(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][8].toString()));
         dataControlAccount.dataShowDoc();
         dataControlAccount.isEdit = true;
     }
@@ -540,44 +547,30 @@ public class EBICRMAccountStackView {
     }
 
     public void showCreditDebitListDialog() {
-
         EBISystem.gui().loadGUI("CRMDialog/crmSelectionDialog.xml");
         dataControlAccount.dataShowCreditDebit();
-
         EBISystem.gui().dialog("abstractSelectionDialog").setTitle(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_LIST"));
-
         EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(final KeyEvent e) {
-            }
-
+            public void keyTyped(final KeyEvent e){}
             @Override
-            public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));
-            }
-
+            public void keyPressed(final KeyEvent e) {EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));}
             @Override
-            public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));
-            }
+            public void keyReleased(final KeyEvent e) {EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));}
         });
 
-        EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setModel(creditDebitMod);
-        EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("abstractTable", "abstractSelectionDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
+        EBISystem.gui().table("abstractTable","abstractSelectionDialog").setModel(creditDebitMod);
+        EBISystem.gui().table("abstractTable","abstractSelectionDialog").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.gui().table("abstractTable","abstractSelectionDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(final ListSelectionEvent e) {
                 if (e.getValueIsAdjusting()) {
                     return;
                 }
-
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-
                 if (lsm.getMinSelectionIndex() != -1) {
                     selectedCDDialogRow = EBISystem.gui().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
-
             }
         });
 
@@ -657,7 +650,7 @@ public class EBICRMAccountStackView {
     }
 
     public void historyAccount() {
-        new EBICRMHistoryView(EBISystem.getModule().hcreator.retrieveDBHistory(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][7].toString()), "Account")).setVisible();
+        new EBICRMHistoryView(EBISystem.getModule().hcreator.retrieveDBHistory(Integer.parseInt(tabModAccount.data[selectedInvoiceRow][8].toString()), "Account")).setVisible();
     }
 
     public void updateYear() {

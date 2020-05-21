@@ -1,98 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dialog name="crmSettingDialog" title="CRM Settings" icon="..\images\write.png" Location="189,27" Size="760,490" visualproperties="false" assignable="false" modal="true" >
- <panel name="companyPanel" title="Company panel" Location="10,7" Size="322,117">
-		<label name="autoIncAdm" title="Auto Inc. Administration" Location="9,24" Size="166,21"/>
-		<button name="autoIncAdmButton" tabindex="1" title="Auto Inc. Nr" Location="176,21" Size="140,29"/>
-		<label name="category" title="Category" Location="12,61" Size="100,20"/>
-		<label name="cooperation" title="Cooperation" Location="12,90" Size="100,20"/>
-		<label name="classification" title="Classification" Location="173,61" Size="105,20"/>
-		<button name="catBnt" tabindex="2" Location="122,60" Size="27,22"/>
-		<button name="coopBnt" tabindex="4" Location="122,89" Size="27,22"/>
-		<button name="classBnt" tabindex="3" Location="283,60" Size="27,22"/>
-</panel>
-<panel name="adressMeetingPanel" title="Address / Meetig panel" Location="9,123" Size="324,55">
-		<label name="addressType" title="Address Type" Location="11,27" Size="100,20"/>
-		<label name="reportType" title="Report Type" Location="170,27" Size="115,20"/>
-		<button name="addressTypeBnt" tabindex="4" Location="122,26" Size="27,22"/>
-		<button name="reportTypeBnt" tabindex="6" Location="289,26" Size="27,22"/>
-</panel>
-<panel name="opportunityPanel" title="Opportunity Panel" Location="9,176" Size="324,109">
-		<label name="busType" title="Business Type" Location="12,27" Size="105,20"/>
-		<label name="saleStage" title="Sale Stage" Location="12,54" Size="105,20"/>
-		<label name="budgetType" title="Budget Type" Location="12,81" Size="105,20"/>
-		<label name="evalType" title="Evaluation Type" Location="170,27" Size="115,20"/>
-		<label name="oppStatus" title="Status" Location="171,54" Size="115,20"/>
-		<button name="bussTypeBnt" tabindex="7" Location="122,26" Size="27,22"/>
-		<button name="saleStgBnt" tabindex="9" Location="122,54" Size="27,22"/>
-		<button name="budTypeBnt" tabindex="11" Location="122,81" Size="27,22"/>
-		<button name="evalTypeBnt" tabindex="8" Location="289,26" Size="27,22"/>
-		<button name="oppstatusBnt" tabindex="10" Location="289,54" Size="27,22"/>
-</panel>
-<panel name="activityPanel" title="Activity Panel" Location="9,284" Size="325,52">
-		<label name="activityStatus" title="activity Status" Location="11,23" Size="105,20"/>
-		<label name="activityType" title="Activity Type" Location="171,23" Size="115,20"/>
-		<button name="activityStatusBnt" tabindex="12" Location="122,23" Size="27,22"/>
-		<button name="activityTypeBnt" tabindex="13" Location="288,23" Size="27,22"/>
-</panel>
-<panel name="offerOrderPanel" title="Offer / Order Panel" Location="9,334" Size="325,52">
-		<label name="offerStatus" title="Offer Status" Location="11,23" Size="105,20"/>
-		<label name="orderStatus" title="Order Status" Location="171,23" Size="115,20"/>
-		<button name="offerStatusBnt" tabindex="14" Location="122,23" Size="27,22"/>
-		<button name="orderStatusBnt" tabindex="15" Location="288,23" Size="27,22"/>
-</panel>
-<panel name="taxProductPanel" title="Tax / Product panel" Location="338,7" Size="402,115">
-		<label name="productCategory" title="Product Category" Location="10,23" Size="125,20"/>
-		<label name="productType" title="Product Type" Location="11,51" Size="125,20"/>
-		<label name="ProductProperties" title="Product Properties" Location="11,81" Size="125,20"/>
-		<button name="taxAdminBnt" tabindex="20" title="Tax Administration" Location="180,80" Size="212,23"/>
-		<label name="tax" title="Tax" Location="191,23" Size="125,20"/>
-		<button name="productCatBnt" tabindex="16" Location="139,23" Size="27,22"/>
-		<button name="productTypeBnt" tabindex="18" Location="140,51" Size="27,22"/>
-		<button name="productPropBnt" tabindex="19" Location="140,81" Size="27,22"/>
-		<button name="productTaxBnt" tabindex="17" Location="321,23" Size="27,22"/>
-</panel>
-<panel name="campaignPanel" title="Campagin Panel" Location="9,384" Size="325,53">
-		<label name="campStatus" title="Stauts" Location="11,27" Size="105,20"/>
-		<label name="CampType" title="Type" Location="171,26" Size="115,20"/>
-		<button name="campaignStatusBnt" tabindex="21" Location="119,26" Size="27,22"/>
-		<button name="campaignTypeBnt" tabindex="22" Location="288,25" Size="27,22"/>
-</panel>
-<panel name="servicePanel" title="Service panel" Location="339,121" Size="397,84">
-		<label name="serviceStatus" title="Status" Location="11,26" Size="125,20"/>
-		<label name="serviceType" title="Type" Location="11,55" Size="125,20"/>
-		<label name="serviceCategory" title="Category" Location="190,26" Size="125,20"/>
-		<button name="serviceStatusBnt" tabindex="23" Location="140,26" Size="27,22"/>
-		<button name="serviceTypeBnt" tabindex="25" Location="140,55" Size="27,22"/>
-		<button name="serviceCatBnt" tabindex="24" Location="321,26" Size="27,22"/>
-</panel>
-<panel name="problemSolPanel" title="Problem / Solution Panel" Location="338,205" Size="399,83">
-		<label name="prosolStatus" title="Stauts" Location="11,26" Size="125,20"/>
-		<label name="prosolType" title="Type" Location="11,55" Size="125,20"/>
-		<label name="prosolCategory" title="Category" Location="192,26" Size="125,20"/>
-		<label name="prosolClassfication" title="Classification" Location="192,55" Size="125,20"/>
-		<button name="prosolStatusBnt" tabindex="26" Location="140,26" Size="27,22"/>
-		<button name="prosolTypeBnt" tabindex="28" Location="140,55" Size="27,22"/>
-		<button name="prosolCateBnt" tabindex="27" Location="321,26" Size="27,22"/>
-		<button name="prosolClassBnt" tabindex="29" Location="321,55" Size="27,22"/>
-</panel>
-		<button name="eMailTemplateDialogBnt" tabindex="30" title="Email Template Setting" Location="10,446" Size="229,27"/>
-<panel name="projectSettings" title="projectSettings" Location="338,286" Size="397,104">
-		<label name="prjStatus" title="EBI_LANG_PROJECT_STATUS" Location="12,20" Size="123,20"/>
-		<label name="task Status" title="EBI_LANG_TASK_STATUS" Location="192,20" Size="127,20"/>
-		<label name="taskType" title="EBI_LANG_TASK_TYPE" Location="193,49" Size="127,20"/>
-		<button name="prjStatusBnt" Location="138,20" Size="27,22"/>
-		<button name="taskStatusBnt" Location="322,20" Size="27,22"/>
-		<button name="taskTypeBnt" Location="322,49" Size="27,22"/>
-		<label name="costProperties" title="EBI_LANG_COST_PROPERTY" Location="13,49" Size="122,20"/>
-		<button name="costPropBnt" Location="138,49" Size="27,22"/>
-		<label name="taskProperty" title="EBI_LANG_TASK_PROPERTY" Location="13,75" Size="121,20"/>
-		<button name="taskPropBnt" Location="138,76" Size="27,22"/>
-</panel>
-<panel name="invoiceSettings" title="invoiceSettings" Location="336,391" Size="400,47">
-		<label name="invoiceStaus" title="EBI_LANG_STATUS" Location="13,20" Size="121,20"/>
-		<label name="invoiceCategory" title="EBI_LANG_CATEGORY" Location="193,20" Size="127,20"/>
-		<button name="invoiceStsBnt" Location="138,20" Size="27,22"/>
-		<button name="invoiceCatBnt" Location="322,20" Size="27,22"/>
-</panel>
-		<button name="invoiceNrAdministration" title="EBI_LANG_INVOICE_AUTOINC_NR" Location="338,445" Size="250,27"/>
+    <panel name="companyPanel" title="Company panel" Location="10,7" Size="322,117">
+        <label name="autoIncAdm" title="Auto Inc. Administration" Location="9,24" Size="166,21"/>
+        <button name="autoIncAdmButton" tabindex="1" title="Auto Inc. Nr" Location="176,21" Size="140,29"/>
+        <label name="category" title="Category" Location="12,61" Size="100,20"/>
+        <label name="cooperation" title="Cooperation" Location="12,90" Size="100,20"/>
+        <label name="classification" title="Classification" Location="173,61" Size="105,20"/>
+        <button name="catBnt" tabindex="2" Location="122,60" Size="27,22"/>
+        <button name="coopBnt" tabindex="4" Location="122,89" Size="27,22"/>
+        <button name="classBnt" tabindex="3" Location="283,60" Size="27,22"/>
+    </panel>
+    <panel name="adressMeetingPanel" title="Address / Meetig panel" Location="9,123" Size="324,55">
+        <label name="addressType" title="Address Type" Location="11,27" Size="100,20"/>
+        <label name="reportType" title="Report Type" Location="170,27" Size="115,20"/>
+        <button name="addressTypeBnt" tabindex="4" Location="122,26" Size="27,22"/>
+        <button name="reportTypeBnt" tabindex="6" Location="289,26" Size="27,22"/>
+    </panel>
+    <panel name="opportunityPanel" title="Opportunity Panel" Location="9,176" Size="324,109">
+        <label name="busType" title="Business Type" Location="12,27" Size="105,20"/>
+        <label name="saleStage" title="Sale Stage" Location="12,54" Size="105,20"/>
+        <label name="budgetType" title="Budget Type" Location="12,81" Size="105,20"/>
+        <label name="evalType" title="Evaluation Type" Location="170,27" Size="115,20"/>
+        <label name="oppStatus" title="Status" Location="171,54" Size="115,20"/>
+        <button name="bussTypeBnt" tabindex="7" Location="122,26" Size="27,22"/>
+        <button name="saleStgBnt" tabindex="9" Location="122,54" Size="27,22"/>
+        <button name="budTypeBnt" tabindex="11" Location="122,81" Size="27,22"/>
+        <button name="evalTypeBnt" tabindex="8" Location="289,26" Size="27,22"/>
+        <button name="oppstatusBnt" tabindex="10" Location="289,54" Size="27,22"/>
+    </panel>
+    <panel name="activityPanel" title="Activity Panel" Location="9,284" Size="325,52">
+        <label name="activityStatus" title="activity Status" Location="11,23" Size="105,20"/>
+        <label name="activityType" title="Activity Type" Location="171,23" Size="115,20"/>
+        <button name="activityStatusBnt" tabindex="12" Location="122,23" Size="27,22"/>
+        <button name="activityTypeBnt" tabindex="13" Location="288,23" Size="27,22"/>
+    </panel>
+    <panel name="offerOrderPanel" title="Offer / Order Panel" Location="9,334" Size="325,52">
+        <label name="offerStatus" title="Offer Status" Location="11,23" Size="105,20"/>
+        <label name="orderStatus" title="Order Status" Location="171,23" Size="115,20"/>
+        <button name="offerStatusBnt" tabindex="14" Location="122,23" Size="27,22"/>
+        <button name="orderStatusBnt" tabindex="15" Location="288,23" Size="27,22"/>
+    </panel>
+    <panel name="taxProductPanel" title="Tax / Product panel" Location="338,7" Size="402,115">
+        <label name="productCategory" title="Product Category" Location="10,23" Size="125,20"/>
+        <label name="productType" title="Product Type" Location="11,51" Size="125,20"/>
+        <label name="ProductProperties" title="Product Properties" Location="11,81" Size="125,20"/>
+        <button name="taxAdminBnt" tabindex="20" title="Tax Administration" Location="180,80" Size="212,23"/>
+        <button name="productCatBnt" tabindex="16" Location="139,23" Size="27,22"/>
+        <button name="productTypeBnt" tabindex="18" Location="140,51" Size="27,22"/>
+        <button name="productPropBnt" tabindex="19" Location="140,81" Size="27,22"/>
+    </panel>
+    <panel name="campaignPanel" title="Campagin Panel" Location="9,384" Size="325,53">
+        <label name="campStatus" title="Stauts" Location="11,27" Size="105,20"/>
+        <label name="CampType" title="Type" Location="171,26" Size="115,20"/>
+        <button name="campaignStatusBnt" tabindex="21" Location="119,26" Size="27,22"/>
+        <button name="campaignTypeBnt" tabindex="22" Location="288,25" Size="27,22"/>
+    </panel>
+    <panel name="servicePanel" title="Service panel" Location="339,121" Size="397,84">
+        <label name="serviceStatus" title="Status" Location="11,26" Size="125,20"/>
+        <label name="serviceType" title="Type" Location="11,55" Size="125,20"/>
+        <label name="serviceCategory" title="Category" Location="190,26" Size="125,20"/>
+        <button name="serviceStatusBnt" tabindex="23" Location="140,26" Size="27,22"/>
+        <button name="serviceTypeBnt" tabindex="25" Location="140,55" Size="27,22"/>
+        <button name="serviceCatBnt" tabindex="24" Location="321,26" Size="27,22"/>
+    </panel>
+    <panel name="problemSolPanel" title="Problem / Solution Panel" Location="338,205" Size="399,83">
+        <label name="prosolStatus" title="Stauts" Location="11,26" Size="125,20"/>
+        <label name="prosolType" title="Type" Location="11,55" Size="125,20"/>
+        <label name="prosolCategory" title="Category" Location="192,26" Size="125,20"/>
+        <label name="prosolClassfication" title="Classification" Location="192,55" Size="125,20"/>
+        <button name="prosolStatusBnt" tabindex="26" Location="140,26" Size="27,22"/>
+        <button name="prosolTypeBnt" tabindex="28" Location="140,55" Size="27,22"/>
+        <button name="prosolCateBnt" tabindex="27" Location="321,26" Size="27,22"/>
+        <button name="prosolClassBnt" tabindex="29" Location="321,55" Size="27,22"/>
+    </panel>
+    <button name="eMailTemplateDialogBnt" tabindex="30" title="Email Template Setting" Location="10,446" Size="229,27"/>
+    <panel name="projectSettings" title="projectSettings" Location="338,286" Size="397,104">
+        <label name="prjStatus" title="EBI_LANG_PROJECT_STATUS" Location="12,20" Size="123,20"/>
+        <label name="task Status" title="EBI_LANG_TASK_STATUS" Location="192,20" Size="127,20"/>
+        <label name="taskType" title="EBI_LANG_TASK_TYPE" Location="193,49" Size="127,20"/>
+        <button name="prjStatusBnt" Location="138,20" Size="27,22"/>
+        <button name="taskStatusBnt" Location="322,20" Size="27,22"/>
+        <button name="taskTypeBnt" Location="322,49" Size="27,22"/>
+        <label name="costProperties" title="EBI_LANG_COST_PROPERTY" Location="13,49" Size="122,20"/>
+        <button name="costPropBnt" Location="138,49" Size="27,22"/>
+        <label name="taskProperty" title="EBI_LANG_TASK_PROPERTY" Location="13,75" Size="121,20"/>
+        <button name="taskPropBnt" Location="138,76" Size="27,22"/>
+    </panel>
+    <panel name="invoiceSettings" title="invoiceSettings" Location="336,391" Size="400,47">
+        <label name="invoiceStaus" title="EBI_LANG_STATUS" Location="13,20" Size="121,20"/>
+        <label name="invoiceCategory" title="EBI_LANG_CATEGORY" Location="193,20" Size="127,20"/>
+        <button name="invoiceStsBnt" Location="138,20" Size="27,22"/>
+        <button name="invoiceCatBnt" Location="322,20" Size="27,22"/>
+    </panel>
+    <button name="invoiceNrAdministration" title="EBI_LANG_INVOICE_AUTOINC_NR" Location="338,445" Size="250,27"/>
 </dialog>

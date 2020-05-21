@@ -539,7 +539,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 }
                 textField.setName(nameSpace);
                 textField.setEnabled(bean.isEnabled());
-
+                
                 if (!bean.isVisible()) {
                     textField.setVisible(bean.isVisible());
                 }

@@ -53,7 +53,6 @@ public class CRMSetting {
         EBISystem.gui().label("productCategory", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_PRODUCT_CATEGORY"));
         EBISystem.gui().label("productType", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_PRODUCT_TYPE"));
         EBISystem.gui().label("ProductProperties", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_PRODUCT_PROPERTIES"));
-        EBISystem.gui().label("tax", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_C_CRM_TAX_TYP"));
         EBISystem.gui().label("campStatus", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_STATUS"));
         EBISystem.gui().label("CampType", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_PROPERTIES"));
         EBISystem.gui().label("serviceStatus", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_STATUS"));
@@ -244,15 +243,6 @@ public class CRMSetting {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 final EBIDialogValueSetter setValueSetter = new EBIDialogValueSetter("CRMPRODUCTDIMENSIONS", EBISystem.i18n("EBI_LANG_C_CRM_PRODUCT_PROPERTIES"));
-                setValueSetter.setVisible();
-            }
-        });
-
-        EBISystem.gui().button("productTaxBnt", "crmSettingDialog").setIcon(EBISystem.getInstance().getIconResource("lf_monitoring.png"));
-        EBISystem.gui().button("productTaxBnt", "crmSettingDialog").addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                final EBIDialogValueSetter setValueSetter = new EBIDialogValueSetter("COMPANYPRODUCTTAXVALUE", EBISystem.i18n("EBI_LANG_C_CRM_TAX_TYP"));
                 setValueSetter.setVisible();
             }
         });

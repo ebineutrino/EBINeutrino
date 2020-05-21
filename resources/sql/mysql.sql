@@ -5,6 +5,7 @@
         ACCOUNT text,
         ACCOUNT_TYPE integer,
         ACCOUNT_TAX_TYPE varchar(255),
+        TAX_VALUE double precision,
         ACCOUNT_DEBIT varchar(255),
         ACCOUNT_CREDIT varchar(255),
         ACCOUNT_D_NAME varchar(255),

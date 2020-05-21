@@ -149,7 +149,7 @@ public class EBIDialogTaxAdministration {
         ResultSet set = null;
         try {
             EBISystem.gui().combo("taxCombo", "taxAdminDialog").removeAllItems();
-            ps = EBISystem.db().initPreparedStatement("SELECT * FROM COMPANYPRODUCTTAXVALUE order by NAME");
+            ps = EBISystem.db().initPreparedStatement("SELECT NAME FROM COMPANYPRODUCTTAX order by NAME");
             set = ps.executeQuery();
 
             if (set != null) {
@@ -210,6 +210,9 @@ public class EBIDialogTaxAdministration {
             if (!EBISystem.hibernate().transaction("EBITAX_SESSION").isActive()) {
                 EBISystem.hibernate().transaction("EBITAX_SESSION").begin();
             }
+            
+            String taxName = EBISystem.gui().combo("taxCombo", "taxAdminDialog").getSelectedItem().toString();
+            
             if (!isEdit) {
                 crmTax = new Companyproducttax();
                 crmTax.setCreateddate(new java.util.Date());
@@ -218,7 +221,7 @@ public class EBIDialogTaxAdministration {
                 crmTax.setChangeddate(new java.util.Date());
                 crmTax.setChangedfrom(EBISystem.ebiUser);
             }
-            crmTax.setName(EBISystem.gui().combo("taxCombo", "taxAdminDialog").getSelectedItem().toString());
+            crmTax.setName(taxName);
             crmTax.setTaxvalue(Double.parseDouble(EBISystem.gui().textField("taxValue", "taxAdminDialog").getText()));
             EBISystem.hibernate().session("EBITAX_SESSION").saveOrUpdate(this.crmTax);
             EBISystem.hibernate().transaction("EBITAX_SESSION").commit();

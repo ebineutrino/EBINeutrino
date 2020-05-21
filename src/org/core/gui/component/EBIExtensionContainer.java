@@ -14,8 +14,8 @@ import java.util.List;
 import javax.swing.*;
 
 /**
- * EBI Neutrino component container
- * This class is managing the jTabbedPane component
+ * EBI Neutrino component container This class is managing the jTabbedPane
+ * component
  */
 public class EBIExtensionContainer implements IEBIContainer {
 
@@ -61,10 +61,11 @@ public class EBIExtensionContainer implements IEBIContainer {
 
     /**
      * Add a component to container
+     *
      * @return index
      */
     @Override
-	public int addContainer(final String title, final JComponent component, final ImageIcon icon, final int mnemo_key) {
+    public int addContainer(final String title, final JComponent component, final ImageIcon icon, final int mnemo_key) {
         jTabbedPane.addTab(title, icon, component);
 
         if (mnemo_key != NON_MNEMO) {
@@ -73,7 +74,7 @@ public class EBIExtensionContainer implements IEBIContainer {
         // Used for the GUIDesigner to identify the selected component xml file
         EBISystem.gui().getHashTabtoFile().put((this.jTabbedPane.getTabCount() - 1),
                 "".equals(EBISystem.gui().getFileToPath())
-                        ? title : EBISystem.gui().getFileToPath());
+                ? title : EBISystem.gui().getFileToPath());
 
         this.registeredTabs.add((this.jTabbedPane.getTabCount() - 1), new String[]{component.getName(), title});
 
@@ -82,16 +83,17 @@ public class EBIExtensionContainer implements IEBIContainer {
 
     /**
      * Add scrollable component to container
+     *
      * @return index
      */
     @Override
-	public int addScrollableContainer(final String title, final JComponent component, final ImageIcon icon, final int mnemo_key) {
+    public int addScrollableContainer(final String title, final JComponent component, final ImageIcon icon, final int mnemo_key) {
         component.setPreferredSize(new Dimension(component.getWidth(), component.getHeight()));
         jscrollPane = new JScrollPane();
         jscrollPane.setViewportView(component);
         jscrollPane.getVerticalScrollBar().setUnitIncrement(150);
         jTabbedPane.addTab(title, icon, jscrollPane);
-        
+
         if (ebiMain.getSize().width < 1100 && ebiMain.getSize().height < 800) {
             if (component.getComponentListeners().length > 1 && component.getComponentListeners()[1] != null) {
                 component.getComponentListeners()[1].componentResized(new ComponentEvent(component, ComponentEvent.COMPONENT_RESIZED));
@@ -103,10 +105,10 @@ public class EBIExtensionContainer implements IEBIContainer {
         }
 
         // Used for the GUIDesigner to identify the selected xml component
-        final int index = this.jTabbedPane.getTabCount() - 1  == -1 ? 0 : this.jTabbedPane.getTabCount() - 1;
+        final int index = this.jTabbedPane.getTabCount() - 1 == -1 ? 0 : this.jTabbedPane.getTabCount() - 1;
         EBISystem.gui().getHashTabtoFile().put(index,
                 "".equals(EBISystem.gui().getFileToPath())
-                        ? title : EBISystem.gui().getFileToPath());
+                ? title : EBISystem.gui().getFileToPath());
 
         this.registeredTabs.add(index, new String[]{component.getName(), title});
 
@@ -115,10 +117,11 @@ public class EBIExtensionContainer implements IEBIContainer {
 
     /**
      * Add scrollable and closable component to container
+     *
      * @return index
      */
     @Override
-	public int addScrollableClosableContainer(final String title, final JComponent component, final ImageIcon icon, final int mnemo_key, final CloseableTabbedPaneListener l) {
+    public int addScrollableClosableContainer(final String title, final JComponent component, final ImageIcon icon, final int mnemo_key, final CloseableTabbedPaneListener l) {
 
         component.setPreferredSize(new Dimension(component.getWidth(), component.getHeight()));
         jscrollPane = new JScrollPane();
@@ -134,7 +137,7 @@ public class EBIExtensionContainer implements IEBIContainer {
         // Used for the GUIDesigner to identify the selected component xml file
         EBISystem.gui().getHashTabtoFile().put((this.jTabbedPane.getTabCount() - 1),
                 "".equals(EBISystem.gui().getFileToPath())
-                        ? title : EBISystem.gui().getFileToPath());
+                ? title : EBISystem.gui().getFileToPath());
 
         this.registeredTabs.add((this.jTabbedPane.getTabCount() - 1), new String[]{component.getName(), title});
 
@@ -142,7 +145,7 @@ public class EBIExtensionContainer implements IEBIContainer {
     }
 
     @Override
-	public int getIndexByTitle(final String title) {
+    public int getIndexByTitle(final String title) {
         int index = -1;
 
         for (int i = 0; i < jTabbedPane.getTabCount(); i++) {
@@ -158,13 +161,13 @@ public class EBIExtensionContainer implements IEBIContainer {
     }
 
     @Override
-	public void removeContainer(final int index) {
+    public void removeContainer(final int index) {
         try {
             EBISystem.gui().removeFileFromTab(index);
             this.jTabbedPane.remove(index);
 
-            for(int i=index-1; i > 1; i--) {
-                if(this.jTabbedPane.isEnabledAt(i)) {
+            for (int i = index - 1; i > 1; i--) {
+                if (this.jTabbedPane.isEnabledAt(i)) {
                     this.jTabbedPane.setSelectedIndex(i);
                     break;
                 }
@@ -178,7 +181,7 @@ public class EBIExtensionContainer implements IEBIContainer {
     }
 
     @Override
-	public void removeAllFromContainer() {
+    public void removeAllFromContainer() {
         try {
             this.jTabbedPane.removeAll();
             this.registeredTabs.clear();
@@ -188,16 +191,16 @@ public class EBIExtensionContainer implements IEBIContainer {
     }
 
     @Override
-	public int getSelectedTab() {
+    public int getSelectedTab() {
         return this.jTabbedPane.getSelectedIndex();
     }
 
     @Override
-	public void setSelectedTab(final int index) {
+    public void setSelectedTab(final int index) {
         try {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
-				public void run() {
+                public void run() {
                     if (index <= getTabCount() && jTabbedPane.getTabCount() > 0) {
                         jTabbedPane.setSelectedIndex(index);
                     }
@@ -210,17 +213,16 @@ public class EBIExtensionContainer implements IEBIContainer {
     }
 
     public String getComponentName(final int index) {
-    	String componentName = "";
-    	if(registeredTabs.get(index) != null) {
-    		String[] cmpObj = ((String[])registeredTabs.get(index));
-    		componentName = cmpObj[0] != null ? cmpObj[0] : ""; 
-    	}
-    	return componentName;
+        String componentName = "";
+        if (registeredTabs.get(index) != null) {
+            String[] cmpObj = ((String[]) registeredTabs.get(index));
+            componentName = cmpObj[0] != null ? cmpObj[0] : "";
+        }
+        return componentName;
     }
-    
 
     @Override
-	public int getTabCount() {
+    public int getTabCount() {
         return this.jTabbedPane.getTabCount();
     }
 
@@ -229,7 +231,7 @@ public class EBIExtensionContainer implements IEBIContainer {
     }
 
     @Override
-	public JTabbedPane getTabInstance() {
+    public JTabbedPane getTabInstance() {
         return jTabbedPane;
     }
 }

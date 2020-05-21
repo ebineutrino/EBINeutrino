@@ -41,7 +41,7 @@ Tomcat.addServlet(ctx, "ebi", new HttpServlet() {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/plain");
         try (Writer writer = response.getWriter()) {
-            writer.write("Hello, Embedded World from Blue Lotus Software!");
+            writer.write("Hello, World from EBI Neutrino Software!");
             writer.flush();
         }
     }

@@ -28,7 +28,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Accountstack.findByAcstackid", query = "SELECT a FROM Accountstack a WHERE a.acstackid = :acstackid"),
     @NamedQuery(name = "Accountstack.findByAccountnr", query = "SELECT a FROM Accountstack a WHERE a.accountnr = :accountnr"),
     @NamedQuery(name = "Accountstack.findByAccountType", query = "SELECT a FROM Accountstack a WHERE a.accountType = :accountType"),
-    @NamedQuery(name = "Accountstack.findByAccountTaxType", query = "SELECT a FROM Accountstack a WHERE a.accountTaxType = :accountTaxType"),
     @NamedQuery(name = "Accountstack.findByAccountDebit", query = "SELECT a FROM Accountstack a WHERE a.accountDebit = :accountDebit"),
     @NamedQuery(name = "Accountstack.findByAccountCredit", query = "SELECT a FROM Accountstack a WHERE a.accountCredit = :accountCredit"),
     @NamedQuery(name = "Accountstack.findByAccountDName", query = "SELECT a FROM Accountstack a WHERE a.accountDName = :accountDName"),
@@ -57,8 +56,12 @@ public class Accountstack implements Serializable {
     private String account;
     @Column(name = "ACCOUNT_TYPE")
     private Integer accountType;
-    @Column(name = "ACCOUNT_TAX_TYPE")
-    private String accountTaxType;
+    @Column(name = "ACCOUNT_DEBIT_TAX_TYPE")
+    private String accountDebitTaxType;
+    @Column(name = "ACCOUNT_CREDIT_TAX_TYPE")
+    private String accountCreditTaxType;
+    @Column(name = "TAX_VALUE")
+    private Double accountTaxValue;
     @Column(name = "ACCOUNT_DEBIT")
     private String accountDebit;
     @Column(name = "ACCOUNT_CREDIT")
@@ -133,12 +136,28 @@ public class Accountstack implements Serializable {
         this.accountType = accountType;
     }
 
-    public String getAccountTaxType() {
-        return accountTaxType;
+    public String getAccountDebitTaxType() {
+        return accountDebitTaxType;
     }
 
-    public void setAccountTaxType(String accountTaxType) {
-        this.accountTaxType = accountTaxType;
+    public void setAccountDebitTaxType(String accountDebitTaxType) {
+        this.accountDebitTaxType = accountDebitTaxType;
+    }
+    
+    public String getAccountCreditTaxType() {
+        return accountCreditTaxType;
+    }
+
+    public void setAccountCreditTaxType(String accountCreditTaxType) {
+        this.accountCreditTaxType = accountCreditTaxType;
+    }
+    
+    public Double getAccountTaxValue() {
+        return accountTaxValue;
+    }
+
+    public void setAccountTaxValue(Double accountTaxValue) {
+        this.accountTaxValue = accountTaxValue;
     }
 
     public String getAccountDebit() {

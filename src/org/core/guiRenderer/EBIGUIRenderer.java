@@ -1255,7 +1255,13 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                     } else if (list.getComponent() instanceof EBIDialog) {
                         ((EBIDialog) list.getComponent()).setVisible(true);
                     }
-                    initScript();
+                    
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            initScript();
+                        }
+                    }).start();
 
                     isInit = false;
                     fileToTabPath = "";
@@ -1373,19 +1379,19 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     }
 
     @Override
-    public final void initScripts() {
+    public synchronized final void initScripts() {
         final Iterator itr = scriptContainer.keySet().iterator();
         while (itr.hasNext()) {
             excScript((String) itr.next(), null);
         }
     }
 
-    private void initScript() {
+    private synchronized final void initScript() {
         excScript(componentNamespace, null);
     }
 
     @Override
-    public final void excScript(final String cmpNamespace, final HashMap<String, String> PARAM) {
+    public synchronized final void excScript(final String cmpNamespace, final HashMap<String, String> PARAM) {
 
         if (scriptContainer.get(cmpNamespace) != null) {
 

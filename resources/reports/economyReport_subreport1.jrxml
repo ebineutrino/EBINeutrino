@@ -6,7 +6,7 @@
 	<parameter name="startDate" class="java.util.Date"/>
 	<parameter name="endDate" class="java.util.Date"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\EBINEUTRINO1_1\\EBINeutrinoCORE\\reports\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["./reports/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="type" class="java.lang.Integer"/>
 	<parameter name="EBI_LANG" class="java.util.Properties" isForPrompting="false"/>

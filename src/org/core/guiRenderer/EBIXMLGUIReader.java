@@ -77,17 +77,13 @@ public class EBIXMLGUIReader {
 
     private boolean readXMLGUI(final Element el) {
         // Read from xml file
-
         if (!parseXMLGUI(el)) {
             return false;
         }
-
         final Iterator children = el.getChildren().iterator();
-
         while (children.hasNext()) {
             readXMLGUI((Element) children.next());
         }
-
         return true;
     }
 

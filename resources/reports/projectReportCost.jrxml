@@ -40,7 +40,7 @@
 	<parameter name="COMPANY_CONTACT_POSITION" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="COMPANY_NAME1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new File(".").getAbsolutePath()+"/reports/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["./reports/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT pro.PROJECTID,pro.PROJECTNR, pro.NAME,pro.MANAGER, pro.BUDGET,pro.ACTUALCOST,pro.REMAINCOST,pro.STATUS,pro.VALIDFROM,pro.VALIDTO,

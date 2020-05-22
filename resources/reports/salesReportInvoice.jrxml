@@ -43,7 +43,7 @@
 	<parameter name="COMPANY_NAME1" class="java.lang.String"/>
 	<parameter name="EBI_ISB2C" class="java.lang.Boolean"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new File(".").getAbsolutePath()+"/reports/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["./reports/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DATE_FROM" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>

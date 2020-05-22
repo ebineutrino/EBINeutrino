@@ -306,20 +306,7 @@ public class EBICRMAccountStackView {
             } catch (final Exception e) {
                 e.printStackTrace();
             }
-
-            for (int i = 0; i < EBISystem.gui().table("debCreditTable", "Account").getColumnCount(); i++) {
-                final TableColumnExt col = EBISystem.gui().table("debCreditTable", "Account").getColumnExt(i);
-                if (i != 1) {
-                    col.setWidth(40);
-                    col.setPreferredWidth(40);
-                } else {
-                    col.setWidth(500);
-                    col.setPreferredWidth(500);
-                }
-            }
         }
-
-        EBISystem.hibernate().openHibernateSession("EBIACCOUNT_SESSION");
 
         creditDebitType = new String[]{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"),
             EBISystem.i18n("EBI_LANG_DEBIT"),
@@ -330,6 +317,7 @@ public class EBICRMAccountStackView {
             EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_EARNING"),
             EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_LIST_EXPEDITURE")};
 
+        EBISystem.hibernate().openHibernateSession("EBIACCOUNT_SESSION");
         dataControlAccount.dataShowCreditDebit();
 
         EBISystem.gui().combo("invoiceYearText", "Account").setEditable(true);

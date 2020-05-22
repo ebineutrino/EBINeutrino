@@ -24,27 +24,27 @@ public class ModelCRMProtocol extends AbstractTableModel {
     }
 
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return columnNames.length;
     }
 
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return data.length;
     }
 
     @Override
-	public String getColumnName(final int col) {
+    public String getColumnName(final int col) {
         return columnNames[col];
     }
 
     @Override
-	public Object getValueAt(final int row, final int col) {
-        return data[row][col] == null ? "" :  data[row][col] ;
+    public Object getValueAt(final int row, final int col) {
+        return data[row][col] == null ? "" : data[row][col];
     }
-    
+
     @Override
-	public boolean isCellEditable(final int rowIndex, final int columnIndex) {
-    	return false;
+    public boolean isCellEditable(final int rowIndex, final int columnIndex) {
+        return false;
     }
 }

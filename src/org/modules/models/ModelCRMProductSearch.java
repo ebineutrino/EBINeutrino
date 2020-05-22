@@ -5,7 +5,6 @@ import org.sdk.EBISystem;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 import org.jdesktop.swingx.treetable.TreeTableNode;
 
-
 public class ModelCRMProductSearch extends AbstractTreeTableModel {
 
     protected boolean asksAllowsChildren;
@@ -31,26 +30,28 @@ public class ModelCRMProductSearch extends AbstractTreeTableModel {
     }
 
     @Override
-	public Object getChild(final Object parent, final int index) {
+    public Object getChild(final Object parent, final int index) {
         final TreeTableNode fileNode = ((TreeTableNode) parent);
         return fileNode.getChildAt(index);
     }
 
     @Override
-	public int getChildCount(final Object parent) {
+    public int getChildCount(final Object parent) {
         final TreeTableNode fileNode = ((TreeTableNode) parent);
         return fileNode.getChildCount();
     }
 
     @Override
-	public int getColumnCount() {
-        /**@todo Implement this org.jdesktopx.swing.treetable.TreeTableModel abstract method*/
+    public int getColumnCount() {
+        /**
+         * @todo Implement this org.jdesktopx.swing.treetable.TreeTableModel
+         * abstract method
+         */
         return 7;
     }
 
     @Override
-	public String getColumnName(final int column) {
-
+    public String getColumnName(final int column) {
 
         switch (column) {
             case 1:
@@ -70,7 +71,7 @@ public class ModelCRMProductSearch extends AbstractTreeTableModel {
     }
 
     @Override
-	public Object getValueAt(final Object node, final int column) {
+    public Object getValueAt(final Object node, final int column) {
 
         try {
             switch (column) {
@@ -95,33 +96,9 @@ public class ModelCRMProductSearch extends AbstractTreeTableModel {
     }
 
     @Override
-	public int getIndexOfChild(final Object arg0, final Object arg1) {
+    public int getIndexOfChild(final Object arg0, final Object arg1) {
         // TODO Auto-generated method stub
         return 0;
     }
 
-//	        public Class getColumnClass(int c) {
-//		        return getColumnClass(c).getClass();
-//		    }
-//	        public boolean isCellEditable(java.lang.Object node, int col) {
-//		        if(col == 1 ){
-//		        	if(i == 0){
-//			        	if(((EBISearchTreeNodeProduct) node).getIsChecked()){
-//	                		//System.out.println("YES IS CHECKED");
-//							((EBISearchTreeNodeProduct) node).setIsChecked(new Boolean(false));
-//						
-//						}else{
-//							//System.out.println("no is not checked");
-//							((EBISearchTreeNodeProduct) node).setIsChecked(new Boolean(true));
-//							
-//						}
-//			        	i++;
-//		        	}
-//			        	return true;
-//		        }else{
-//		        	i = 0;
-//		    	    return false;
-//		        }
-//		    }
-//	       
-} 
+}

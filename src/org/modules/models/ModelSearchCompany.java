@@ -51,36 +51,4 @@ public class ModelSearchCompany extends AbstractTableModel {
 	public Object getValueAt(final int row, final int col) {
         return data[row][col];
     }
-
-    /*
-     * JTable uses this method to determine the default renderer/
-     * editor for each cell.  If we didn't implement this method,
-     * then the last column would contain text ("true"/"false"),
-     * rather than a check box.
-     */
-    @Override
-	public Class getColumnClass(final int c) {
-        return getValueAt(0, c).getClass();
-    }
-
-    /*
-     * Don't need to implement this method unless your table's
-     * editable.
-     */
-    @Override
-	public boolean isCellEditable(final int row, final int col) {
-        //Note that the data/cell address is constant,
-        //no matter where the cell appears onscreen.
-        return false;
-    }
-
-    /*
-     * Don't need to implement this method unless your table's
-     * data can change.
-     */
-    @Override
-	public void setValueAt(final Object value, final int row, final int col) {
-        data[row][col] = value;
-        fireTableCellUpdated(row, col);
-    }
 }

@@ -14,7 +14,7 @@ public class ModelOrder extends AbstractTableModel {
         EBISystem.i18n("EBI_LANG_C_STATUS"),
         EBISystem.i18n("EBI_LANG_DESCRIPTION")
     };
-    
+
     public Object[][] data = {{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
 
     public Object[] getRow(final int row) {
@@ -34,27 +34,25 @@ public class ModelOrder extends AbstractTableModel {
     }
 
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return columnNames.length;
     }
 
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return data.length;
     }
 
     @Override
-	public String getColumnName(final int col) {
+    public String getColumnName(final int col) {
         return columnNames[col];
     }
 
     @Override
-	public Object getValueAt(final int row, final int col) {
-        if(row >=data.length){
-          return "";
+    public Object getValueAt(final int row, final int col) {
+        if (row >= data.length) {
+            return "";
         }
         return data[row][col];
     }
-
-
 }

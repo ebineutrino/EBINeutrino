@@ -326,6 +326,4 @@ public class ModelCRMContact extends AbstractTableModel {
         }
         return ret;
     }
-    
-    
 }

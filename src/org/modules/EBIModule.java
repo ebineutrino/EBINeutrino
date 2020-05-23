@@ -9,7 +9,6 @@ import org.modules.views.EBICRMContactView;
 import org.modules.views.EBICRMCompanyView;
 import org.modules.views.EBICRMOfferView;
 import org.modules.views.EBICRMPlanningView;
-import org.modules.views.EBICRMCampaignView;
 import org.modules.views.EBICRMOrderView;
 import org.modules.views.EBIMeetingProtocolView;
 import org.modules.views.EBICRMBankView;
@@ -67,7 +66,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
     private EBICRMAccountStackView accountPane = null;
     private EBICRMSummaryView summaryPane = null;
     private EBICRMProductView productPane = null;
-    private EBICRMCampaignView campaignPane = null;
     private EBICRMServiceView servicePane = null;
     private EBICRMProblemSolutionView prosolPane = null;
     private EBICRMInvoiceView invoicePane = null;
@@ -157,13 +155,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
             EBISystem.getInstance().gui().loadProject("project.xml");
             if (!EBISystem.getInstance().gui().isToolBarEmpty()) {
                 crmToolBar.setCRMToolBar();
-            }
-
-            if (EBISystem.getInstance().gui().existView("Campaign")) {
-                this.getEBICRMCampaign();
-            } else if ("Campaign/campaignGUI.xml".equals(EBISystem.registeredModule.get(0).toString())) {
-                ebiContainer.showClosableCampaignContainer();
-                crmToolBar.enableToolButtonCampaignModule();
             }
 
             if (EBISystem.gui().existView("Account")) {
@@ -321,9 +312,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
             if (toParse.equals("productGUI")) {
                 crmToolBar.enableToolButtonProductModule();
                 ebiContainer.showClosableProductContainer();
-            } else if (toParse.equals("campaignGUI")) {
-                crmToolBar.enableToolButtonCampaignModule();
-                ebiContainer.showClosableCampaignContainer();
             } else if (toParse.equals("problemSolutionGUI")) {
                 crmToolBar.enableToolButtonProsol();
                 ebiContainer.showClosableProsolContainer();
@@ -365,7 +353,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         servicePane = null;
         productPane = null;
         invoicePane = null;
-        campaignPane = null;
         prosolPane = null;
         return EBISystem.getInstance().getCompany() == null ? -1 : EBISystem.getInstance().getCompany().getCompanyid();
     }
@@ -405,20 +392,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         }
         return companyPane;
     }
-
-    public EBICRMCampaignView getEBICRMCampaign() {
-        if (campaignPane == null) {
-            campaignPane = (EBICRMCampaignView) EBISystem.getInstance().getMappedBean(EBICRMCampaignView.class);
-            campaignPane.initialize(true);
-            campaignPane.initializeAction();
-        }
-        return campaignPane;
-    }
     
-    public void invalidateCampaign(){
-        campaignPane = null;
-    }
-
     public EBIMeetingProtocolView getMeetingProtocol() {
         if (meetingReport == null) {
             meetingReport = (EBIMeetingProtocolView) EBISystem.getInstance().getMappedBean(EBIMeetingProtocolView.class);

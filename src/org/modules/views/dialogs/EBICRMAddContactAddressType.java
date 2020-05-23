@@ -1,6 +1,5 @@
 package org.modules.views.dialogs;
 
-import org.modules.controls.ControlCampaign;
 import org.modules.controls.ControlOffer;
 import org.modules.controls.ControlOrder;
 import org.sdk.EBISystem;
@@ -8,7 +7,6 @@ import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
 import org.sdk.model.hibernate.Companyofferreceiver;
 import org.sdk.model.hibernate.Companyorderreceiver;
-import org.sdk.model.hibernate.Crmcampaignreceiver;
 
 import javax.swing.*;
 import java.util.Date;
@@ -20,11 +18,9 @@ public class EBICRMAddContactAddressType {
     private boolean isCampaign = false;
     private ControlOffer dataControlOffer = null;
     private ControlOrder dataControlOrder = null;
-    private ControlCampaign dataControlCampaign = null;
     private final JTextField phoneForContact = new JTextField();
     private Companyofferreceiver receiver = null;
     private Companyorderreceiver receiver1 = null;
-    private Crmcampaignreceiver receiver2 = null;
 
     public EBICRMAddContactAddressType(final ControlOffer dataControlOffer) {
         EBISystem.gui().loadGUI("CRMDialog/addnewReceiverDialog.xml");
@@ -49,22 +45,7 @@ public class EBICRMAddContactAddressType {
         this.dataControlOrder = dataControlOrder;
         isOrder = true;
     }
-
-    public EBICRMAddContactAddressType(final ControlCampaign dataControlCampaign) {
-        EBISystem.gui().loadGUI("CRMDialog/addnewReceiverDialogCampaign.xml");
-        this.dataControlCampaign = dataControlCampaign;
-        EBISystem.gui().label("companyNumber", "addNewReceiverDialog").setText(EBISystem.i18n("EBI_LANG_COMPANY_NUMBER"));
-        EBISystem.gui().label("companyName", "addNewReceiverDialog").setText(EBISystem.i18n("EBI_LANG_COMPANY_NAME"));
-        isCampaign = true;
-    }
-
-    public EBICRMAddContactAddressType(final ControlCampaign dataControlCampaign, final Crmcampaignreceiver campRec) {
-        this.receiver2 = campRec;
-        EBISystem.gui().loadGUI("CRMDialog/addnewReceiverDialogCampaign.xml");
-        this.dataControlCampaign = dataControlCampaign;
-        isCampaign = true;
-    }
-
+   
     public void setVisible() {
         EBISystem.gui().dialog("addNewReceiverDialog").setTitle(EBISystem.i18n("EBI_LANG_C_CRM_ADD_CONTACT_SEND_TYPE"));
         EBISystem.gui().vpanel("addNewReceiverDialog").setModuleTitle(EBISystem.i18n("EBI_LANG_C_CRM_ADD_CONTACT_SEND_TYPE"));
@@ -104,8 +85,6 @@ public class EBICRMAddContactAddressType {
                     } else {
                         addReciever1();
                     }
-                } else {
-                    addReciever2();
                 }
                 newReciever();
             }
@@ -198,23 +177,6 @@ public class EBICRMAddContactAddressType {
             }
         }
 
-        if (this.receiver2 != null) {
-            EBISystem.gui().combo("typeDispatchText", "addNewReceiverDialog").setSelectedItem(this.receiver2.getReceivervia());
-            EBISystem.gui().combo("genderText", "addNewReceiverDialog").setSelectedItem(this.receiver2.getGender());
-            EBISystem.gui().textField("nameText", "addNewReceiverDialog").setText(this.receiver2.getName());
-            EBISystem.gui().textField("surnameText", "addNewReceiverDialog").setText(this.receiver2.getSurname());
-            EBISystem.gui().textField("positionText", "addNewReceiverDialog").setText(this.receiver2.getPosition());
-            EBISystem.gui().textField("postcodeText", "addNewReceiverDialog").setText(this.receiver2.getPbox());
-            EBISystem.gui().textField("streetText", "addNewReceiverDialog").setText(this.receiver2.getStreet());
-            EBISystem.gui().textField("locationText", "addNewReceiverDialog").setText(this.receiver2.getLocation());
-            EBISystem.gui().textField("zipText", "addNewReceiverDialog").setText(this.receiver2.getZip());
-            EBISystem.gui().textField("emailText", "addNewReceiverDialog").setText(this.receiver2.getEmail());
-            EBISystem.gui().textField("faxText", "addNewReceiverDialog").setText(this.receiver2.getFax());
-            EBISystem.gui().textField("countryText", "addNewReceiverDialog").setText(this.receiver2.getCountry());
-            EBISystem.gui().textField("companyNameText", "addNewReceiverDialog").setText(this.receiver2.getCompanyname());
-            EBISystem.gui().textField("companyNrText", "addNewReceiverDialog").setText(this.receiver2.getCompanynumber());
-            EBISystem.gui().getCheckBox("mainContact", "addNewReceiverDialog").setSelected(this.receiver2.getCnum() == 1 ? true : false);
-        }
         EBISystem.gui().showGUI();
     }
 
@@ -323,40 +285,5 @@ public class EBICRMAddContactAddressType {
             dataControlOrder.getCompOrder().getCompanyorderreceivers().add(ord);
         }
         dataControlOrder.dataShowReceiver();
-    }
-
-    public void addReciever2() {
-        Crmcampaignreceiver campaignre;
-        if (receiver2 == null) {
-            campaignre = new Crmcampaignreceiver();
-            campaignre.setReceiverid((dataControlCampaign.getCampaignReceiverList().size() + 1) * -1);
-        } else {
-            campaignre = receiver2;
-        }
-
-        campaignre.setCrmcampaign(dataControlCampaign.getCampaign());
-        campaignre.setCnum(EBISystem.gui().getCheckBox("mainContact", "addNewReceiverDialog").isSelected() ? 1 : 0);
-        campaignre.setCompanynumber(EBISystem.gui().textField("companyNrText", "addNewReceiverDialog").getText());
-        campaignre.setCompanyname(EBISystem.gui().textField("companyNameText", "addNewReceiverDialog").getText());
-        campaignre.setCreateddate(new Date());
-        campaignre.setCreatedfrom(EBISystem.ebiUser);
-        campaignre.setReceivervia(EBISystem.gui().combo("typeDispatchText", "addNewReceiverDialog").getSelectedItem().toString());
-        campaignre.setGender(EBISystem.gui().combo("genderText", "addNewReceiverDialog").getSelectedItem().toString());
-        campaignre.setName(EBISystem.gui().textField("nameText", "addNewReceiverDialog").getText());
-        campaignre.setSurname(EBISystem.gui().textField("surnameText", "addNewReceiverDialog").getText());
-        campaignre.setPosition(EBISystem.gui().textField("positionText", "addNewReceiverDialog").getText());
-        campaignre.setPbox(EBISystem.gui().textField("postcodeText", "addNewReceiverDialog").getText());
-        campaignre.setStreet(EBISystem.gui().textField("streetText", "addNewReceiverDialog").getText());
-        campaignre.setLocation(EBISystem.gui().textField("locationText", "addNewReceiverDialog").getText());
-        campaignre.setZip(EBISystem.gui().textField("zipText", "addNewReceiverDialog").getText());
-        campaignre.setEmail(EBISystem.gui().textField("emailText", "addNewReceiverDialog").getText());
-        campaignre.setFax(EBISystem.gui().textField("faxText", "addNewReceiverDialog").getText());
-        campaignre.setCountry(EBISystem.gui().textField("countryText", "addNewReceiverDialog").getText());
-        campaignre.setPhone(phoneForContact.getText());
-
-        if (this.receiver2 == null) {
-            dataControlCampaign.getCampaignReceiverList().add(campaignre);
-        }
-        dataControlCampaign.dataShowReciever();
     }
 }

@@ -55,15 +55,7 @@ public class EBICRMToolBar extends EBICRMActionListener {
                 ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).setVisible(false);
             }
         }
-        
-        if (EBISystem.gui().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar") != null) {
-            if (EBISystem.registeredModule.contains("Campaign/campaignGUI.xml") || EBISystem.getUserRight().isAdministrator()) {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar")).addActionListener(windowShowCampaignTab());
-            } else {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar")).setVisible(false);
-            }
-        }
-        
+      
         if (EBISystem.gui().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar") != null) {
             if (EBISystem.registeredModule.contains("CRMProblemSolution/problemSolutionGUI.xml") || EBISystem.getUserRight().isAdministrator()) {
                 ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).addActionListener(windowShowProsolTab());

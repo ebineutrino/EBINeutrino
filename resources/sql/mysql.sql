@@ -668,102 +668,6 @@
         primary key (CALENDARID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 /
-    create table if not exists  CRMCAMPAIGN (
-        CAMPAIGNID integer not null auto_increment,
-        CAMPAIGNNR varchar(255),
-        CREATEDDATE datetime,
-        CREATEDFROM varchar(150),
-        CHANGEDDATE datetime,
-        CHANGEDFROM varchar(150),
-        NAME varchar(255),
-        STATUS varchar(255),
-        VALIDFROM datetime,
-        VALIDTO datetime,
-        primary key (CAMPAIGNID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/
-    create table if not exists  CRMCAMPAIGNDOCS (
-        DOCID integer not null auto_increment,
-        CAMPAIGNID integer,
-        NAME varchar(255),
-        FILES longblob,
-        CREATEDDATE datetime,
-        CREATEDFROM varchar(150),
-        primary key (DOCID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/
-    create table if not exists  CRMCAMPAIGNPOSITION (
-        POSITIONID integer not null auto_increment,
-        CAMPAIGNID integer,
-        PRODUCTID integer,
-        PRODUCTNR varchar(255),
-        DEDUCTION varchar(5),
-        PRODUCTNAME varchar(255),
-        QUANTITY bigint,
-        NETAMOUNT double precision not null,
-        PRETAX double precision not null,
-        TAXTYPE varchar(150),
-        TYPE varchar(255),
-        CATEGORY varchar(255),
-        DESCRIPTION text,
-        CREATEDFROM varchar(150),
-        CREATEDDATE datetime,
-        CHANGEDDATE datetime,
-        CHANGEDFROM varchar(150),
-        primary key (POSITIONID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/
-    create table if not exists  CRMCAMPAIGNPROP (
-        PROPERTIESID integer not null auto_increment,
-        CAMPAIGNID integer,
-        CREATEDDATE datetime,
-        CREATEDFROM varchar(150),
-        CHANGEDDATE datetime,
-        CHANGEDFROM varchar(150),
-        NAME varchar(255),
-        VALUE varchar(255),
-        primary key (PROPERTIESID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/
-    create table if not exists  CRMCAMPAIGNPROPS (
-        ID integer not null auto_increment,
-        NAME varchar(255) not null,
-        primary key (ID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/
-    create table if not exists  CRMCAMPAIGNRECEIVER (
-        RECEIVERID integer not null auto_increment,
-        CAMPAIGNID integer,
-        CNUM integer,
-        RECEIVERVIA varchar(50),
-        COMPANYNAME varchar(255),
-        COMPANYNUMBER varchar(255),
-        GENDER varchar(20),
-        SURNAME varchar(150),
-        NAME varchar(150),
-        MITTELNAME varchar(150),
-        POSITION varchar(150),
-        EMAIL varchar(50),
-        PHONE varchar(30),
-        FAX varchar(30),
-        STREET varchar(50),
-        ZIP varchar(15),
-        LOCATION varchar(100),
-        PBOX varchar(100),
-        COUNTRY varchar(100),
-        CREATEDFROM varchar(150),
-        CREATEDDATE datetime,
-        CHANGEDFROM varchar(150),
-        CHANGEDDATE datetime,
-        primary key (RECEIVERID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/
-    create table if not exists  CRMCAMPAIGNSTATUS (
-        ID integer not null auto_increment,
-        NAME varchar(150),
-        primary key (ID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/
     create table if not exists  CRMINVOICE (
         INVOICEID integer not null auto_increment,
         ASSOSIATION varchar(150),
@@ -1380,30 +1284,6 @@
         add constraint FK378EAB83F54B1B7 
         foreign key (SERVICEID) 
         references COMPANYSERVICE (SERVICEID) ON DELETE CASCADE ON UPDATE CASCADE;
-/
-    alter table CRMCAMPAIGNDOCS 
-        add index FK2F505C0984114DEA (CAMPAIGNID), 
-        add constraint FK2F505C0984114DEA 
-        foreign key (CAMPAIGNID) 
-        references CRMCAMPAIGN (CAMPAIGNID) ON DELETE CASCADE ON UPDATE CASCADE;
-/
-    alter table CRMCAMPAIGNPOSITION 
-        add index FK11B733F784114DEA (CAMPAIGNID), 
-        add constraint FK11B733F784114DEA 
-        foreign key (CAMPAIGNID) 
-        references CRMCAMPAIGN (CAMPAIGNID) ON DELETE CASCADE ON UPDATE CASCADE;
-/
-    alter table CRMCAMPAIGNPROP 
-        add index FK2F55DD3184114DEA (CAMPAIGNID), 
-        add constraint FK2F55DD3184114DEA 
-        foreign key (CAMPAIGNID) 
-        references CRMCAMPAIGN (CAMPAIGNID) ON DELETE CASCADE ON UPDATE CASCADE;
-/
-    alter table CRMCAMPAIGNRECEIVER 
-        add index FKB4F084BD84114DEA (CAMPAIGNID), 
-        add constraint FKB4F084BD84114DEA 
-        foreign key (CAMPAIGNID) 
-        references CRMCAMPAIGN (CAMPAIGNID) ON DELETE CASCADE ON UPDATE CASCADE;
 /
     alter table CRMINVOICENUMBER 
         add index FKC7921F987D593035 (CATEGORYID), 

@@ -49,9 +49,6 @@ public class EBICRMAutomate {
         } else if (title.equals(EBISystem.i18n("EBI_LANG_C_TAB_PRODUCT"))) { // Store Product
             ret = EBISystem.getModule().getEBICRMProductPane().saveProduct();
             canSaveCompany = false;
-        } else if (title.equals(EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN"))) { // Store Campaign
-            ret = EBISystem.getModule().getEBICRMCampaign().saveCampaign();
-            canSaveCompany = false;
         } else if (title.equals(EBISystem.i18n("EBI_LANG_C_TAB_PROSOL"))) { // Store ProSol
             ret = EBISystem.getModule().getProsolPane().saveprosol();
             canSaveCompany = false;
@@ -103,8 +100,6 @@ public class EBICRMAutomate {
             EBISystem.getModule().getServicePane().deleteService();
         } else if (title.equals(EBISystem.i18n("EBI_LANG_C_TAB_PRODUCT"))) { // Store Product
             EBISystem.getModule().getEBICRMProductPane().deleteProduct();
-        } else if (title.equals(EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN"))) { // Store Campaign
-            EBISystem.getModule().getEBICRMCampaign().deleteCampaign();
         } else if (title.equals(EBISystem.i18n("EBI_LANG_C_TAB_PROSOL"))) { // Store ProSol
             EBISystem.getModule().getProsolPane().deleteprosol();
         } else if (title.equals(EBISystem.i18n("EBI_LANG_C_TAB_INVOICE"))) { // Store Invoice

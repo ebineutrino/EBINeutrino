@@ -49,14 +49,6 @@ public class EBICRMTabcontrol implements CloseableTabbedPaneListener {
         }
     }
 
-    public void closeCampaignContainer() {
-        if (EBISystem.getModule().getEBICRMCampaign() != null) {
-            EBISystem.getInstance().getIEBIContainerInstance().
-                    removeContainer(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN")));
-            EBISystem.getModule().invalidateCampaign();
-        }
-    }
-
     public void closeProsolContainer() {
         if (EBISystem.getModule().getProsolPane() != null) {
             EBISystem.getInstance().getIEBIContainerInstance().
@@ -78,14 +70,6 @@ public class EBICRMTabcontrol implements CloseableTabbedPaneListener {
         EBISystem.gui().showGUI();
         EBISystem.getModule().getEBICRMProductPane().showProduct();
         final int id = EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_TAB_PRODUCT"));
-        EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(id);
-    }
-
-    public void showClosableCampaignContainer() {
-        EBISystem.gui().loadGUI("Campaign/campaignGUI.xml");
-        EBISystem.gui().showGUI();
-        EBISystem.getModule().getEBICRMCampaign().getDataControlCampaign().dataShow(-1);
-        final int id = EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN"));
         EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(id);
     }
 
@@ -154,15 +138,6 @@ public class EBICRMTabcontrol implements CloseableTabbedPaneListener {
         if (EBISystem.i18n("EBI_LANG_C_TAB_CALENDAR").equals(tabToClose)) {
             if (EBISystem.gui().getToolBarComponent("toolbarItemCalendarModule", "ebiToolBar") != null) {
                 ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemCalendarModule", "ebiToolBar")).setSelected(false);
-            }
-        }
-
-        if (EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN").equals(tabToClose)) {
-            if (EBISystem.gui().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar") != null) {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar")).setSelected(false);
-            }
-            if (EBISystem.getModule().getEBICRMCampaign() != null) {
-                EBISystem.getModule().getEBICRMCampaign().getDataControlCampaign().dataNew();
             }
         }
 

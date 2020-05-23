@@ -7,7 +7,6 @@ import org.modules.views.EBICRMServiceView;
 import org.modules.views.EBICRMCompanyView;
 import org.modules.views.EBICRMPlanningView;
 import org.modules.views.EBICRMOfferView;
-import org.modules.views.EBICRMCampaignView;
 import org.modules.views.EBICRMOrderView;
 import org.modules.views.EBIMeetingProtocolView;
 import org.modules.views.EBICRMCompanyActivityView;
@@ -202,12 +201,7 @@ public final class EBICRMDynamicFunctionalityMethods {
                     EBISystem.gui().combo("ProductTypeText", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.type));
                     EBISystem.gui().combo("productTaxTypeTex", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.taxType));
                 }
-
-                EBICRMCampaignView.campaignStatus = getStatusProperties("CRMCAMPAIGNSTATUS");
-                if (EBISystem.gui().existView("Campaign")) {
-                    EBISystem.gui().combo("CampaignStatusText", "Campaign").setModel(new javax.swing.DefaultComboBoxModel(EBICRMCampaignView.campaignStatus));
-                }
-
+                
                 EBICRMPlanningView.projectStatus = getStatusProperties("CRMPROJECTSTATUS");
                 if (EBISystem.gui().existView("Project")) {
                     EBISystem.gui().combo("prjStatusText", "Project").setModel(new DefaultComboBoxModel(EBICRMPlanningView.projectStatus));

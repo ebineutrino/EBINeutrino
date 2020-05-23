@@ -4,10 +4,7 @@ import org.sdk.model.hibernate.Crmproduct;
 import org.sdk.model.hibernate.Crmprojecttask;
 import org.sdk.model.hibernate.Crmproductdimensions;
 import org.sdk.model.hibernate.Crmproductdimension;
-import org.sdk.model.hibernate.Crmcampaignprop;
 import org.sdk.model.hibernate.Crmprojectprop;
-import org.sdk.model.hibernate.Crmcampaign;
-import org.sdk.model.hibernate.Crmcampaignprops;
 import org.sdk.model.hibernate.Crmprojectprops;
 import org.sdk.model.hibernate.Crmprojectcost;
 import org.sdk.EBISystem;
@@ -29,16 +26,13 @@ public class EBIDialogProperties {
 
     private Crmprojecttask projectTask = null;
     private String[] properties = null;
-    private boolean isCampaign = false;
     private boolean isProperties = false;
     private boolean isProjectProperties = false;
     private boolean isProjectCost = false;
     public boolean cancel = false;
     private boolean isEdit = false;
     private Crmproduct product = null;
-    private Crmcampaign campaign = null;
     private Crmproductdimension dimension = null;
-    private Crmcampaignprop campaignProperties = null;
     private Crmprojectprop projectProperties = null;
     private Crmprojectcost projectCosts = null;
     private String pack = "";
@@ -112,27 +106,6 @@ public class EBIDialogProperties {
         }
     }
 
-    public EBIDialogProperties(final Crmcampaign cmp, final Crmcampaignprop props) {
-        EBISystem.gui().loadGUI("CRMDialog/propertiesDialog.xml");
-        EBISystem.hibernate().openHibernateSession("EBI_PROPERTIES");
-        EBISystem.hibernate().transaction("EBI_PROPERTIES").begin();
-        campaign = cmp;
-        getAvalCampaignProperties();
-        EBISystem.gui().combo("propertiesText", "propertiesDialog").setModel(new javax.swing.DefaultComboBoxModel(properties));
-
-        if (props != null) {
-            campaignProperties = props;
-            EBISystem.gui().textArea("propertiesValueText", "propertiesDialog").setText(props.getValue());
-            EBISystem.gui().combo("propertiesText", "propertiesDialog").setSelectedItem(props.getName());
-            if (EBISystem.gui().combo("propertiesText", "propertiesDialog").getSelectedItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                EBISystem.gui().combo("propertiesText", "propertiesDialog").insertItemAt(props.getName(), 1);
-                EBISystem.gui().combo("propertiesText", "propertiesDialog").setSelectedIndex(1);
-            }
-            isEdit = true;
-        }
-        isCampaign = true;
-    }
-
     public void setVisible() {
 
         if (!isProjectCost) {
@@ -182,8 +155,6 @@ public class EBIDialogProperties {
                 }
                 if (isProperties) {
                     saveProductProperties();
-                } else if (isCampaign) {
-                    saveCampaignProperties();
                 } else if (isProjectCost) {
                     saveProjectCost();
                 } else if (isProjectProperties) {
@@ -288,31 +259,6 @@ public class EBIDialogProperties {
         }
     }
 
-    private void getAvalCampaignProperties() {
-
-        Query query;
-        try {
-            query = EBISystem.hibernate().session("EBI_PROPERTIES").createQuery("from Crmcampaignprop ");
-
-            properties = new String[query.list().size() + 1];
-            final Iterator it = query.iterate();
-            properties[0] = EBISystem.i18n("EBI_LANG_PLEASE_SELECT");
-            int i = 1;
-            while (it.hasNext()) {
-                final Crmcampaignprops dim = (Crmcampaignprops) it.next();
-                EBISystem.hibernate().session("EBI_PROPERTIES").refresh(dim);
-                properties[i] = dim.getName();
-                i++;
-            }
-
-        } catch (final HibernateException e) {
-            e.printStackTrace();
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
     private void saveProductProperties() {
         if (!isEdit) {
             dimension = new Crmproductdimension();
@@ -330,21 +276,7 @@ public class EBIDialogProperties {
         EBISystem.gui().combo("propertiesText", "propertiesDialog").setSelectedIndex(0);
         EBISystem.gui().combo("propertiesText", "propertiesDialog").grabFocus();
     }
-
-    private void saveCampaignProperties() {
-        if (!isEdit) {
-            campaignProperties = new Crmcampaignprop();
-            campaignProperties.setPropertiesid((campaign.getCrmcampaignprops().size() + 1) * -1);
-        }
-        campaignProperties.setCrmcampaign(EBISystem.getModule().getEBICRMCampaign().getDataControlCampaign().getCampaign());
-        campaignProperties.setCreateddate(new Date());
-        campaignProperties.setCreatedfrom(EBISystem.ebiUser);
-        campaignProperties.setName(EBISystem.gui().combo("propertiesText", "propertiesDialog").getSelectedItem().toString());
-        campaignProperties.setValue(EBISystem.gui().textArea("propertiesValueText", "propertiesDialog").getText());
-        campaign.getCrmcampaignprops().add(campaignProperties);
-        EBISystem.getModule().getEBICRMCampaign().showCampaignProperties();
-    }
-
+ 
     private void saveProjectProperties() {
         if (!isEdit) {
             projectProperties = new Crmprojectprop();

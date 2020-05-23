@@ -19,9 +19,8 @@
          <toolbaritemcheckable name="toolbarItemInvoiceModule" keyStroke="2" title="Invoice Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_INVOICE_MODUL" icon="pexport.png"/>
          
          <toolbaritemcheckable name="toolbarItemAccountModule" keyStroke="3" title="Account Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_ACCOUNT_MODUL" icon="account.png"/>
-         
+
          <separator />
-         <toolbaritemcheckable name="toolbarItemCampaignModule" keyStroke="4" title="Campaign Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_CAMPAIGN_MODUL" icon="campaign_small.png"/>
          <toolbaritemcheckable name="toolbarItemProSolModule" keyStroke="5"  title="Problem / Solution Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_PROBLEM_SOLUTION_MODUL" icon="crm_kl.png"/>
          <separator />
          <toolbaritemcheckable name="toolbarItemProjectModule" keyStroke="6" title="Project Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_PROJECT_MODUL" icon="run.png"/>

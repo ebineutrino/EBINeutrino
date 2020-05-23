@@ -1,6 +1,4 @@
 package org.modules.views.component.listener;
-
-import org.modules.EBIModule;
 import org.modules.views.dialogs.EBICRMHistoryView;
 import org.modules.views.dialogs.EBIDialogSearchCompany;
 import org.modules.views.dialogs.EBIDialogSearchContact;
@@ -8,7 +6,6 @@ import org.modules.views.settings.CRMSetting;
 import org.sdk.EBISystem;
 import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
-import org.sdk.interfaces.IEBISecurity;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -64,23 +61,6 @@ public class EBICRMActionListener {
                         EBISystem.getModule().ebiContainer.closeProductContainer();
                     } else {
                         ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).setSelected(true);
-                    }
-                }
-            }
-        };
-    }
-
-    protected ActionListener windowShowCampaignTab() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                if (((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar")).isSelected()) {
-                    EBISystem.getModule().ebiContainer.showClosableCampaignContainer();
-                } else {
-                    if (EBISystem.getSecurity().checkCanReleaseModules() == true) {
-                        EBISystem.getModule().ebiContainer.closeCampaignContainer();
-                    } else {
-                        ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar")).setSelected(true);
                     }
                 }
             }

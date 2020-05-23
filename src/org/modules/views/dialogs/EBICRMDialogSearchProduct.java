@@ -3,7 +3,6 @@ package org.modules.views.dialogs;
 import org.sdk.model.hibernate.Crminvoiceposition;
 import org.sdk.model.hibernate.Crmproduct;
 import org.sdk.model.hibernate.Crmproblemsolposition;
-import org.sdk.model.hibernate.Crmcampaignposition;
 import org.sdk.model.hibernate.Companyorderpositions;
 import org.sdk.model.hibernate.Companyservicepositions;
 import org.sdk.model.hibernate.Companyofferpositions;
@@ -45,7 +44,6 @@ public class EBICRMDialogSearchProduct {
     private boolean isInvoice = false;
     private Companyorderpositions orderPosition = null;
     private Companyofferpositions offerPosition = null;
-    private Crmcampaignposition campaignPosition = null;
     private Companyservicepositions servicePosition = null;
     private Crmproblemsolposition prosolPosition = null;
     private Crminvoiceposition invoicePosition = null;
@@ -86,14 +84,6 @@ public class EBICRMDialogSearchProduct {
     public EBICRMDialogSearchProduct(final Crmproblemsolposition prosolPosition, final EBICRMDialogAddProduct addPro) {
         this.prosolPosition = prosolPosition;
         isProsol = true;
-        this.addProduct = addPro;
-        tabModel = new ModelCRMProductSearch();
-        initialzeDialog();
-    }
-
-    public EBICRMDialogSearchProduct(final Crmcampaignposition cmppos, final EBICRMDialogAddProduct addPro) {
-        campaignPosition = cmppos;
-        isCampaign = true;
         this.addProduct = addPro;
         tabModel = new ModelCRMProductSearch();
         initialzeDialog();
@@ -376,9 +366,6 @@ public class EBICRMDialogSearchProduct {
         } else if (isCRMOffer) {
             fillProductFromOffer();
             this.addProduct.fillHTMLForm();
-        } else if (isCampaign) {
-            fillProductFromCampaign();
-            this.addProduct.fillHTMLForm();
         } else if (isCRMService) {
             fillProductFromService();
             this.addProduct.fillHTMLForm();
@@ -422,56 +409,6 @@ public class EBICRMDialogSearchProduct {
                 EBISystem.getModule().getEBICRMProductPane().getDataControlProduct().getProduct().getCrmproductdependencies().add(dep);
             }
 
-        } catch (final HibernateException e) {
-            e.printStackTrace();
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void fillProductFromCampaign() {
-        Query query;
-        try {
-
-            EBISystem.hibernate().transaction("SEARCH_PRODUCT_SESSION").begin();
-
-            query = EBISystem.hibernate().session("SEARCH_PRODUCT_SESSION").createQuery(
-                    "from Crmproduct where productid=?1 ").setParameter(1, Integer.valueOf(selectedNode.getProductID()));
-
-            final Iterator it = query.iterate();
-
-            if (it.hasNext()) {
-                final Crmproduct product = (Crmproduct) it.next();
-                campaignPosition.setProductid(product.getProductid());
-                campaignPosition.setCreateddate(new java.util.Date());
-                campaignPosition.setCreatedfrom(EBISystem.ebiUser);
-                if (product.getProductnr() != null) {
-                    campaignPosition.setProductnr(product.getProductnr());
-                }
-                if (product.getProductname() != null) {
-                    campaignPosition.setProductname(product.getProductname());
-                }
-                if (product.getCategory() != null) {
-                    campaignPosition.setCategory(product.getCategory());
-                }
-                if (product.getDescription() != null) {
-                    campaignPosition.setDescription(product.getDescription());
-                }
-                if (product.getSaleprice() != null) {
-                    campaignPosition.setNetamount(product.getSaleprice());
-                }
-                if (product.getPretax() != null) {
-                    campaignPosition.setPretax(product.getPretax());
-                }
-                if (product.getTaxtype() != null) {
-                    campaignPosition.setTaxtype(product.getTaxtype());
-                }
-                if (product.getType() != null) {
-                    campaignPosition.setType(product.getType());
-                }
-                addProduct.productID = product.getProductid();
-            }
-            EBISystem.hibernate().transaction("SEARCH_PRODUCT_SESSION").commit();
         } catch (final HibernateException e) {
             e.printStackTrace();
         } catch (final Exception e) {

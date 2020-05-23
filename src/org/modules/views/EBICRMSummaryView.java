@@ -5,7 +5,6 @@ import org.sdk.model.hibernate.Crminvoice;
 import org.sdk.model.hibernate.Companyoffer;
 import org.sdk.model.hibernate.Companyservice;
 import org.sdk.model.hibernate.Crmproblemsolutions;
-import org.sdk.model.hibernate.Crmcampaign;
 import org.sdk.model.hibernate.Companyopportunity;
 import org.sdk.model.hibernate.Companyorder;
 import org.modules.views.dialogs.EBIDialogSearchCompany;
@@ -228,8 +227,6 @@ public class EBICRMSummaryView {
                 EBISystem.gui().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMOfferView.offerStatus));
             } else if (EBISystem.i18n("EBI_LANG_C_ORDER").equals(summaryText)) {
                 EBISystem.gui().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMOrderView.orderStatus));
-            } else if (EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN").equals(summaryText)) {
-                EBISystem.gui().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMCampaignView.campaignStatus));
             } else if (EBISystem.i18n("EBI_LANG_C_TAB_PROSOL").equals(summaryText)) {
                 EBISystem.gui().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMProblemSolutionView.prosolStatus));
             } else if (EBISystem.i18n("EBI_LANG_C_TAB_INVOICE").equals(summaryText)) {
@@ -287,18 +284,6 @@ public class EBICRMSummaryView {
                             setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_ORDER")));
                     EBISystem.getModule().getOrderPane().editOrderRemote(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
                 }
-            } else if (EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN").equals(selType)) {
-
-                if (!EBISystem.getModule().crmToolBar.isCampaignSelected()) {
-                    EBISystem.getModule().crmToolBar.enableToolButtonCampaignModule();
-                    EBISystem.getModule().ebiContainer.showClosableCampaignContainer();
-                } else {
-                    EBISystem.getModule().ebiContainer.setSelectedTab(EBISystem.getInstance().
-                            getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN")));
-                }
-                EBISystem.getModule().getEBICRMCampaign().getDataControlCampaign()
-                        .dataEdit(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
-
             } else if (EBISystem.i18n("EBI_LANG_C_TAB_PROSOL").equals(selType)) {
 
                 if (!EBISystem.getModule().crmToolBar.isProsolSelected()) {
@@ -494,35 +479,6 @@ public class EBICRMSummaryView {
                         tabModel.data[i][5] = companyOrder.getStatus() == null ? "" : companyOrder.getStatus();
                         tabModel.data[i][6] = companyOrder.getCompany().getCompanyid();
                         tabModel.data[i][7] = companyOrder.getOrderid();
-                        i++;
-                    }
-
-                } else {
-                    tabModel.data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", ""}};
-                }
-
-            } else if (EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN").equals(summaryType)) {
-
-                query = EBISystem.hibernate().session("SUMMARY_SESSION").createQuery(returnBuildQuery("Crmcampaign"));
-
-                setParamToHQuery(query);
-                objectIterator = query.iterate();
-
-                if (query.list().size() > 0) {
-
-                    tabModel.data = new Object[query.list().size()][8];
-
-                    while (objectIterator.hasNext()) {
-                        final Crmcampaign crmCampaign = (Crmcampaign) objectIterator.next();
-                        EBISystem.hibernate().session("SUMMARY_SESSION").refresh(crmCampaign);
-                        tabModel.data[i][0] = EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN");
-                        tabModel.data[i][1] = crmCampaign.getCampaignnr();
-                        tabModel.data[i][2] = crmCampaign.getName() == null ? "" : crmCampaign.getName();
-                        tabModel.data[i][3] = EBISystem.getInstance().getDateToString(crmCampaign.getCreateddate()) == null ? "" : EBISystem.getInstance().getDateToString(crmCampaign.getCreateddate());
-                        tabModel.data[i][4] = EBISystem.getInstance().getDateToString(crmCampaign.getChangeddate()) == null ? "" : EBISystem.getInstance().getDateToString(crmCampaign.getChangeddate());
-                        tabModel.data[i][5] = crmCampaign.getStatus() == null ? "" : crmCampaign.getStatus();
-                        tabModel.data[i][6] = crmCampaign.getCampaignid();
-                        tabModel.data[i][7] = crmCampaign.getCampaignid();
                         i++;
                     }
 

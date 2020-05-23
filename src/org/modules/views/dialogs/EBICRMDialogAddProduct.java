@@ -1,7 +1,6 @@
 package org.modules.views.dialogs;
 
 import org.sdk.model.hibernate.Crminvoiceposition;
-import org.sdk.model.hibernate.Crmcampaignposition;
 import org.sdk.model.hibernate.Crminvoice;
 import org.sdk.model.hibernate.Companyservicepositions;
 import org.sdk.model.hibernate.Companyofferpositions;
@@ -10,7 +9,6 @@ import org.sdk.model.hibernate.Companyservice;
 import org.sdk.model.hibernate.Crmproblemsolposition;
 import org.sdk.model.hibernate.Crmproblemsolutions;
 import org.sdk.model.hibernate.Companyorderpositions;
-import org.sdk.model.hibernate.Crmcampaign;
 import org.sdk.model.hibernate.Companyorder;
 import org.sdk.EBISystem;
 import org.sdk.gui.component.EBIJTextFieldNumeric;
@@ -32,7 +30,6 @@ public class EBICRMDialogAddProduct {
 
     private Companyoffer offer = null;
     private Companyorder order = null;
-    private Crmcampaign campaign = null;
     private Crminvoice invoice = null;
     private Companyservice service = null;
     private Crmproblemsolutions prosol = null;
@@ -44,7 +41,6 @@ public class EBICRMDialogAddProduct {
     private boolean isInvoice = false;
     private Companyorderpositions orderPosition = null;
     private Companyofferpositions offerPosition = null;
-    private Crmcampaignposition campaignPosition = null;
     private Crminvoiceposition invoicePosition = null;
     private Companyservicepositions servicePosition = null;
     private Crmproblemsolposition prosolPosition = null;
@@ -64,14 +60,7 @@ public class EBICRMDialogAddProduct {
         EBISystem.gui().loadGUI("CRMDialog/productInsertDialog.xml");
         this.order = order;
         isOrder = true;
-    }
-
-    public EBICRMDialogAddProduct(final Crmcampaign campaign) {
-        campaignPosition = new Crmcampaignposition();
-        EBISystem.gui().loadGUI("CRMDialog/productInsertDialog.xml");
-        this.campaign = campaign;
-        isCampaign = true;
-    }
+    } 
 
     public EBICRMDialogAddProduct(final Crminvoice invoice) {
         invoicePosition = new Crminvoiceposition();
@@ -145,10 +134,6 @@ public class EBICRMDialogAddProduct {
                 }
                 if (isService) {
                     prod = new EBICRMDialogSearchProduct(servicePosition, EBICRMDialogAddProduct.this);
-                }
-
-                if (isCampaign) {
-                    prod = new EBICRMDialogSearchProduct(campaignPosition, EBICRMDialogAddProduct.this);
                 }
 
                 if (isProsol) {
@@ -244,16 +229,17 @@ public class EBICRMDialogAddProduct {
      *
      */
     public void savePosistion() {
+        
         if (canSave) {
+            
             if (isOffer) {
                 saveOfferPosition();
             }
+            
             if (isOrder) {
                 saveOrderPosition();
             }
-            if (isCampaign) {
-                saveCampaignPosition();
-            }
+            
             if (isService) {
                 saveServicePosition();
             }
@@ -277,20 +263,6 @@ public class EBICRMDialogAddProduct {
         offerPosition.setNetamount(offerPosition.getNetamount());
         offer.getCompanyofferpositionses().add(offerPosition);
         EBISystem.getModule().getOfferPane().showProduct();
-        resetFields();
-    }
-
-    private void saveCampaignPosition() {
-        if (!validateInput()) {
-            return;
-        }
-        campaignPosition.setCrmcampaign(this.campaign);
-        campaignPosition.setPositionid((campaign.getCrmcampaignpositions().size() + 1) * -1);
-        campaignPosition.setQuantity(BigInteger.valueOf(Long.parseLong(EBISystem.gui().textField("quantityText", "productInsertDialog").getText())));
-        campaignPosition.setDeduction(EBISystem.gui().textField("deductionText", "productInsertDialog").getText());
-        campaignPosition.setNetamount(campaignPosition.getNetamount());
-        campaign.getCrmcampaignpositions().add(campaignPosition);
-        EBISystem.getModule().getEBICRMCampaign().showProduct();
         resetFields();
     }
 
@@ -366,11 +338,7 @@ public class EBICRMDialogAddProduct {
         if (isOrder) {
             orderPosition = new Companyorderpositions();
         }
-
-        if (isCampaign) {
-            campaignPosition = new Crmcampaignposition();
-        }
-
+        
         if (isService) {
             servicePosition = new Companyservicepositions();
         }
@@ -421,16 +389,6 @@ public class EBICRMDialogAddProduct {
             buffer.append("<tr><td  bgcolor=#a0f0ff colspan='2'><b>" + EBISystem.i18n("EBI_LANG_DESCRIPTION") + "</b></td></tr>");
             buffer.append("<tr><td  bgcolor=#eeeeee colspan='2'>" + offerPosition.getDescription() + "</td></tr>");
 
-        } else if (isCampaign && campaignPosition.getProductnr() != null) {
-            buffer.append("<tr><td width=5% bgcolor=#ebebeb>" + EBISystem.i18n("EBI_LANG_PRODUCT_NR") + "</td><td bgcolor='#ebebeb' >" + campaignPosition.getProductnr() + "</td></tr>");
-            buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_NAME") + "</td><td bgcolor='#eeeeee'>" + campaignPosition.getProductname() + "</td></tr>");
-            buffer.append("<tr><td width=5% bgcolor=#ebebeb>" + EBISystem.i18n("EBI_LANG_CATEGORY") + "</td><td bgcolor='#ebebeb'>" + campaignPosition.getCategory() + "</td></tr>");
-            buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_TYPE") + "</td><td bgcolor='#eeeeee'>" + ("null".equals(campaignPosition.getType()) ? "" : campaignPosition.getType()) + "</td></tr>");
-            buffer.append("<tr><td width=5% bgcolor=#ebebeb>" + EBISystem.i18n("EBI_LANG_TAX_TYPE") + "</td><td bgcolor='#ebebeb'>" + ("null".equals(campaignPosition.getTaxtype()) ? "" : campaignPosition.getTaxtype()) + "</td></tr>");
-            buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_SALE_PRICE") + "</td><td bgcolor='#eeeeee'>"
-                    + currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(campaignPosition.getNetamount(), EBISystem.gui().textField("quantityText", "productInsertDialog").getText(), EBISystem.gui().textField("deductionText", "productInsertDialog").getText())) + "</td></tr>");
-            buffer.append("<tr><td  bgcolor=#a0f0ff colspan='2'><b>" + EBISystem.i18n("EBI_LANG_DESCRIPTION") + "</b></td></tr>");
-            buffer.append("<tr><td  bgcolor=#eeeeee colspan='2'>" + campaignPosition.getDescription() + "</td></tr>");
         } else if (isService && servicePosition.getProductnr() != null) {
             buffer.append("<tr><td width=5% bgcolor=#ebebeb>" + EBISystem.i18n("EBI_LANG_PRODUCT_NR") + "</td><td bgcolor='#ebebeb' >" + servicePosition.getProductnr() + "</td></tr>");
             buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_NAME") + "</td><td bgcolor='#eeeeee'>" + servicePosition.getProductname() + "</td></tr>");

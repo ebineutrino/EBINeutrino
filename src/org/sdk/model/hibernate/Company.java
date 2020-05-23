@@ -121,8 +121,6 @@ public class Company implements Serializable {
     @OneToMany(mappedBy = "company")
     private Set<Companyorder> companyorderSet = new HashSet();
     @OneToMany(mappedBy = "company")
-    private Set<MailAssigned> mailAssignedSet = new HashSet();
-    @OneToMany(mappedBy = "company")
     private Set<Companymeetingprotocol> companymeetingprotocolSet = new HashSet();
 
     public Company() {}
@@ -386,15 +384,6 @@ public class Company implements Serializable {
 
     public void setCompanyorders(Set<Companyorder> companyorderSet) {
         this.companyorderSet = companyorderSet;
-    }
-
-    @XmlTransient
-    public Set<MailAssigned> getMailAssignedses() {
-        return mailAssignedSet;
-    }
-
-    public void setMailAssignedses(Set<MailAssigned> mailAssignedSet) {
-        this.mailAssignedSet = mailAssignedSet;
     }
 
     @XmlTransient

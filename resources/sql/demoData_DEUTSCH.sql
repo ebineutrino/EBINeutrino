@@ -200,18 +200,6 @@ INSERT INTO CRMADDRESSTYPE (ID, `NAME`) VALUES
 (3, 'Business'),
 (4, 'Privat');
 
-
-INSERT INTO CRMCAMPAIGNPROPS (ID, `NAME`) VALUES
-(1, 'Dauer'),
-(2, 'Budget'),
-(3, 'Größe'),
-(4, 'Extras');
-
-
-INSERT INTO CRMCAMPAIGNSTATUS (ID, `NAME`) VALUES
-(1, 'Offen'),
-(2, 'Geschlossen');
-
 INSERT INTO CRMINVOICE (INVOICEID, ASSOSIATION, INVOICENR, BEGINCHAR, `NAME`, `STATUS`, CATEGORY, `DATE`, TAXTYPE, GENDER, POSITION, COMPANYNAME, CONTACTNAME, CONTACTSURNAME, CONTACTSTREET, CONTACTZIP, CONTACTLOCATION, CONTACTPOSTCODE, CONTACTCOUNTRY, CONTACTTELEPHONE, CONTACTFAX, CONTACTEMAIL, CONTACTWEB, CONTACTDESCRIPTION, CREATEDDATE, CREATEDFROM, CHANGEDDATE, CHANGEDFROM) VALUES
 (1, 'Order: 1', 3000, 'FRT', 'Invoice ABC23494', 'Open', 'Fruit', '2010-10-31', 'IVA', 'Mr', 'CEO', 'EBI Neutrino R1 Open Source CRM ERP', 'James', 'Newone', 'Newstreet', '3839898', 'New City', '9023983', 'NewCountry', '', '+49 8474 8493983', 'info@ebineutrino.org', 'www.ebineutrino.org', 'Some description', '2010-10-31', 'root', NULL, NULL),
 (2, 'Service: 2', 3001, 'FRT', 'Rechnung', 'Open', 'Fruit', '2010-10-31', 'Please select', 'Mr', 'CEO', 'EBI Neutrino R1 Open Source CRM ERP', 'James', 'Newone', 'Newstreet', '3839898', 'New City', '9023983', 'NewCountry', '+49 8474 8493983', '+49 8474 8493983', 'info@ebineutrino.org', 'www.ebineutrino.org', 'CEO of company', '2010-10-31', 'root', NULL, NULL);

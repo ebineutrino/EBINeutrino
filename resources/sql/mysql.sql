@@ -983,16 +983,7 @@
         EXTRA varchar(255),
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/
-    create table if not exists  EBIPESSIMISTIC (
-        OPTIMISTICID integer not null auto_increment,
-        RECORDID integer,
-        MODULENAME varchar(255),
-        USER varchar(255),
-        LOCKDATE datetime,
-        STATUS integer,
-        primary key (OPTIMISTICID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
 /
     create table if not exists  EBIUSER (
         ID integer not null auto_increment,
@@ -1028,66 +1019,8 @@
         primary key (ID)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 /
-    create table if not exists  MAIL_ASSIGNED (
-        ID integer not null auto_increment,
-        COMPANYID integer,
-        MAIL_DATE datetime,
-        SETFROM varchar(150),
-        MAIL_FROM varchar(255),
-        MAIL_TO varchar(255),
-        MAIL_CC varchar(255),
-        MAIL_SUBJECT varchar(255),
-        MAIL_MESSAGE text,
-        ATTACHID varchar(255),
-        primary key (ID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/
-    create table if not exists  MAIL_ATTACH (
-        ID integer not null auto_increment,
-        MAIL_ATTACHID varchar(255),
-        FILENAME varchar(255),
-        FILEBIN longblob,
-        primary key (ID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/
-    create table if not exists  MAIL_DELETED (
-        ID integer not null auto_increment,
-        MAIL_FROM varchar(255),
-        MAIL_TO varchar(255),
-        MAIL_CC varchar(255),
-        MAIL_SUBJECT varchar(255),
-        MAIL_MESSAGE text,
-        ATTACHID varchar(255),
-        MAIL_DATE datetime,
-        SETFROM varchar(150),
-        primary key (ID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/
-    create table if not exists  MAIL_INBOX (
-        ID integer not null auto_increment,
-        MAIL_FROM varchar(255),
-        MAIL_TO varchar(255),
-        MAIL_CC varchar(255),
-        MAIL_SUBJECT varchar(255),
-        MAIL_MESSAGE text,
-        ATTACHID varchar(255),
-        MAIL_DATE datetime,
-        SETFROM varchar(150),
-        primary key (ID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/
-    create table if not exists  MAIL_OUTBOX (
-        ID integer not null auto_increment,
-        MAIL_FROM varchar(255),
-        MAIL_TO varchar(255),
-        MAIL_CC varchar(255),
-        MAIL_SUBJECT varchar(255),
-        MAIL_MESSAGE text,
-        ATTACHID varchar(255),
-        MAIL_DATE datetime,
-        SETFROM varchar(150),
-        primary key (ID)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+
 /
     create table if not exists  MAIL_TEMPLATE (
         ID integer not null auto_increment,

@@ -29,7 +29,6 @@ public class CRMSetting {
         EBISystem.gui().getPanel("activityPanel", "crmSettingDialog").setBorder(BorderFactory.createTitledBorder(null, EBISystem.i18n("EBI_LANG_SETTINGS_FOR_ACTIVITY_PANEL"), TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         EBISystem.gui().getPanel("offerOrderPanel", "crmSettingDialog").setBorder(BorderFactory.createTitledBorder(null, EBISystem.i18n("EBI_LANG_SETTINGS_FOR_OFFER_ORDER_PANEL"), TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         EBISystem.gui().getPanel("taxProductPanel", "crmSettingDialog").setBorder(BorderFactory.createTitledBorder(null, EBISystem.i18n("EBI_LANG_SETTINGS_FOR_TAX_PRODUCT_PANEL"), TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
-        EBISystem.gui().getPanel("campaignPanel", "crmSettingDialog").setBorder(BorderFactory.createTitledBorder(null, EBISystem.i18n("EBI_LANG_SETTINGS_FOR_CAMPAIGN_PANEL"), TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         EBISystem.gui().getPanel("servicePanel", "crmSettingDialog").setBorder(BorderFactory.createTitledBorder(null, EBISystem.i18n("EBI_LANG_SETTINGS_FOR_SERVICE_PANEL"), TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         EBISystem.gui().getPanel("problemSolPanel", "crmSettingDialog").setBorder(BorderFactory.createTitledBorder(null, EBISystem.i18n("EBI_LANG_SETTINGS_FOR_PROSOL_PANEL"), TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         EBISystem.gui().getPanel("projectSettings", "crmSettingDialog").setBorder(BorderFactory.createTitledBorder(null, EBISystem.i18n("EBI_LANG_SETTINGS_FOR_PROJECT_PANEL"), TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
@@ -53,8 +52,6 @@ public class CRMSetting {
         EBISystem.gui().label("productCategory", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_PRODUCT_CATEGORY"));
         EBISystem.gui().label("productType", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_PRODUCT_TYPE"));
         EBISystem.gui().label("ProductProperties", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_PRODUCT_PROPERTIES"));
-        EBISystem.gui().label("campStatus", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_STATUS"));
-        EBISystem.gui().label("CampType", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_PROPERTIES"));
         EBISystem.gui().label("serviceStatus", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_STATUS"));
         EBISystem.gui().label("serviceType", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_TYPE"));
         EBISystem.gui().label("serviceCategory", "crmSettingDialog").setText(EBISystem.i18n("EBI_LANG_CATEGORY"));
@@ -243,24 +240,6 @@ public class CRMSetting {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 final EBIDialogValueSetter setValueSetter = new EBIDialogValueSetter("CRMPRODUCTDIMENSIONS", EBISystem.i18n("EBI_LANG_C_CRM_PRODUCT_PROPERTIES"));
-                setValueSetter.setVisible();
-            }
-        });
-
-        EBISystem.gui().button("campaignStatusBnt", "crmSettingDialog").setIcon(EBISystem.getInstance().getIconResource("lf_monitoring.png"));
-        EBISystem.gui().button("campaignStatusBnt", "crmSettingDialog").addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                final EBIDialogValueSetter setValueSetter = new EBIDialogValueSetter("CRMCAMPAIGNSTATUS", EBISystem.i18n("EBI_LANG_C_CRM_CAMPAIGN_STATUS"));
-                setValueSetter.setVisible();
-            }
-        });
-
-        EBISystem.gui().button("campaignTypeBnt", "crmSettingDialog").setIcon(EBISystem.getInstance().getIconResource("lf_monitoring.png"));
-        EBISystem.gui().button("campaignTypeBnt", "crmSettingDialog").addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                final EBIDialogValueSetter setValueSetter = new EBIDialogValueSetter("CRMCAMPAIGNPROPS", EBISystem.i18n("EBI_LANG_C_CRM_CAMPAIGN_PROPERTIES"));
                 setValueSetter.setVisible();
             }
         });

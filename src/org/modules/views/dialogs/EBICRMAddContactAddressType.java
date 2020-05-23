@@ -9,13 +9,11 @@ import org.sdk.model.hibernate.Companyofferreceiver;
 import org.sdk.model.hibernate.Companyorderreceiver;
 
 import javax.swing.*;
-import java.util.Date;
 
 public class EBICRMAddContactAddressType {
 
     public boolean isSaved = false;
     private boolean isOrder = false;
-    private boolean isCampaign = false;
     private ControlOffer dataControlOffer = null;
     private ControlOrder dataControlOrder = null;
     private final JTextField phoneForContact = new JTextField();
@@ -79,12 +77,10 @@ public class EBICRMAddContactAddressType {
                     return;
                 }
                 isSaved = true;
-                if (!isCampaign) {
-                    if (!isOrder) {
-                        addReciever();
-                    } else {
-                        addReciever1();
-                    }
+                if (!isOrder) {
+                    addReciever();
+                } else {
+                    addReciever1();
                 }
                 newReciever();
             }
@@ -123,10 +119,6 @@ public class EBICRMAddContactAddressType {
                 addCon.setValueToComponent(EBISystem.gui().textField("emailText", "addNewReceiverDialog"), "contact.EMail");
                 addCon.setValueToComponent(EBISystem.gui().textField("faxText", "addNewReceiverDialog"), "contact.Fax");
                 addCon.setValueToComponent(phoneForContact, "contact.Phone");
-                if (isCampaign) {
-                    addCon.setValueToComponent(EBISystem.gui().textField("companyNrText", "addNewReceiverDialog"), "company.CUSTOMERNR");
-                    addCon.setValueToComponent(EBISystem.gui().textField("companyNameText", "addNewReceiverDialog"), "company.NAME");
-                }
                 EBISystem.gui().dialog("addNewReceiverDialog").setVisible(false);
                 addCon.setVisible();
                 EBISystem.gui().dialog("addNewReceiverDialog").setVisible(true);
@@ -216,11 +208,6 @@ public class EBICRMAddContactAddressType {
         EBISystem.gui().textField("emailText", "addNewReceiverDialog").setText("");
         EBISystem.gui().textField("faxText", "addNewReceiverDialog").setText("");
         EBISystem.gui().getCheckBox("mainContact", "addNewReceiverDialog").setSelected(false);
-
-        if (isCampaign) {
-            EBISystem.gui().textField("companyNrText", "addNewReceiverDialog").setText("");
-            EBISystem.gui().textField("companyNameText", "addNewReceiverDialog").setText("");
-        }
     }
 
     public void addReciever() {

@@ -232,7 +232,6 @@ public class EBIReportSetting extends JPanel {
                         EBISystem.i18n("EBI_LANG_C_OFFER"),
                         EBISystem.i18n("EBI_LANG_C_ORDER"),
                         EBISystem.i18n("EBI_LANG_C_OPPORTUNITY"),
-                        EBISystem.i18n("EBI_LANG_C_CAMPAIGN"),
                         EBISystem.i18n("EBI_LANG_C_PRODUCT"),
                         EBISystem.i18n("EBI_LANG_C_PROSOL"),
                         EBISystem.i18n("EBI_LANG_PROJECT"),

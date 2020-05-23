@@ -333,7 +333,7 @@ public class EBISystem {
                     "MeetingsCallManagement/meetingcallGUI.xml", "Activity/activityGUI.xml",
                     "Opportunity/opportunityGUI.xml", "Offer/offerGUI.xml", "Order/orderGUI.xml",
                     "CRMService/serviceGUI.xml", "Mailing", "Product/productGUI.xml", "Calendar",
-                    "Campaign/campaignGUI.xml", "CRMProblemSolution/problemSolutionGUI.xml",
+                    "CRMProblemSolution/problemSolutionGUI.xml",
                     "Invoice/invoiceGUI.xml", "AccountStack/accountGUI.xml", "Project/projectGUI.xml"};
 
                 if (User.getModuleid() != null) {
@@ -348,7 +348,6 @@ public class EBISystem {
                 registeredModule.add("CRMDialog/crmCompanySearch.xml");
                 registeredModule.add("CRMDialog/accountShowPTAX.xml");
                 registeredModule.add("CRMDialog/addNewContactDialog.xml");
-                registeredModule.add("CRMDialog/addnewReceiverDialogCampaign.xml");
                 registeredModule.add("CRMDialog/autoIncNrDialog.xml");
                 registeredModule.add("CRMDialog/costValueDialog.xml");
                 registeredModule.add("CRMDialog/creditDebitDialog.xml");
@@ -783,8 +782,6 @@ public class EBISystem {
             index = "6";
         } else if (EBISystem.i18n("EBI_LANG_C_OPPORTUNITY").equals(category)) {
             index = "7";
-        } else if (EBISystem.i18n("EBI_LANG_C_CAMPAIGN").equals(category)) {
-            index = "8";
         } else if (EBISystem.i18n("EBI_LANG_C_PRODUCT").equals(category)) {
             index = "9";
         } else if (EBISystem.i18n("EBI_LANG_C_PROSOL").equals(category)) {
@@ -908,18 +905,16 @@ public class EBISystem {
         } else if (index == 7) {
             category = EBISystem.i18n("EBI_LANG_C_OPPORTUNITY");
         } else if (index == 8) {
-            category = EBISystem.i18n("EBI_LANG_C_CAMPAIGN");
-        } else if (index == 9) {
             category = EBISystem.i18n("EBI_LANG_C_PRODUCT");
-        } else if (index == 10) {
+        } else if (index == 9) {
             category = EBISystem.i18n("EBI_LANG_C_PROSOL");
-        } else if (index == 11) {
+        } else if (index == 10) {
             category = EBISystem.i18n("EBI_LANG_PROJECT");
-        } else if (index == 12) {
+        } else if (index == 11) {
             category = EBISystem.i18n("EBI_LANG_C_SERVICE");
-        } else if (index == 13) {
+        } else if (index == 12) {
             category = EBISystem.i18n("EBI_LANG_PRINT_ACCOUNT");
-        } else if (index == 14) {
+        } else if (index == 13) {
             category = EBISystem.i18n("EBI_LANG_PRINT_OTHERS");
         }
 

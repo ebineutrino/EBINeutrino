@@ -38,7 +38,6 @@ public class EBICRMDialogSearchProduct {
     private boolean isDependency = false;
     private boolean isCRMOrder = false;
     private boolean isCRMOffer = false;
-    private boolean isCampaign = false;
     private boolean isCRMService = false;
     private boolean isProsol = false;
     private boolean isInvoice = false;

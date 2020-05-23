@@ -25,27 +25,6 @@ public class ModelReceiver extends AbstractTableModel {
     public ModelReceiver() {
     }
 
-    public ModelReceiver(final boolean isCampaign) {
-        if (isCampaign) {
-            columnNames = new String[]{
-                EBISystem.i18n("EBI_LANG_C_SEND_TYPE"),
-                EBISystem.i18n("EBI_LANG_COMPANY"),
-                EBISystem.i18n("EBI_LANG_COMPANY_NUMBER"),
-                EBISystem.i18n("EBI_LANG_C_GENDER"),
-                EBISystem.i18n("EBI_LANG_NAME"),
-                EBISystem.i18n("EBI_LANG_C_CNAME"),
-                EBISystem.i18n("EBI_LANG_CONTACT_POSITION"),
-                EBISystem.i18n("EBI_LANG_C_STREET_NR"),
-                EBISystem.i18n("EBI_LANG_C_ZIP"),
-                EBISystem.i18n("EBI_LANG_C_LOCATION"),
-                EBISystem.i18n("EBI_LANG_C_POST_CODE"),
-                EBISystem.i18n("EBI_LANG_C_COUNTRY"),
-                EBISystem.i18n("EBI_LANG_EMAIL")
-            };
-            data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", "", "", "", "", "", ""}};
-        }
-    }
-
     public Object[] getRow(final int row) {
         if (row < 0 || row > data.length - 1) {
             return null;

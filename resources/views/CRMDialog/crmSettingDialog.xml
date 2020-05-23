@@ -49,12 +49,6 @@
         <button name="productTypeBnt" tabindex="18" Location="140,51" Size="27,22"/>
         <button name="productPropBnt" tabindex="19" Location="140,81" Size="27,22"/>
     </panel>
-    <panel name="campaignPanel" title="Campagin Panel" Location="9,384" Size="325,53">
-        <label name="campStatus" title="Stauts" Location="11,27" Size="105,20"/>
-        <label name="CampType" title="Type" Location="171,26" Size="115,20"/>
-        <button name="campaignStatusBnt" tabindex="21" Location="119,26" Size="27,22"/>
-        <button name="campaignTypeBnt" tabindex="22" Location="288,25" Size="27,22"/>
-    </panel>
     <panel name="servicePanel" title="Service panel" Location="339,121" Size="397,84">
         <label name="serviceStatus" title="Status" Location="11,26" Size="125,20"/>
         <label name="serviceType" title="Type" Location="11,55" Size="125,20"/>

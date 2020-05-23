@@ -35,7 +35,6 @@ public class EBICRMDialogAddProduct {
     private Crmproblemsolutions prosol = null;
     private boolean isOrder = false;
     private boolean isOffer = false;
-    private boolean isCampaign = false;
     private boolean isService = false;
     private boolean isProsol = false;
     private boolean isInvoice = false;

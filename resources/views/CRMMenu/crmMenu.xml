@@ -15,9 +15,8 @@
    <menu Name="menuModule" Title="EBI_LANG_MODULE" KeyEvent="M" >
        <MenuItem Name="menuItemProductModule" KeyStroke="F1" checkable="true" Title="EBI_LANG_PRODUCT_ADMIN_WINDOW" Icon="" />   
        <MenuItem Name="menuItemCalendarModule" KeyStroke="F2" checkable="true" Title="EBI_LANG_CRM_CALENDAR_WINDOW" Icon="" />
-       <MenuItem Name="menuItemCampaignModule" KeyStroke="F3" checkable="true" Title="EBI_LANG_CRM_CAMPAIGN_WINDOW" Icon="" />  
-	   <MenuItem Name="menuItemProsolModule"   KeyStroke="F4" checkable="true" Title="EBI_LANG_CRM_PROSOL_WINDOW" Icon="" /> 
-	   <MenuItem Name="menuItemProjectModule"  KeyStroke="F5" checkable="true" Title="EBI_LANG_CRM_PROJECT_WINDOW" Icon="" />  	   
+       <MenuItem Name="menuItemProsolModule"   KeyStroke="F4" checkable="true" Title="EBI_LANG_CRM_PROSOL_WINDOW" Icon="" /> 
+       <MenuItem Name="menuItemProjectModule"  KeyStroke="F5" checkable="true" Title="EBI_LANG_CRM_PROJECT_WINDOW" Icon="" />  	   
        <MenuItem Name="menuItemInvoiceModule" KeyStroke="F6" checkable="true" Title="EBI_LANG_CRM_INVOICE_WINDOW"  Icon=""/>
    </menu>
 

@@ -48,7 +48,7 @@ public class EBICRMSummaryView {
             EBISystem.i18n("EBI_LANG_C_SEARCH_ALL"), EBISystem.i18n("EBI_LANG_C_OPPORTUNITY"),
             EBISystem.i18n("EBI_LANG_C_ACTIVITIES"), EBISystem.i18n("EBI_LANG_C_OFFER"),
             EBISystem.i18n("EBI_LANG_C_ORDER"), EBISystem.i18n("EBI_LANG_C_SERVICE"),
-            EBISystem.i18n("EBI_LANG_C_TAB_INVOICE"), EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN"),
+            EBISystem.i18n("EBI_LANG_C_TAB_INVOICE"),
             EBISystem.i18n("EBI_LANG_C_TAB_PROSOL")}));
 
         EBISystem.gui().textField("filterTableText", "Summary").addKeyListener(new KeyListener() {

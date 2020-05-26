@@ -367,6 +367,24 @@ public class EBIDatabase implements IEBIDatabase {
         }
         return ps;
     }
+    
+    
+     /**
+     * create new PreparedStatement
+     *
+     * @param query
+     * @return Preparedstatement
+     */
+    @Override
+    public PreparedStatement initPSGenerateKEY(final String query) {
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        } catch (final SQLException ex) {
+            exceptionHandle(ex);
+        }
+        return ps;
+    }
 
     @Override
     public boolean isValidConnection() {
@@ -387,14 +405,14 @@ public class EBIDatabase implements IEBIDatabase {
      * @return generated key (id)
      */
     @Override
-    public String executePreparedStmtGetKey(final PreparedStatement ps) {
+    public Long executePreparedStmtGetKey(final PreparedStatement ps) {
         ResultSet key;
-        String gkey = "";
+        Long gkey = 0L;
         try {
             ps.execute();
             key = ps.getGeneratedKeys();
             key.next();
-            gkey = key.getString(1);
+            gkey = key.getLong(1);
             ps.close();
         } catch (final SQLException ex) {
             exceptionHandle(ex);

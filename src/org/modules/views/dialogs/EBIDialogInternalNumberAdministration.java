@@ -37,6 +37,7 @@ public class EBIDialogInternalNumberAdministration {
     private void fillComboInvoiceCategory() {
         ResultSet set = null;
         try {
+            EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").removeAllItems();
             final PreparedStatement ps = EBISystem.getInstance().iDB().initPreparedStatement("SELECT NAME FROM CRMINVOICECATEGORY ");
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps);
             EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").addItem(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"));
@@ -63,6 +64,7 @@ public class EBIDialogInternalNumberAdministration {
     private void fillComboCategory() {
         ResultSet set = null;
         try {
+            EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").removeAllItems();
             final PreparedStatement ps = EBISystem.getInstance().iDB().initPreparedStatement("SELECT NAME FROM COMPANYCATEGORY ");
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps);
             EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").addItem(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"));
@@ -223,14 +225,17 @@ public class EBIDialogInternalNumberAdministration {
                 table = "COMPANYNUMBER";
             }
 
-            final int cid = retriveIDFromCategory(EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").getSelectedItem().toString());
+            String cat = EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").getEditor().getItem().toString();
+            final Long cid = retriveIDFromCategory(cat);
+
             final String sql = "INSERT INTO " + table + " (CATEGORY,NUMBERFROM,NUMBERTO,BEGINCHAR,CATEGORYID) values(?,?,?,?,?) ";
+
             final PreparedStatement ps = EBISystem.getInstance().iDB().initPreparedStatement(sql);
-            ps.setString(1, EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").getSelectedItem().toString());
+            ps.setString(1, cat);
             ps.setInt(2, Integer.parseInt(EBISystem.gui().textField("numberFromText", "autoIncNrDialog").getText()));
             ps.setInt(3, Integer.parseInt(EBISystem.gui().textField("numberToText", "autoIncNrDialog").getText()));
             ps.setString(4, EBISystem.gui().textField("beginCharText", "autoIncNrDialog").getText());
-            ps.setInt(5, cid);
+            ps.setLong(5, cid);
             EBISystem.getInstance().iDB().executePreparedStmt(ps);
         } catch (final SQLException ex) {
             EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.NEUTRINO_DEBUG_MESSAGE);
@@ -238,8 +243,8 @@ public class EBIDialogInternalNumberAdministration {
         newNumber();
     }
 
-    private int retriveIDFromCategory(final String category) {
-        int toRet = -1;
+    private Long retriveIDFromCategory(final String category) {
+        Long toRet = -1L;
         ResultSet set = null;
         try {
             String table;
@@ -256,7 +261,18 @@ public class EBIDialogInternalNumberAdministration {
             if (set.getRow() > 0) {
                 set.beforeFirst();
                 set.next();
-                toRet = set.getInt("ID");
+                toRet = set.getLong("ID");
+            } else {
+                //insert a category if not available
+                final String isql = "INSERT INTO " + table + " (NAME) values(?) ";
+                final PreparedStatement ips = EBISystem.getInstance().iDB().initPSGenerateKEY(isql);
+                ips.setString(1, category);
+                toRet = EBISystem.getInstance().iDB().executePreparedStmtGetKey(ips);
+                if(isInvoice){
+                    fillComboInvoiceCategory();
+                }else{
+                    fillComboCategory();
+                }
             }
 
         } catch (final SQLException ex) {
@@ -288,11 +304,11 @@ public class EBIDialogInternalNumberAdministration {
             }
             final String sql = "UPDATE " + table + " SET CATEGORY=?,NUMBERFROM=?,NUMBERTO=?, CATEGORYID=?, BEGINCHAR=? where ID=?";
             final PreparedStatement ps = EBISystem.getInstance().iDB().initPreparedStatement(sql);
-            final int cid = retriveIDFromCategory(EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").getSelectedItem().toString());
+            final Long cid = retriveIDFromCategory(EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").getSelectedItem().toString());
             ps.setString(1, EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").getSelectedItem().toString());
             ps.setInt(2, Integer.parseInt(EBISystem.gui().textField("numberFromText", "autoIncNrDialog").getText()));
             ps.setInt(3, Integer.parseInt(EBISystem.gui().textField("numberToText", "autoIncNrDialog").getText()));
-            ps.setInt(4, cid);
+            ps.setLong(4, cid);
             ps.setString(5, EBISystem.gui().textField("beginCharText", "autoIncNrDialog").getText());
             ps.setInt(6, id);
             EBISystem.getInstance().iDB().executePreparedStmt(ps);

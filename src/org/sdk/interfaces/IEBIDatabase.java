@@ -113,24 +113,32 @@ public interface IEBIDatabase {
     void execExt(String query) throws SQLException;
 
     /**
-     * This method create new PreparedStatement
+     * create new PreparedStatement
      *
      * @param query
      * @return Preparedstatement
      */
     PreparedStatement initPreparedStatement(String query);
+    
+    /**
+     * create new PreparedStatement
+     *
+     * @param query
+     * @return Preparedstatement
+     */
+    PreparedStatement initPSGenerateKEY(final String query);
 
 
     /**
-     * this method execute the one preparedstatement
+     * execute the one preparedstatement
      *
      * @param ps
      * @return generated key (id)
      */
-    String executePreparedStmtGetKey(PreparedStatement ps);
+    Long executePreparedStmtGetKey(PreparedStatement ps);
 
     /**
-     * this method execute the one preparedstatement
+     * execute the one preparedstatement
      *
      * @param ps
      * @return return true if the preparedstatement is successfully executed otherwise false
@@ -139,7 +147,7 @@ public interface IEBIDatabase {
     boolean executePreparedStmt(PreparedStatement ps);
 
     /**
-     * this method execute the one preparedstatement
+     * execute the one preparedstatement
      *
      * @param ps Preparedstatement
      * @return return ResultSet if successfully or null

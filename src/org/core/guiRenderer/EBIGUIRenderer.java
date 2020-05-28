@@ -1214,7 +1214,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
         if (canShow) {
             renderToolbar(toVisualPanel);
             initToolbar(name);
-            initScript();
+            initScript(componentNamespace);
             isInit = false;
         }
     }
@@ -1256,10 +1256,16 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                         ((EBIDialog) list.getComponent()).setVisible(true);
                     }
                     
+                    final String cmpNamespace = componentNamespace;
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            initScript();
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                   initScript(cmpNamespace);
+                                }
+                            });
                         }
                     }).start();
 
@@ -1386,8 +1392,8 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
         }
     }
 
-    private synchronized final void initScript() {
-        excScript(componentNamespace, null);
+    private synchronized final void initScript(final String namespace) {
+        excScript(namespace, null);
     }
 
     @Override

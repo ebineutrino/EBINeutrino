@@ -41,8 +41,6 @@
         <formattedtextfield name="debitCal" Location="440,200" Size="100,25"/>
         <formattedtextfield name="creditCal" Location="440,230" Size="100,25"/>
         
-        
-        
         <textarea name="descriptionText" tabindex="7" Location="19,270" Size="521,85"/>
     </panel>
     <panel name="avAccount" title="EBI_LANG_C_AVAILABLE_ACCOUNT_DATA" resizewidth="true" resizeheight="true" Location="11,439" Size="1176,405">

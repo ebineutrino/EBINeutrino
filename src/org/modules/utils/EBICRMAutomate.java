@@ -61,6 +61,9 @@ public class EBICRMAutomate {
         } else if (title.equals(EBISystem.i18n("EBI_LANG_C_LEADS"))) { // Store Leads
             ret = EBISystem.getModule().getLeadPane().saveLeads();
             canSaveCompany = false;
+        } else if (title.equals(EBISystem.i18n("EBI_LANG_C_TAB_ACCOUNT"))) { // Store Accounting
+            ret = EBISystem.getModule().getAccountPane().saveAccount();
+            canSaveCompany = false;
         }
         if (canSaveCompany && ret) {
             EBISystem.getModule().saveCompany(checkCompany);

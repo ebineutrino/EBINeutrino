@@ -1,4 +1,4 @@
-package org.modules.views.component.listener;
+package org.modules.controls.component.listener;
 import org.modules.views.dialogs.EBICRMHistoryView;
 import org.modules.views.dialogs.EBIDialogSearchCompany;
 import org.modules.views.dialogs.EBIDialogSearchContact;

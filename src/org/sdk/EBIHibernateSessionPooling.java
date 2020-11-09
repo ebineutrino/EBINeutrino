@@ -95,8 +95,8 @@ public class EBIHibernateSessionPooling implements IEBIHibernate {
                     || !EBISystem.getInstance().iDB().isValidConnection()) {
                 openHibernateSession(index);
             }
-
         } catch (final Exception ex) {
+            ex.printStackTrace();
         }
         return ((Session) ((Object[]) sessionList.get(index))[0]);
     }
@@ -111,7 +111,6 @@ public class EBIHibernateSessionPooling implements IEBIHibernate {
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
-
         return this;
     }
 

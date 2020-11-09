@@ -4,7 +4,6 @@ import org.sdk.EBISystem;
 
 import javax.swing.table.AbstractTableModel;
 
-
 public class ModelCRMAccount extends AbstractTableModel {
 
     public String[] columnNames = {
@@ -15,8 +14,7 @@ public class ModelCRMAccount extends AbstractTableModel {
         EBISystem.i18n("EBI_LANG_TOTAL_AMOUNT"),
         EBISystem.i18n("EBI_LANG_TAX"),
         EBISystem.i18n("EBI_LANG_DEBIT"),
-        EBISystem.i18n("EBI_LANG_CREDIT"),
-    };
+        EBISystem.i18n("EBI_LANG_CREDIT"),};
 
     public Object[][] data = {{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", "", "", ""}};
 
@@ -37,24 +35,23 @@ public class ModelCRMAccount extends AbstractTableModel {
     }
 
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return columnNames.length;
     }
 
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return data.length;
     }
 
     @Override
-	public String getColumnName(final int col) {
+    public String getColumnName(final int col) {
         return columnNames[col];
     }
 
     @Override
-	public Object getValueAt(final int row, final int col) {
+    public Object getValueAt(final int row, final int col) {
         return data[row][col];
     }
-
 
 }

@@ -34,6 +34,9 @@ public class ModelCRMContact extends AbstractTableModel {
         this.type = type;
     }
     
+    
+    
+    
     public String[] columnNames = {
         EBISystem.i18n("EBI_LANG_CONTACT_POSITION"),
         EBISystem.i18n("EBI_LANG_C_GENDER"),

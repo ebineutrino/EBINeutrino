@@ -1,6 +1,5 @@
-package org.modules.views.component;
+package org.modules.controls.component;
 
-import java.util.Date;
 import org.sdk.EBISystem;
 import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;

@@ -231,7 +231,7 @@ public class ControlAccountStack {
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][3] = act.getAccountname() == null ? "" : act.getAccountname();
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][4] = act.getAccountvalue() == null ? "" : currency.format(act.getAccountvalue());
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][5] = act.getAccountTaxValue() == null ? "" : currency.format(act.getAccountTaxValue());
-                    EBISystem.getModule().getAccountPane().getTabModAccount().data[i][6] = act.getAccountCredit() == null ? "" : act.getAccountCredit();
+                    EBISystem.getModule().getAccountPane().getTabModAccount().data[i][6] = act.getAccountDebit()== null ? "" : act.getAccountDebit();
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][7] = act.getAccountCredit() == null ? "" : act.getAccountCredit();
                     EBISystem.getModule().getAccountPane().getTabModAccount().data[i][8] = act.getAcstackid();
                     if (id != -1 && id == act.getAcstackid()) {

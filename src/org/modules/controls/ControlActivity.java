@@ -41,23 +41,23 @@ public class ControlActivity {
             }
 
             companyActivity.setActivityname(EBISystem.gui().textField("activityNameText", "Activity").getText());
-            if (EBISystem.gui().combo("activityTypeText", "Activity").getSelectedItem() != null) {
-                companyActivity.setActivitytype(EBISystem.gui().combo("activityTypeText", "Activity").getSelectedItem().toString());
+            if (EBISystem.gui().combo("activityTypeText", "Activity").getEditor().getItem() != null) {
+                companyActivity.setActivitytype(EBISystem.gui().combo("activityTypeText", "Activity").getEditor().getItem().toString());
             }
             companyActivity.setTimerdisabled(EBISystem.gui().getCheckBox("timerActiveBox", "Activity").isSelected() ? 1 : 0);
 
             int tstart = 0;
-            if (EBISystem.gui().combo("timerStartText", "Activity").getSelectedItem() != null) {
-                if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui().combo("timerStartText", "Activity").getSelectedItem().toString())) {
+            if (EBISystem.gui().combo("timerStartText", "Activity").getEditor().getItem() != null) {
+                if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui().combo("timerStartText", "Activity").getEditor().getItem().toString())) {
                     try {
-                        tstart = Integer.parseInt(EBISystem.gui().combo("timerStartText", "Activity").getSelectedItem().toString().split(" ")[0]);
+                        tstart = Integer.parseInt(EBISystem.gui().combo("timerStartText", "Activity").getEditor().getItem().toString().split(" ")[0]);
                     } catch (final NumberFormatException ex) {
                         ex.printStackTrace();
                     }
                 }
             }
             companyActivity.setTimerstart(tstart);
-            if (EBISystem.gui().combo("activityStatusText", "Activity").getSelectedItem() != null) {
+            if (EBISystem.gui().combo("activityStatusText", "Activity").getEditor().getItem() != null) {
                 if (EBISystem.gui().combo("activityStatusText", "Activity").getSelectedIndex() != 0) {
                     companyActivity.setActivitystatus(EBISystem.gui().combo("activityStatusText", "Activity").getSelectedItem().toString());
                 }

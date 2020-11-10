@@ -263,9 +263,9 @@ public class EBICRMDialogSearchProduct {
 
             if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                     equals(EBISystem.gui().combo("categoryText", "searchProduct")
-                            .getSelectedItem().toString()) &&
+                            .getEditor().getItem().toString()) &&
                     !"".equals(EBISystem.gui().combo("categoryText", "searchProduct")
-                                    .getSelectedItem().toString())) {
+                                    .getEditor().getItem().toString())) {
 
                 param3 = true;
                 if (param1 == false && param2 == false) {
@@ -288,7 +288,7 @@ public class EBICRMDialogSearchProduct {
             }
             if (param3) {
                 pst.setString((param1 && param2) ? 3 : (param1 || param2) ? 2 : 1,
-                        "%" + EBISystem.gui().combo("categoryText", "searchProduct").getSelectedItem().toString() + "%");
+                        "%" + EBISystem.gui().combo("categoryText", "searchProduct").getEditor().getItem().toString() + "%");
             }
 
             set = EBISystem.getInstance().iDB().executePreparedQuery(pst);

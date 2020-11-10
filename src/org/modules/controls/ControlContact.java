@@ -34,8 +34,8 @@ public class ControlContact {
                 contact.setCompany(EBISystem.getInstance().getCompany());
             }
 
-            if (EBISystem.gui().combo("genderTex", "Contact").getSelectedItem() != null) {
-                contact.setGender(EBISystem.gui().combo("genderTex", "Contact").getSelectedItem().toString());
+            if (EBISystem.gui().combo("genderTex", "Contact").getEditor().getItem() != null) {
+                contact.setGender(EBISystem.gui().combo("genderTex", "Contact").getEditor().getItem().toString());
             }
 
             contact.setPosition(EBISystem.gui().textField("positionText", "Contact").getText());

@@ -47,30 +47,30 @@ public class ControlOpportunity {
 
             opportunity.setName(EBISystem.gui().combo("opportunityNameText", "Opportunity").getEditor().getItem().toString());
 
-            if (EBISystem.gui().combo("oppEvalStatusText", "Opportunity").getSelectedItem() != null) {
-                opportunity.setEvaluationstatus(EBISystem.gui().combo("oppEvalStatusText", "Opportunity").getSelectedItem().toString());
+            if (EBISystem.gui().combo("oppEvalStatusText", "Opportunity").getEditor().getItem() != null) {
+                opportunity.setEvaluationstatus(EBISystem.gui().combo("oppEvalStatusText", "Opportunity").getEditor().getItem().toString());
                 opportunity.setEvaluetiondate(new java.sql.Date(new Date().getTime()));
             }
 
-            if (EBISystem.gui().combo("oppBdgStatusText", "Opportunity").getSelectedItem() != null) {
-                opportunity.setBudgetstatus(EBISystem.gui().combo("oppBdgStatusText", "Opportunity").getSelectedItem().toString());
+            if (EBISystem.gui().combo("oppBdgStatusText", "Opportunity").getEditor().getItem() != null) {
+                opportunity.setBudgetstatus(EBISystem.gui().combo("oppBdgStatusText", "Opportunity").getEditor().getItem().toString());
                 opportunity.setBudgetdate(new java.sql.Date(new Date().getTime()));
             }
 
-            opportunity.setSalestage(EBISystem.gui().combo("oppSaleStateText", "Opportunity").getSelectedItem().toString());
+            opportunity.setSalestage(EBISystem.gui().combo("oppSaleStateText", "Opportunity").getEditor().getItem().toString());
             opportunity.setSalestagedate(new java.sql.Date(new Date().getTime()));
 
-            if (EBISystem.gui().combo("oppBdgStatusText", "Opportunity").getSelectedItem() != null) {
-                opportunity.setOpportunitystatus(EBISystem.gui().combo("oppBdgStatusText", "Opportunity").getSelectedItem().toString());
+            if (EBISystem.gui().combo("oppBdgStatusText", "Opportunity").getEditor().getItem() != null) {
+                opportunity.setOpportunitystatus(EBISystem.gui().combo("oppBdgStatusText", "Opportunity").getEditor().getItem().toString());
                 opportunity.setOpportunitystatusdate(new java.sql.Date(new Date().getTime()));
             }
 
-            if (EBISystem.gui().combo("oppProbabilityText", "Opportunity").getSelectedItem() != null) {
-                opportunity.setProbability(EBISystem.gui().combo("oppProbabilityText", "Opportunity").getSelectedItem().toString());
+            if (EBISystem.gui().combo("oppProbabilityText", "Opportunity").getEditor().getItem() != null) {
+                opportunity.setProbability(EBISystem.gui().combo("oppProbabilityText", "Opportunity").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().combo("oppBustypeText", "Opportunity").getSelectedItem() != null) {
-                opportunity.setBusinesstype(EBISystem.gui().combo("oppBustypeText", "Opportunity").getSelectedItem().toString());
+            if (EBISystem.gui().combo("oppBustypeText", "Opportunity").getEditor().getItem() != null) {
+                opportunity.setBusinesstype(EBISystem.gui().combo("oppBustypeText", "Opportunity").getEditor().getItem().toString());
             }
 
             if (!"".equals(EBISystem.gui().FormattedField("oppValueText", "Opportunity").getText())) {
@@ -657,15 +657,15 @@ public class ControlOpportunity {
         final List<String> list = new ArrayList<String>();
 
         list.add(EBISystem.i18n("EBI_LANG_NAME") + ": " + (this.opportunity.getName().equals(EBISystem.gui().combo("opportunityNameText", "Opportunity").getEditor().getItem().toString()) == true ? this.opportunity.getName() : this.opportunity.getName() + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_C_EVALUATING_STATUS") + ": " + (this.opportunity.getEvaluationstatus().equals(EBISystem.gui().combo("oppEvalStatusText", "Opportunity").getSelectedItem().toString()) == true ? this.opportunity.getEvaluationstatus() : this.opportunity.getEvaluationstatus() + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_C_BUDGETSTATUS") + ": " + (this.opportunity.getBudgetstatus().equals(EBISystem.gui().combo("oppBdgStatusText", "Opportunity").getSelectedItem().toString()) == true ? this.opportunity.getBudgetstatus() : this.opportunity.getBudgetstatus() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_C_EVALUATING_STATUS") + ": " + (this.opportunity.getEvaluationstatus().equals(EBISystem.gui().combo("oppEvalStatusText", "Opportunity").getEditor().getItem().toString()) == true ? this.opportunity.getEvaluationstatus() : this.opportunity.getEvaluationstatus() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_C_BUDGETSTATUS") + ": " + (this.opportunity.getBudgetstatus().equals(EBISystem.gui().combo("oppBdgStatusText", "Opportunity").getEditor().getItem().toString()) == true ? this.opportunity.getBudgetstatus() : this.opportunity.getBudgetstatus() + "$"));
 
-        list.add(EBISystem.i18n("EBI_LANG_SALE_STAGE") + ": " + (this.opportunity.getSalestage().equals(EBISystem.gui().combo("oppSaleStateText", "Opportunity").getSelectedItem().toString()) == true ? this.opportunity.getSalestage() : this.opportunity.getSalestage() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_SALE_STAGE") + ": " + (this.opportunity.getSalestage().equals(EBISystem.gui().combo("oppSaleStateText", "Opportunity").getEditor().getItem().toString()) == true ? this.opportunity.getSalestage() : this.opportunity.getSalestage() + "$"));
 
-        list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": " + (this.opportunity.getOpportunitystatus().equals(EBISystem.gui().combo("statusOppText", "Opportunity").getSelectedItem().toString()) == true ? this.opportunity.getOpportunitystatus() : this.opportunity.getOpportunitystatus() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": " + (this.opportunity.getOpportunitystatus().equals(EBISystem.gui().combo("statusOppText", "Opportunity").getEditor().getItem().toString()) == true ? this.opportunity.getOpportunitystatus() : this.opportunity.getOpportunitystatus() + "$"));
 
-        list.add(EBISystem.i18n("EBI_LANG_PROBABILITY") + ": " + (this.opportunity.getProbability().equals(EBISystem.gui().combo("oppProbabilityText", "Opportunity").getSelectedItem().toString()) == true ? this.opportunity.getProbability() : this.opportunity.getProbability() + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_BUSINESS_TYP") + ": " + (this.opportunity.getBusinesstype().equals(EBISystem.gui().combo("oppBustypeText", "Opportunity").getSelectedItem().toString()) == true ? this.opportunity.getBusinesstype() : this.opportunity.getBusinesstype() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_PROBABILITY") + ": " + (this.opportunity.getProbability().equals(EBISystem.gui().combo("oppProbabilityText", "Opportunity").getEditor().getItem().toString()) == true ? this.opportunity.getProbability() : this.opportunity.getProbability() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_BUSINESS_TYP") + ": " + (this.opportunity.getBusinesstype().equals(EBISystem.gui().combo("oppBustypeText", "Opportunity").getEditor().getItem().toString()) == true ? this.opportunity.getBusinesstype() : this.opportunity.getBusinesstype() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_VALUE") + ": " + (String.valueOf(this.opportunity.getOpportunityvalue()).equals(EBISystem.gui().FormattedField("oppValueText", "Opportunity").getValue().toString()) == true ? String.valueOf(this.opportunity.getOpportunityvalue()) : String.valueOf(this.opportunity.getOpportunityvalue()) + "$"));
 

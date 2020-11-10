@@ -63,8 +63,8 @@ public class ControlOrder {
                 compOrder.setOfferid(offerID);
             }
 
-            if (EBISystem.gui().combo("orderStatusText", "Order").getSelectedItem() != null) {
-                compOrder.setStatus(EBISystem.gui().combo("orderStatusText", "Order").getSelectedItem().toString());
+            if (EBISystem.gui().combo("orderStatusText", "Order").getEditor().getItem() != null) {
+                compOrder.setStatus(EBISystem.gui().combo("orderStatusText", "Order").getEditor().getItem().toString());
             }
 
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(compOrder);
@@ -685,7 +685,7 @@ public class ControlOrder {
         list.add(EBISystem.i18n("EBI_LANG_ORDER_NUMBER") + ": " + (compOrder.getOrdernr().equals(EBISystem.gui().textField("orderNrText", "Order").getText()) == true ? compOrder.getOrdernr() : compOrder.getOrdernr() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_NAME") + ": " + (compOrder.getName().equals(EBISystem.gui().textField("orderNameText", "Order").getText()) == true ? compOrder.getName() : compOrder.getName() + "$"));
 
-        list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": " + (compOrder.getStatus().equals(EBISystem.gui().combo("orderStatusText", "Order").getSelectedItem().toString()) == true ? compOrder.getStatus() : compOrder.getStatus() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": " + (compOrder.getStatus().equals(EBISystem.gui().combo("orderStatusText", "Order").getEditor().getItem().toString()) == true ? compOrder.getStatus() : compOrder.getStatus() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": " + (compOrder.getDescription().equals(EBISystem.gui().textArea("orderDescription", "Order").getText()) == true ? compOrder.getDescription() : compOrder.getDescription() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_CREATED_DATE") + ": " + (EBISystem.getInstance().getDateToString(compOrder.getOfferdate()).equals(EBISystem.gui().timePicker("orderCreatedText", "Order").getEditor().getText()) == true ? EBISystem.getInstance().getDateToString(compOrder.getOfferdate()) : EBISystem.getInstance().getDateToString(compOrder.getOfferdate()) + "$"));

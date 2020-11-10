@@ -304,8 +304,8 @@ public class EBIDialogInternalNumberAdministration {
             }
             final String sql = "UPDATE " + table + " SET CATEGORY=?,NUMBERFROM=?,NUMBERTO=?, CATEGORYID=?, BEGINCHAR=? where ID=?";
             final PreparedStatement ps = EBISystem.getInstance().iDB().initPreparedStatement(sql);
-            final Long cid = retriveIDFromCategory(EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").getSelectedItem().toString());
-            ps.setString(1, EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").getSelectedItem().toString());
+            final Long cid = retriveIDFromCategory(EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").getEditor().getItem().toString());
+            ps.setString(1, EBISystem.gui().combo("categoryCombo", "autoIncNrDialog").getEditor().getItem().toString());
             ps.setInt(2, Integer.parseInt(EBISystem.gui().textField("numberFromText", "autoIncNrDialog").getText()));
             ps.setInt(3, Integer.parseInt(EBISystem.gui().textField("numberToText", "autoIncNrDialog").getText()));
             ps.setLong(4, cid);

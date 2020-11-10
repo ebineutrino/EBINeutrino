@@ -45,16 +45,16 @@ public class ControlService {
             compService.setServicenr(EBISystem.gui().textField("serviceNrText", "Service").getText());
             compService.setName(EBISystem.gui().textField("serviceNameText", "Service").getText());
 
-            if (EBISystem.gui().combo("serviceStatusText", "Service").getSelectedItem() != null) {
-                compService.setStatus(EBISystem.gui().combo("serviceStatusText", "Service").getSelectedItem().toString());
+            if (EBISystem.gui().combo("serviceStatusText", "Service").getEditor().getItem() != null) {
+                compService.setStatus(EBISystem.gui().combo("serviceStatusText", "Service").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().combo("serviceCategoryText", "Service").getSelectedItem() != null) {
-                compService.setCategory(EBISystem.gui().combo("serviceCategoryText", "Service").getSelectedItem().toString());
+            if (EBISystem.gui().combo("serviceCategoryText", "Service").getEditor().getItem() != null) {
+                compService.setCategory(EBISystem.gui().combo("serviceCategoryText", "Service").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().combo("serviceTypeText", "Service").getSelectedItem() != null) {
-                compService.setType(EBISystem.gui().combo("serviceTypeText", "Service").getSelectedItem().toString());
+            if (EBISystem.gui().combo("serviceTypeText", "Service").getEditor().getItem() != null) {
+                compService.setType(EBISystem.gui().combo("serviceTypeText", "Service").getEditor().getItem().toString());
             }
 
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(compService);
@@ -404,17 +404,17 @@ public class ControlService {
 
         list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": "
                 + (compService.getStatus().equals(EBISystem.gui().combo("serviceStatusText", "Service")
-                        .getSelectedItem().toString()) == true ? compService.getStatus() : compService.getStatus() + "$"));
+                        .getEditor().getItem().toString()) == true ? compService.getStatus() : compService.getStatus() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_CATEGORY") + ": "
                 + (compService.getCategory()
                         .equals(EBISystem.gui().combo("serviceCategoryText", "Service")
-                                .getSelectedItem().toString()) == true ? compService.getCategory() : compService.getCategory() + "$"));
+                                .getEditor().getItem().toString()) == true ? compService.getCategory() : compService.getCategory() + "$"));
         list.add(
                 EBISystem.i18n("EBI_LANG_TYPE") + ": "
                 + (compService.getType()
                         .equals(EBISystem.gui().combo("serviceTypeText", "Service")
-                                .getSelectedItem().toString()) == true ? compService.getType() : compService.getType() + "$"));
+                                .getEditor().getItem().toString()) == true ? compService.getType() : compService.getType() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": "
                 + (compService.getDescription().equals(

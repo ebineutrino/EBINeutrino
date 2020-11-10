@@ -38,8 +38,8 @@ public class ControlMeetingProtocol {
                 meetingProtocol.setCompany(EBISystem.getInstance().getCompany());
             }
 
-            if (EBISystem.gui().combo("meetingTypeText", "MeetingCall").getSelectedItem() != null) {
-                meetingProtocol.setMeetingtype(EBISystem.gui().combo("meetingTypeText", "MeetingCall").getSelectedItem().toString());
+            if (EBISystem.gui().combo("meetingTypeText", "MeetingCall").getEditor().getItem() != null) {
+                meetingProtocol.setMeetingtype(EBISystem.gui().combo("meetingTypeText", "MeetingCall").getEditor().getItem().toString());
             }
 
             meetingProtocol.setMeetingsubject(EBISystem.gui().textField("subjectMeetingText", "MeetingCall").getText());

@@ -46,20 +46,20 @@ public class ControlProblemSolution {
             compProsol.setServicenr(EBISystem.gui().textField("prosolNrText", "Prosol").getText());
             compProsol.setName(EBISystem.gui().textField("prosolNameText", "Prosol").getText());
 
-            if (EBISystem.gui().combo("prosolStatusText", "Prosol").getSelectedItem() != null) {
-                compProsol.setStatus(EBISystem.gui().combo("prosolStatusText", "Prosol").getSelectedItem().toString());
+            if (EBISystem.gui().combo("prosolStatusText", "Prosol").getEditor().getItem() != null) {
+                compProsol.setStatus(EBISystem.gui().combo("prosolStatusText", "Prosol").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().combo("prosolCategoryText", "Prosol").getSelectedItem() != null) {
-                compProsol.setCategory(EBISystem.gui().combo("prosolCategoryText", "Prosol").getSelectedItem().toString());
+            if (EBISystem.gui().combo("prosolCategoryText", "Prosol").getEditor().getItem() != null) {
+                compProsol.setCategory(EBISystem.gui().combo("prosolCategoryText", "Prosol").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().combo("prosolTypeText", "Prosol").getSelectedItem() != null) {
-                compProsol.setType(EBISystem.gui().combo("prosolTypeText", "Prosol").getSelectedItem().toString());
+            if (EBISystem.gui().combo("prosolTypeText", "Prosol").getEditor().getItem() != null) {
+                compProsol.setType(EBISystem.gui().combo("prosolTypeText", "Prosol").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().combo("prosolClassificationText", "Prosol").getSelectedItem() != null) {
-                compProsol.setClassification(EBISystem.gui().combo("prosolClassificationText", "Prosol").getSelectedItem().toString());
+            if (EBISystem.gui().combo("prosolClassificationText", "Prosol").getEditor().getItem() != null) {
+                compProsol.setClassification(EBISystem.gui().combo("prosolClassificationText", "Prosol").getEditor().getItem().toString());
             }
 
             EBISystem.hibernate().session("PROSOL_SESSION").saveOrUpdate(compProsol);
@@ -365,10 +365,10 @@ public class ControlProblemSolution {
         list.add(EBISystem.i18n("EBI_LANG_PROSOL_NUMBER") + ": " + (compProsol.getServicenr().equals(EBISystem.gui().textField("prosolNrText", "Prosol").getText()) == true ? compProsol.getServicenr() : compProsol.getServicenr() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_NAME") + ": " + (compProsol.getName().equals(EBISystem.gui().textField("prosolNameText", "Prosol").getText()) == true ? compProsol.getName() : compProsol.getName() + "$"));
 
-        list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": " + (compProsol.getStatus().equals(EBISystem.gui().combo("prosolStatusText", "Prosol").getSelectedItem().toString()) == true ? compProsol.getStatus() : compProsol.getStatus() + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_CATEGORY") + ": " + (compProsol.getCategory().equals(EBISystem.gui().combo("prosolCategoryText", "Prosol").getSelectedItem().toString()) == true ? compProsol.getCategory() : compProsol.getCategory() + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_TYPE") + ": " + (compProsol.getType().equals(EBISystem.gui().combo("prosolTypeText", "Prosol").getSelectedItem().toString()) == true ? compProsol.getType() : compProsol.getType() + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_CLASSIFICATION") + ": " + (compProsol.getClassification().equals(EBISystem.gui().combo("prosolClassificationText", "Prosol").getSelectedItem().toString()) == true ? compProsol.getClassification() : compProsol.getClassification() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": " + (compProsol.getStatus().equals(EBISystem.gui().combo("prosolStatusText", "Prosol").getEditor().getItem().toString()) == true ? compProsol.getStatus() : compProsol.getStatus() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_CATEGORY") + ": " + (compProsol.getCategory().equals(EBISystem.gui().combo("prosolCategoryText", "Prosol").getEditor().getItem().toString()) == true ? compProsol.getCategory() : compProsol.getCategory() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_TYPE") + ": " + (compProsol.getType().equals(EBISystem.gui().combo("prosolTypeText", "Prosol").getEditor().getItem().toString()) == true ? compProsol.getType() : compProsol.getType() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_CLASSIFICATION") + ": " + (compProsol.getClassification().equals(EBISystem.gui().combo("prosolClassificationText", "Prosol").getEditor().getItem().toString()) == true ? compProsol.getClassification() : compProsol.getClassification() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": " + (compProsol.getDescription().equals(EBISystem.gui().textArea("prosolDescriptionText", "Prosol").getText()) == true ? compProsol.getDescription() : compProsol.getDescription() + "$"));
         list.add("*EOR*"); // END OF RECORD

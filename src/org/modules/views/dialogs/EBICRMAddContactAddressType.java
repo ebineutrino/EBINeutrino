@@ -179,14 +179,14 @@ public class EBICRMAddContactAddressType {
         }
 
         if (EBISystem.i18n("EBI_LANG_EMAIL").equals(
-                EBISystem.gui().combo("typeDispatchText", "addNewReceiverDialog").getSelectedItem())
+                EBISystem.gui().combo("typeDispatchText", "addNewReceiverDialog").getEditor().getItem())
                 && "".equals(EBISystem.gui().textField("emailText", "addNewReceiverDialog").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_EMAIL")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }
 
         if (EBISystem.i18n("EBI_LANG_C_FAX").equals(
-                EBISystem.gui().combo("typeDispatchText", "addNewReceiverDialog").getSelectedItem().toString())
+                EBISystem.gui().combo("typeDispatchText", "addNewReceiverDialog").getEditor().getItem().toString())
                 && "".equals(EBISystem.gui().textField("faxText", "addNewReceiverDialog").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_FAX")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
@@ -223,8 +223,8 @@ public class EBICRMAddContactAddressType {
         of.setCnum(EBISystem.gui().getCheckBox("mainContact", "addNewReceiverDialog").isSelected() ? 1 : 0);
         of.setCreateddate(new java.sql.Date(new java.util.Date().getTime()));
         of.setCreatedfrom(EBISystem.ebiUser);
-        of.setReceivervia(EBISystem.gui().combo("typeDispatchText", "addNewReceiverDialog").getSelectedItem().toString());
-        of.setGender(EBISystem.gui().combo("genderText", "addNewReceiverDialog").getSelectedItem().toString());
+        of.setReceivervia(EBISystem.gui().combo("typeDispatchText", "addNewReceiverDialog").getEditor().getItem().toString());
+        of.setGender(EBISystem.gui().combo("genderText", "addNewReceiverDialog").getEditor().getItem().toString());
         of.setName(EBISystem.gui().textField("nameText", "addNewReceiverDialog").getText());
         of.setSurname(EBISystem.gui().textField("surnameText", "addNewReceiverDialog").getText());
         of.setPosition(EBISystem.gui().textField("positionText", "addNewReceiverDialog").getText());
@@ -254,8 +254,8 @@ public class EBICRMAddContactAddressType {
         ord.setCnum(EBISystem.gui().getCheckBox("mainContact", "addNewReceiverDialog").isSelected() ? 1 : 0);
         ord.setCreateddate(new java.sql.Date(new java.util.Date().getTime()));
         ord.setCreatedfrom(EBISystem.ebiUser);
-        ord.setReceivervia(EBISystem.gui().combo("typeDispatchText", "addNewReceiverDialog").getSelectedItem().toString());
-        ord.setGender(EBISystem.gui().combo("genderText", "addNewReceiverDialog").getSelectedItem().toString());
+        ord.setReceivervia(EBISystem.gui().combo("typeDispatchText", "addNewReceiverDialog").getEditor().getItem().toString());
+        ord.setGender(EBISystem.gui().combo("genderText", "addNewReceiverDialog").getEditor().getItem().toString());
         ord.setName(EBISystem.gui().textField("nameText", "addNewReceiverDialog").getText());
         ord.setSurname(EBISystem.gui().textField("surnameText", "addNewReceiverDialog").getText());
         ord.setPosition(EBISystem.gui().textField("positionText", "addNewReceiverDialog").getText());

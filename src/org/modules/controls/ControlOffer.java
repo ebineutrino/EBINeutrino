@@ -65,8 +65,8 @@ public class ControlOffer {
                 compOffer.setOpportunityid(opportunityID);
             }
 
-            if (EBISystem.gui().combo("offerStatusText", "Offer").getSelectedItem() != null) {
-                compOffer.setStatus(EBISystem.gui().combo("offerStatusText", "Offer").getSelectedItem().toString());
+            if (EBISystem.gui().combo("offerStatusText", "Offer").getEditor().getItem() != null) {
+                compOffer.setStatus(EBISystem.gui().combo("offerStatusText", "Offer").getEditor().getItem().toString());
             }
 
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(compOffer);

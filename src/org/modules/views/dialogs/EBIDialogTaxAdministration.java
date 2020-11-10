@@ -176,14 +176,14 @@ public class EBIDialogTaxAdministration {
     }
 
     private boolean validateInput() {
-        if (EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui().combo("taxCombo", "taxAdminDialog").getSelectedItem().toString())) {
+        if (EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui().combo("taxCombo", "taxAdminDialog").getEditor().getItem().toString())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_SELECT_TAX_TYPE")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }
 
         if (!isEdit) {
             for (int i = 0; i < tabModel.data.length; i++) {
-                if (tabModel.data[i][0].toString().toLowerCase().equals(EBISystem.gui().combo("taxCombo", "taxAdminDialog").getSelectedItem().toString().toLowerCase())) {
+                if (tabModel.data[i][0].toString().toLowerCase().equals(EBISystem.gui().combo("taxCombo", "taxAdminDialog").getEditor().getItem().toString().toLowerCase())) {
                     EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_SAME_RECORD_EXSIST")).Show(EBIMessage.ERROR_MESSAGE);
                     return false;
                 }
@@ -211,7 +211,7 @@ public class EBIDialogTaxAdministration {
                 EBISystem.hibernate().transaction("EBITAX_SESSION").begin();
             }
             
-            String taxName = EBISystem.gui().combo("taxCombo", "taxAdminDialog").getSelectedItem().toString();
+            String taxName = EBISystem.gui().combo("taxCombo", "taxAdminDialog").getEditor().getItem().toString();
             
             if (!isEdit) {
                 crmTax = new Companyproducttax();

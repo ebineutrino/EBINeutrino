@@ -34,8 +34,8 @@ public class ControlAddress {
                 address.setChangedfrom(EBISystem.ebiUser);
             }
 
-            if (EBISystem.gui().combo("addressTypeText", "Address").getSelectedItem() != null) {
-                address.setAddresstype(EBISystem.gui().combo("addressTypeText", "Address").getSelectedItem().toString());
+            if (EBISystem.gui().combo("addressTypeText", "Address").getEditor().getItem() != null) {
+                address.setAddresstype(EBISystem.gui().combo("addressTypeText", "Address").getEditor().getItem().toString());
             }
 
             address.setStreet(EBISystem.gui().textField("streetText", "Address").getText());

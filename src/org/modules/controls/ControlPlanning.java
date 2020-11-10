@@ -45,8 +45,8 @@ public class ControlPlanning {
             project.setName(EBISystem.gui().textField("prjNameText", "Project").getText());
             project.setManager(EBISystem.gui().textField("prjManagerText", "Project").getText());
 
-            if (EBISystem.gui().combo("prjStatusText", "Project").getSelectedItem() != null) {
-                project.setStatus(EBISystem.gui().combo("prjStatusText", "Project").getSelectedItem().toString());
+            if (EBISystem.gui().combo("prjStatusText", "Project").getEditor().getItem() != null) {
+                project.setStatus(EBISystem.gui().combo("prjStatusText", "Project").getEditor().getItem().toString());
             }
 
             if (EBISystem.gui().timePicker("prjstartDateText", "Project").getDate() != null) {
@@ -502,7 +502,7 @@ public class ControlPlanning {
 
                 list.add(EBISystem.i18n("EBI_LANG_STATUS") + ": "
                         + (proj.getStatus().equals(EBISystem.gui()
-                                .combo("prjStatusText", "Project").getSelectedItem()) ? proj.getStatus()
+                                .combo("prjStatusText", "Project").getEditor().getItem()) ? proj.getStatus()
                         : proj.getStatus() + "$"));
 
                 if (proj.getBudget() != null) {

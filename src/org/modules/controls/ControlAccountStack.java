@@ -450,7 +450,7 @@ public class ControlAccountStack {
             actcd.setCreatedfrom(EBISystem.ebiUser);
             actcd.setCreditdebitnumber(EBISystem.gui().textField("numberText", "creditDebitDialog").getText());
             actcd.setCreditdebitname(EBISystem.gui().textField("nameText", "creditDebitDialog").getText());
-            actcd.setCreditdebittaxtname(EBISystem.gui().combo("taxTypeText", "creditDebitDialog").getSelectedItem().toString());
+            actcd.setCreditdebittaxtname(EBISystem.gui().combo("taxTypeText", "creditDebitDialog").getEditor().getItem().toString());
 
             if (EBISystem.gui().combo("creditDebitTypeText", "creditDebitDialog").getSelectedIndex() == 3) {
                 actcd.setCreditdebitvalue(Double.parseDouble(EBISystem.gui().FormattedField("valueText", "creditDebitDialog").getValue() == null ? "0.0"
@@ -641,17 +641,17 @@ public class ControlAccountStack {
                     tax = (actcd.getCreditdebitvalue() * val) / 100;
                 }
                
-                if (EBISystem.gui().combo("accountTypeText", "Account").getSelectedItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_ACTIVE"))) {
+                if (EBISystem.gui().combo("accountTypeText", "Account").getEditor().getItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_ACTIVE"))) {
                     debitValue = (val + tax);
                     creditValue = (dVal * -1);
-                } else if (EBISystem.gui().combo("accountTypeText", "Account").getSelectedItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_PASSIVE"))) {
+                } else if (EBISystem.gui().combo("accountTypeText", "Account").getEditor().getItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_PASSIVE"))) {
                     debitValue = ((val + tax) * -1);
                     creditValue = dVal;
-                } else if (EBISystem.gui().combo("accountTypeText", "Account").getSelectedItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_EARNING"))) {
+                } else if (EBISystem.gui().combo("accountTypeText", "Account").getEditor().getItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_EARNING"))) {
 
                     debitValue = (val + tax);
                     creditValue = (dVal * -1);
-                } else if (EBISystem.gui().combo("accountTypeText", "Account").getSelectedItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_LIST_EXPEDITURE"))) {
+                } else if (EBISystem.gui().combo("accountTypeText", "Account").getEditor().getItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_LIST_EXPEDITURE"))) {
                     debitValue = ((val + tax) * -1);
                     creditValue = dVal;
                 }

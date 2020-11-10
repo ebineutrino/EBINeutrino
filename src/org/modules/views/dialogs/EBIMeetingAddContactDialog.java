@@ -168,8 +168,8 @@ public class EBIMeetingAddContactDialog {
     }
 
     public String getGenderText() {
-        return EBISystem.gui().combo("genderText", "addNewContactDialog").getSelectedItem() == null ? ""
-                : EBISystem.gui().combo("genderText", "addNewContactDialog").getSelectedItem().toString();
+        return EBISystem.gui().combo("genderText", "addNewContactDialog").getEditor().getItem() == null ? ""
+                : EBISystem.gui().combo("genderText", "addNewContactDialog").getEditor().getItem().toString();
     }
 
     public void setGenderText(final String gender) {

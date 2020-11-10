@@ -57,16 +57,16 @@ public class ControlProduct {
             product.setProductnr(EBISystem.gui().textField("ProductNrTex", "Product").getText());
             product.setProductname(EBISystem.gui().textField("ProductNameText", "Product").getText());
 
-            if (EBISystem.gui().combo("ProductCategoryText", "Product").getSelectedItem() != null) {
-                product.setCategory(EBISystem.gui().combo("ProductCategoryText", "Product").getSelectedItem().toString());
+            if (EBISystem.gui().combo("ProductCategoryText", "Product").getEditor().getItem() != null) {
+                product.setCategory(EBISystem.gui().combo("ProductCategoryText", "Product").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().combo("ProductTypeText", "Product").getSelectedItem() != null) {
-                product.setType(EBISystem.gui().combo("ProductTypeText", "Product").getSelectedItem().toString());
+            if (EBISystem.gui().combo("ProductTypeText", "Product").getEditor().getItem() != null) {
+                product.setType(EBISystem.gui().combo("ProductTypeText", "Product").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().combo("productTaxTypeTex", "Product").getSelectedItem() != null) {
-                product.setTaxtype(EBISystem.gui().combo("productTaxTypeTex", "Product").getSelectedItem().toString());
+            if (EBISystem.gui().combo("productTaxTypeTex", "Product").getEditor().getItem() != null) {
+                product.setTaxtype(EBISystem.gui().combo("productTaxTypeTex", "Product").getEditor().getItem().toString());
             }
 
             product.setPretax(Double.parseDouble(EBISystem.gui().FormattedField("productGrossText", "Product").getValue() == null ? "0.0" : EBISystem.gui().FormattedField("productGrossText", "Product").getValue().toString()));
@@ -394,13 +394,13 @@ public class ControlProduct {
             list.add(EBISystem.i18n("EBI_LANG_NAME") + ": " + (pr.getProductname().equals(EBISystem.gui().textField("ProductNameText", "Product").getText()) == true ? pr.getProductname() : pr.getProductname() + "$"));
         }
         if (pr.getCategory() != null) {
-            list.add(EBISystem.i18n("EBI_LANG_CATEGORY") + ": " + (pr.getCategory().equals(EBISystem.gui().combo("ProductCategoryText", "Product").getSelectedItem().toString()) == true ? pr.getCategory() : pr.getCategory() + "$"));
+            list.add(EBISystem.i18n("EBI_LANG_CATEGORY") + ": " + (pr.getCategory().equals(EBISystem.gui().combo("ProductCategoryText", "Product").getEditor().getItem().toString()) == true ? pr.getCategory() : pr.getCategory() + "$"));
         }
         if (pr.getType() != null) {
-            list.add(EBISystem.i18n("EBI_LANG_TYPE") + ": " + (pr.getType().equals(EBISystem.gui().combo("ProductTypeText", "Product").getSelectedItem().toString()) == true ? pr.getType() : pr.getType() + "$"));
+            list.add(EBISystem.i18n("EBI_LANG_TYPE") + ": " + (pr.getType().equals(EBISystem.gui().combo("ProductTypeText", "Product").getEditor().getItem().toString()) == true ? pr.getType() : pr.getType() + "$"));
         }
         if (pr.getTaxtype() != null) {
-            list.add(EBISystem.i18n("EBI_LANG_TAX_TYPE") + ": " + (pr.getTaxtype().equals(EBISystem.gui().combo("productTaxTypeTex", "Product").getSelectedItem().toString()) == true ? pr.getTaxtype() : pr.getTaxtype() + "$"));
+            list.add(EBISystem.i18n("EBI_LANG_TAX_TYPE") + ": " + (pr.getTaxtype().equals(EBISystem.gui().combo("productTaxTypeTex", "Product").getEditor().getItem().toString()) == true ? pr.getTaxtype() : pr.getTaxtype() + "$"));
         }
         if (pr.getPretax() != null) {
             list.add(EBISystem.i18n("EBI_LANG_PRE_TAX_PRICE") + ": " + (String.valueOf(pr.getPretax()).equals(EBISystem.gui().FormattedField("productGrossText", "Product").getValue().toString()) == true ? String.valueOf(pr.getPretax()) : String.valueOf(pr.getPretax()) + "$"));
@@ -692,7 +692,7 @@ public class ControlProduct {
         try {
             query = EBISystem.hibernate().session("EBIPRODUCT_SESSION").
                     createQuery("from Companyproducttax where name=?1 ").setParameter(1,
-                    EBISystem.gui().combo("productTaxTypeTex", "Product").getSelectedItem().toString());
+                    EBISystem.gui().combo("productTaxTypeTex", "Product").getEditor().getItem().toString());
 
             final Iterator it = query.iterate();
             if (it.hasNext()) {
@@ -720,7 +720,7 @@ public class ControlProduct {
         try {
             query = EBISystem.hibernate().session("EBIPRODUCT_SESSION").
                     createQuery("from Companyproducttax where name=?1 ").setParameter(1,
-                    EBISystem.gui().combo("productTaxTypeTex", "Product").getSelectedItem().toString());
+                    EBISystem.gui().combo("productTaxTypeTex", "Product").getEditor().getItem().toString());
             final Iterator it = query.iterate();
             if (it.hasNext()) {
                 final Companyproducttax tax = (Companyproducttax) it.next();

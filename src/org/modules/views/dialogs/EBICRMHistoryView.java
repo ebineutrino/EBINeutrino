@@ -25,7 +25,7 @@ public class EBICRMHistoryView {
         EBISystem.gui().button("viewHistory", "historyViewDialog").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui().combo("historyText", "historyViewDialog").getSelectedItem().toString())) {
+                if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui().combo("historyText", "historyViewDialog").getEditor().getItem().toString())) {
                     showValueAsHTML();
                 }
             }

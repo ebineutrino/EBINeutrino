@@ -44,13 +44,13 @@ public class ControlInvoice {
             invoice.setBeginchar(EBISystem.getModule().getInvoicePane().getBeginChar());
             invoice.setName(EBISystem.gui().textField("invoiceNameText", "Invoice").getText());
 
-            if (EBISystem.gui().combo("invoiceStatusText", "Invoice").getSelectedItem() != null) {
-                invoice.setStatus(EBISystem.gui().combo("invoiceStatusText", "Invoice").getSelectedItem().toString());
+            if (EBISystem.gui().combo("invoiceStatusText", "Invoice").getEditor().getItem()  != null) {
+                invoice.setStatus(EBISystem.gui().combo("invoiceStatusText", "Invoice").getEditor().getItem().toString());
             }
 
             if (!isEdit) {
-                if (EBISystem.gui().combo("categoryText", "Invoice").getSelectedItem() != null) {
-                    invoice.setCategory(EBISystem.gui().combo("categoryText", "Invoice").getSelectedItem().toString());
+                if (EBISystem.gui().combo("categoryText", "Invoice").getEditor().getItem() != null) {
+                    invoice.setCategory(EBISystem.gui().combo("categoryText", "Invoice").getEditor().getItem().toString());
                 }
             }
 
@@ -65,8 +65,8 @@ public class ControlInvoice {
             }
 
             // Invoice rec
-            if (EBISystem.gui().combo("genderText", "Invoice").getSelectedItem() != null) {
-                invoice.setGender(EBISystem.gui().combo("genderText", "Invoice").getSelectedItem().toString());
+            if (EBISystem.gui().combo("genderText", "Invoice").getEditor().getItem() != null) {
+                invoice.setGender(EBISystem.gui().combo("genderText", "Invoice").getEditor().getItem().toString());
             }
 
             invoice.setPosition(EBISystem.gui().textField("titleText", "Invoice").getText());

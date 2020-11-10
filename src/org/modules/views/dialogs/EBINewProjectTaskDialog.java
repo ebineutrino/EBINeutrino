@@ -104,12 +104,12 @@ public class EBINewProjectTaskDialog implements ChangeListener {
 
                 te.setReached(EBISystem.gui().combo("taskDoneText", "projectTaskDialog").getSelectedIndex() * 10);
 
-                if (EBISystem.gui().combo("taskStatusText", "projectTaskDialog").getSelectedItem() != null) {
-                    te.setStatus(EBISystem.gui().combo("taskStatusText", "projectTaskDialog").getSelectedItem().toString());
+                if (EBISystem.gui().combo("taskStatusText", "projectTaskDialog").getEditor().getItem() != null) {
+                    te.setStatus(EBISystem.gui().combo("taskStatusText", "projectTaskDialog").getEditor().getItem().toString());
                 }
 
-                if (EBISystem.gui().combo("taskTypeText", "projectTaskDialog").getSelectedItem() != null) {
-                    te.setType(EBISystem.gui().combo("taskTypeText", "projectTaskDialog").getSelectedItem().toString());
+                if (EBISystem.gui().combo("taskTypeText", "projectTaskDialog").getEditor().getItem() != null) {
+                    te.setType(EBISystem.gui().combo("taskTypeText", "projectTaskDialog").getEditor().getItem().toString());
                 }
 
                 try {

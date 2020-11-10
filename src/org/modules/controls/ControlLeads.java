@@ -58,19 +58,19 @@ public class ControlLeads {
             }
             company.setWeb(EBISystem.gui().textField("internetText", "Leads").getText());
 
-            if (EBISystem.gui().combo("classificationText", "Leads").getSelectedItem() != null) {
+            if (EBISystem.gui().combo("classificationText", "Leads").getEditor().getItem() != null) {
                 company.setQualification(EBISystem.gui().combo("classificationText", "Leads")
-                        .getSelectedItem().toString());
+                        .getEditor().getItem().toString());
             }
 
             company.setDescription(EBISystem.gui().textArea("descriptionText", "Leads").getText());
 
             contact.setCompany(company);
-            if (EBISystem.gui().combo("genderText", "Leads").getSelectedItem() != null) {
+            if (EBISystem.gui().combo("genderText", "Leads").getEditor().getItem() != null) {
                 if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(
-                        EBISystem.gui().combo("genderText", "Leads").getSelectedItem().toString())) {
+                        EBISystem.gui().combo("genderText", "Leads").getEditor().getItem().toString())) {
                     contact.setGender(
-                            EBISystem.gui().combo("genderText", "Leads").getSelectedItem().toString());
+                            EBISystem.gui().combo("genderText", "Leads").getEditor().getItem().toString());
                 }
             }
 

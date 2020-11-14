@@ -10,6 +10,8 @@ public class EBIWinWaiting extends EBIDialogExt {
     private JProgressBar jProgressBar = null;
     private String textBackup = "";
 
+    private static EBIWinWaiting instance = null;
+
     /**
      * This is the default constructor
      */
@@ -19,8 +21,10 @@ public class EBIWinWaiting extends EBIDialogExt {
         setAlwaysOnTop(true);
         setName("EBIWinWaiting");
         setTitle("Loading...");
-        getJProgressBar().setString(name);
-        textBackup = name;
+        if (name != null) {
+            getJProgressBar().setString(name);
+            textBackup = name;
+        }
     }
 
     public EBIWinWaiting(final String name, final EBIMain owner) {
@@ -52,11 +56,6 @@ public class EBIWinWaiting extends EBIDialogExt {
         getJProgressBar().setString(text);
     }
 
-    /**
-     * This method initializes jProgressBar
-     *
-     * @return javax.swing.JProgressBar
-     */
     private JProgressBar getJProgressBar() {
         if (jProgressBar == null) {
             jProgressBar = new JProgressBar();
@@ -75,4 +74,21 @@ public class EBIWinWaiting extends EBIDialogExt {
             getJProgressBar().setString(textBackup);
         }
     }
+
+    public static EBIWinWaiting getInstance(final String name) {
+        if (instance == null) {
+            instance = new EBIWinWaiting(name);
+        } else {
+            instance.getJProgressBar().setString(name);
+        }
+        return instance;
+    }
+
+    public static EBIWinWaiting getInstance() {
+        if (instance == null) {
+            instance = new EBIWinWaiting(null);
+        }
+        return instance;
+    }
+
 }

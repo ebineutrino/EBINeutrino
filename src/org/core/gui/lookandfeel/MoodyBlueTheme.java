@@ -174,4 +174,20 @@ public class MoodyBlueTheme extends DefaultMetalTheme {
         UIManager.put("ScrollBarUI", "org.core.gui.lookandfeel.EBIScrollbar");
         UIManager.put("TabbedPaneUI", "org.core.gui.lookandfeel.EBITabbedPaneUI");
     }
+
+    public static Color getBackgroundColor(){
+        return new Color(41, 47, 54);
+    }
+    
+    public static Color getForegroundColor(){
+        return new Color(192, 192, 192);
+    }
+    
+    public static Color getSelectionForegroundColor(){
+        return new Color(50, 50, 50);
+    }
+    
+    public static Color getSelectionBackgroundColor(){
+        return new Color(200, 200, 200);
+    }
 }

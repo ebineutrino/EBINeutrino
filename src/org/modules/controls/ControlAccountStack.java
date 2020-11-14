@@ -803,8 +803,7 @@ public class ControlAccountStack {
                 EBIWinWaiting wait = null;
                 try {
                     if("".equals(invoiceYear)){return;}
-                    wait = new EBIWinWaiting(EBISystem.i18n("EBI_LANG_LOAD_IMPORT_DATA"));
-                    wait.setVisible(true);
+                    EBIWinWaiting.getInstance(EBISystem.i18n("EBI_LANG_LOAD_IMPORT_DATA")).setVisible(true);
 
                     final Calendar calendar1 = new GregorianCalendar();
                     calendar1.set(Calendar.DAY_OF_MONTH, 1);

@@ -29,7 +29,7 @@ public class EBIDialogSearchContact {
     private ModelContactSearch tabModel = null;
     private int selRowContact = -1;
     private boolean loadCompleteCompany = false;
-    final EBIWinWaiting wait = new EBIWinWaiting(EBISystem.i18n("EBI_LANG_LOAD_COMPANY_DATA"));
+    final EBIWinWaiting wait = EBIWinWaiting.getInstance(EBISystem.i18n("EBI_LANG_LOAD_COMPANY_DATA"));
 
 
     public EBIDialogSearchContact(final boolean load) {

@@ -21,6 +21,9 @@ class SMTPSend{
 	
     SMTPSend(def sys){
         system = sys;
+    }
+    
+    void configure(){
         props.put("mail.smtp.user", smtpEMailUser);
         props.put("mail.smtp.host", smtpHost);
         props.put("mail.smtp.port", smtpPort);
@@ -34,6 +37,7 @@ class SMTPSend{
         session = Session.getInstance(props, auth)
         session.setDebug(true);
     }
+    
 	
     boolean sendMessage(String to, String subject, String message, String fileName){
         boolean ret = true;
@@ -44,7 +48,6 @@ class SMTPSend{
             msg.setSubject(subject);
             msg.setFrom(new InternetAddress(to));
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-		
 		
             BodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setText(message);

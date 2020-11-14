@@ -550,7 +550,7 @@ public class EBICRMOrderView {
         new EBICRMHistoryView(EBISystem.getModule().hcreator.retrieveDBHistory(EBISystem.getInstance().getCompany().getCompanyid(), "Order")).setVisible();
     }
 
-    public void mailOrder(final int id) {
+    public synchronized void mailOrder(final int id) {
         EBISystem.gui().button("sendEmail", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {

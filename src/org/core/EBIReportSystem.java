@@ -38,7 +38,7 @@ public class EBIReportSystem implements IEBIReportSystem {
     public boolean showWindow = false;
     public boolean eMailRecord = false;
     public String strRecs = null;
-    private final EBIWinWaiting wait = new EBIWinWaiting(EBISystem.i18n("EBI_LANG_LOAD_REPORT_DATA"));
+    private final EBIWinWaiting wait = EBIWinWaiting.getInstance(EBISystem.i18n("EBI_LANG_LOAD_REPORT_DATA"));
 
     @Getter
     @Setter
@@ -475,6 +475,7 @@ public class EBIReportSystem implements IEBIReportSystem {
 
                     EBISystem.gui().addScriptBean("groovy",
                             "Run/sendEMailViaClient.groovy", "groovy", "", "EMail");
+                    
                     EBISystem.gui().excScript("EMail", EMAIL_PARAM);
                 }
 

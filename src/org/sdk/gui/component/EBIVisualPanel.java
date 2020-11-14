@@ -59,7 +59,7 @@ public class EBIVisualPanel extends JPanel {
             gbiHeader.fill(new RoundRectangle2D.Double(0, 0, getWidth() + 15, drawHeight, 0, 0));
             // paint
             g2.drawImage(buffImgHeader, null, 0, 0);
-            g2.drawImage(moduleIcon.getImage(), 2, 2, null);
+            g2.drawImage(moduleIcon.getImage(), 10, 2, null);
             
             if (drawProgressView) {
                 g2.setPaint(new Color(255, 66, 41));
@@ -90,27 +90,27 @@ public class EBIVisualPanel extends JPanel {
 
     public void initialize() {
         changedFrom = new JLabel();
-        changedFrom.setBounds(new Rectangle(827, 0, 63, 19));
+        changedFrom.setBounds(new Rectangle(827, 2, 63, 19));
         changedFrom.setHorizontalAlignment(SwingConstants.RIGHT);
         changedFrom.setFont(new Font("Dialog", Font.BOLD, 10));
         changedFrom.setForeground(new Color(255, 255, 255));
         changedDate = new JLabel();
-        changedDate.setBounds(new Rectangle(649, 0, 76, 19));
+        changedDate.setBounds(new Rectangle(649, 2, 76, 19));
         changedDate.setHorizontalAlignment(SwingConstants.RIGHT);
         changedDate.setFont(new Font("Dialog", Font.BOLD, 10));
         changedDate.setForeground(new Color(255, 255, 255));
         createdFrom = new JLabel();
-        createdFrom.setBounds(new Rectangle(484, 0, 63, 19));
+        createdFrom.setBounds(new Rectangle(484, 2, 63, 19));
         createdFrom.setHorizontalAlignment(SwingConstants.RIGHT);
         createdFrom.setFont(new Font("Dialog", Font.BOLD, 10));
         createdFrom.setForeground(new Color(255, 255, 255));
         createdDate = new JLabel();
-        createdDate.setBounds(new Rectangle(306, 0, 74, 19));
+        createdDate.setBounds(new Rectangle(306, 2, 74, 19));
         createdDate.setHorizontalAlignment(SwingConstants.RIGHT);
         createdDate.setFont(new Font("Dialog", Font.BOLD, 10));
         createdDate.setForeground(new Color(255, 255, 255));
         moduleTitle = new JLabel();
-        moduleTitle.setBounds(new Rectangle(30, 0, 222, 19));
+        moduleTitle.setBounds(new Rectangle(30, 2, 222, 19));
         moduleTitle.setFont(new Font("Dialog", Font.BOLD, 10));
         moduleTitle.setForeground(new Color(255, 255, 255));
         this.setBorder(null);
@@ -142,7 +142,7 @@ public class EBIVisualPanel extends JPanel {
     private JLabel getJTextFieldAdded() {
         if (jTextFieldAdded == null) {
             jTextFieldAdded = new JLabel();
-            jTextFieldAdded.setBounds(new Rectangle(382, 0, 98, 19));
+            jTextFieldAdded.setBounds(new Rectangle(382, 2, 98, 19));
             jTextFieldAdded.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 10));
             jTextFieldAdded.setForeground(new Color(255, 255, 255));
             jTextFieldAdded.setOpaque(false);
@@ -154,7 +154,7 @@ public class EBIVisualPanel extends JPanel {
     private JLabel getJTextFieldAddedFrom() {
         if (jTextFieldAddedFrom == null) {
             jTextFieldAddedFrom = new JLabel();
-            jTextFieldAddedFrom.setBounds(new Rectangle(548, 0, 98, 19));
+            jTextFieldAddedFrom.setBounds(new Rectangle(548, 2, 98, 19));
             jTextFieldAddedFrom.setForeground(new Color(255, 255, 255));
             jTextFieldAddedFrom.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 10));
             jTextFieldAddedFrom.setOpaque(false);
@@ -166,7 +166,7 @@ public class EBIVisualPanel extends JPanel {
     private JLabel getJTextFieldChanged() {
         if (jTextFieldChanged == null) {
             jTextFieldChanged = new JLabel();
-            jTextFieldChanged.setBounds(new Rectangle(727, 0, 98, 19));
+            jTextFieldChanged.setBounds(new Rectangle(727, 2, 98, 19));
             jTextFieldChanged.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 10));
             jTextFieldChanged.setOpaque(false);
             jTextFieldChanged.setForeground(new Color(255, 255, 255));
@@ -178,7 +178,7 @@ public class EBIVisualPanel extends JPanel {
     private JLabel getJTextFieldChangedFrom() {
         if (jTextFieldChangedFrom == null) {
             jTextFieldChangedFrom = new JLabel();
-            jTextFieldChangedFrom.setBounds(new Rectangle(892, 0, 98, 19));
+            jTextFieldChangedFrom.setBounds(new Rectangle(892, 2, 98, 19));
             jTextFieldChangedFrom.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 10));
             jTextFieldChangedFrom.setOpaque(false);
             jTextFieldChangedFrom.setForeground(new Color(255, 255, 255));
@@ -264,7 +264,6 @@ public class EBIVisualPanel extends JPanel {
 
     @Override
     public void setBackground(final Color color) {
-        final Color bgColor = color;
         repaint();
     }
 

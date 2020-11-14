@@ -193,7 +193,6 @@ public class EBIButton extends JButton implements MouseListener, MouseMotionList
     @Override
     public void mouseExited(final MouseEvent e) {
         // TODO Auto-generated method stub
-
     }
 
     public Color getColor() {

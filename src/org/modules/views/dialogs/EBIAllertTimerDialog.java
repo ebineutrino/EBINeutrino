@@ -24,7 +24,7 @@ public class EBIAllertTimerDialog {
     }
 
     public void setVisible(final int actId, final int compId, final String taskName,
-                        final Date dueDate, final int duration, final String message) {
+            final Date dueDate, final int duration, final String message) {
         final SimpleDateFormat formatter = new SimpleDateFormat("d.M.y HH:mm ");
         companyId = compId;
         activityId = actId;
@@ -37,7 +37,7 @@ public class EBIAllertTimerDialog {
         EBISystem.gui().dialog(nameSpace).setHaveSerial(true);
         EBISystem.gui().button("closeDialog", nameSpace).addActionListener(new ActionListener() {
             @Override
-			public void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 setActionforDialog();
             }
         });
@@ -45,18 +45,13 @@ public class EBIAllertTimerDialog {
         EBISystem.gui().button("openTask", nameSpace).addActionListener(new ActionListener() {
 
             @Override
-			public void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 setActionforDialog();
                 final Runnable waitRunner = new Runnable() {
                     @Override
-					public void run() {
-
-                        final EBIWinWaiting wait = new EBIWinWaiting(EBISystem.i18n("EBI_LANG_LOAD_COMPANY_DATA"));
-
+                    public void run() {
                         try {
-
-                            wait.setVisible(true);
-
+                            EBIWinWaiting.getInstance(EBISystem.i18n("EBI_LANG_LOAD_COMPANY_DATA")).setVisible(true);
                             if (EBISystem.getInstance().getCompany() == null || companyId != EBISystem.getInstance().getCompany().getCompanyid()) {
                                 EBISystem.getModule().createUI(companyId, false);
                             }
@@ -67,7 +62,7 @@ public class EBIAllertTimerDialog {
                         } catch (final Exception ex) {
                             ex.printStackTrace();
                         } finally {
-                            wait.setVisible(false);
+                            EBIWinWaiting.getInstance().setVisible(false);
                         }
                     }
                 };

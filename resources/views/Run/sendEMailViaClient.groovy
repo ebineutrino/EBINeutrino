@@ -4,6 +4,7 @@ import Run.mail.SMTPSend
 import org.sdk.EBISystem
 import org.sdk.model.hibernate.MailAccount
 import org.hibernate.query.Query
+import org.sdk.gui.dialogs.EBIWinWaiting;
 
 system.hibernate().openHibernateSession("EMAIL_SETTINGS");
 system.hibernate().transaction("EMAIL_SETTINGS").begin();
@@ -21,6 +22,7 @@ if (iter.hasNext()) {
         sendEMail.setSmtpEMailUser(mailAccount.getSmtpUser());
         sendEMail.setSmtpPassword(mailAccount.getSmtpPassword());
         sendEMail.setSmtpHost(mailAccount.getSmtpServer());
+        sendEMail.configure();
 	 
         send = sendEMail.sendMessage(_TO, _SUBJECT, _BODY, _ATTACHMENT);
     }catch(Exception ex) {
@@ -33,11 +35,12 @@ if (iter.hasNext()) {
         ex.printStackTrace();
         system.message.error(ex.getCause()+" : "+ex.getMessage());
     }finally {
+        EBIWinWaiting.getInstance().setVisible(false);
         if(send) {
             system.message.info("EMail successfully send!");
         }
     }
 }else{
-    system.message.info("Please configure an email account using system settings");
+    system.message.info("Please configure an email account by using System Settings");
 }
 system.hibernate().transaction("EMAIL_SETTINGS").commit();

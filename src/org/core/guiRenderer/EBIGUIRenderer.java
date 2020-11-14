@@ -576,7 +576,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 combo.setName(nameSpace);
                 combo.setEnabled(bean.isEnabled());
                 addUndoManager(((JTextField) combo.getEditor().getEditorComponent()).getDocument(), combo);
-
+                
                 final Border line = BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(34, 34, 34));
                 final Border empty = new EmptyBorder(0, 5, 0, 0);
                 final CompoundBorder border = new CompoundBorder(line, empty);

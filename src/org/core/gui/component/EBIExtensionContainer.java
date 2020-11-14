@@ -36,7 +36,6 @@ public class EBIExtensionContainer implements IEBIContainer {
      * @return void
      */
     public void initContainer() {
-
         jTabbedPane = new JTabbedPane();
         jTabbedPane.setName("jTabbedPane");
         jTabbedPane.setTabPlacement(SwingConstants.TOP);
@@ -48,14 +47,12 @@ public class EBIExtensionContainer implements IEBIContainer {
     }
 
     public void initContainer(final JPanel panel) {
-
         jTabbedPane = new JTabbedPane();
         jTabbedPane.setName("jTabbedPane");
         jTabbedPane.setTabPlacement(SwingConstants.TOP);
         jTabbedPane.setFocusable(false);
         jTabbedPane.setFocusCycleRoot(false);
         jTabbedPane.setFocusTraversalKeysEnabled(false);
-
         panel.add(this.jTabbedPane, BorderLayout.CENTER);
     }
 

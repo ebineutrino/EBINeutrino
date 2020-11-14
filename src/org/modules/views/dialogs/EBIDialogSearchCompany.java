@@ -32,7 +32,7 @@ public class EBIDialogSearchCompany {
     private ModelSearchCompany tableModel = null;
     private boolean isHierarchies = false;
     private boolean isSummary = false;
-    final EBIWinWaiting wait = new EBIWinWaiting(EBISystem.i18n("EBI_LANG_LOAD_COMPANY_DATA"));
+    final EBIWinWaiting wait = EBIWinWaiting.getInstance(EBISystem.i18n("EBI_LANG_LOAD_COMPANY_DATA"));
 
     /**
      * This is the default constructor

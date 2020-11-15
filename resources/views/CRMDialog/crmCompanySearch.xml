@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dialog name="searchCRMCompany" title="Search Company" icon="search.png" Location="100,100" Size="900,450" visualproperties="false" assignable="false" modal="true" resizable="true" >
+<dialog name="searchCRMCompany" title="Search Company" Location="100,100" Size="900,450" visualproperties="false" assignable="false" modal="true" resizable="true" >
     <textfield name="filterTableText" tabindex="1" Location="9,9" Size="750,32"  Placeholder="EBI_LANG_FILTER"/>
     <button name="compSearchsearchButton" tabindex="8" title="Search" Location="761,7" Size="117,35"/>
     <button name="compSearchcancelButton" title="cancel" fitonresize="true" Location="776,405" Size="107,29"/>

@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dialog name="addNewContactDialog" title="EBI_LANG_C_ADD_CONTACT" icon="/Users/francesco/IdeaProjects/ebineutrinoCRM_ERP/..\images\people.png" Location="100,100" Size="400,580" visualproperties="false" assignable="false" modal="true" >
- 		<button name="closeButton" tabindex="18" title="EBI_LANG_CANCEL" Location="275,513" Size="107,29"/>
-		<button name="applyButton" tabindex="17" title="EBI_LANG_APPLY" Location="140,513" Size="132,29"/>
-		<label name="gender" title="EBI_LANG_C_GENDER" Location="20,10" Size="100,25"/>
-		<label name="position" title="EBI_LANG_C_POSITION" Location="20,40" Size="100,25"/>
-		<label name="name" title="EBI_LANG_C_NAME" Location="20,70" Size="100,25"/>
-		<label name="surname" title="EBI_LANG_SURNAME" Location="20,100" Size="100,25"/>
-		<label name="birddate" title="EBI_LANG_C_BIRTHDATE" Location="20,270" Size="100,25"/>
-		<label name="telephone" title="EBI_LANG_C_TELEPHONE" Location="20,300" Size="100,25"/>
-		<label name="fax" title="EBI_LANG_C_FAX" Location="20,330" Size="100,25"/>
-		<label name="mobile" title="EBI_LANG_C_MOBILE_PHONE" Location="20,360" Size="100,25"/>
-		<label name="email" title="EBI_LANG_C_EMAIL" Location="20,390" Size="100,25"/>
-		<textarea name="contactDescription" tabindex="16" Location="17,441" Size="365,66"/>
-		<combobox name="genderText" tabindex="1" Location="123,10" Size="148,25"/>
-		<textfield name="positionText" tabindex="2" Location="123,40" Size="256,25"/>
-		<textfield name="nameText" tabindex="3" Location="123,70" Size="256,25"/>
-		<textfield name="surnameText" tabindex="4" Location="122,100" Size="256,25"/>
-		<timepicker name="birddateText" tabindex="10" Location="123,270" Size="256,25"/>
-		<textfield name="telephoneText" tabindex="11" Location="123,300" Size="256,25"/>
-		<textfield name="faxText" tabindex="12" Location="123,330" Size="256,25"/>
-		<textfield name="mobileText" tabindex="13" Location="123,360" Size="256,25"/>
-		<textfield name="emailText" tabindex="14" Location="123,390" Size="256,25"/>
-		<checkbox name="mainContact" tabindex="15" title="EBI_LANG_MAIN_CONTACT" Location="124,418" Size="167,21"/>
-		<label name="streetNr" title="EBI_LANG_C_STREET_NR" Location="20,140" Size="100,25"/>
-		<textfield name="streetNrText" tabindex="5" Location="123,140" Size="256,25"/>
-		<label name="ziplocation" title="EBI_LANG_C_ZIP_LOCATION" Location="20,170" Size="100,25"/>
-		<textfield name="zipText" tabindex="6" Location="123,170" Size="79,25"/>
-		<textfield name="locationText" tabindex="7" Location="205,170" Size="174,25"/>
-		<label name="pbox" title="EBI_LANG_C_POST_CODE" Location="20,200" Size="100,25"/>
-		<textfield name="pboxText" tabindex="8" Location="123,200" Size="256,25"/>
-		<label name="country" title="EBI_LANG_C_COUNTRY" Location="20,240" Size="100,25"/>
-		<textfield name="countryText" tabindex="9" Location="123,240" Size="256,25"/>
-		<button name="newContact" Location="276,10" Size="27,24"/>
-		<button name="searchContact" Location="308,10" Size="27,24"/>
+<dialog name="addNewContactDialog" title="EBI_LANG_C_ADD_CONTACT" 
+        Location="100,100" Size="400,580" visualproperties="false" assignable="false" modal="true" >
+    <button name="closeButton" tabindex="18" title="EBI_LANG_CANCEL" Location="275,513" Size="107,29"/>
+    <button name="applyButton" tabindex="17" title="EBI_LANG_APPLY" Location="140,513" Size="132,29"/>
+    <label name="gender" title="EBI_LANG_C_GENDER" Location="20,10" Size="100,25"/>
+    <label name="position" title="EBI_LANG_C_POSITION" Location="20,40" Size="100,25"/>
+    <label name="name" title="EBI_LANG_C_NAME" Location="20,70" Size="100,25"/>
+    <label name="surname" title="EBI_LANG_SURNAME" Location="20,100" Size="100,25"/>
+    <label name="birddate" title="EBI_LANG_C_BIRTHDATE" Location="20,270" Size="100,25"/>
+    <label name="telephone" title="EBI_LANG_C_TELEPHONE" Location="20,300" Size="100,25"/>
+    <label name="fax" title="EBI_LANG_C_FAX" Location="20,330" Size="100,25"/>
+    <label name="mobile" title="EBI_LANG_C_MOBILE_PHONE" Location="20,360" Size="100,25"/>
+    <label name="email" title="EBI_LANG_C_EMAIL" Location="20,390" Size="100,25"/>
+    <textarea name="contactDescription" tabindex="16" Location="17,441" Size="365,66"/>
+    <combobox name="genderText" tabindex="1" Location="123,10" Size="148,25"/>
+    <textfield name="positionText" tabindex="2" Location="123,40" Size="256,25"/>
+    <textfield name="nameText" tabindex="3" Location="123,70" Size="256,25"/>
+    <textfield name="surnameText" tabindex="4" Location="122,100" Size="256,25"/>
+    <timepicker name="birddateText" tabindex="10" Location="123,270" Size="256,25"/>
+    <textfield name="telephoneText" tabindex="11" Location="123,300" Size="256,25"/>
+    <textfield name="faxText" tabindex="12" Location="123,330" Size="256,25"/>
+    <textfield name="mobileText" tabindex="13" Location="123,360" Size="256,25"/>
+    <textfield name="emailText" tabindex="14" Location="123,390" Size="256,25"/>
+    <checkbox name="mainContact" tabindex="15" title="EBI_LANG_MAIN_CONTACT" Location="124,418" Size="167,21"/>
+    <label name="streetNr" title="EBI_LANG_C_STREET_NR" Location="20,140" Size="100,25"/>
+    <textfield name="streetNrText" tabindex="5" Location="123,140" Size="256,25"/>
+    <label name="ziplocation" title="EBI_LANG_C_ZIP_LOCATION" Location="20,170" Size="100,25"/>
+    <textfield name="zipText" tabindex="6" Location="123,170" Size="79,25"/>
+    <textfield name="locationText" tabindex="7" Location="205,170" Size="174,25"/>
+    <label name="pbox" title="EBI_LANG_C_POST_CODE" Location="20,200" Size="100,25"/>
+    <textfield name="pboxText" tabindex="8" Location="123,200" Size="256,25"/>
+    <label name="country" title="EBI_LANG_C_COUNTRY" Location="20,240" Size="100,25"/>
+    <textfield name="countryText" tabindex="9" Location="123,240" Size="256,25"/>
+    <button name="newContact" Location="276,10" Size="27,24"/>
+    <button name="searchContact" Location="308,10" Size="27,24"/>
 </dialog>

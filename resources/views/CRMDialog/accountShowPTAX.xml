@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dialog name="taxViewDialog" title="EBI_LANG_TAX_DIALOG" icon="images/account.png" Location="100,100" Size="610,450" visualproperties="false" assignable="false" modal="true" >
+<dialog name="taxViewDialog" title="EBI_LANG_TAX_DIALOG" Location="100,100" Size="610,450" visualproperties="false" assignable="false" modal="true" >
     <button name="closeButton" title="EBI_LANG_CLOSE" Location="489,406" Size="107,29"/>
     <button name="viewTax" tabindex="2" title="EBI_LANG_SHOW" Location="494,20" Size="100,28"/>
     <editor name="viewtaxText" Location="14,57" Size="580,340"/>

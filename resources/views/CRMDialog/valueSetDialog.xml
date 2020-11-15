@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dialog name="valueSetterDialog" title="Settings:" icon="../images/write.png" Location="100,100" Size="570,420" visualproperties="false" assignable="false" modal="true" >
- 		<label name="name" title="Name" Location="10,25" Size="103,25"/>
-		<textfield name="nameValue" tabindex="1" Location="110,25" Size="303,25"/>
-		<button name="saveValue" tabindex="2" title="Save" Location="420,25" Size="130,25"/>
-		<button name="closeDialog" tabindex="3" title="Close" Location="408,375" Size="150,25"/>
-		<table name="valueTable" Location="10,115" Size="548,250"/>
-		<button name="newBnt" Location="11,75" Size="31,27"/>
-		<button name="deleteBnt" Location="80,75" Size="31,27"/>
-		<button name="editBnt" Location="45,75" Size="31,27"/>
+<dialog name="valueSetterDialog" title="Settings:" Location="100,100" Size="570,420" visualproperties="false" assignable="false" modal="true" >
+    <label name="name" title="Name" Location="10,25" Size="103,25"/>
+    <textfield name="nameValue" tabindex="1" Location="110,25" Size="303,25"/>
+    <button name="saveValue" tabindex="2" title="Save" Location="420,25" Size="130,25"/>
+    <button name="closeDialog" tabindex="3" title="Close" Location="408,375" Size="150,25"/>
+    <table name="valueTable" Location="10,115" Size="548,250"/>
+    <button name="newBnt" Location="11,75" Size="31,27"/>
+    <button name="deleteBnt" Location="80,75" Size="31,27"/>
+    <button name="editBnt" Location="45,75" Size="31,27"/>
 </dialog>

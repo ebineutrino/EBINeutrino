@@ -18,19 +18,15 @@ public class EBIDialogValueSetter {
 
     private MyTableModelValueSetter tabMod = null;
     private String Tab = "";
-    private String Title = "";
     private int id = -1;
     private boolean isSaveOrUpdate = false;
     private int selRow = -1;
 
-    public EBIDialogValueSetter(final String tab, final String title) {
+    public EBIDialogValueSetter(final String tab) {
 
         tabMod = new MyTableModelValueSetter();
-
         EBISystem.gui().loadGUI("CRMDialog/valueSetDialog.xml");
-
         Tab = tab.toUpperCase();
-        Title = title;
         initialize();
         load();
         EBISystem.gui().button("deleteBnt", "valueSetterDialog").setEnabled(false);
@@ -74,9 +70,9 @@ public class EBIDialogValueSetter {
 
     public void setVisible() {
         EBISystem.gui().dialog("valueSetterDialog")
-                .setTitle(EBISystem.i18n("EBI_LANG_SETTINGS_FOR") + ":" + Title);
+                .setTitle(EBISystem.i18n("EBI_LANG_SETTINGS"));
         EBISystem.gui().vpanel("valueSetterDialog")
-                .setModuleTitle(EBISystem.i18n("EBI_LANG_SETTINGS_FOR") + ":" + Title);
+                .setModuleTitle(EBISystem.i18n("EBI_LANG_SETTINGS"));
 
         EBISystem.gui().label("name", "valueSetterDialog").setText(EBISystem.i18n("EBI_LANG_NAME"));
 
@@ -183,7 +179,6 @@ public class EBIDialogValueSetter {
         if (!validateInput()) {
             return;
         }
-
         try {
             final PreparedStatement ps1 = EBISystem.getInstance().iDB().initPreparedStatement("INSERT INTO " + Tab + "  (NAME) VALUES(?)");
             ps1.setString(1, EBISystem.gui().textField("nameValue", "valueSetterDialog").getText());

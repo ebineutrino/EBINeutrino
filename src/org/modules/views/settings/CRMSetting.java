@@ -76,7 +76,6 @@ public class CRMSetting {
                 final EBIDialogInternalNumberAdministration adm = new EBIDialogInternalNumberAdministration(true);
                 adm.setVisible();
             }
-
         });
 
         EBISystem.gui().button("catBnt", "crmSettingDialog").setIcon(EBISystem.getInstance().getIconResource("lf_monitoring.png"));

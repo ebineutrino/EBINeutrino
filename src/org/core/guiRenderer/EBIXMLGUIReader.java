@@ -26,8 +26,8 @@ public class EBIXMLGUIReader {
     private boolean stepOne = true;
 
     private String resourceViewsPath = System.getProperty("user.dir")
-                + File.separator+"resources"
-                + File.separator;
+            + File.separator + "resources"
+            + File.separator;
 
     public EBIXMLGUIReader(final String xmlPath) {
         builder = new SAXBuilder();
@@ -46,7 +46,7 @@ public class EBIXMLGUIReader {
         boolean ret = true;
         stepOne = true;
         try {
-            xmlDoc = builder.build(resourceViewsPath+xmlPath);
+            xmlDoc = builder.build(resourceViewsPath + xmlPath);
             ret = readXMLGUI(xmlDoc.getRootElement());
         } catch (final IOException ex) {
             ret = false;
@@ -292,38 +292,72 @@ public class EBIXMLGUIReader {
 
                     case "min":
                         try {
-                            widg.setMin(Integer.parseInt(att.getValue()));
-                        } catch (final NumberFormatException ex) {
-                            widg.setMin(0);
-                        }
-                        break;
+                        widg.setMin(Integer.parseInt(att.getValue()));
+                    } catch (final NumberFormatException ex) {
+                        widg.setMin(0);
+                    }
+                    break;
 
                     case "max":
                         try {
-                            widg.setMax(Integer.parseInt(att.getValue()));
-                        } catch (final NumberFormatException ex) {
-                            widg.setMax(0);
-                        }
-                        break;
+                        widg.setMax(Integer.parseInt(att.getValue()));
+                    } catch (final NumberFormatException ex) {
+                        widg.setMax(0);
+                    }
+                    break;
                     case "tabindex":
                         try {
-                            widg.setTabIndex(Integer.parseInt(att.getValue()));
-                        } catch (final NumberFormatException ex) {
-                            widg.setTabIndex(0);
+                        widg.setTabIndex(Integer.parseInt(att.getValue()));
+                    } catch (final NumberFormatException ex) {
+                        widg.setTabIndex(0);
+                    }
+                    break;
+
+                    case "bind":
+                        widg.setBind(att.getValue());
+                        break;
+
+                    case "actionlistener":
+                        widg.setActionListener(att.getValue());
+                        break;
+
+                    case "placeholder":
+                        widg.setPlaceHolder(att.getValue());
+                        break;
+
+                    case "propertybinding":
+                        widg.setPropertyBinding(att.getValue());
+                        break;
+
+                    case "internalnumber":
+                        if (!"".equals(att.getValue())) {
+                            try {
+                                widg.setInternalNumberAdmin(Boolean.parseBoolean(att.getValue()));
+                            } catch (final Exception ex) {
+                                widg.setInternalNumberAdmin(false);
+                            }
+                        }
+                        break;
+
+                    case "autoinc_number":
+                        if (!"".equals(att.getValue())) {
+                            try {
+                                widg.setAutoIncrementalNr(Boolean.parseBoolean(att.getValue()));
+                            } catch (final Exception ex) {
+                                widg.setAutoIncrementalNr(false);
+                            }
                         }
                         break;
                         
-                    case "bind":
-                    	widg.setBind(att.getValue());
-                    	break;
-
-                    case "actionlistener":
-                    	widg.setActionListener(att.getValue());
-                    	break;
-                        
-                    case "placeholder":
-                    	widg.setPlaceHolder(att.getValue());
-                    	break;
+                    case "taxadmin":
+                        if (!"".equals(att.getValue())) {
+                            try {
+                                widg.setTaxAdministration(Boolean.parseBoolean(att.getValue()));
+                            } catch (final Exception ex) {
+                                widg.setTaxAdministration(false);
+                            }
+                        }
+                        break;
                 }
             }
             widg.setType(el.getName().trim().toLowerCase());

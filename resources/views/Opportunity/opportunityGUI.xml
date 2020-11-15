@@ -12,15 +12,15 @@
         <label name="oppName" title="EBI_LANG_NAME" Location="10,20" Size="113,25"/>
         <combobox name="opportunityNameText" tabindex="1" Location="125,20" Size="245,25"/>
         <label name="oppEvalStatus" title="EBI_LANG_C_EVALUATING_STATUS" Location="10,50" Size="113,25"/>
-        <combobox name="oppEvalStatusText" tabindex="2" bind="COMPANYOPPORTUNITYEVSTATUS" Location="125,50" Size="245,25"/>
+        <combobox name="oppEvalStatusText" tabindex="2" bind="COMPANYOPPORTUNITYEVSTATUS" Location="125,50" Size="245,25" propertyBinding="COMPANYOPPORTUNITYEVSTATUS"/>
         <label name="oppBdgStatus" title="EBI_LANG_C_BUDGETSTATUS" Location="10,80" Size="113,25"/>
-        <combobox name="oppBdgStatusText" tabindex="3" bind="COMPANYOPPORTUNITYBGSTATUS" Location="125,80" Size="245,25"/>
+        <combobox name="oppBdgStatusText" tabindex="3" bind="COMPANYOPPORTUNITYBGSTATUS" Location="125,80" Size="245,25" propertyBinding="COMPANYOPPORTUNITYBGSTATUS"/>
         <label name="oppSaleState" title="EBI_LANG_SALE_STAGE" Location="10,110" Size="113,25"/>
-        <combobox name="oppSaleStateText" tabindex="4" Location="125,110" bind="COMPANYOPPORTUNITYSSTAGE" Size="245,25"/>
+        <combobox name="oppSaleStateText" tabindex="4" Location="125,110" bind="COMPANYOPPORTUNITYSSTAGE" Size="245,25" propertyBinding="COMPANYOPPORTUNITYSSTAGE"/>
         <label name="oppStatus" title="EBI_LANG_C_STATUS" Location="10,140" Size="113,25"/>
-        <combobox name="statusOppText" tabindex="5" bind="COMPANYOPPORTUNITYSTATUS" Location="125,140" Size="245,25"/>
+        <combobox name="statusOppText" tabindex="5" bind="COMPANYOPPORTUNITYSTATUS" Location="125,140" Size="245,25" propertyBinding="COMPANYOPPORTUNITYSTATUS"/>
         <label name="oppBustype" title="EBI_LANG_BUSINESS_TYP" Location="10,170" Size="113,25"/>
-        <combobox name="oppBustypeText" tabindex="6" bind="COMPANYOPPORTUNITYBUSTYP" Location="125,170" Size="245,25"/>
+        <combobox name="oppBustypeText" tabindex="6" bind="COMPANYOPPORTUNITYBUSTYP" Location="125,170" Size="245,25" propertyBinding="COMPANYOPPORTUNITYBUSTYP"/>
         <label name="oppProbability" title="EBI_LANG_PROBABILITY" Location="10,200" Size="113,25"/>
         <combobox name="oppProbabilityText" tabindex="7" Location="125,200" Size="245,25"/>
         <label name="oppValue" title="EBI_LANG_VALUE" Location="10,230" Size="113,25"/>

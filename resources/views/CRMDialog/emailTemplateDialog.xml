@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dialog name="emailTemplateDialog" title="Email Template" icon="write.png" Location="0,0" 
-                    Size="590,520" visualproperties="false" assignable="false" modal="true" resizable="true" >
+<dialog name="emailTemplateDialog" title="Email Template" Location="0,0" 
+        Size="590,520" visualproperties="false" assignable="false" modal="true" resizable="true" >
     <button name="saveValue" title="Save" Location="449,200" Size="127,32"/>
     <table name="taxValueTable" resizewidth="true" Location="8,42" Size="567,149"/>
     <button name="newBnt" Location="10,10" Size="31,27"/>

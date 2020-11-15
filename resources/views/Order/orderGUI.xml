@@ -7,7 +7,7 @@
         <label name="orderName" title="EBI_LANG_NAME" Location="10,50" Size="113,25"/>
         <textfield name="orderNameText" tabindex="2" Location="125,50" Size="245,25"/>
         <label name="orderStatus" title="EBI_LANG_C_STATUS" Location="10,80" Size="113,25"/>
-        <combobox name="orderStatusText" tabindex="3" Location="125,80" bind="COMPANYORDERSTATUS" Size="245,25"/>
+        <combobox name="orderStatusText" tabindex="3" Location="125,80" bind="COMPANYORDERSTATUS" Size="245,25" propertyBinding="COMPANYORDERSTATUS"/>
         <label name="orderCreateDate" title="EBI_LANG_SEND_DATE" Location="10,110" Size="113,25"/>
         <timepicker name="orderCreatedText" tabindex="4" Location="125,110" Size="245,25"/>
         <label name="orderReceiveDate" title="EBI_LANG_VALID_TO" Location="10,140" Size="113,25"/>

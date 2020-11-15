@@ -52,6 +52,9 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.core.gui.component.EBITextfield;
+import org.modules.views.dialogs.EBIDialogInternalNumberAdministration;
+import org.modules.views.dialogs.EBIDialogTaxAdministration;
+import org.sdk.gui.dialogs.EBIDialogValueSetter;
 
 public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
@@ -124,12 +127,12 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                     } else if (EBISystem.registeredModule.contains(bx.getPath())) {
                         addXMLToolBarGUI(bx);
                     }
-                }else if ("codecontrol".equals(bx.getType().toLowerCase())) {
+                } else if ("codecontrol".equals(bx.getType().toLowerCase())) {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
                             addScriptBean(bx.getName(), bx.getPath(), bx.getName(), bx.getClassName(), "Startup");
-                            excScript("Startup", null );
+                            excScript("Startup", null);
                         }
                     }).start();
                 } else {
@@ -539,7 +542,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 }
                 textField.setName(nameSpace);
                 textField.setEnabled(bean.isEnabled());
-                
+
                 if (!bean.isVisible()) {
                     textField.setVisible(bean.isVisible());
                 }
@@ -576,11 +579,68 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 combo.setName(nameSpace);
                 combo.setEnabled(bean.isEnabled());
                 addUndoManager(((JTextField) combo.getEditor().getEditorComponent()).getDocument(), combo);
-                
+
                 final Border line = BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(34, 34, 34));
                 final Border empty = new EmptyBorder(0, 5, 0, 0);
                 final CompoundBorder border = new CompoundBorder(line, empty);
 
+                
+                JPopupMenu popupmenu = null;
+                if (!"".equals(bean.getPropertyBinding()) || bean.isInternalNumberAdmin() || bean.isAutoIncrementalNr() || bean.isTaxAdmin()) {
+                    popupmenu = new JPopupMenu("Combo Settings");
+                    
+                    if (!"".equals(bean.getPropertyBinding())) {
+                        JMenuItem settings = new JMenuItem(EBISystem.i18n("EBI_LANG_SETTINGS"));
+                        settings.setName(bean.getPropertyBinding());
+                        settings.setIcon(EBISystem.getInstance().getIconResource("settings_small.png"));
+                        settings.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                JMenuItem ec = (JMenuItem) e.getSource();
+                                new EBIDialogValueSetter(ec.getName()).setVisible();
+                            }
+                        });
+                        popupmenu.add(settings);
+                    }
+                    
+                    if(bean.isAutoIncrementalNr()){
+                        JMenuItem autoIncItem = new JMenuItem(EBISystem.i18n("EBI_LANG_INVOICE_AUTOINC_NR"));
+                        autoIncItem.setIcon(EBISystem.getInstance().getIconResource("incremental_small.png"));
+                        autoIncItem.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                               new EBIDialogInternalNumberAdministration(true).setVisible();
+                            }
+                        });
+                        popupmenu.add(autoIncItem);
+                    }
+                    
+                    if(bean.isInternalNumberAdmin()){
+                        JMenuItem internalNrItem = new JMenuItem(EBISystem.i18n("EBI_LANG_C_MANAGING"));
+                        internalNrItem.setIcon(EBISystem.getInstance().getIconResource("incremental_small.png"));
+                        internalNrItem.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                               new EBIDialogInternalNumberAdministration(false).setVisible();
+                            }
+                        });
+                        popupmenu.add(internalNrItem);
+                    }
+                    
+                    if(bean.isTaxAdministration()){
+                        JMenuItem taxAdminItem = new JMenuItem(EBISystem.i18n("EBI_LANG_C_CRM_TAX_ADMINISTRATION"));
+                        taxAdminItem.setIcon(EBISystem.getInstance().getIconResource("incremental_small.png"));
+                        taxAdminItem.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                new EBIDialogTaxAdministration().setVisible();
+                            }
+                        });
+                        popupmenu.add(taxAdminItem);
+                    }
+                    combo.setComponentPopupMenu(popupmenu);
+                }
+                
                 ((JTextField) combo.getEditor().getEditorComponent()).setBorder(border);
                 ((JTextField) combo.getEditor().getEditorComponent()).addActionListener(new ActionListener() {
                     @Override
@@ -1255,7 +1315,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                     } else if (list.getComponent() instanceof EBIDialog) {
                         ((EBIDialog) list.getComponent()).setVisible(true);
                     }
-                    
+
                     final String cmpNamespace = componentNamespace;
                     new Thread(new Runnable() {
                         @Override
@@ -1263,7 +1323,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                   initScript(cmpNamespace);
+                                    initScript(cmpNamespace);
                                 }
                             });
                         }
@@ -1411,64 +1471,64 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                     /*SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public final void run() {*/
-                            try {
+                    try {
 
-                                Iterator ixt;
-                                String nmSpace;
-                                if (resizeContainer.get(cmpNamespace) == null) {
-                                    nmSpace = tabToComponentNamespaces.get(ebiMain.container.getSelectedTab());
-                                    ixt = resizeContainer.get(nmSpace).iterator();
-                                } else {
-                                    nmSpace = cmpNamespace;
-                                    ixt = resizeContainer.get(cmpNamespace).iterator();
-                                }
+                        Iterator ixt;
+                        String nmSpace;
+                        if (resizeContainer.get(cmpNamespace) == null) {
+                            nmSpace = tabToComponentNamespaces.get(ebiMain.container.getSelectedTab());
+                            ixt = resizeContainer.get(nmSpace).iterator();
+                        } else {
+                            nmSpace = cmpNamespace;
+                            ixt = resizeContainer.get(cmpNamespace).iterator();
+                        }
 
-                                binding.setVariable("namespace", nmSpace);
-                                while (ixt.hasNext()) {
-                                    final EBIGUINBean bx = (EBIGUINBean) ixt.next();
-                                    JComponent cmp = bx.getComponent();
-                                    if (bx.getComponent() instanceof JScrollPane) {
-                                        cmp = bx.getScrollComponent();
-                                    }
-                                    binding.setVariable(bx.getName(), cmp);
-                                }
-
-                                if (PARAM != null) {
-                                    final Iterator<String> prmItr = PARAM.keySet().iterator();
-                                    while (prmItr.hasNext()) {
-                                        final String key = prmItr.next();
-                                        binding.setVariable(key, PARAM.get(key));
-                                    }
-                                }
-
-                                gse.run(script.getPath(), binding);
-                                final Script scr = gse.createScript(script.getPath(), binding);
-
-                                if (scr.getMetaClass().getMetaMethod("ebiEdit", null) != null
-                                        || scr.getMetaClass().getMetaMethod("ebiDelete", null) != null
-                                        || scr.getMetaClass().getMetaMethod("ebiNew", null) != null
-                                        || scr.getMetaClass().getMetaMethod("ebiSave", null) != null) {
-
-                                    EBISystem.getInstance().setDataStore(cmpNamespace, scr);
-                                }
-
-                            } catch (final ResourceException ex) {
-                                EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex))
-                                        .Show(EBIMessage.ERROR_MESSAGE);
-                                ex.printStackTrace();
-                            } catch (final ScriptException ex) {
-                                EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex))
-                                        .Show(EBIMessage.ERROR_MESSAGE);
-                                ex.printStackTrace();
-                            } catch (final Exception ex) {
-                                EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex))
-                                        .Show(EBIMessage.ERROR_MESSAGE);
-                                ex.printStackTrace();
-                            } catch (final NoClassDefFoundError e) {
-                                EBIExceptionDialog.getInstance(e.getMessage()).Show(EBIMessage.ERROR_MESSAGE);
-                                e.printStackTrace();
+                        binding.setVariable("namespace", nmSpace);
+                        while (ixt.hasNext()) {
+                            final EBIGUINBean bx = (EBIGUINBean) ixt.next();
+                            JComponent cmp = bx.getComponent();
+                            if (bx.getComponent() instanceof JScrollPane) {
+                                cmp = bx.getScrollComponent();
                             }
-                      //  }
+                            binding.setVariable(bx.getName(), cmp);
+                        }
+
+                        if (PARAM != null) {
+                            final Iterator<String> prmItr = PARAM.keySet().iterator();
+                            while (prmItr.hasNext()) {
+                                final String key = prmItr.next();
+                                binding.setVariable(key, PARAM.get(key));
+                            }
+                        }
+
+                        gse.run(script.getPath(), binding);
+                        final Script scr = gse.createScript(script.getPath(), binding);
+
+                        if (scr.getMetaClass().getMetaMethod("ebiEdit", null) != null
+                                || scr.getMetaClass().getMetaMethod("ebiDelete", null) != null
+                                || scr.getMetaClass().getMetaMethod("ebiNew", null) != null
+                                || scr.getMetaClass().getMetaMethod("ebiSave", null) != null) {
+
+                            EBISystem.getInstance().setDataStore(cmpNamespace, scr);
+                        }
+
+                    } catch (final ResourceException ex) {
+                        EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex))
+                                .Show(EBIMessage.ERROR_MESSAGE);
+                        ex.printStackTrace();
+                    } catch (final ScriptException ex) {
+                        EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex))
+                                .Show(EBIMessage.ERROR_MESSAGE);
+                        ex.printStackTrace();
+                    } catch (final Exception ex) {
+                        EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex))
+                                .Show(EBIMessage.ERROR_MESSAGE);
+                        ex.printStackTrace();
+                    } catch (final NoClassDefFoundError e) {
+                        EBIExceptionDialog.getInstance(e.getMessage()).Show(EBIMessage.ERROR_MESSAGE);
+                        e.printStackTrace();
+                    }
+                    //  }
                     //});
 
                 } else if ("java".equals(script.getType())) {
@@ -1958,7 +2018,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 widgetBean = res.getBean();
             }
         }
-        
+
         return widgetBean;
     }
 

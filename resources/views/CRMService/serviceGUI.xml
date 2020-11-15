@@ -6,11 +6,11 @@
         <label name="serviceName" title="EBI_LANG_NAME" Location="10,50" Size="113,25"/>
         <textfield name="serviceNameText" tabindex="2" Location="125,50" Size="245,25"/>
         <label name="serviceCategory" title="EBI_LANG_CATEGORY" Location="10,80" Size="113,25"/>
-        <combobox name="serviceCategoryText" tabindex="3" Location="125,80" bind="COMPANYSERVICECATEGORY" Size="245,25"/>
+        <combobox name="serviceCategoryText" tabindex="3" Location="125,80" bind="COMPANYSERVICECATEGORY" Size="245,25" propertyBinding="COMPANYSERVICECATEGORY"/>
         <label name="serviceType" title="EBI_LANG_TYPE" Location="10,110" Size="113,25"/>
-        <combobox name="serviceTypeText" tabindex="4" Location="125,110" bind="COMPANYSERVICETYPE" Size="245,25"/>
+        <combobox name="serviceTypeText" tabindex="4" Location="125,110" bind="COMPANYSERVICETYPE" Size="245,25" propertyBinding="COMPANYSERVICETYPE"/>
         <label name="serviceStatus" title="EBI_LANG_C_STATUS" Location="10,140" Size="113,25"/>
-        <combobox name="serviceStatusText" tabindex="5" Location="125,140" bind="COMPANYSERVICESTATUS" Size="245,25"/>
+        <combobox name="serviceStatusText" tabindex="5" Location="125,140" bind="COMPANYSERVICESTATUS" Size="245,25" propertyBinding="COMPANYSERVICESTATUS"/>
         <label name="serviceDescription" title="EBI_LANG_DESCRIPTION" Location="10,184" Size="113,20"/>
         <textarea name="serviceDescriptionText" tabindex="6" Location="10,206" Size="363,144"/>
     </panel>

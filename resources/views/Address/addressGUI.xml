@@ -2,7 +2,7 @@
 <visualpanel name="Address" title="EBI_LANG_C_ADRESS" Location="0,0" Size="1100,850" visualproperties="true" assignable="false" bean="org.modules.views.EBICRMAddressView">
     <panel name="generalAddress"  title="EBI_LANG_C_GERNERAL_DATA" Location="6,11" Size="440,220">
         <label name="addressType"  title="EBI_LANG_C_ADRESS_TYPE" Location="10,20" Size="103,25"/>
-        <combobox name="addressTypeText"  tabindex="1" bind="CRMADDRESSTYPE" Location="120,20" Size="290,25"/>
+        <combobox name="addressTypeText"  tabindex="1" bind="CRMADDRESSTYPE" Location="120,20" Size="290,25" propertyBinding="CRMADDRESSTYPE"/>
         <label name="street"  title="EBI_LANG_C_STREET_NR" Location="10,50" Size="103,25"/>
         <textfield name="streetText"  tabindex="2" Location="120,50" Size="290,25"/>
         <label name="zipLocation"  title="EBI_LANG_C_ZIP_LOCATION" Location="10,80" Size="103,25"/>

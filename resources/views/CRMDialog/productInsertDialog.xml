@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dialog name="productInsertDialog" title="Product Insert Dialog" icon="/home/warnwall/git/ebineutrinoCRM_ERP/..\images\product.png" Location="100,100" Size="660,420" visualproperties="false"  assignable="false" modal="true" resizable="true" >
- 		<button name="closeButton" tabindex="6" title="cancel" fitonresize="true" Location="534,360" Size="107,29"/>
-		<button name="applyButton" tabindex="5" title="apply" fitonresize="true" Location="401,360" Size="127,29"/>
-		<editor name="productText" resizewidth="true" resizeheight="true" Location="10,57" Size="630,289"/>
-		<label name="quantity" title="quantity" Location="11,19" Size="80,25"/>
-		<textfield name="quantityText" tabindex="1" Location="90,19" Size="170,25"/>
-		<label name="deduction" title="deduction" Location="295,20" Size="80,25"/>
-		<textfield name="deductionText" tabindex="2" Location="375,20" Size="156,25"/>
-		<label name="%" title="%" Location="535,20" Size="18,25"/>
-		<button name="newProduct" tabindex="3" Location="566,20" Size="31,27"/>
-		<button name="searchProduct" tabindex="4" Location="600,20" Size="31,27"/>
+<dialog name="productInsertDialog" title="Product Insert Dialog" Location="100,100" Size="660,420" visualproperties="false"  assignable="false" modal="true" resizable="true" >
+    <button name="closeButton" tabindex="6" title="cancel" fitonresize="true" Location="534,360" Size="107,29"/>
+    <button name="applyButton" tabindex="5" title="apply" fitonresize="true" Location="401,360" Size="127,29"/>
+    <editor name="productText" resizewidth="true" resizeheight="true" Location="10,57" Size="630,289"/>
+    <label name="quantity" title="quantity" Location="11,19" Size="80,25"/>
+    <textfield name="quantityText" tabindex="1" Location="90,19" Size="170,25"/>
+    <label name="deduction" title="deduction" Location="295,20" Size="80,25"/>
+    <textfield name="deductionText" tabindex="2" Location="375,20" Size="156,25"/>
+    <label name="%" title="%" Location="535,20" Size="18,25"/>
+    <button name="newProduct" tabindex="3" Location="566,20" Size="31,27"/>
+    <button name="searchProduct" tabindex="4" Location="600,20" Size="31,27"/>
 </dialog>

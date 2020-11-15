@@ -56,6 +56,42 @@ public class EBIGUIWidgetsBean {
     private String actionListener = "";
     private String mappedBean = "";
     private String placeHolder="";
+    private String propertyBinding="";
+    private boolean internalNumberAdmin = false;
+    private boolean autoIncrementalNr = false;
+    private boolean taxAdministration = false;
+
+    public boolean isTaxAdministration() {
+        return taxAdministration;
+    }
+
+    public void setTaxAdministration(boolean taxAdministration) {
+        this.taxAdministration = taxAdministration;
+    }
+
+    public boolean isAutoIncrementalNr() {
+        return autoIncrementalNr;
+    }
+
+    public void setAutoIncrementalNr(boolean autoIncrementalNr) {
+        this.autoIncrementalNr = autoIncrementalNr;
+    }
+
+    public boolean isInternalNumberAdmin() {
+        return internalNumberAdmin;
+    }
+
+    public void setInternalNumberAdmin(boolean internalNumberAdmin) {
+        this.internalNumberAdmin = internalNumberAdmin;
+    }
+
+    public String getPropertyBinding() {
+        return propertyBinding;
+    }
+
+    public void setPropertyBinding(String propertyBinding) {
+        this.propertyBinding = propertyBinding;
+    }
 
     public String getPlaceHolder() {
         return placeHolder;

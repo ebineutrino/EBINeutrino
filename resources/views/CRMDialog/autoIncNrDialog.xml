@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dialog name="autoIncNrDialog" title="EBI_LANG_C_CRM_FORM_INTERNAL_NUMBER_SETTING" icon="../images/write.png" Location="100,100" Size="570,450" visualproperties="false" assignable="false" modal="true" resizable="true" >
- 		<label name="category" title="EBI_LANG_CATEGORY" Location="9,20" Size="103,25"/>
-		<button name="saveValue" tabindex="5" title="EBI_LANG_SAVE" Location="413,20" Size="130,25"/>
-		<table name="valueTable" resizewidth="true" resizeheight="true" Location="9,150" Size="547,288"/>
-		<button name="newBnt" Location="9,111" Size="30,27"/>
-		<button name="deleteBnt" Location="80,111" Size="30,27"/>
-		<button name="editBnt" Location="45,111" Size="30,27"/>
-		<combobox name="categoryCombo" tabindex="1" Location="119,20" Size="289,25"/>
-		<label name="numberFrom" title="EBI_LANG_C_NUMBER_FROM" Location="202,60" Size="100,25"/>
-		<textfield name="numberFromText" tabindex="3" Location="304,60" Size="67,25"/>
-		<label name="numberTo" title="EBI_LANG_C_NUMBER_TO" Location="373,60" Size="100,25"/>
-		<textfield name="numberToText" tabindex="4" Location="474,60" Size="67,25"/>
-		<label name="BeginCharText" title="EBI_LANG_BEGIN_CHAR" Location="8,60" Size="109,25"/>
-		<textfield name="beginCharText" tabindex="2" Location="120,60" Size="78,25"/>
+<dialog name="autoIncNrDialog" title="EBI_LANG_C_CRM_FORM_INTERNAL_NUMBER_SETTING" Location="100,100"
+        Size="570,450" visualproperties="false" assignable="false" modal="true" resizable="true" >
+    <label name="category" title="EBI_LANG_CATEGORY" Location="9,20" Size="103,25"/>
+    <button name="saveValue" tabindex="5" title="EBI_LANG_SAVE" Location="413,20" Size="130,25"/>
+    <table name="valueTable" resizewidth="true" resizeheight="true" Location="9,150" Size="547,288"/>
+    <button name="newBnt" Location="9,111" Size="30,27"/>
+    <button name="deleteBnt" Location="80,111" Size="30,27"/>
+    <button name="editBnt" Location="45,111" Size="30,27"/>
+    <combobox name="categoryCombo" tabindex="1" Location="119,20" Size="289,25"/>
+    <label name="numberFrom" title="EBI_LANG_C_NUMBER_FROM" Location="202,60" Size="100,25"/>
+    <textfield name="numberFromText" tabindex="3" Location="304,60" Size="67,25"/>
+    <label name="numberTo" title="EBI_LANG_C_NUMBER_TO" Location="373,60" Size="100,25"/>
+    <textfield name="numberToText" tabindex="4" Location="474,60" Size="67,25"/>
+    <label name="BeginCharText" title="EBI_LANG_BEGIN_CHAR" Location="8,60" Size="109,25"/>
+    <textfield name="beginCharText" tabindex="2" Location="120,60" Size="78,25"/>
 </dialog>

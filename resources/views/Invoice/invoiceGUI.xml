@@ -88,7 +88,7 @@
     <textfield name="invoiceNrText" Location="124,20" Size="252,25"/>
     <textfield name="invoiceNameText" tabindex="1" Location="124,50" Size="252,25"/>
 
-    <combobox name="invoiceStatusText" tabindex="2" Location="124,80" bind="CRMINVOICESTATUS" Size="253,25"/>
+    <combobox name="invoiceStatusText" tabindex="2" Location="124,80" bind="CRMINVOICESTATUS" Size="253,25" propertyBinding="CRMINVOICESTATUS"/>
     <timepicker name="invoiceDateText" tabindex="4" Location="600,50" Size="213,25"/>
 
     <label name="orderNr" title="EBI_LANG_C_ASSOSIATION" Location="493,80" Size="100,25"/>
@@ -97,6 +97,6 @@
     <button name="selectOrder" Location="783,80" Size="31,27" actionListener="org.modules.views.EBICRMInvoiceView.selectOrder" icon="down.png"/>
 
     <label name="category" title="EBI_LANG_CATEGORY" Location="493,20" Size="100,25"/>
-    <combobox name="categoryText" tabindex="3" Location="600,19" bind="CRMINVOICECATEGORY" Size="211,25"/>
+    <combobox name="categoryText" tabindex="3" Location="600,19" bind="CRMINVOICECATEGORY" Size="211,25" propertyBinding="CRMINVOICECATEGORY" autoinc_number="true"/>
 
 </visualpanel>

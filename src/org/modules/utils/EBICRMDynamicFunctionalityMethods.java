@@ -27,8 +27,10 @@ import java.sql.SQLException;
 
 public final class EBICRMDynamicFunctionalityMethods {
 
+    private static EBICRMDynamicFunctionalityMethods singleTon = null;
+    
+    
     public final Object[] getInternNumber(final String category, final boolean isInvoice) {
-
         ResultSet set = null;
         PreparedStatement ps = null;
         final Object[] toRet = new Object[2];
@@ -134,8 +136,11 @@ public final class EBICRMDynamicFunctionalityMethods {
     }
 
     public final void initComboBoxes(final boolean reload) {
+        
         final boolean haveModuleChange = EBISystem.canRelease;
+        
         EBICRMCompanyView.categories = getStatusProperties("COMPANYCATEGORY");
+        
         if (EBISystem.gui().existView("Company")) {
             EBICRMCompanyView.cooperations = getStatusProperties("COMPANYCOOPERATION");
             EBICRMCompanyView.classification = getStatusProperties("COMPANYCLASSIFICATION");
@@ -209,6 +214,7 @@ public final class EBICRMDynamicFunctionalityMethods {
 
                 EBINewProjectTaskDialog.taskStatus = getStatusProperties("CRMPROJECTTASKSTATUS");
                 EBINewProjectTaskDialog.taskType = getStatusProperties("CRMPROJECTTASKTYPE");
+                
                 if (EBISystem.gui().existView("projectTaskDialog")) {
                     EBISystem.gui().combo("taskStatusText", "projectTaskDialog").setModel(new DefaultComboBoxModel(EBINewProjectTaskDialog.taskStatus));
                     EBISystem.gui().combo("taskTypeText", "projectTaskDialog").setModel(new DefaultComboBoxModel(EBINewProjectTaskDialog.taskType));
@@ -454,4 +460,12 @@ public final class EBICRMDynamicFunctionalityMethods {
         }
         return BUFF;
     }
+    
+    public static EBICRMDynamicFunctionalityMethods getInstance(){
+        if(singleTon == null){
+            singleTon = new EBICRMDynamicFunctionalityMethods();
+        }
+        return singleTon;
+    }
+    
 }

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dialog name="projectTaskDialog" title="EBI_LANG_TASK_DIALOG" Location="100,100" Size="710,550" visualproperties="false" assignable="false" modal="true" resizable="true" >
- 		<label name="taskName" title="EBI_LANG_NAME" Location="21,20" Size="100,20"/>
-		<label name="taskStatus" title="EBI_LANG_STATUS" Location="21,48" Size="100,20"/>
-		<label name="taskType" title="EBI_LANG_TYPE" Location="22,77" Size="100,20"/>
-		<label name="duration" title="EBI_LANG_DURATION" Location="320,20" Size="100,20"/>
-<panel name="taskColor" Location="320,48" Size="28,21"/>
-		<button name="chooseTaskColor" title="EBI_LANG_CHOOS_COLOR" Location="358,46" Size="154,26"/>
-		<label name="taskDone" title="EBI_LANG_TASK_DONE" Location="320,77" Size="100,20"/>
-		<editor name="taskDescription" min="1" fitonresize="true" resizewidth="true" Location="11,280" Size="685,201"/>
-		<button name="cancelTask" title="EBI_LANG_CANCEL" fitonresize="true" Location="569,492" Size="124,29"/>
-		<button name="taskSave" title="EBI_LANG_SAVE" fitonresize="true" Location="442,492" Size="123,29"/>
-		<label name="cost" title="EBI_LANG_COST" Location="20,108" Size="100,20"/>
-		<label name="properties" title="EBI_LANG_PROPERTIES" Location="353,109" Size="100,20"/>
-		<table name="tableCost" Location="12,155" Size="332,116"/>
-		<table name="taskPropertiesTable" Location="354,156" Size="344,115"/>
-		<button name="newCost" Location="14,130" Size="28,20"/>
-		<button name="editCost" Location="44,130" Size="28,20"/>
-		<button name="deleteCost" Location="74,130" Size="28,20"/>
-		<button name="newProperties" Location="355,132" Size="28,20"/>
-		<button name="editProperties" Location="385,132" Size="28,20"/>
-		<button name="deleteProperties" Location="415,132" Size="28,20"/>
-		<textfield name="taskNameText" Location="123,20" Size="193,20"/>
-		<combobox name="taskStatusText" Location="124,48" bind="CRMPROJECTTASKSTATUS" Size="193,20"/>
-		<combobox name="taskTypeText" Location="125,77" bind="CRMPROJECTTASKTYPE" Size="192,20"/>
-		<combobox name="taskDoneText" Location="422,77" Size="179,20"/>
-		<textfield name="durationText" Location="423,20" Size="179,20"/>
-		<label name="days" title="EBI_LANG_DAYS" Location="605,20" Size="100,20"/>
+    <label name="taskName" title="EBI_LANG_NAME" Location="21,20" Size="100,20"/>
+    <label name="taskStatus" title="EBI_LANG_STATUS" Location="21,48" Size="100,20"/>
+    <label name="taskType" title="EBI_LANG_TYPE" Location="22,77" Size="100,20"/>
+    <label name="duration" title="EBI_LANG_DURATION" Location="320,20" Size="100,20"/>
+    <panel name="taskColor" Location="320,48" Size="28,21"/>
+    <button name="chooseTaskColor" title="EBI_LANG_CHOOS_COLOR" Location="358,46" Size="154,26"/>
+    <label name="taskDone" title="EBI_LANG_TASK_DONE" Location="320,77" Size="100,20"/>
+    <editor name="taskDescription" min="1" fitonresize="true" resizewidth="true" Location="11,280" Size="685,201"/>
+    <button name="cancelTask" title="EBI_LANG_CANCEL" fitonresize="true" Location="569,492" Size="124,29"/>
+    <button name="taskSave" title="EBI_LANG_SAVE" fitonresize="true" Location="442,492" Size="123,29"/>
+    <label name="cost" title="EBI_LANG_COST" Location="20,108" Size="100,20"/>
+    <label name="properties" title="EBI_LANG_PROPERTIES" Location="353,109" Size="100,20"/>
+    <table name="tableCost" Location="12,155" Size="332,116"/>
+    <table name="taskPropertiesTable" Location="354,156" Size="344,115"/>
+    <button name="newCost" Location="14,130" Size="28,20"/>
+    <button name="editCost" Location="44,130" Size="28,20"/>
+    <button name="deleteCost" Location="74,130" Size="28,20"/>
+    <button name="newProperties" Location="355,132" Size="28,20"/>
+    <button name="editProperties" Location="385,132" Size="28,20"/>
+    <button name="deleteProperties" Location="415,132" Size="28,20"/>
+    <textfield name="taskNameText" Location="123,20" Size="193,20"/>
+    <combobox name="taskStatusText" Location="124,48" bind="CRMPROJECTTASKSTATUS" Size="193,20" propertyBinding="CRMPROJECTTASKSTATUS"/>
+    <combobox name="taskTypeText" Location="125,77" bind="CRMPROJECTTASKTYPE" Size="192,20" propertyBinding="CRMPROJECTTASKTYPE"/>
+    <combobox name="taskDoneText" Location="422,77" Size="179,20"/>
+    <textfield name="durationText" Location="423,20" Size="179,20"/>
+    <label name="days" title="EBI_LANG_DAYS" Location="605,20" Size="100,20"/>
 </dialog>

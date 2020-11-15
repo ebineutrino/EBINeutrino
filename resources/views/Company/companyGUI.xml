@@ -14,9 +14,9 @@
         <label name="comName1" title="EBI_LANG_C_COMPANY_NAME2" Location="10,140" Size="94,25"/>
         <textfield name="name1Text" tabindex="5" Location="105,140" Size="265,25"/>
         <label name="comCategory" title="EBI_LANG_CATEGORY" Location="10,170" Size="94,25"/>
-        <combobox name="categoryText" tabindex="6" bind="COMPANYCATEGORY" Location="105,170" Size="265,25"/>
+        <combobox name="categoryText" tabindex="6" bind="COMPANYCATEGORY" Location="105,170" Size="265,25" propertyBinding="COMPANYCATEGORY" internalNumber="true"/>
         <label name="comCooperation" title="EBI_LANG_C_COOPERATION" Location="10,200" Size="94,25"/>
-        <combobox name="cooperationText" tabindex="7" bind="COMPANYCOOPERATION" Location="105,200" Size="265,25"/>
+        <combobox name="cooperationText" tabindex="7" bind="COMPANYCOOPERATION" Location="105,200" Size="265,25" propertyBinding="COMPANYCOOPERATION"/>
         <label name="comTaxID" title="EBI_LANG_C_VAT_NR" Location="10,230" Size="94,25"/>
         <textfield name="taxIDText" tabindex="8" Location="105,230" Size="265,25"/>
         <label name="comEmployee" title="EBI_LANG_C_EMPLOYEE" Location="10,260" Size="94,25"/>
@@ -30,7 +30,7 @@
         <label name="comEMail" title="EBI_LANG_EMAIL" Location="10,380" Size="94,25"/>
         <textfield name="emailText" tabindex="13" Location="105,380" Size="265,25"/>
         <label name="comClassification" title="EBI_LANG_C_CRM_CLASSIFICATION_TYPE" Location="10,410" Size="94,25"/>
-        <combobox name="classificationText" tabindex="14" bind="COMPANYCLASSIFICATION" Location="105,410" Size="150,25"/>
+        <combobox name="classificationText" tabindex="14" bind="COMPANYCLASSIFICATION" Location="105,410" Size="150,25" propertyBinding="COMPANYCLASSIFICATION"/>
         <checkbox name="lockCompany" tabindex="15" title="EBI_LANG_C_LOCKED" Location="260,410" Size="90,25"/>
     </panel>
     <panel name="companyAddressViewPanel" title="EBI_LANG_C_DESCRIPTION_ADRESS" Location="410,14" Size="609,466">

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dialog name="historyViewDialog" title="EBI_LANG_HISTORY_VIEW" icon="..\images\timemashine.png" Location="100,100" Size="570,480" visualproperties="false" assignable="false" modal="true" resizable="true" >
- 		<button name="closeButton" title="EBI_LANG_CLOSE" fitonresize="true" Location="450,421" Size="107,29"/>
-		<label name="history" title="EBI_LANG_HISTORY" Location="13,20" Size="100,25"/>
-		<combobox name="historyText" tabindex="1" title="historyText" Location="114,20" Size="321,25"/>
-		<button name="viewHistory" tabindex="2" title="EBI_LANG_VIEW" Location="446,19" Size="100,28"/>
-		<editor name="viewhistoryText" resizewidth="true" resizeheight="true" Location="14,57" Size="541,359"/>
+<dialog name="historyViewDialog" title="EBI_LANG_HISTORY_VIEW" Location="100,100" Size="570,480" visualproperties="false" assignable="false" modal="true" resizable="true" >
+    <button name="closeButton" title="EBI_LANG_CLOSE" fitonresize="true" Location="450,421" Size="107,29"/>
+    <label name="history" title="EBI_LANG_HISTORY" Location="13,20" Size="100,25"/>
+    <combobox name="historyText" tabindex="1" title="historyText" Location="114,20" Size="321,25"/>
+    <button name="viewHistory" tabindex="2" title="EBI_LANG_VIEW" Location="446,19" Size="100,28"/>
+    <editor name="viewhistoryText" resizewidth="true" resizeheight="true" Location="14,57" Size="541,359"/>
 </dialog>

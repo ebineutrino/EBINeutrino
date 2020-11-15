@@ -8,7 +8,7 @@
         <textfield name="activityNameText" tabindex="1" Location="120,20" Size="290,25"/>
         <label name="activityType" title="EBI_LANG_TYPE" Location="10,50" Size="106,25"/>
         
-        <combobox name="activityTypeText" tabindex="2" bind="COMPANYACTIVITYTYPE" Location="120,50" Size="290,25"/>
+        <combobox name="activityTypeText" tabindex="2" bind="COMPANYACTIVITYTYPE" Location="120,50" Size="290,25"  propertyBinding="COMPANYACTIVITYTYPE"/>
         
         <label name="activityDate" title="EBI_LANG_DUE_DATE" Location="10,80" Size="106,25"/>
         
@@ -21,7 +21,7 @@
         
         <textfield name="durationText" tabindex="6" Location="120,110" Size="89,25"/>
         
-        <combobox name="activityStatusText" tabindex="7" bind="COMPANYACTIVITYSTATUS" Location="120,140" Size="290,25"/>
+        <combobox name="activityStatusText" tabindex="7" bind="COMPANYACTIVITYSTATUS" Location="120,140" Size="290,25" propertyBinding="COMPANYACTIVITYSTATUS"/>
         
 
         <button name="newActivityDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_ADD_NEW_DOC" Location="439,20" Size="31,27" actionListener="org.modules.views.EBICRMCompanyActivityView.newDocs" icon="new.png"/>

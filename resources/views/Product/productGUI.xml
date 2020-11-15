@@ -7,12 +7,12 @@
         <label name="ProductName" title="EBI_LANG_NAME" Location="10,50" Size="105,25"/>
         <textfield name="ProductNameText" tabindex="2" Location="120,50" Size="245,25"/>
         <label name="ProductCategory" title="EBI_LANG_CATEGORY" Location="10,80" Size="105,25"/>
-        <combobox name="ProductCategoryText" tabindex="3" Location="120,80" bind="COMPANYPRODUCTCATEGORY" Size="245,25"/>
+        <combobox name="ProductCategoryText" tabindex="3" Location="120,80" bind="COMPANYPRODUCTCATEGORY" Size="245,25" propertyBinding="COMPANYPRODUCTCATEGORY"/>
         <label name="ProductType" title="EBI_LANG_TYPE" Location="10,110" Size="104,25"/>
-        <combobox name="ProductTypeText" tabindex="4" Location="120,110" bind="COMPANYPRODUCTTYPE" Size="245,25"/>
+        <combobox name="ProductTypeText" tabindex="4" Location="120,110" bind="COMPANYPRODUCTTYPE" Size="245,25" propertyBinding="COMPANYPRODUCTTYPE"/>
         <panel name="taxPanel" title="EBI_LANG_PRICE" Location="386,10" Size="442,150">
             <label name="productTaxType" title="EBI_LANG_TAX_TYPE" Location="10,20" Size="113,27"/>
-            <combobox name="productTaxTypeTex" tabindex="5" Location="125,20" Size="245,25"/>
+            <combobox name="productTaxTypeTex" tabindex="5" Location="125,20" Size="245,25" bind="COMPANYPRODUCTTAX" propertyBinding="COMPANYPRODUCTTAX" taxadmin="true"/>
             <label name="productGross" title="EBI_LANG_PRE_TAX_PRICE" Location="10,50" Size="113,25"/>
             <formattedtextfield name="productGrossText" tabindex="6" Location="125,50" Size="245,25"/>
 

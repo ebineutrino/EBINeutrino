@@ -6,16 +6,15 @@
         <label name="prosolName" title="EBI_LANG_NAME" Location="10,50" Size="112,25"/>
         <textfield name="prosolNameText" Location="125,50" Size="280,25"/>
         <label name="prosolCategory" title="EBI_LANG_CATEGORY" Location="10,110" Size="113,20"/>
-        <combobox name="prosolCategoryText" Location="125,110" bind="CRMPROBLEMSOLCATEGORY" Size="280,25"/>
+        <combobox name="prosolCategoryText" Location="125,110" bind="CRMPROBLEMSOLCATEGORY" Size="280,25" propertyBinding="CRMPROBLEMSOLCATEGORY"/>
         <label name="prosolType" title="EBI_LANG_TYPE" Location="10,140" Size="113,25"/>
-        <combobox name="prosolTypeText" Location="125,140" bind="CRMPROBLEMSOLTYPE" Size="280,25"/>
+        <combobox name="prosolTypeText" Location="125,140" bind="CRMPROBLEMSOLTYPE" Size="280,25" propertyBinding="CRMPROBLEMSOLTYPE"/>
         <label name="prosolStatus" title="EBI_LANG_C_STATUS" Location="10,170" Size="111,25"/>
-        <combobox name="prosolStatusText" Location="125,170" bind="CRMPROBLEMSOLSTATUS" Size="280,25"/>
+        <combobox name="prosolStatusText" Location="125,170" bind="CRMPROBLEMSOLSTATUS" Size="280,25" propertyBinding="CRMPROBLEMSOLSTATUS"/>
         <label name="prosolClassification" title="EBI_LANG_CLASSIFICATION" Location="10,80" Size="112,25"/>
-        <combobox name="prosolClassificationText" Location="125,80" bind="CRMPROBLEMSOLCLASS" Size="280,25"/>
+        <combobox name="prosolClassificationText" Location="125,80" bind="CRMPROBLEMSOLCLASS" Size="280,25" propertyBinding="CRMPROBLEMSOLCLASS"/>
     </panel>
     <panel name="prosolDocument" title="EBI_LANG_C_PANEL_DOCUMENT" Location="10,288" Size="438,190">
-
         <button name="newprosolDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_ADD_NEW_DOC" Location="10,20" Size="31,27"
                 actionListener="org.modules.views.EBICRMProblemSolutionView.newDocs" icon="new.png"/>
         <button name="showprosolDoc" enabled="false" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_DOC" Location="45,20" Size="31,27" 

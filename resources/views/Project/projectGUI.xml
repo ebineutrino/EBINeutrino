@@ -34,7 +34,7 @@
     <timepicker name="prjstartDateText" tabindex="4" Location="470,50" Size="180,25"/>
     <timepicker name="prjendDateText" tabindex="5" Location="740,20" Size="150,25"/>
     
-    <combobox name="prjStatusText" tabindex="6" Location="740,50" bind="CRMPROJECTSTATUS" Size="151,25"/>
+    <combobox name="prjStatusText" tabindex="6" Location="740,50" bind="CRMPROJECTSTATUS" Size="151,25" propertyBinding="CRMPROJECTSTATUS"/>
     <label name="projectBudget" title="EBI_LANG_PROJECT_BUDGET" Location="910,20" Size="70,25"/>
     
     <formattedtextfield name="budgetText" tabindex="7" Location="990,20" Size="125,25"/>

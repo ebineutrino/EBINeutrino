@@ -14,7 +14,7 @@
         <label name="subjectMeeting" title="EBI_LANG_C_MEMO_SUBJECT" Location="10,20" Size="100,25"/>
         <textfield name="subjectMeetingText" tabindex="1" Location="115,20" Size="290,25"/>
         <label name="meetingType" title="EBI_LANG_C_MEETING_TYPE" Location="10,50" Size="100,25"/>
-        <combobox name="meetingTypeText" tabindex="2" bind="COMPANYMEETINGTYPE" Location="115,50" Size="290,25"/>
+        <combobox name="meetingTypeText" tabindex="2" bind="COMPANYMEETINGTYPE" Location="115,50" Size="290,25" propertyBinding="COMPANYMEETINGTYPE"/>
         <label name="dateMeeting" title="EBI_LANG_DATE" Location="10,80" Size="100,25"/>
         <timepicker name="dateMeetingText" tabindex="3" Location="115,80" Size="290,25"/>
         <table name="meetingDoc" Location="8,145" Size="405,135"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dialog name="searchCRMContact" title="EBI_LANG_C_SEARCH_CONTACT" icon="people.png" Location="100,100" Size="900,440" visualproperties="false" assignable="false" modal="true" resizable="true" >
+<dialog name="searchCRMContact" title="EBI_LANG_C_SEARCH_CONTACT" Location="100,100" Size="900,440" visualproperties="false" assignable="false" modal="true" resizable="true" >
     <button name="cancelButton" title="EBI_LANG_CANCEL" fitonresize="true" Location="775,394" Size="107,29"/>
     <button name="applyButton" title="EBI_LANG_APPLY" fitonresize="true" Location="641,394" Size="132,29"/>
     <textfield name="filterTableText" tabindex="2" Location="10,10" Size="750,35" placeHolder="EBI_LANG_FILTER"/>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dialog name="csvSetImportDialog" title="EBI_LANG_CSV_SET_UP" icon="..\images\eximp.png" Location="100,100" Size="570,420" visualproperties="false" assignable="false" resizable="true" >
- 		<label name="name" title="EBI_LANG_DB_TABLE" Location="10,11" Size="103,20"/>
-		<button name="saveValue" tabindex="2" title="EBI_LANG_IMPORT" Location="408,9" Size="130,24"/>
-		<button name="closeDialog" tabindex="3" title="Close" fitonresize="true" Location="407,384" Size="150,25"/>
-		<table name="valueTable" resizewidth="true" resizeheight="true" Location="3,81" Size="553,298"/>
-		<combobox name="dataTableText" Location="117,11" Size="265,20"/>
-		<checkbox name="insertUpdate" title="Update" Location="72,51" Size="100,20"/>
-		<combobox name="keyText" Location="225,49" Size="209,20"/>
-		<label name="key" title="Key:" Location="174,50" Size="49,20"/>
-		<checkbox name="removeHeader" title="EBI_LANG_REMOVE_HEADER" Location="459,48" Size="220,20"/>
+<dialog name="csvSetImportDialog" title="EBI_LANG_CSV_SET_UP" Location="100,100" Size="570,420" visualproperties="false" assignable="false" resizable="true" >
+    <label name="name" title="EBI_LANG_DB_TABLE" Location="10,11" Size="103,20"/>
+    <button name="saveValue" tabindex="2" title="EBI_LANG_IMPORT" Location="408,9" Size="130,24"/>
+    <button name="closeDialog" tabindex="3" title="Close" fitonresize="true" Location="407,384" Size="150,25"/>
+    <table name="valueTable" resizewidth="true" resizeheight="true" Location="3,81" Size="553,298"/>
+    <combobox name="dataTableText" Location="117,11" Size="265,20"/>
+    <checkbox name="insertUpdate" title="Update" Location="72,51" Size="100,20"/>
+    <combobox name="keyText" Location="225,49" Size="209,20"/>
+    <label name="key" title="Key:" Location="174,50" Size="49,20"/>
+    <checkbox name="removeHeader" title="EBI_LANG_REMOVE_HEADER" Location="459,48" Size="220,20"/>
 </dialog>

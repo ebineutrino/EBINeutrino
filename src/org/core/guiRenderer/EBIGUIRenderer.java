@@ -52,6 +52,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.core.gui.component.EBITextfield;
+import org.modules.utils.EBICRMDynamicFunctionalityMethods;
 import org.modules.views.dialogs.EBIDialogInternalNumberAdministration;
 import org.modules.views.dialogs.EBIDialogTaxAdministration;
 import org.sdk.gui.dialogs.EBIDialogValueSetter;
@@ -597,6 +598,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             public void actionPerformed(ActionEvent e) {
                                 JMenuItem ec = (JMenuItem) e.getSource();
                                 new EBIDialogValueSetter(ec.getName()).setVisible();
+                                EBICRMDynamicFunctionalityMethods.getInstance().initComboBoxes(true);
                             }
                         });
                         popupmenu.add(settings);
@@ -609,6 +611,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 new EBIDialogInternalNumberAdministration(true).setVisible();
+                                EBICRMDynamicFunctionalityMethods.getInstance().initComboBoxes(true);
                             }
                         });
                         popupmenu.add(autoIncItem);
@@ -621,6 +624,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 new EBIDialogInternalNumberAdministration(false).setVisible();
+                                EBICRMDynamicFunctionalityMethods.getInstance().initComboBoxes(true);
                             }
                         });
                         popupmenu.add(internalNrItem);
@@ -633,6 +637,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 new EBIDialogTaxAdministration().setVisible();
+                                EBICRMDynamicFunctionalityMethods.getInstance().initComboBoxes(true);
                             }
                         });
                         popupmenu.add(taxAdminItem);
@@ -647,9 +652,10 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             if (lastPopup.isVisible()) {
                                 lastPopup.setVisible(false);
                                 lastPopup = null;
+                                 ((JTextField) e.getSource()).requestFocus();
                             }
                         }
-                        ((JTextField) e.getSource()).requestFocus();
+                       
                     }
 
                     @Override

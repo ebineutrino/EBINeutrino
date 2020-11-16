@@ -76,6 +76,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     private GroovyScriptEngine gse = null;
     private Binding binding = null;
     private boolean observeChanges = false;
+    private JPopupMenu lastPopup = null;
 
     private String resourcePath = System.getProperty("user.dir")
             + File.separator + "resources"
@@ -584,13 +585,11 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 final Border empty = new EmptyBorder(0, 5, 0, 0);
                 final CompoundBorder border = new CompoundBorder(line, empty);
 
-                
-                JPopupMenu popupmenu = null;
-                if (!"".equals(bean.getPropertyBinding()) || bean.isInternalNumberAdmin() || bean.isAutoIncrementalNr() || bean.isTaxAdmin()) {
-                    popupmenu = new JPopupMenu("Combo Settings");
-                    
+                if (!"".equals(bean.getPropertyBinding()) || bean.isInternalNumberAdmin() || bean.isAutoIncrementalNr() || bean.isTaxAdministration()) {
+                    JPopupMenu popupmenu = new JPopupMenu("Combo Settings");
+
                     if (!"".equals(bean.getPropertyBinding())) {
-                        JMenuItem settings = new JMenuItem(EBISystem.i18n("EBI_LANG_SETTINGS"));
+                        JMenuItem settings = new JMenuItem(EBISystem.i18n("EBI_LANG_ADMINISTRATION"));
                         settings.setName(bean.getPropertyBinding());
                         settings.setIcon(EBISystem.getInstance().getIconResource("settings_small.png"));
                         settings.addActionListener(new ActionListener() {
@@ -602,32 +601,32 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                         });
                         popupmenu.add(settings);
                     }
-                    
-                    if(bean.isAutoIncrementalNr()){
+
+                    if (bean.isAutoIncrementalNr()) {
                         JMenuItem autoIncItem = new JMenuItem(EBISystem.i18n("EBI_LANG_INVOICE_AUTOINC_NR"));
                         autoIncItem.setIcon(EBISystem.getInstance().getIconResource("incremental_small.png"));
                         autoIncItem.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                               new EBIDialogInternalNumberAdministration(true).setVisible();
+                                new EBIDialogInternalNumberAdministration(true).setVisible();
                             }
                         });
                         popupmenu.add(autoIncItem);
                     }
-                    
-                    if(bean.isInternalNumberAdmin()){
-                        JMenuItem internalNrItem = new JMenuItem(EBISystem.i18n("EBI_LANG_C_MANAGING"));
+
+                    if (bean.isInternalNumberAdmin()) {
+                        JMenuItem internalNrItem = new JMenuItem(EBISystem.i18n("EBI_LANG_C_CRM_INTERNAL_NUMBER_SETTINGS"));
                         internalNrItem.setIcon(EBISystem.getInstance().getIconResource("incremental_small.png"));
                         internalNrItem.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                               new EBIDialogInternalNumberAdministration(false).setVisible();
+                                new EBIDialogInternalNumberAdministration(false).setVisible();
                             }
                         });
                         popupmenu.add(internalNrItem);
                     }
-                    
-                    if(bean.isTaxAdministration()){
+
+                    if (bean.isTaxAdministration()) {
                         JMenuItem taxAdminItem = new JMenuItem(EBISystem.i18n("EBI_LANG_C_CRM_TAX_ADMINISTRATION"));
                         taxAdminItem.setIcon(EBISystem.getInstance().getIconResource("incremental_small.png"));
                         taxAdminItem.addActionListener(new ActionListener() {
@@ -640,7 +639,25 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                     }
                     combo.setComponentPopupMenu(popupmenu);
                 }
-                
+
+                ((JTextField) combo.getEditor().getEditorComponent()).addFocusListener(new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        if (lastPopup != null) {
+                            if (lastPopup.isVisible()) {
+                                lastPopup.setVisible(false);
+                                lastPopup = null;
+                            }
+                        }
+                        ((JTextField) e.getSource()).requestFocus();
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        lastPopup = ((JTextField) e.getSource()).getComponentPopupMenu();
+                    }
+                });
+
                 ((JTextField) combo.getEditor().getEditorComponent()).setBorder(border);
                 ((JTextField) combo.getEditor().getEditorComponent()).addActionListener(new ActionListener() {
                     @Override

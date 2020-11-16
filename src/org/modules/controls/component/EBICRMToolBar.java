@@ -44,10 +44,6 @@ public class EBICRMToolBar extends EBICRMActionListener {
             EBISystem.gui().getToolBarButton("toolbarItemDelete", "ebiToolBar").addActionListener(deleteListenerAction());
         }
         
-        if (EBISystem.gui().getToolBarButton("toolbarItemCRMSetting", "ebiToolBar") != null) {
-            EBISystem.gui().getToolBarButton("toolbarItemCRMSetting", "ebiToolBar").addActionListener(crmSettingAction());
-        }
-        
         if (EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar") != null) {
             if (EBISystem.registeredModule.contains("Product/productGUI.xml") || EBISystem.getInstance().getUserRight().isAdministrator()) {
                 ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).addActionListener(windowShowProductTab());

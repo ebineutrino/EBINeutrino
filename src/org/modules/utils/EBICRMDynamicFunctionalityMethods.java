@@ -24,6 +24,7 @@ import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.modules.views.dialogs.EBIDialogProperties;
 
 public final class EBICRMDynamicFunctionalityMethods {
 
@@ -189,7 +190,6 @@ public final class EBICRMDynamicFunctionalityMethods {
                 EBICRMProblemSolutionView.prosolType = getStatusProperties("CRMPROBLEMSOLTYPE");
                 EBICRMProblemSolutionView.prosolCategory = getStatusProperties("CRMPROBLEMSOLCATEGORY");
                 EBICRMProblemSolutionView.prosolClassification = getStatusProperties("CRMPROBLEMSOLCLASS");
-
                 if (EBISystem.gui().existView("Prosol")) {
                     EBISystem.gui().combo("prosolStatusText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolStatus));
                     EBISystem.gui().combo("prosolTypeText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolType));
@@ -200,7 +200,6 @@ public final class EBICRMDynamicFunctionalityMethods {
                 EBICRMProductView.category = getStatusProperties("COMPANYPRODUCTCATEGORY");
                 EBICRMProductView.type = getStatusProperties("COMPANYPRODUCTTYPE");
                 EBICRMProductView.taxType = getStatusProperties("COMPANYPRODUCTTAX");
-
                 if (EBISystem.gui().existView("Product")) {
                     EBISystem.gui().combo("ProductCategoryText", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.category));
                     EBISystem.gui().combo("ProductTypeText", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.type));
@@ -214,15 +213,28 @@ public final class EBICRMDynamicFunctionalityMethods {
 
                 EBINewProjectTaskDialog.taskStatus = getStatusProperties("CRMPROJECTTASKSTATUS");
                 EBINewProjectTaskDialog.taskType = getStatusProperties("CRMPROJECTTASKTYPE");
-                
                 if (EBISystem.gui().existView("projectTaskDialog")) {
                     EBISystem.gui().combo("taskStatusText", "projectTaskDialog").setModel(new DefaultComboBoxModel(EBINewProjectTaskDialog.taskStatus));
                     EBISystem.gui().combo("taskTypeText", "projectTaskDialog").setModel(new DefaultComboBoxModel(EBINewProjectTaskDialog.taskType));
                 }
-
+                
+                EBIDialogProperties.projectCost = getStatusProperties("CRMPROJECTCOSTS");
+                if (EBISystem.gui().existView("costValueDialog")) {
+                      EBISystem.gui().combo("propertiesText", "costValueDialog").setModel(new DefaultComboBoxModel(EBIDialogProperties.projectCost));
+                }
+                
+                EBIDialogProperties.projectProperty = getStatusProperties("CRMPROJECTPROPS");
+                if (EBISystem.gui().existView("projectPropertiesDialog")) {
+                      EBISystem.gui().combo("propertiesText", "projectPropertiesDialog").setModel(new DefaultComboBoxModel(EBIDialogProperties.projectProperty));
+                }
+                
+                EBIDialogProperties.productDimension = getStatusProperties("CRMPRODUCTDIMENSIONS");
+                if (EBISystem.gui().existView("propertiesDialog")) {
+                      EBISystem.gui().combo("propertiesText", "propertiesDialog").setModel(new DefaultComboBoxModel(EBIDialogProperties.productDimension));
+                }
+                
                 EBICRMInvoiceView.invoiceCategory = getStatusProperties("CRMINVOICECATEGORY");
                 EBICRMInvoiceView.invoiceStatus = getStatusProperties("CRMINVOICESTATUS");
-                
                 if (EBISystem.gui().existView("Invoice")) {
                     EBISystem.gui().combo("invoiceStatusText", "Invoice").setModel(new DefaultComboBoxModel(EBICRMInvoiceView.invoiceStatus));
                     EBISystem.gui().combo("categoryText", "Invoice").setModel(new DefaultComboBoxModel(EBICRMInvoiceView.invoiceCategory));

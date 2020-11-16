@@ -2,7 +2,6 @@ package org.modules.controls.component.listener;
 import org.modules.views.dialogs.EBICRMHistoryView;
 import org.modules.views.dialogs.EBIDialogSearchCompany;
 import org.modules.views.dialogs.EBIDialogSearchContact;
-import org.modules.views.settings.CRMSetting;
 import org.sdk.EBISystem;
 import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
@@ -181,24 +180,6 @@ public class EBICRMActionListener {
                     if (EBISystem.getModule().storeAutomate.deleteFromSelectedTab(EBISystem.gui().vpanel(componentName).getID())) {
                         EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_RECORD_DELETED")).Show(EBIMessage.INFO_MESSAGE);
                     }
-                }
-            }
-        };
-    }
-
-    protected ActionListener crmSettingAction() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                boolean pass;
-                if (EBISystem.getInstance().getIEBISystemUserRights().isAdministrator()) {
-                    pass = true;
-                } else {
-                    pass = EBISystem.getSecurity().secureModule();
-                }
-                if (pass) {
-                    final CRMSetting setting = new CRMSetting();
-                    setting.setVisible();
                 }
             }
         };

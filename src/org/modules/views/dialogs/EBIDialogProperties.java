@@ -25,7 +25,9 @@ import java.util.Iterator;
 public class EBIDialogProperties {
 
     private Crmprojecttask projectTask = null;
-    private String[] properties = null;
+    public static String[] productDimension = null;
+    public static String[] projectCost = null;
+    public static String[] projectProperty = null;
     private boolean isProperties = false;
     private boolean isProjectProperties = false;
     private boolean isProjectCost = false;
@@ -38,16 +40,12 @@ public class EBIDialogProperties {
     private String pack = "";
 
     public EBIDialogProperties(final Crmproduct prd, final Crmproductdimension dims) {
-
         EBISystem.gui().loadGUI("CRMDialog/propertiesDialog.xml");
         product = prd;
         EBISystem.hibernate().openHibernateSession("EBI_PROPERTIES");
         EBISystem.hibernate().transaction("EBI_PROPERTIES").begin();
-        getAvalProperties();
-        EBISystem.gui().combo("propertiesText", "propertiesDialog").setModel(new javax.swing.DefaultComboBoxModel(properties));
-
+        EBISystem.gui().combo("propertiesText", "propertiesDialog").setModel(new javax.swing.DefaultComboBoxModel(productDimension));
         if (dims != null) {
-
             dimension = dims;
             EBISystem.gui().textArea("propertiesValueText", "propertiesDialog").setText(dims.getValue());
             EBISystem.gui().combo("propertiesText", "propertiesDialog").setSelectedItem(dims.getName());
@@ -69,14 +67,12 @@ public class EBIDialogProperties {
         if (isCost) {
             projectCosts = (Crmprojectcost) prop;
             EBISystem.gui().loadGUI("CRMDialog/costValueDialog.xml");
-            getAvalProjectCosts();
-            EBISystem.gui().combo("propertiesText", "costValueDialog").setModel(new javax.swing.DefaultComboBoxModel(properties));
+            EBISystem.gui().combo("propertiesText", "costValueDialog").setModel(new javax.swing.DefaultComboBoxModel(projectCost));
             isProjectCost = true;
         } else {
             projectProperties = (Crmprojectprop) prop;
-            EBISystem.gui().loadGUI("CRMDialog/propertiesDialog.xml");
-            getAvalProjectProperties();
-            EBISystem.gui().combo("propertiesText", "propertiesDialog").setModel(new javax.swing.DefaultComboBoxModel(properties));
+            EBISystem.gui().loadGUI("CRMDialog/projectPropertiesDialog.xml");
+            EBISystem.gui().combo("propertiesText", "projectPropertiesDialog").setModel(new javax.swing.DefaultComboBoxModel(projectProperty));
             isProjectProperties = true;
         }
 
@@ -95,11 +91,11 @@ public class EBIDialogProperties {
             } else {
                 name = ((Crmprojectprop) prop).getName();
                 value = ((Crmprojectprop) prop).getValue();
-                EBISystem.gui().textArea("propertiesValueText", "propertiesDialog").setText(value.toString());
-                EBISystem.gui().combo("propertiesText", "propertiesDialog").setSelectedItem(name);
-                if (EBISystem.gui().combo("propertiesText", "propertiesDialog").getEditor().getItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().combo("propertiesText", "propertiesDialog").insertItemAt(name, 1);
-                    EBISystem.gui().combo("propertiesText", "propertiesDialog").setSelectedIndex(1);
+                EBISystem.gui().textArea("propertiesValueText", "projectPropertiesDialog").setText(value.toString());
+                EBISystem.gui().combo("propertiesText", "projectPropertiesDialog").setSelectedItem(name);
+                if (EBISystem.gui().combo("propertiesText", "projectPropertiesDialog").getEditor().getItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
+                    EBISystem.gui().combo("propertiesText", "projectPropertiesDialog").insertItemAt(name, 1);
+                    EBISystem.gui().combo("propertiesText", "projectPropertiesDialog").setSelectedIndex(1);
                 }
             }
             isEdit = true;
@@ -172,91 +168,6 @@ public class EBIDialogProperties {
             }
         });
         EBISystem.gui().showGUI();
-    }
-
-    private void getAvalProperties() {
-        Query query;
-        try {
-            query = EBISystem.hibernate().session("EBI_PROPERTIES").createQuery("from Crmproductdimensions ");
-            properties = new String[query.list().size() + 1];
-            final Iterator it = query.iterate();
-            properties[0] = EBISystem.i18n("EBI_LANG_PLEASE_SELECT");
-            int i = 1;
-            while (it.hasNext()) {
-                final Crmproductdimensions dim = (Crmproductdimensions) it.next();
-                EBISystem.hibernate().session("EBI_PROPERTIES").refresh(dim);
-                properties[i] = dim.getName();
-                i++;
-            }
-
-        } catch (final HibernateException e) {
-            e.printStackTrace();
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getAvalProjectProperties() {
-        Query query;
-        try {
-            query = EBISystem.hibernate().session("EBI_PROPERTIES").createQuery("from Crmprojectprops ");
-
-            if (query != null) {
-                properties = new String[query.list().size() + 1];
-                final Iterator it = query.iterate();
-                int i = 1;
-                while (it.hasNext()) {
-                    final Crmprojectprops prop = (Crmprojectprops) it.next();
-                    EBISystem.hibernate().session("EBI_PROPERTIES").refresh(prop);
-                    properties[i] = prop.getName();
-                    i++;
-                }
-            }else{
-                properties = new String[1];
-            }
-            properties[0] = EBISystem.i18n("EBI_LANG_PLEASE_SELECT");
-        } catch (final HibernateException e) {
-            e.printStackTrace();
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getAvalProjectCosts() {
-
-        PreparedStatement ps = null;
-        ResultSet set = null;
-
-        try {
-            ps = EBISystem.db().initPreparedStatement("SELECT * FROM CRMPROJECTCOSTS order by NAME");
-            set = ps.executeQuery();
-
-            if (set != null) {
-                set.last();
-                final int size = set.getRow();
-                if (size > 0) {
-                    set.beforeFirst();
-                    properties = new String[size + 1];
-                    int i = 1;
-                    while (set.next()) {
-                        properties[i] = set.getString("NAME");
-                        i++;
-                    }
-                }else{
-                    properties = new String[1];
-                }
-                properties[0] = EBISystem.i18n("EBI_LANG_PLEASE_SELECT");
-            }
-        } catch (final SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                ps.close();
-                set.close();
-            } catch (final SQLException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     private void saveProductProperties() {

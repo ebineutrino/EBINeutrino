@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dialog name="propertiesDialog" title="Properties Dialog" Location="100,100" Size="460,280" visualproperties="false" assignable="false" modal="true" >
+<dialog name="projectPropertiesDialog" title="Properties Dialog" Location="100,100" Size="460,280" visualproperties="false" assignable="false" modal="true" >
     <button name="closeButton" tabindex="4" title="cancel" Location="327,240" Size="107,29"/>
     <button name="applyButton" tabindex="3" title="apply" Location="192,240" Size="132,29"/>
     <label name="properties" title="properties" Location="13,20" Size="100,20"/>
-    <combobox name="propertiesText" tabindex="1" editable="true" Location="114,20" Size="321,20"  bind="CRMPRODUCTDIMENSIONS" propertyBinding="CRMPRODUCTDIMENSIONS"/>
+    <combobox name="propertiesText" tabindex="1" editable="true" Location="114,20" Size="321,20"  bind="CRMPROJECTPROPS" propertyBinding="CRMPROJECTPROPS"/>
     <textarea name="propertiesValueText" tabindex="2" Location="13,75" Size="425,149"/>
     <label name="value" title="value" Location="14,50" Size="100,20"/>
 </dialog>

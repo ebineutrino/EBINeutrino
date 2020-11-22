@@ -51,6 +51,8 @@ public class EBINeutrinoSystemInit extends EBISystem {
                 final EBISetup application = new EBISetup(this);
                 application.setResizable(false);
                 application.setVisible(true);
+            }else{
+                System.exit(0);
             }
         }else{
             if(!splash.isVisible()){

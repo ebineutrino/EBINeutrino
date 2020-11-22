@@ -354,7 +354,6 @@ public class EBISystem {
                 registeredModule.add("CRMDialog/crmContactSearch.xml");
                 registeredModule.add("CRMDialog/crmHistoryDialog.xml");
                 registeredModule.add("CRMDialog/crmSelectionDialog.xml");
-                registeredModule.add("CRMDialog/crmSettingDialog.xml");
                 registeredModule.add("CRMDialog/emailTemplateDialog.xml");
                 registeredModule.add("CRMDialog/importDataDialog.xml");
                 registeredModule.add("CRMDialog/newProjectTaskDialog.xml");
@@ -421,20 +420,24 @@ public class EBISystem {
         return pwd;
     }
 
-    /**
-     * Open report file
-     *
-     * @param filename
-     */
-    public void openPDFReportFile(final String filename) {
+    private void openDocument(String key, final String filename) {
         try {
+            final String pdf_path = EBIPropertiesRW.getEBIProperties().getValue(key);
 
-            final String pdf_path = EBIPropertiesRW.getEBIProperties().getValue("EBI_Neutrino_PDF");
-
-            if (System.getProperty("os.name").equals("Linux")) {
-                Runtime.getRuntime().exec(pdf_path + " " + filename);
+            if ("".equals(pdf_path)) {
+                if (isMac()) {
+                    Runtime.getRuntime().exec("open " + filename);
+                } else if (isUnix()) {
+                    Runtime.getRuntime().exec("xdg-open " + filename);
+                } else {
+                    Runtime.getRuntime().exec("cmd /C start " + pdf_path + " " + filename);
+                }
             } else {
-                Runtime.getRuntime().exec("cmd /C start " + pdf_path + " " + filename);
+                if (isMac() || isUnix()) {
+                    Runtime.getRuntime().exec(pdf_path + " " + filename);
+                } else {
+                    Runtime.getRuntime().exec("cmd /C start " + pdf_path + " " + filename);
+                }
             }
 
         } catch (final Exception ex) {
@@ -445,41 +448,21 @@ public class EBISystem {
     }
 
     /**
+     * Open report file
+     *
+     * @param filename
+     */
+    public void openPDFReportFile(final String fileName) {
+        this.openDocument("EBI_Neutrino_PDF", fileName);
+    }
+
+    /**
      * Open a Text reader program specified in the ebiNeutrino.properties
      *
      * @param fileName
      */
     public void openTextDocumentFile(final String fileName) {
-        try {
-
-            String path_office = EBIPropertiesRW.getEBIProperties().getValue("EBI_Neutrino_TextEditor_Path");
-
-            if (!path_office.equals("System Registry")) {
-
-                if (path_office.indexOf(' ') != -1) {
-                    path_office = "\"" + path_office + "\"";
-                }
-
-            } else {
-                if (System.getProperty("os.name").equals("Linux")) {
-                    path_office = "ooffice -writer";
-                } else {
-                    path_office = "ooffice.exe -writer";
-                }
-            }
-
-            if (System.getProperty("os.name").equals("Linux")) {
-                Runtime.getRuntime().exec(path_office + " " + fileName);
-            } else {
-                Runtime.getRuntime().exec("cmd /C start " + path_office + " " + fileName);
-            }
-
-        } catch (final Exception ex) {
-            logger.error("Exception", ex.fillInStackTrace());
-            EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex) + i18n("EBI_LANG_ERROR_TXT_PROG_NOT_FOUND"))
-                    .Show(EBIMessage.ERROR_MESSAGE);
-        }
-
+        this.openDocument("EBI_Neutrino_TextEditor_Path", fileName);
     }
 
     /**
@@ -744,24 +727,21 @@ public class EBISystem {
     public static boolean isUnix() {
         final String os = System.getProperty("os.name").toLowerCase();
         // linux or unix
-        return (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0);
+        return (os.indexOf("unix") >= 0 || os.indexOf("linux") >= 0);
     }
-    
-    
+
     public static boolean isWindows(String value) {
         // windows
-        return (value.indexOf("win") >= 0);
+        return (value.toLowerCase().indexOf("win") != -1);
     }
 
     public static boolean isMac(String value) {
-        return (value.indexOf("mac") >= 0);
+        return (value.toLowerCase().indexOf("mac") != -1);
     }
 
     public static boolean isUnix(String value) {
-        return (value.indexOf("nix") >= 0 || value.indexOf("nux") >= 0);
+        return (value.toLowerCase().indexOf("unix") != -1 || value.toLowerCase().indexOf("linux") != -1);
     }
-    
-    
 
     public String convertReportCategoryToIndex(final String category) {
         String index = "0";

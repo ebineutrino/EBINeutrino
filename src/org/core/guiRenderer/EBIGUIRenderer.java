@@ -655,7 +655,6 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                                  ((JTextField) e.getSource()).requestFocus();
                             }
                         }
-                       
                     }
 
                     @Override

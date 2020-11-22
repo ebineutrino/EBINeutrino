@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-
+import javax.swing.border.EtchedBorder;
 
 public class EBISystemSettingPanel extends JPanel {
 
@@ -25,9 +25,12 @@ public class EBISystemSettingPanel extends JPanel {
     private JTextField jtextPDFPath = null;
     private JButton jButtonSelectPath = null;
     private JTextField jtextBrowserPath = null;
+    private JTextField jtextLogo = null;
+    private JLabel logo = null;
     private JButton jButtonBrowserPath = null;
+    private JButton jButtonBrowserLogo = null;
     private JPanel generalSettings = null;
-    private JPanel jPanelEmailSetting = null;
+    private JPanel panelEMailSettings = null;
     private JTextField jTextEMailhost = null;
     private JTextField jTextEMailBenutzer = null;
     private JPasswordField jTextEMailpassword = null;
@@ -41,25 +44,24 @@ public class EBISystemSettingPanel extends JPanel {
     private JPasswordField jTextpopPassword = null;
     private JComboBox jComboBoxLanguage = null;
     private JComboBox jComboDateFormat = null;
-    private JLabel jLabel10 = null;
-    private JLabel jLabel9 = null;
-    private JLabel jLabel8 = null;
-
+    private JLabel passwordPOPLabel = null;
+    private JLabel emailUserLabel = null;
+    private JLabel emailServerLabel = null;
+    private JLabel logoView = null;
 
     public EBISystemSettingPanel() {
         super();
-       
         initialize();
-
         parseLanguageFileFromDir();
         final EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
 
+        if (!"".equals(properties.getValue("EBI_Neutrino_TextEditor_Path"))){
+            jTextEditorPath.setText(properties.getValue("EBI_Neutrino_TextEditor_Path"));
+        }
         if (!"".equals(properties.getValue("EBI_Neutrino_PDF"))) {
-
             jtextPDFPath.setText(properties.getValue("EBI_Neutrino_PDF"));
         }
         if (!"".equals(properties.getValue("EBI_Neutrino_Browser"))) {
-
             jtextBrowserPath.setText(properties.getValue("EBI_Neutrino_Browser"));
         }
         if (!"".equals(properties.getValue("EBI_Neutrino_Language_File"))) {
@@ -70,6 +72,10 @@ public class EBISystemSettingPanel extends JPanel {
         }
         if (!"".equals(properties.getValue("EBI_Neutrino_Date_Format"))) {
             this.jComboDateFormat.getEditor().setItem(properties.getValue("EBI_Neutrino_Date_Format"));
+        }
+        if (!"".equals(properties.getValue("EBI_Neutrino_Logo"))) {
+            this.jtextLogo.setText(properties.getValue("EBI_Neutrino_Logo"));
+            loadIconToView();
         }
         loadEMailSetting();
         EBISystemSetting.selectedModule = 0;
@@ -104,34 +110,51 @@ public class EBISystemSettingPanel extends JPanel {
         }
     }
 
-    /**
-     * This method initializes this
-     *
-     * @return void
-     */
     private void initialize() {
-        final JLabel jLabel1 = new JLabel();
-        jLabel1.setBounds(new java.awt.Rectangle(83, 14, 303, 38));
-        jLabel1.setText(EBISystem.i18n("EBI_LANG_SYSTEM_SETTING"));
-        jLabel1.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 14));
-        final JLabel jLabel = new JLabel();
-        jLabel.setBounds(new java.awt.Rectangle(19, 0, 62, 68));
-        jLabel.setIcon(EBISystem.getInstance().getIconResource("advancedsettings.png"));
-        jLabel.setText("");
+
+        final JLabel systemSettingsLabel = new JLabel();
+        systemSettingsLabel.setBounds(new java.awt.Rectangle(90, 14, 303, 38));
+        systemSettingsLabel.setText(EBISystem.i18n("EBI_LANG_SYSTEM_SETTING"));
+        systemSettingsLabel.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 14));
+
+        final JLabel systemSettingsImage = new JLabel();
+        systemSettingsImage.setBounds(new java.awt.Rectangle(19, 0, 62, 68));
+        systemSettingsImage.setIcon(EBISystem.getInstance().getIconResource("advancedsettings.png"));
+        systemSettingsImage.setText("");
+
+        logoView = new JLabel();
+        logoView.setBounds(new java.awt.Rectangle(450, 85, 200, 100));
+        logoView.setText("#Logo");
+        logoView.setHorizontalAlignment(SwingConstants.CENTER);
+        logoView.setHorizontalTextPosition(SwingConstants.CENTER);
+        logoView.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+
         this.setLayout(null);
         this.setSize(1024, 846);
-        this.add(jLabel, null);
-        this.add(jLabel1, null);
+        this.add(logoView, null);
+        this.add(systemSettingsImage, null);
+        this.add(systemSettingsLabel, null);
         this.add(getJPanelSysAlg(), null);
         this.add(getJPanelLogo(), null);
         this.add(getJPanelEmailSetting(), null);
     }
 
-    /**
-     * This method initializes jPanelSysAlg
-     *
-     * @return javax.swing.JPanel
-     */
+    private void loadIconToView() {
+        if (!"".equals(jtextLogo.getText())) {
+            ImageIcon icon = new ImageIcon(jtextLogo.getText());
+            Image image = icon.getImage(); // transform it
+            Image newimg = null;
+            if(icon.getIconWidth() > logoView.getWidth()){
+                newimg = image.getScaledInstance(logoView.getWidth(), logoView.getHeight(), java.awt.Image.SCALE_SMOOTH);
+            }else{
+                newimg = image;
+            }
+            logoView.setIcon(new ImageIcon(newimg));
+            logoView.updateUI();
+            logoView.setText("");
+        }
+    }
+
     private JPanel getJPanelSysAlg() {
         if (jPanelSysAlg == null) {
             final JLabel jLabel6 = new JLabel();
@@ -171,29 +194,19 @@ public class EBISystemSettingPanel extends JPanel {
         return jPanelSysAlg;
     }
 
-    /**
-     * This method initializes jComboAdobePath
-     *
-     * @return javax.swing.JComboBox
-     */
     private JTextField getJComboAdobePath() {
         if (jtextPDFPath == null) {
             jtextPDFPath = new JTextField();
-            jtextPDFPath.setBounds(new Rectangle(139, 25, 214, 25));
+            jtextPDFPath.setBounds(new Rectangle(120, 25, 214, 25));
             jtextPDFPath.setEditable(true);
         }
         return jtextPDFPath;
     }
 
-    /**
-     * This method initializes jButtonSelectPath
-     *
-     * @return javax.swing.JButton
-     */
     private JButton getJButtonSelectPath() {
         if (jButtonSelectPath == null) {
             jButtonSelectPath = new JButton();
-            jButtonSelectPath.setBounds(new Rectangle(358, 24, 35, 27));
+            jButtonSelectPath.setBounds(new Rectangle(340, 24, 35, 27));
             jButtonSelectPath.setText("...");
             jButtonSelectPath.addActionListener(new java.awt.event.ActionListener() {
 
@@ -210,29 +223,19 @@ public class EBISystemSettingPanel extends JPanel {
         return jButtonSelectPath;
     }
 
-    /**
-     * This method initializes jComboBrowserPath
-     *
-     * @return javax.swing.JComboBox
-     */
     private JTextField getJComboBrowserPath() {
         if (jtextBrowserPath == null) {
             jtextBrowserPath = new JTextField();
             jtextBrowserPath.setEditable(true);
-            jtextBrowserPath.setBounds(new Rectangle(139, 62, 214, 25));
+            jtextBrowserPath.setBounds(new Rectangle(120, 62, 214, 25));
         }
         return jtextBrowserPath;
     }
 
-    /**
-     * This method initializes jButtonBrowserPath
-     *
-     * @return javax.swing.JButton
-     */
     private JButton getJButtonBrowserPath() {
         if (jButtonBrowserPath == null) {
             jButtonBrowserPath = new JButton();
-            jButtonBrowserPath.setBounds(new Rectangle(358, 62, 35, 25));
+            jButtonBrowserPath.setBounds(new Rectangle(340, 62, 35, 25));
             jButtonBrowserPath.setText("...");
             jButtonBrowserPath.addActionListener(new java.awt.event.ActionListener() {
 
@@ -248,39 +251,58 @@ public class EBISystemSettingPanel extends JPanel {
         return jButtonBrowserPath;
     }
 
+    private JButton getJButtonBrowserLogo() {
+        if (jButtonBrowserLogo == null) {
+            jButtonBrowserLogo = new JButton();
+            jButtonBrowserLogo.setBounds(new Rectangle(335, 15, 35, 25));
+            jButtonBrowserLogo.setText("...");
+            jButtonBrowserLogo.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(final java.awt.event.ActionEvent e) {
+                    final File file = EBISystem.getInstance().getOpenDialog(JFileChooser.FILES_ONLY);
+                    if (file != null) {
+                        jtextLogo.setText(file.getAbsolutePath());
+                        loadIconToView();
+                    }
+                }
+            });
+        }
+        return jButtonBrowserLogo;
+    }
+
+    private JTextField getBrowserLogo() {
+        if (jtextLogo == null) {
+            jtextLogo = new JTextField();
+            jtextLogo.setEditable(true);
+            jtextLogo.setBounds(new Rectangle(115, 15, 214, 25));
+        }
+        return jtextLogo;
+    }
+
     public void saveSystemSetting() {
         boolean isSaved = false;
         final EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
-
-        if (!"".equals(jtextPDFPath.getText())) {
-            properties.setValue("EBI_Neutrino_PDF", jtextPDFPath.getText());
-        }
-        if (!"".equals(jtextBrowserPath.getText())) {
-
-            properties.setValue("EBI_Neutrino_Browser", jtextBrowserPath.getText());
-        }
+        
+        properties.setValue("EBI_Neutrino_PDF", jtextPDFPath.getText());
+        properties.setValue("EBI_Neutrino_Browser", jtextBrowserPath.getText());
         if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(this.jComboBoxLanguage.getSelectedItem().toString())) {
             properties.setValue("EBI_Neutrino_Language_File", "language/EBINeutrinoLanguage_"
                     + this.jComboBoxLanguage.getSelectedItem().toString() + ".properties");
             isSaved = true;
         }
-        if (!"".equals(this.jTextEditorPath.getText())) {
-            properties.setValue("EBI_Neutrino_TextEditor_Path", this.jTextEditorPath.getText());
-        }
-        if (this.jComboDateFormat.getEditor().getItem() != null) {
-            properties.setValue("EBI_Neutrino_Date_Format", this.jComboDateFormat.getEditor().getItem().toString());
-        }
 
+        properties.setValue("EBI_Neutrino_TextEditor_Path", this.jTextEditorPath.getText());
+        properties.setValue("EBI_Neutrino_Date_Format", this.jComboDateFormat.getEditor().getItem().toString());
+        properties.setValue("EBI_Neutrino_Logo", this.jtextLogo.getText());
+        
         if (validateInput() == true) {
             saveEMailSetting();
         }
 
         properties.saveEBINeutrinoProperties();
-
         if (isSaved == true) {
             EBISystem.getInstance().reloadTranslationSystem();
         }
-
         EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_INFO_SETTING_SAVED")).Show(EBIMessage.INFO_MESSAGE);
     }
 
@@ -314,7 +336,7 @@ public class EBISystemSettingPanel extends JPanel {
             }
 
             final PreparedStatement ps = EBISystem.getInstance().iDB().initPreparedStatement(sql);
-            ps.setString(1,EBISystem.ebiUser);
+            ps.setString(1, EBISystem.ebiUser);
             ps.setDate(2, new java.sql.Date(new java.util.Date().getTime()));
             ps.setString(3, this.jTextFromTitle.getText());
             ps.setString(4, this.jTextEMailhost.getText());
@@ -343,11 +365,8 @@ public class EBISystemSettingPanel extends JPanel {
     }
 
     public void loadEMailSetting() {
-
         ResultSet set = null;
-
         try {
-
             final PreparedStatement ps1 = EBISystem.getInstance().iDB()
                     .initPreparedStatement("SELECT * FROM MAIL_ACCOUNT WHERE CREATEFROM=?");
             ps1.setString(1, EBISystem.ebiUser);
@@ -386,23 +405,24 @@ public class EBISystemSettingPanel extends JPanel {
         }
     }
 
-    /**
-     * This method initializes generalSettings
-     *
-     * @return javax.swing.JPanel
-     */
     private JPanel getJPanelLogo() {
         if (generalSettings == null) {
-            final JLabel jLabel5 = new JLabel();
-            jLabel5.setBounds(new Rectangle(35, 56, 93, 25));
-            jLabel5.setText(EBISystem.i18n("EBI_LANG_DATE_FORMAT"));
-            jLabel5.setHorizontalAlignment(SwingConstants.RIGHT);
-            jLabel5.setFont(new Font("Dialog", Font.PLAIN, 12));
-            final JLabel jLabel4 = new JLabel();
-            jLabel4.setBounds(new Rectangle(35, 27, 93, 25));
-            jLabel4.setHorizontalAlignment(SwingConstants.RIGHT);
-            jLabel4.setText(EBISystem.i18n("EBI_LANG_LANGUAGE"));
-            jLabel4.setFont(new Font("Dialog", Font.PLAIN, 12));
+            final JLabel logoLabel = new JLabel();
+            logoLabel.setBounds(new Rectangle(16, 15, 93, 25));
+            logoLabel.setText("Logo");
+            logoLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            logoLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+
+            final JLabel dateFormatLabel = new JLabel();
+            dateFormatLabel.setBounds(new Rectangle(16, 75, 93, 25));
+            dateFormatLabel.setText(EBISystem.i18n("EBI_LANG_DATE_FORMAT"));
+            dateFormatLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            dateFormatLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+            final JLabel languageLabel = new JLabel();
+            languageLabel.setBounds(new Rectangle(16, 45, 93, 25));
+            languageLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            languageLabel.setText(EBISystem.i18n("EBI_LANG_LANGUAGE"));
+            languageLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
             generalSettings = new JPanel();
             generalSettings.setLayout(null);
             generalSettings.setOpaque(false);
@@ -411,105 +431,112 @@ public class EBISystemSettingPanel extends JPanel {
                     EBISystem.i18n("EBI_LANG_PANEL_NAME_GENERAL_SETTING"),
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                     javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
-            generalSettings.add(jLabel4, null);
+            generalSettings.add(languageLabel, null);
+            generalSettings.add(logoLabel, null);
             generalSettings.add(getJComboBoxLanguage(), null);
-            generalSettings.add(jLabel5, null);
+            generalSettings.add(dateFormatLabel, null);
             generalSettings.add(getJComboDateFormat(), null);
+            generalSettings.add(getJButtonBrowserLogo(), null);
+            generalSettings.add(getBrowserLogo(), null);
         }
         return generalSettings;
     }
 
     private JPanel getJPanelEmailSetting() {
-        if (jPanelEmailSetting == null) {
-            jLabel10 = new JLabel();
-            jLabel10.setBounds(new Rectangle(289, 185, 91, 20));
-            jLabel10.setFont(new Font("Dialog", Font.PLAIN, 12));
-            jLabel10.setText(EBISystem.i18n("EBI_LANG_POP_EMAIL_PASSWORD"));
-            jLabel9 = new JLabel();
-            jLabel9.setBounds(new Rectangle(289, 153, 91, 20));
-            jLabel9.setFont(new Font("Dialog", Font.PLAIN, 12));
-            jLabel9.setText(EBISystem.i18n("EBI_LANG_POP_EMAIL_USER"));
-            jLabel8 = new JLabel();
-            jLabel8.setBounds(new Rectangle(289, 121, 91, 20));
-            jLabel8.setFont(new Font("Dialog", Font.PLAIN, 12));
-            jLabel8.setText(EBISystem.i18n("EBI_LANG_POP_EMAIL_SERVER"));
-            final JLabel jlabelF = new JLabel();
-            jlabelF.setBounds(new Rectangle(289, 87, 91, 20));
-            jlabelF.setFont(new Font("Dialog", Font.PLAIN, 12));
-            jlabelF.setText(EBISystem.i18n("EBI_LANG_EMAIL_FOLDER_NAME"));
-            final JLabel jLabel7 = new JLabel();
-            jLabel7.setBounds(new Rectangle(16, 89, 264, 20));
-            jLabel7.setText(EBISystem.i18n("EBI_LANG_EMAIL_SERVER_CONNECTION_DATA"));
-            jPanelEmailSetting = new JPanel();
-            jPanelEmailSetting.setLayout(null);
-            jPanelEmailSetting.setOpaque(false);
-            jPanelEmailSetting.setBounds(new Rectangle(19, 342, 572, 232));
-            jPanelEmailSetting.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
+        if (panelEMailSettings == null) {
+            passwordPOPLabel = new JLabel();
+            passwordPOPLabel.setBounds(new Rectangle(315, 196, 91, 20));
+            passwordPOPLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+            passwordPOPLabel.setText(EBISystem.i18n("EBI_LANG_POP_EMAIL_PASSWORD"));
+
+            emailUserLabel = new JLabel();
+            emailUserLabel.setBounds(new Rectangle(315, 164, 91, 20));
+            emailUserLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+            emailUserLabel.setText(EBISystem.i18n("EBI_LANG_POP_EMAIL_USER"));
+
+            emailServerLabel = new JLabel();
+            emailServerLabel.setBounds(new Rectangle(315, 132, 91, 20));
+            emailServerLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+            emailServerLabel.setText(EBISystem.i18n("EBI_LANG_POP_EMAIL_SERVER"));
+
+            final JLabel emailProtocolLabel = new JLabel();
+            emailProtocolLabel.setBounds(new Rectangle(315, 98, 91, 20));
+            emailProtocolLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+            emailProtocolLabel.setText(EBISystem.i18n("EBI_LANG_EMAIL_PROTOCOL"));
+
+            final JLabel serverConnectionDataLabel = new JLabel();
+            serverConnectionDataLabel.setBounds(new Rectangle(16, 100, 264, 20));
+            serverConnectionDataLabel.setText(EBISystem.i18n("EBI_LANG_EMAIL_SERVER_CONNECTION_DATA"));
+            panelEMailSettings = new JPanel();
+            panelEMailSettings.setLayout(null);
+            panelEMailSettings.setOpaque(false);
+            panelEMailSettings.setBounds(new Rectangle(19, 342, 600, 250));
+            panelEMailSettings.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
                     EBISystem.i18n("EBI_LANG_EMAIL_SETTING"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                     javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
-            final JLabel jLabely8 = new JLabel();
-            jLabely8.setBounds(new Rectangle(16, 59, 91, 20));
-            jLabely8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-            jLabely8.setFont(new Font("Dialog", Font.PLAIN, 12));
-            jLabely8.setText(EBISystem.i18n("EBI_LANG_EMAIL_TITLE"));
-            final JLabel jLabely7 = new JLabel();
-            jLabely7.setBounds(new Rectangle(16, 28, 91, 20));
-            jLabely7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-            jLabely7.setFont(new Font("Dialog", Font.PLAIN, 12));
-            jLabely7.setText(EBISystem.i18n("EBI_LANG_EMAIL_ADRESS"));
-            final JLabel jLabely5 = new JLabel();
-            jLabely5.setBounds(new Rectangle(2, 185, 105, 20));
-            jLabely5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-            jLabely5.setFont(new Font("Dialog", Font.PLAIN, 12));
-            jLabely5.setText(EBISystem.i18n("EBI_LANG_SMTP_EMAIL_PASSWORD"));
-            final JLabel jLabely4 = new JLabel();
-            jLabely4.setBounds(new Rectangle(16, 153, 91, 20));
-            jLabely4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-            jLabely4.setFont(new Font("Dialog", Font.PLAIN, 12));
-            jLabely4.setText(EBISystem.i18n("EBI_LANG_SMTP_EMAIL_USER"));
-            final JLabel jLabely3 = new JLabel();
-            jLabely3.setBounds(new Rectangle(16, 121, 91, 20));
-            jLabely3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-            jLabely3.setFont(new Font("Dialog", Font.PLAIN, 12));
-            jLabely3.setText(EBISystem.i18n("EBI_LANG_SMTP_EMAIL_SERVER"));
-            final JLabel jLabely = new JLabel();
-            jLabely.setBounds(new java.awt.Rectangle(35, 39, 0, 0));
-            jPanelEmailSetting.add(jLabely, null);
-            jPanelEmailSetting.add(jLabely3, null);
-            jPanelEmailSetting.add(jLabely4, null);
-            jPanelEmailSetting.add(jLabely5, null);
-            jPanelEmailSetting.add(jlabelF, null);
-            jPanelEmailSetting.add(getJTextEMailhost(), null);
-            jPanelEmailSetting.add(getJTextEMailBenutzer(), null);
-            jPanelEmailSetting.add(getJTextEMailpassword(), null);
-            jPanelEmailSetting.add(jLabely7, null);
-            jPanelEmailSetting.add(getJTextEmailfrom(), null);
-            jPanelEmailSetting.add(jLabely8, null);
-            jPanelEmailSetting.add(getJTextFromTitle(), null);
-            jPanelEmailSetting.add(jLabel7, null);
-            jPanelEmailSetting.add(jLabel8, null);
-            jPanelEmailSetting.add(jLabel9, null);
-            jPanelEmailSetting.add(jLabel10, null);
-            jPanelEmailSetting.add(getJTextpopServer(), null);
-            jPanelEmailSetting.add(getInboxFolder(), null);
-            jPanelEmailSetting.add(getJTextpopUser(), null);
-            jPanelEmailSetting.add(getJTextpopPassword(), null);
+
+            final JLabel emailTitleLabel = new JLabel();
+            emailTitleLabel.setBounds(new Rectangle(16, 59, 91, 20));
+            emailTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            emailTitleLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+            emailTitleLabel.setText(EBISystem.i18n("EBI_LANG_EMAIL_TITLE"));
+
+            final JLabel emailAddressLabel = new JLabel();
+            emailAddressLabel.setBounds(new Rectangle(16, 28, 91, 20));
+            emailAddressLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            emailAddressLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+            emailAddressLabel.setText(EBISystem.i18n("EBI_LANG_EMAIL_ADRESS"));
+
+            final JLabel smtpPasswordLabel = new JLabel();
+            smtpPasswordLabel.setBounds(new Rectangle(2, 196, 105, 20));
+            smtpPasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            smtpPasswordLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+            smtpPasswordLabel.setText(EBISystem.i18n("EBI_LANG_SMTP_EMAIL_PASSWORD"));
+
+            final JLabel emailSMTPUserLabel = new JLabel();
+            emailSMTPUserLabel.setBounds(new Rectangle(16, 164, 91, 20));
+            emailSMTPUserLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            emailSMTPUserLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+            emailSMTPUserLabel.setText(EBISystem.i18n("EBI_LANG_SMTP_EMAIL_USER"));
+
+            final JLabel emailSMTPServerLabel = new JLabel();
+            emailSMTPServerLabel.setBounds(new Rectangle(16, 132, 91, 20));
+            emailSMTPServerLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            emailSMTPServerLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+            emailSMTPServerLabel.setText(EBISystem.i18n("EBI_LANG_SMTP_EMAIL_SERVER"));
+
+            panelEMailSettings.add(serverConnectionDataLabel, null);
+            panelEMailSettings.add(emailSMTPServerLabel, null);
+            panelEMailSettings.add(emailSMTPUserLabel, null);
+            panelEMailSettings.add(smtpPasswordLabel, null);
+            panelEMailSettings.add(emailProtocolLabel, null);
+            panelEMailSettings.add(emailAddressLabel, null);
+            panelEMailSettings.add(emailTitleLabel, null);
+
+            panelEMailSettings.add(getJTextEMailhost(), null);
+            panelEMailSettings.add(getJTextEMailBenutzer(), null);
+            panelEMailSettings.add(getJTextEMailpassword(), null);
+            panelEMailSettings.add(getJTextEmailfrom(), null);
+
+            panelEMailSettings.add(getJTextFromTitle(), null);
+
+            panelEMailSettings.add(emailServerLabel, null);
+            panelEMailSettings.add(emailUserLabel, null);
+            panelEMailSettings.add(passwordPOPLabel, null);
+            panelEMailSettings.add(getJTextpopServer(), null);
+            panelEMailSettings.add(getEMailProtocol(), null);
+            panelEMailSettings.add(getJTextpopUser(), null);
+            panelEMailSettings.add(getJTextpopPassword(), null);
         }
-        return jPanelEmailSetting;
+        return panelEMailSettings;
     }
 
-    /**
-     * This method initializes jTextEMailhost
-     *
-     * @return javax.swing.JTextField
-     */
     private JTextField getJTextEMailhost() {
         if (jTextEMailhost == null) {
             jTextEMailhost = new JTextField();
-            jTextEMailhost.setBounds(new Rectangle(111, 119, 175, 25));
+            jTextEMailhost.setBounds(new Rectangle(111, 130, 175, 25));
             jTextEMailhost.setFocusTraversalKeysEnabled(false);
             jTextEMailhost.addKeyListener(new java.awt.event.KeyAdapter() {
-
                 @Override
                 public void keyPressed(final java.awt.event.KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -525,15 +552,10 @@ public class EBISystemSettingPanel extends JPanel {
         return jTextEMailhost;
     }
 
-    /**
-     * This method initializes jTextEMailBenutzer
-     *
-     * @return javax.swing.JTextField
-     */
     private JTextField getJTextEMailBenutzer() {
         if (jTextEMailBenutzer == null) {
             jTextEMailBenutzer = new JTextField();
-            jTextEMailBenutzer.setBounds(new Rectangle(111, 151, 175, 25));
+            jTextEMailBenutzer.setBounds(new Rectangle(111, 162, 175, 25));
             jTextEMailBenutzer.setFocusTraversalKeysEnabled(false);
             jTextEMailBenutzer.addKeyListener(new java.awt.event.KeyAdapter() {
 
@@ -552,15 +574,10 @@ public class EBISystemSettingPanel extends JPanel {
         return jTextEMailBenutzer;
     }
 
-    /**
-     * This method initializes jTextEMailpassword
-     *
-     * @return javax.swing.JTextField
-     */
     private JTextField getJTextEMailpassword() {
         if (jTextEMailpassword == null) {
             jTextEMailpassword = new JPasswordField();
-            jTextEMailpassword.setBounds(new Rectangle(111, 186, 175, 25));
+            jTextEMailpassword.setBounds(new Rectangle(111, 195, 175, 25));
             jTextEMailpassword.setFocusTraversalKeysEnabled(false);
             jTextEMailpassword.addKeyListener(new java.awt.event.KeyAdapter() {
 
@@ -579,11 +596,6 @@ public class EBISystemSettingPanel extends JPanel {
         return jTextEMailpassword;
     }
 
-    /**
-     * This method initializes jTextEmailfrom
-     *
-     * @return javax.swing.JTextField
-     */
     private JTextField getJTextEmailfrom() {
         if (jTextEmailfrom == null) {
             jTextEmailfrom = new JTextField();
@@ -606,7 +618,6 @@ public class EBISystemSettingPanel extends JPanel {
         return jTextEmailfrom;
     }
 
-     
     private void enableEMailFields(final boolean enabled) {
         this.jTextFromTitle.setEnabled(enabled ? false : true);
         this.jTextEMailhost.setEnabled(enabled ? false : true);
@@ -633,11 +644,6 @@ public class EBISystemSettingPanel extends JPanel {
         this.jcomboEMailProtocol.setSelectedIndex(0);
     }
 
-    /**
-     * This method initializes jTextFromTitle
-     *
-     * @return javax.swing.JTextField
-     */
     private JTextField getJTextFromTitle() {
         if (jTextFromTitle == null) {
             jTextFromTitle = new JTextField();
@@ -660,29 +666,19 @@ public class EBISystemSettingPanel extends JPanel {
         return jTextFromTitle;
     }
 
-    /**
-     * This method initializes jTextEditorPath
-     *
-     * @return javax.swing.JTextField
-     */
     private JTextField getJTextEditorPath() {
         if (jTextEditorPath == null) {
             jTextEditorPath = new JTextField();
-            jTextEditorPath.setBounds(new Rectangle(139, 96, 214, 25));
+            jTextEditorPath.setBounds(new Rectangle(120, 96, 214, 25));
 
         }
         return jTextEditorPath;
     }
 
-    /**
-     * This method initializes jButtonOpenTextEditor
-     *
-     * @return javax.swing.JButton
-     */
     private JButton getJButtonOpenTextEditor() {
         if (jButtonOpenTextEditor == null) {
             jButtonOpenTextEditor = new JButton();
-            jButtonOpenTextEditor.setBounds(new Rectangle(358, 96, 35, 25));
+            jButtonOpenTextEditor.setBounds(new Rectangle(340, 96, 35, 25));
             jButtonOpenTextEditor.setText("...");
             jButtonOpenTextEditor.addActionListener(new java.awt.event.ActionListener() {
 
@@ -698,15 +694,10 @@ public class EBISystemSettingPanel extends JPanel {
         return jButtonOpenTextEditor;
     }
 
-    /**
-     * This method initializes jTextpopServer
-     *
-     * @return javax.swing.JTextField
-     */
     private JTextField getJTextpopServer() {
         if (jTextpopServer == null) {
             jTextpopServer = new JTextField();
-            jTextpopServer.setBounds(new Rectangle(384, 119, 175, 25));
+            jTextpopServer.setBounds(new Rectangle(400, 130, 175, 25));
             jTextpopServer.setFocusTraversalKeysEnabled(false);
             jTextpopServer.addKeyListener(new java.awt.event.KeyAdapter() {
 
@@ -725,30 +716,29 @@ public class EBISystemSettingPanel extends JPanel {
         return jTextpopServer;
     }
 
-    private JComboBox getInboxFolder() {
+    private JComboBox getEMailProtocol() {
         if (jcomboEMailProtocol == null) {
             jcomboEMailProtocol = new JComboBox();
             jcomboEMailProtocol.addItem("pop3");
             jcomboEMailProtocol.addItem("imaps");
-            jcomboEMailProtocol.setBounds(new Rectangle(384, 85, 175, 25));
+            jcomboEMailProtocol.setBounds(new Rectangle(400, 96, 175, 25));
             jcomboEMailProtocol.setFocusTraversalKeysEnabled(false);
             jcomboEMailProtocol.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(final ActionEvent e) {
                     if (jcomboEMailProtocol.getSelectedItem().toString().equals("imaps")) {
-                        jLabel10.setText(jLabel10.getText().replaceAll("POP", "IMAP"));
-                        jLabel9.setText(jLabel9.getText().replaceAll("POP", "IMAP"));
-                        jLabel8.setText(jLabel8.getText().replaceAll("POP", "IMAP"));
+                        passwordPOPLabel.setText(passwordPOPLabel.getText().replaceAll("POP", "IMAP"));
+                        emailUserLabel.setText(emailUserLabel.getText().replaceAll("POP", "IMAP"));
+                        emailServerLabel.setText(emailServerLabel.getText().replaceAll("POP", "IMAP"));
                     } else {
-                        jLabel10.setText(jLabel10.getText().replaceAll("IMAP", "POP"));
-                        jLabel9.setText(jLabel9.getText().replaceAll("IMAP", "POP"));
-                        jLabel8.setText(jLabel8.getText().replaceAll("IMAP", "POP"));
+                        passwordPOPLabel.setText(passwordPOPLabel.getText().replaceAll("IMAP", "POP"));
+                        emailUserLabel.setText(emailUserLabel.getText().replaceAll("IMAP", "POP"));
+                        emailServerLabel.setText(emailServerLabel.getText().replaceAll("IMAP", "POP"));
                     }
                 }
             });
 
             jcomboEMailProtocol.addKeyListener(new java.awt.event.KeyAdapter() {
-
                 @Override
                 public void keyPressed(final java.awt.event.KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -764,15 +754,10 @@ public class EBISystemSettingPanel extends JPanel {
         return jcomboEMailProtocol;
     }
 
-    /**
-     * This method initializes jTextpopUser
-     *
-     * @return javax.swing.JTextField
-     */
     private JTextField getJTextpopUser() {
         if (jTextpopUser == null) {
             jTextpopUser = new JTextField();
-            jTextpopUser.setBounds(new Rectangle(384, 151, 175, 25));
+            jTextpopUser.setBounds(new Rectangle(400, 162, 175, 25));
             jTextpopUser.setFocusTraversalKeysEnabled(false);
             jTextpopUser.addKeyListener(new java.awt.event.KeyAdapter() {
 
@@ -791,18 +776,12 @@ public class EBISystemSettingPanel extends JPanel {
         return jTextpopUser;
     }
 
-    /**
-     * This method initializes jTextpopPassword
-     *
-     * @return javax.swing.JTextField
-     */
     private JTextField getJTextpopPassword() {
         if (jTextpopPassword == null) {
             jTextpopPassword = new JPasswordField();
-            jTextpopPassword.setBounds(new Rectangle(384, 186, 175, 25));
+            jTextpopPassword.setBounds(new Rectangle(400, 197, 175, 25));
             jTextpopPassword.setFocusTraversalKeysEnabled(false);
             jTextpopPassword.addKeyListener(new java.awt.event.KeyAdapter() {
-
                 @Override
                 public void keyPressed(final java.awt.event.KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -854,28 +833,18 @@ public class EBISystemSettingPanel extends JPanel {
         return true;
     }
 
-    /**
-     * This method initializes jComboBoxLanguage
-     *
-     * @return javax.swing.JComboBox
-     */
     private JComboBox getJComboBoxLanguage() {
         if (jComboBoxLanguage == null) {
             jComboBoxLanguage = new JComboBox();
-            jComboBoxLanguage.setBounds(new Rectangle(142, 27, 214, 25));
+            jComboBoxLanguage.setBounds(new Rectangle(115, 45, 214, 25));
         }
         return jComboBoxLanguage;
     }
 
-    /**
-     * This method initializes jComboDateFormat
-     *
-     * @return javax.swing.JComboBox
-     */
     private JComboBox getJComboDateFormat() {
         if (jComboDateFormat == null) {
             jComboDateFormat = new JComboBox();
-            jComboDateFormat.setBounds(new Rectangle(142, 56, 214, 25));
+            jComboDateFormat.setBounds(new Rectangle(115, 75, 214, 25));
             jComboDateFormat.setEditable(true);
             jComboDateFormat.addItem("dd.MM.yyyy");
             jComboDateFormat.addItem("MM.dd.yyyy");

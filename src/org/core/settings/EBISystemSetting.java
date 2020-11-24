@@ -14,7 +14,7 @@ public class EBISystemSetting extends EBIVisualPanelTemplate {
     public EBIMain ebiMain = null;
     public static int selectedModule = -1;
 
-    public EBISystemSetting(final EBIMain main) {
+    public EBISystemSetting(final EBIMain main){
     	super(false);
         ebiMain = main;
         cpanel = new JPanel();

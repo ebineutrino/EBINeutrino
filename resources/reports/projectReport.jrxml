@@ -222,7 +222,7 @@ task.COLOR as TCOLOR,task.DONE,task.DESCRIPTION FROM CRMPROJECT as pro LEFT JOIN
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="13" y="0" width="297" height="69"/>
-				<imageExpression class="java.lang.String"><![CDATA[System.getProperty("user.dir")+"/resources/images/logo.gif"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="13" y="72" width="677" height="1" forecolor="#CCCCCC"/>

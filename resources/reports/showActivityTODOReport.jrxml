@@ -125,7 +125,7 @@ FROM COMPANYACTIVITIES act, COMPANY as comp WHERE act.COMPANYID = $P{COMPANYID} 
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="297" height="69"/>
-				<imageExpression><![CDATA[System.getProperty("user.dir")+"/resources/images/logo.gif"]]></imageExpression>
+				<imageExpression><![CDATA[$F{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 		</band>
 	</title>

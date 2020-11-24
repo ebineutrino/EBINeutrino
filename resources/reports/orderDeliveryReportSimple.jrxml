@@ -155,7 +155,7 @@ pos.PRODUCTNAME, pos.QUANTITY, pos.CATEGORY, pos.PRETAX, pos.NETAMOUNT, pos.DEDU
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="299" height="69"/>
-				<imageExpression class="java.lang.String"><![CDATA[System.getProperty("user.dir")+"/resources/images/logo.gif"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="313" y="36" width="207" height="15"/>

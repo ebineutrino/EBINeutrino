@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.Setter;
+import org.sdk.utils.EBIPropertiesRW;
 
 /**
  *
@@ -65,6 +66,8 @@ public class EBIReportSystem implements IEBIReportSystem {
             @Override
             public void run() {
                 if (reportFile.isFile() && reportFile.getName().endsWith(".jrxml")) {
+                    
+                    System.out.println(reportFile.getName());
 
                     final String jsprFile = reportFile.getAbsolutePath().replace(".jrxml", ".jasper");
                     wait.setString("Compile Report:" + jsprFile);
@@ -503,20 +506,18 @@ public class EBIReportSystem implements IEBIReportSystem {
      * @param map
      */
     public void addParametertoReport(final Map<String, Object> map) {
-
         ResultSet set = null;
         ResultSet set1 = null;
 
         map.put("EBI_LANG", EBIPropertiesLang.getProperties().getProperty());
+        map.put("SYSTEM_LOGO", EBIPropertiesRW.getEBIProperties().getValue("EBI_Neutrino_Logo"));
         map.put("EBI_ISB2C", EBISystem.USE_ASB2C);
 
         try {
-
             final PreparedStatement ps1 = EBISystem.getInstance().iDB().initPreparedStatement("SELECT * FROM COMPANY com "
                     + "LEFT JOIN COMPANYBANK bnk ON com.COMPANYID=bnk.COMPANYID WHERE com.ISACTUAL=? ");
 
             ps1.setInt(1, 1);
-
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps1);
 
             set.last();

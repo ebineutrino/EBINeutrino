@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.12.2.final utlizzo versione della libreria JasperReports6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListCompanyData" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="24d1e82f-38e8-44cf-a102-ae6377fdc319">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListCompanyData" language="java" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="24d1e82f-38e8-44cf-a102-ae6377fdc319">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="235"/>
@@ -66,7 +66,7 @@
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="0" y="0" width="150" height="31" uuid="5eb2baa6-bc22-4ab6-a1e0-62bd79cc53ba"/>
-				<imageExpression><![CDATA[System.getProperty("user.dir")+"/resources/images/logo.gif"]]></imageExpression>
+				<imageExpression><![CDATA[$F{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="11" y="75" width="531" height="1" uuid="1395dea4-7532-4081-8dc5-29b0dede898d"/>

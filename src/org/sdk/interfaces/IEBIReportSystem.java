@@ -1,7 +1,6 @@
 package org.sdk.interfaces;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.Map;
 
 /**

@@ -32,7 +32,7 @@ import javax.swing.border.EmptyBorder;
 
 public class EBIReportSetting extends JPanel {
 
-    private JPanel jPanelAllgemein = null;
+    private JPanel generalReportPanel = null;
     private EBIMain ebiMain = null;
     private JPanel jPanelAvailableReports = null;
     private JScrollPane jScrollPaneAvailableReport = null;
@@ -136,7 +136,7 @@ public class EBIReportSetting extends JPanel {
      * @return javax.swing.JPanel
      */
     private JPanel getJPanelAllgemein() {
-        if (jPanelAllgemein == null) {
+        if (generalReportPanel == null) {
             final JLabel jLabel2 = new JLabel();
             jLabel2.setBounds(new Rectangle(16, 25, 68, 25));
             jLabel2.setText(EBISystem.i18n("EBI_LANG_NAME"));
@@ -149,21 +149,21 @@ public class EBIReportSetting extends JPanel {
             jLabel.setBounds(new java.awt.Rectangle(16, 64, 67, 20));
             jLabel.setText(EBISystem.i18n("EBI_LANG_CATEGORY"));
             jLabel.setFont(new Font("San Serif", Font.PLAIN, 11));
-            jPanelAllgemein = new JPanel();
-            jPanelAllgemein.setLayout(null);
-            jPanelAllgemein.setBounds(new Rectangle(14, 70, 600, 149));
-            jPanelAllgemein.setBorder(javax.swing.BorderFactory.createTitledBorder(null, EBISystem.i18n("EBI_LANG_GENERAL_REPORT_SETTING"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
-            jPanelAllgemein.add(getJComboReportCat(), null);
-            jPanelAllgemein.add(jLabel, null);
-            jPanelAllgemein.add(jLabel1, null);
-            jPanelAllgemein.add(getJTextReportPath(), null);
-            jPanelAllgemein.add(getJButtonOpenPath(), null);
-            jPanelAllgemein.add(getJRadioShowAsPDF(), null);
-            jPanelAllgemein.add(getJRadioShowAsNormal(), null);
-            jPanelAllgemein.add(getJCheckIsAktive(), null);
-            jPanelAllgemein.add(getInstallReports(), null);
-            jPanelAllgemein.add(jLabel2, null);
-            jPanelAllgemein.add(getJTextReportName(), null);
+            generalReportPanel = new JPanel();
+            generalReportPanel.setLayout(null);
+            generalReportPanel.setBounds(new Rectangle(14, 70, 600, 149));
+            generalReportPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, EBISystem.i18n("EBI_LANG_GENERAL_REPORT_SETTING"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+            generalReportPanel.add(getJComboReportCat(), null);
+            generalReportPanel.add(jLabel, null);
+            generalReportPanel.add(jLabel1, null);
+            generalReportPanel.add(getJTextReportPath(), null);
+            generalReportPanel.add(getJButtonOpenPath(), null);
+            generalReportPanel.add(getJRadioShowAsPDF(), null);
+            generalReportPanel.add(getJRadioShowAsNormal(), null);
+            generalReportPanel.add(getJCheckIsAktive(), null);
+            generalReportPanel.add(getInstallReports(), null);
+            generalReportPanel.add(jLabel2, null);
+            generalReportPanel.add(getJTextReportName(), null);
 
             final JButton btnCompileReport = new JButton("Compile Report");
             btnCompileReport.addActionListener(new ActionListener() {
@@ -173,10 +173,10 @@ public class EBIReportSetting extends JPanel {
                 }
             });
             btnCompileReport.setBounds(373, 62, 154, 25);
-            jPanelAllgemein.add(btnCompileReport);
+            generalReportPanel.add(btnCompileReport);
             setRadioGroup();
         }
-        return jPanelAllgemein;
+        return generalReportPanel;
     }
 
     private void setRadioGroup() {

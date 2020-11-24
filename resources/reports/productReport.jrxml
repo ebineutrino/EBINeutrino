@@ -87,7 +87,7 @@ pro.PRETAX,pro.SALEPRICE, pro.PICTURE,pro.DESCRIPTION FROM (CRMPRODUCT as pro LE
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="13" y="0" width="297" height="69"/>
-				<imageExpression><![CDATA[System.getProperty("user.dir")+"/resources/images/logo.gif"]]></imageExpression>
+				<imageExpression><![CDATA[$F{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="13" y="72" width="677" height="1" forecolor="#CCCCCC"/>

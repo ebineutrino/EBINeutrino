@@ -151,7 +151,7 @@ and pos.ORDERID=o.ORDERID and o.ORDERID=rec.ORDERID]]>
 			</line>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="297" height="69"/>
-				<imageExpression><![CDATA[System.getProperty("user.dir")+"/resources/images/logo.gif"]]></imageExpression>
+				<imageExpression><![CDATA[$F{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="311" y="51" width="207" height="18"/>

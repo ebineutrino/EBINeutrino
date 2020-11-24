@@ -168,7 +168,7 @@ pos.TAXTYPE, tax.NAME, tax.TAXVALUE FROM CRMINVOICE o LEFT JOIN COMPANY comp ON 
 			</line>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="297" height="69"/>
-				<imageExpression><![CDATA[System.getProperty("user.dir")+"/images/logo.gif"]]></imageExpression>
+				<imageExpression><![CDATA[$F{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 		</band>
 	</title>

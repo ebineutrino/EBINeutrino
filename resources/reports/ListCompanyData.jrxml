@@ -11,6 +11,7 @@
 	<style name="Detail" fontSize="12"/>
 	<parameter name="COMPANYID" class="java.lang.Integer"/>
 	<parameter name="EBI_LANG" class="java.util.Properties" isForPrompting="false"/>
+        <parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT address.ADDRESSTYPE,address.STREET,address.ZIP,address.LOCATION,address.PBOX,address.COUNTRY,comp.BEGINCHAR,comp.COMPANYNUMBER,comp.CUSTOMERNR,comp.PHONE,comp.NAME,comp.NAME2,comp.FAX,comp.EMAIL,comp.EMPLOYEE,comp.QUALIFICATION,comp.CATEGORY,comp.COOPERATION,comp.ISLOCK,comp.WEB,comp.TAXNUMBER,comp.DESCRIPTION,contact.GENDER,contact.SURNAME,contact.TITLE,contact.POSITION,contact.DESCRIPTION as CDESCIPTION, contact.MITTELNAME,comp.NAME as CNAME,contact.NAME as CONNAME, contact.PHONE as CPHONE, contact.FAX as CFAX,contact.MOBILE, contact.EMAIL as CEMAIL FROM COMPANY as comp left join COMPANYCONTACTS as contact on contact.CONTACTID=comp.COMPANYID left join COMPANYCONTACTADDRESS as address on address.CONTACTID=contact.CONTACTID WHERE comp.COMPANYID=$P{COMPANYID}]]>
 	</queryString>
@@ -66,7 +67,7 @@
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="0" y="0" width="150" height="31" uuid="5eb2baa6-bc22-4ab6-a1e0-62bd79cc53ba"/>
-				<imageExpression><![CDATA[$F{SYSTEM_LOGO}]]></imageExpression>
+				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="11" y="75" width="531" height="1" uuid="1395dea4-7532-4081-8dc5-29b0dede898d"/>

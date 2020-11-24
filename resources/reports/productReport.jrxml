@@ -14,6 +14,7 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="ID" class="java.lang.Integer"/>
+        <parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="EBI_LANG" class="java.util.Properties" isForPrompting="false"/>
 	<parameter name="COMPANY_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="COMPANY_NAME" class="java.lang.String" isForPrompting="false"/>
@@ -87,7 +88,7 @@ pro.PRETAX,pro.SALEPRICE, pro.PICTURE,pro.DESCRIPTION FROM (CRMPRODUCT as pro LE
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="13" y="0" width="297" height="69"/>
-				<imageExpression><![CDATA[$F{SYSTEM_LOGO}]]></imageExpression>
+				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="13" y="72" width="677" height="1" forecolor="#CCCCCC"/>

@@ -9,6 +9,7 @@
 	<style name="Detail" fontSize="12" pdfFontName="Helvetica-Bold"/>
 	<parameter name="ID" class="java.lang.Integer"/>
 	<parameter name="EBI_LANG" class="java.util.Properties" isForPrompting="false"/>
+        <parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT opt.OPPORTUNITYID,opt.COMPANYID, opt.NAME, opt.SALESTAGE, opt.PROBABILITY,
 opt.OPPORTUNITYVALUE,opt.ISCLOSE,opt.BUSINESSTYPE,opt.EVALUATIONSTATUS,opt.EVALUETIONDATE,
@@ -65,7 +66,7 @@ WHERE opt.OPPORTUNITYID=$P{ID} and con.OPPORTUNITYID= opt.OPPORTUNITYID and comp
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="0" y="0" width="303" height="69"/>
-				<imageExpression><![CDATA[$F{SYSTEM_LOGO}]]></imageExpression>
+				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement style="Detail" x="312" y="58" width="241" height="24" forecolor="#666666"/>

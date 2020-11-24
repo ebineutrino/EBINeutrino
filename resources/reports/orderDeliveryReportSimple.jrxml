@@ -53,6 +53,7 @@
 	</style>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="ID" class="java.lang.Integer"/>
+        <parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="COMPANY_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="COMPANY_NAME" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="COMPANY_STR_NR" class="java.lang.String" isForPrompting="false"/>
@@ -155,7 +156,7 @@ pos.PRODUCTNAME, pos.QUANTITY, pos.CATEGORY, pos.PRETAX, pos.NETAMOUNT, pos.DEDU
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="299" height="69"/>
-				<imageExpression class="java.lang.String"><![CDATA[$F{SYSTEM_LOGO}]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="313" y="36" width="207" height="15"/>

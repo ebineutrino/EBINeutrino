@@ -52,6 +52,7 @@
 		</box>
 	</style>
 	<style name="Crosstab Data Text" hAlign="Center"/>
+        <parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="COMPANYID" class="java.lang.Integer"/>
 	<parameter name="COMPANY_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="COMPANY_NAME" class="java.lang.String" isForPrompting="false"/>
@@ -125,7 +126,7 @@ FROM COMPANYACTIVITIES act, COMPANY as comp WHERE act.COMPANYID = $P{COMPANYID} 
 			</textField>
 			<image scaleImage="RealSize">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="297" height="69"/>
-				<imageExpression><![CDATA[$F{SYSTEM_LOGO}]]></imageExpression>
+				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 		</band>
 	</title>

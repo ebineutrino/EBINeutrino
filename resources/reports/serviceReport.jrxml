@@ -199,7 +199,7 @@ psol.SERVICEID=serv.SERVICEID and serv.SERVICEID=$P{ID}]]>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMPANY_ZIP}+" "+$P{COMPANY_LOCATION}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealSize">
+			<image scaleImage="RetainShape">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="13" y="0" width="297" height="69"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>

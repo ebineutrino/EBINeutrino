@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="opportunityReport" language="java" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty">
+<!-- Created with Jaspersoft Studio version 6.12.2.final utlizzo versione della libreria JasperReports6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="opportunityReport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="9c3ab976-2953-4475-be2f-10b5c73128f5">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -9,7 +10,7 @@
 	<style name="Detail" fontSize="12" pdfFontName="Helvetica-Bold"/>
 	<parameter name="ID" class="java.lang.Integer"/>
 	<parameter name="EBI_LANG" class="java.util.Properties" isForPrompting="false"/>
-        <parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT opt.OPPORTUNITYID,opt.COMPANYID, opt.NAME, opt.SALESTAGE, opt.PROBABILITY,
 opt.OPPORTUNITYVALUE,opt.ISCLOSE,opt.BUSINESSTYPE,opt.EVALUATIONSTATUS,opt.EVALUETIONDATE,
@@ -51,25 +52,25 @@ WHERE opt.OPPORTUNITYID=$P{ID} and con.OPPORTUNITYID= opt.OPPORTUNITYID and comp
 	<title>
 		<band height="82" splitType="Stretch">
 			<textField>
-				<reportElement style="Detail" x="312" y="0" width="241" height="31"/>
+				<reportElement style="Detail" x="312" y="0" width="241" height="31" uuid="6acb3542-4426-4790-bf4b-78aabe9effc4"/>
 				<textElement textAlignment="Right">
 					<font size="18" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{COMPNAME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="312" y="31" width="241" height="24" forecolor="#666666"/>
+				<reportElement style="Detail" x="312" y="31" width="241" height="18" forecolor="#666666" uuid="ecf6a4cc-807d-419d-9149-3227efe1efcc"/>
 				<textElement textAlignment="Right">
 					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAME2}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealSize">
-				<reportElement key="image-1" isPrintRepeatedValues="false" x="0" y="0" width="303" height="69"/>
+			<image scaleImage="RetainShape">
+				<reportElement key="image-1" isPrintRepeatedValues="false" x="12" y="0" width="291" height="69" uuid="442e2a19-02ec-4da7-b0fb-60cef0411ae4"/>
 				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="Detail" x="312" y="58" width="241" height="24" forecolor="#666666"/>
+				<reportElement style="Detail" x="312" y="58" width="241" height="24" forecolor="#666666" uuid="0f66fc76-772e-4722-b8d1-787194ceae8a"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
@@ -83,132 +84,132 @@ WHERE opt.OPPORTUNITYID=$P{ID} and con.OPPORTUNITYID= opt.OPPORTUNITYID and comp
 	<columnHeader>
 		<band height="236" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="28" width="100" height="20"/>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="28" width="100" height="20" uuid="819a4b75-3e2c-4c1d-9c6b-8c7de7ef6c02"/>
 				<textElement>
 					<font size="8" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_EVALUATING_STATUS")+": "]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="8" width="502" height="20"/>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="8" width="542" height="20" uuid="29809dc6-a7be-457a-8e5d-30c0ce9c3222"/>
 				<textElement>
 					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_NAME")+": "+$F{NAME}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" isPrintRepeatedValues="false" x="290" y="28" width="119" height="20" isPrintWhenDetailOverflows="true"/>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="290" y="28" width="119" height="20" isPrintWhenDetailOverflows="true" uuid="9a985f5e-954c-44cc-aaeb-8d883e703d35"/>
 				<textElement>
 					<font size="8" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_VALUE")+": "]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" isPrintRepeatedValues="false" x="290" y="48" width="263" height="20" isPrintWhenDetailOverflows="true"/>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="290" y="48" width="264" height="20" isPrintWhenDetailOverflows="true" uuid="f8fa5b03-a76a-4f50-a8fc-bb92039da098"/>
 				<textElement>
 					<font size="8" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_CLOSED")+": "+($F{ISCLOSE} == true ? $P{EBI_LANG}.getProperty("EBI_LANG_YES") : $P{EBI_LANG}.getProperty("EBI_LANG_NO"))]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="108" width="100" height="20"/>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="108" width="100" height="20" uuid="1f73932b-ea67-4a23-bf67-9532ec790e8f"/>
 				<textElement>
 					<font size="8" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_BUSINESS_TYP")+": "]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="68" width="100" height="20"/>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="68" width="100" height="20" uuid="d927f26e-9abb-4343-a196-5a91c88fcfef"/>
 				<textElement>
 					<font size="8" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_SALE_STAGE")+": "]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="48" width="100" height="20"/>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="48" width="100" height="20" uuid="8ed544d3-16af-4ca1-8c10-9fb53b18e263"/>
 				<textElement>
 					<font size="8" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_BUDGETSTATUS")+": "]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="88" width="100" height="20"/>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="88" width="100" height="20" uuid="5b5519fd-62fe-450f-b22a-230b82ca65f4"/>
 				<textElement>
 					<font size="8" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_STATUS")+": "]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="128" width="100" height="20"/>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" x="11" y="128" width="100" height="20" uuid="f8925248-8b04-4087-84e3-2e096c528f65"/>
 				<textElement>
 					<font size="8" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_PROBABILITY")+": "]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" isPrintRepeatedValues="false" mode="Opaque" x="12" y="161" width="530" height="72" backcolor="#CCFFCC"/>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" isPrintRepeatedValues="false" mode="Opaque" x="12" y="161" width="541" height="72" backcolor="#F0F0F0" uuid="a4c4b98b-49d9-4316-8470-ae9f7567c4eb"/>
 				<textElement>
 					<font size="8" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement isPrintRepeatedValues="false" x="111" y="160" width="431" height="1" backcolor="#F4F4F4"/>
+				<reportElement isPrintRepeatedValues="false" x="111" y="160" width="431" height="1" backcolor="#F4F4F4" uuid="2716e322-a344-4c9f-a7de-cc6d7363f071"/>
 				<graphicElement>
 					<pen lineColor="#C5C5C5"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="11" y="0" width="531" height="1"/>
+				<reportElement x="11" y="0" width="542" height="1" uuid="c832cf8c-170f-4828-bcb6-0035cb476e50"/>
 				<graphicElement>
 					<pen lineColor="#DEDEDE"/>
 				</graphicElement>
 			</line>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="409" y="28" width="144" height="20"/>
+				<reportElement x="409" y="28" width="144" height="20" uuid="28856bb9-08bf-4105-ad71-df6cb8fecf31"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{OPPORTUNITYVALUE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="111" y="28" width="100" height="20"/>
+				<reportElement x="111" y="28" width="100" height="20" uuid="905cc81f-c0a5-4d24-aca2-f1a57301f341"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{EVALUATIONSTATUS}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="111" y="48" width="100" height="20"/>
+				<reportElement x="111" y="48" width="100" height="20" uuid="8a05cef1-b46a-4b89-a8f1-ff5a3807dc79"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{BUDGETSTATUS}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="111" y="68" width="100" height="20"/>
+				<reportElement x="111" y="68" width="100" height="20" uuid="fd9b72e1-591c-4392-94fe-ddfe8d287777"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SALESTAGE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="111" y="88" width="100" height="20"/>
+				<reportElement x="111" y="88" width="100" height="20" uuid="6d963dc3-8bc2-4a20-b511-1ef19671f05b"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{OPPORTUNITYSTATUS}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="111" y="108" width="100" height="20"/>
+				<reportElement x="111" y="108" width="100" height="20" uuid="b33a1aec-8580-4dbe-b13a-7253f001bbcc"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{BUSINESSTYPE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="111" y="128" width="100" height="20"/>
+				<reportElement x="111" y="128" width="100" height="20" uuid="f1a26816-2d4d-4a04-8282-ce75fee4ff6c"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -217,64 +218,64 @@ WHERE opt.OPPORTUNITYID=$P{ID} and con.OPPORTUNITYID= opt.OPPORTUNITYID and comp
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="199" splitType="Stretch">
+		<band height="207" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="11" y="55" width="279" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement mode="Transparent" x="11" y="55" width="279" height="20" isRemoveLineWhenBlank="true" uuid="051e7f8b-1b37-492a-9e40-55256d89b264"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SURNAME} +"  "+ $F{CONNAME}+"  "+($F{MITTELNAME} == null ? "" : $F{MITTELNAME})]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="11" y="5" width="531" height="1" backcolor="#EEEEEE"/>
+				<reportElement x="10" y="0" width="544" height="1" backcolor="#EEEEEE" uuid="73f5b89f-508d-4888-a7a9-d410c6c94aa4"/>
 				<graphicElement>
 					<pen lineColor="#EEEEEE"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="11" y="15" width="167" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="11" y="15" width="167" height="20" isRemoveLineWhenBlank="true" uuid="c55e2a72-ac09-4c49-9dbb-d0c04051a751"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{GENDER}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="11" y="35" width="279" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement mode="Transparent" x="11" y="35" width="279" height="20" isRemoveLineWhenBlank="true" uuid="b4e9b6d7-764c-4de4-9632-8a9e61fc8df1"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{POSITION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="335" y="15" width="220" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement mode="Transparent" x="335" y="15" width="218" height="20" isRemoveLineWhenBlank="true" uuid="df32d5bb-d0ae-442f-b4ab-95f0bc23b7e2"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_TELEPHONE")+": "+$F{PHONE}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="335" y="35" width="220" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement mode="Transparent" x="335" y="35" width="218" height="20" isRemoveLineWhenBlank="true" uuid="603a3df8-e480-44e6-ac1d-4d584796c48a"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_FAX_1")+": "+$F{FAX}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="335" y="55" width="220" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement mode="Transparent" x="335" y="55" width="218" height="20" isRemoveLineWhenBlank="true" uuid="7c030a4b-ca59-493c-946e-e539f38d201e"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_MOBILE_PHONE_1")+": "+$F{MOBILE}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="335" y="75" width="220" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement mode="Transparent" x="335" y="75" width="218" height="20" isRemoveLineWhenBlank="true" uuid="20711b9f-838e-40c6-9bb6-6a7bff3f462c"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_EMAIL")+": "+$F{EMAIL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="12" y="105" width="541" height="90" isRemoveLineWhenBlank="true" backcolor="#CCFFCC"/>
+				<reportElement mode="Opaque" x="12" y="105" width="541" height="90" isRemoveLineWhenBlank="true" backcolor="#F0F0F0" uuid="95775226-a5d4-4f76-8145-0e4378b7f254"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -285,14 +286,14 @@ WHERE opt.OPPORTUNITYID=$P{ID} and con.OPPORTUNITYID= opt.OPPORTUNITYID and comp
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement style="Column header" x="473" y="0" width="80" height="20"/>
+				<reportElement style="Column header" x="473" y="0" width="80" height="20" uuid="18d28234-6e0c-4492-9da5-5ade3f1fb6f5"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement style="Column header" x="0" y="0" width="197" height="20"/>
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="cb9787ca-6145-4e27-85fa-1c37bb031962"/>
 				<textElement>
 					<font size="8" isBold="false"/>
 				</textElement>

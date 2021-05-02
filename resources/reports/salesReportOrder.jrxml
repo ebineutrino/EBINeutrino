@@ -92,7 +92,7 @@ $F{NETAMOUNT} * $F{QUANTITY}]]></variableExpression>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_NAME}+"\n"+$P{COMPANY_NAME1}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealSize">
+			<image scaleImage="RetainShape">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="12" y="10" width="297" height="69"/>
 				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>

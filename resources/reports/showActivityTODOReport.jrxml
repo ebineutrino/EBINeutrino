@@ -124,7 +124,7 @@ FROM COMPANYACTIVITIES act, COMPANY as comp WHERE act.COMPANYID = $P{COMPANYID} 
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_NAME}+"\n"+$P{COMPANY_NAME1}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealSize">
+			<image scaleImage="RetainShape">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="297" height="69"/>
 				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>

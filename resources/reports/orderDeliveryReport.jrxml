@@ -150,7 +150,7 @@ and pos.ORDERID=o.ORDERID and o.ORDERID=rec.ORDERID]]>
 			<line>
 				<reportElement key="line-1" x="14" y="72" width="510" height="1" forecolor="#CCCCCC" backcolor="#CCCCCC"/>
 			</line>
-			<image scaleImage="RealSize">
+			<image scaleImage="RetainShape">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="297" height="69"/>
 				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>

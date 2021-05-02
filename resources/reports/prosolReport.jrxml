@@ -87,7 +87,7 @@ psol.PROSOLID = $P{ID} and pro.SOLUTIONID = psol.PROSOLID and cpr.PRODUCTID = pr
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMPANY_ZIP}+" "+$P{COMPANY_LOCATION}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealSize">
+			<image scaleImage="RetainShape">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="13" y="0" width="297" height="69"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>
@@ -109,7 +109,7 @@ psol.PROSOLID = $P{ID} and pro.SOLUTIONID = psol.PROSOLID and cpr.PRODUCTID = pr
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_PROSOL")]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealSize">
+			<image scaleImage="RetainShape">
 				<reportElement x="417" y="10" width="273" height="170" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 				<imageExpression class="java.io.InputStream"><![CDATA[$F{PICTURE}]]></imageExpression>
 			</image>

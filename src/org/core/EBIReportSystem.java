@@ -13,9 +13,6 @@ import net.sf.jasperreports.view.JasperViewer;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -66,18 +63,13 @@ public class EBIReportSystem implements IEBIReportSystem {
             @Override
             public void run() {
                 if (reportFile.isFile() && reportFile.getName().endsWith(".jrxml")) {
-                    
-                    System.out.println(reportFile.getName());
-
                     final String jsprFile = reportFile.getAbsolutePath().replace(".jrxml", ".jasper");
-                    wait.setString("Compile Report:" + jsprFile);
-                    try {
-                        Files.deleteIfExists(Paths.get(jsprFile));
-                    } catch (final IOException e) {
-                        e.printStackTrace();
-                        wait.setVisible(false);
+                    
+                    File jasperFile = new File(jsprFile);
+                    if(jasperFile.exists()){
+                        jasperFile.delete();
                     }
-                    // compile report
+                    wait.setString("Compile Report:" + jsprFile);
                     try {
                         JasperCompileManager.compileReportToFile(reportFile.getAbsolutePath(), jsprFile);
                     } catch (final JRException e) {
@@ -270,22 +262,22 @@ public class EBIReportSystem implements IEBIReportSystem {
                                         EBISystem.getInstance().iDB().getActiveConnection());
 
                                 if ((Boolean) report[1] == true) {
-
                                     final String fileN = report[0].toString().replaceAll("[^\\p{L}\\p{N}]", "");
                                     JasperExportManager.exportReportToPdfFile(jasperPrint, resourceTmpPath + fileN + ".pdf");
 
                                     EBISystem.getInstance().openPDFReportFile(resourceTmpPath + fileN + ".pdf");
-
                                 } else {
                                     JFrame.setDefaultLookAndFeelDecorated(false);
                                     final JasperViewer view = new JasperViewer(jasperPrint, false);
                                     view.setState(Frame.MAXIMIZED_BOTH);
+                                    view.setAlwaysOnTop(true);
                                     view.setVisible(true);
                                 }
 
                             } else {
-                                EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_NO_REPORT_FOUND"))
-                                        .Show(EBIMessage.ERROR_MESSAGE);
+                                EBIExceptionDialog.
+                                        getInstance(EBISystem.i18n("EBI_LANG_NO_REPORT_FOUND"))
+                                            .Show(EBIMessage.ERROR_MESSAGE);
                             }
                         } catch (final Exception ex) {
                             ex.printStackTrace();
@@ -360,6 +352,7 @@ public class EBIReportSystem implements IEBIReportSystem {
                             final JasperViewer view = new JasperViewer(jasperPrint, false);
                             view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                             view.setState(Frame.MAXIMIZED_BOTH);
+                            view.setAlwaysOnTop(true);
                             view.setVisible(true);
                         }
 

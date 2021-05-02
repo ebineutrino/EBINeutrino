@@ -19,9 +19,7 @@ public class EBIOfferSelectionDialog  {
     public String name = "";
     public int id = 0;
 
-    /**
-     * This is the xxx default constructor
-     */
+    
     public EBIOfferSelectionDialog(final Set<Companyoffer> opList) {
         tabModel = new ModelOffer();
         this.opList = opList;
@@ -135,7 +133,7 @@ public class EBIOfferSelectionDialog  {
 
                 tabModel.data[i][0] = obj.getName() == null ? "" : obj.getName();
                 tabModel.data[i][1] = obj.getOfferdate() == null ? "" : obj.getOfferdate();
-                tabModel.data[i][2] = obj.getValidto() == null ? "" : obj.getValidto();
+                tabModel.data[i][2] = obj.getValidto() == null ? "" : EBISystem.getInstance().getDateToString(obj.getValidto());
                 tabModel.data[i][3] = obj.getOpportunityid() == null ? 0 : obj.getOpportunityid();
                 tabModel.data[i][4] = obj.getStatus() == null ? "" : obj.getStatus();
                 tabModel.data[i][5] = obj.getDescription() == null ? "" : obj.getDescription();

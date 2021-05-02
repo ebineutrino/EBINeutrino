@@ -65,7 +65,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAME2}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealSize">
+			<image scaleImage="RetainShape">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="0" y="0" width="150" height="31" uuid="5eb2baa6-bc22-4ab6-a1e0-62bd79cc53ba"/>
 				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>

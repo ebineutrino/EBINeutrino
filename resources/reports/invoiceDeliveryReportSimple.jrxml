@@ -162,7 +162,7 @@ pos.TAXTYPE, tax.NAME, tax.TAXVALUE FROM CRMINVOICE o LEFT JOIN COMPANY comp ON 
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMPANY_ZIP}+" "+$P{COMPANY_LOCATION}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealSize">
+			<image scaleImage="RetainShape">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="303" height="69"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>

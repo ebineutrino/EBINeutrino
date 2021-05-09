@@ -672,6 +672,16 @@ public class EBISystem {
             }
         }
     }
+    
+    public boolean containDataStore(final String packageName, final String method){
+        boolean ret= false;
+        if (storableFactory.get(packageName) != null) {
+            if (storableFactory.get(packageName).getMetaClass().getMetaMethod(method, null) != null) {
+                ret = true;
+            }
+        }
+        return ret;
+    }
 
     public void resetDataStore() {
         storableFactory.clear();

@@ -158,7 +158,8 @@ public class ControlAddress {
     public void dataShow(Integer id) {
 
         int selRow = EBISystem.gui().table("companyAddess", "Address").getSelectedRow() + id;
-        final int size = EBISystem.getInstance().getCompany().getCompanyaddresses().size();
+        final int size = EBISystem.getInstance().getCompany().getCompanyaddresses() == null ? -1 :
+                            EBISystem.getInstance().getCompany().getCompanyaddresses().size();
 
         if (size > 0) {
             EBISystem.getModule().getAddressPane().getTabModel().data = new Object[size][7];

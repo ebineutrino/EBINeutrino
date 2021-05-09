@@ -23,7 +23,6 @@
         
         <combobox name="activityStatusText" tabindex="7" bind="COMPANYACTIVITYSTATUS" Location="120,140" Size="290,25" propertyBinding="COMPANYACTIVITYSTATUS"/>
         
-
         <button name="newActivityDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_ADD_NEW_DOC" Location="439,20" Size="31,27" actionListener="org.modules.views.EBICRMCompanyActivityView.newDocs" icon="new.png"/>
         <button name="showActivityDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_DOC" Location="473,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMCompanyActivityView.saveAndShowDocs" icon="move_up.png"/>
         <button name="deleteActivityDoc" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_DOC" Location="508,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMCompanyActivityView.deleteDoc" icon="delete.png"/>
@@ -50,5 +49,6 @@
 
         <table name="tableActivity" min="1" resizewidth="true" resizeheight="true" Location="8,70" Size="860,254"/>
         <textfield name="filterTableText" Location="220,28" Size="260,30" placeHolder="EBI_LANG_FILTER" resizeWidth="true"/>
+            <codecontrol name="groovy" path="csvExport/activityCSV.groovy"/>
     </panel>
 </visualpanel>

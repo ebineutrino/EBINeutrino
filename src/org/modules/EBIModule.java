@@ -49,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
 
 public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface {
 
@@ -365,38 +366,74 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         crmToolBar = new EBICRMToolBar();
         ebiContainer = new EBICRMTabcontrol();
         storeAutomate = new EBICRMAutomate();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                EBISystem.getInstance().getDataStore("CRM", "ebiOnLoad");
+            }
+        });
+    }
+
+    @Override
+    public void onAfterLoad() {
+        afterLoadDelegate("CRM");
     }
 
     @Override
     public void onExit() {
     }
 
+    public void invalidateProductPane() {
+        productPane = null;
+    }
+
+    private void afterLoadDelegate(final String nameSpace) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                EBIArbitration.arbitrate().begin("AfterLoadThread", new EBIArbCallback() {
+                    @Override
+                    public boolean callback(Thread currentThread) {
+                        EBIArbitration.arbitrate().waitJobDone("CRM_INITIALIZE");
+                        if (EBISystem.getInstance().containDataStore(nameSpace, "ebiAfterLoad")) {
+                            EBISystem.getInstance().getDataStore(nameSpace, "ebiAfterLoad");
+                            System.out.println("called xy");
+                        }
+                        return true;
+                    }
+                });
+            }
+        });
+    }
+
     public EBICRMProductView getEBICRMProductPane() {
         if (productPane == null) {
             productPane = (EBICRMProductView) EBISystem.getInstance().getMappedBean(EBICRMProductView.class);
+            EBISystem.getInstance().getDataStore("Product", "ebiOnLoad");
             productPane.initialize(true);
             productPane.initializeAction();
+            afterLoadDelegate("Product");
         }
 
         return productPane;
-    }
-    
-    public void invalidateProductPane(){
-        productPane = null;
     }
 
     public EBICRMCompanyView getCompanyPane() {
         if (companyPane == null) {
             companyPane = (EBICRMCompanyView) EBISystem.getInstance().getMappedBean(EBICRMCompanyView.class);
+            EBISystem.getInstance().getDataStore("Company", "ebiOnLoad");
             companyPane.initializeAction();
+            afterLoadDelegate("Company");
         }
         return companyPane;
     }
-    
+
     public EBIMeetingProtocolView getMeetingProtocol() {
         if (meetingReport == null) {
             meetingReport = (EBIMeetingProtocolView) EBISystem.getInstance().getMappedBean(EBIMeetingProtocolView.class);
+            EBISystem.getInstance().getDataStore("Meeting", "ebiOnLoad");
             meetingReport.initializeAction();
+            afterLoadDelegate("Meeting");
         }
         return meetingReport;
     }
@@ -404,7 +441,9 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
     public EBICRMContactView getContactPane() {
         if (contactPane == null) {
             contactPane = (EBICRMContactView) EBISystem.getInstance().getMappedBean(EBICRMContactView.class);
+            EBISystem.getInstance().getDataStore("Contact", "ebiOnLoad");
             contactPane.initializeAction();
+            afterLoadDelegate("Contact");
         }
         return contactPane;
     }
@@ -412,7 +451,9 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
     public EBICRMAddressView getAddressPane() {
         if (addressPane == null) {
             addressPane = (EBICRMAddressView) EBISystem.getInstance().getMappedBean(EBICRMAddressView.class);
+            EBISystem.getInstance().getDataStore("Address", "ebiOnLoad");
             addressPane.initializeAction();
+            afterLoadDelegate("Address");
         }
         return addressPane;
     }
@@ -420,7 +461,9 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
     public EBICRMOpportunityView getOpportunityPane() {
         if (opportunityPane == null) {
             opportunityPane = (EBICRMOpportunityView) EBISystem.getInstance().getMappedBean(EBICRMOpportunityView.class);
+            EBISystem.getInstance().getDataStore("Opportunity", "ebiOnLoad");
             opportunityPane.initializeAction();
+            afterLoadDelegate("Opportunity");
         }
         return opportunityPane;
     }
@@ -428,7 +471,9 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
     public EBICRMCompanyActivityView getActivitiesPane() {
         if (activitiesPane == null) {
             activitiesPane = (EBICRMCompanyActivityView) EBISystem.getInstance().getMappedBean(EBICRMCompanyActivityView.class);
+            EBISystem.getInstance().getDataStore("Activity", "ebiOnLoad");
             activitiesPane.initializeAction();
+            afterLoadDelegate("Activity");
         }
         return activitiesPane;
     }
@@ -437,6 +482,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         if (offerPane == null) {
             offerPane = (EBICRMOfferView) EBISystem.getInstance().getMappedBean(EBICRMOfferView.class);
             offerPane.initializeAction();
+            afterLoadDelegate("Offer");
         }
         return offerPane;
     }
@@ -446,6 +492,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
             leadsPane = (EBICRMLeadsView) EBISystem.getInstance().getMappedBean(EBICRMLeadsView.class);
             leadsPane.initialize(true);
             leadsPane.initializeAction();
+            afterLoadDelegate("Lead");
         }
         return leadsPane;
     }
@@ -454,6 +501,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         if (orderPane == null) {
             orderPane = (EBICRMOrderView) EBISystem.getInstance().getMappedBean(EBICRMOrderView.class);
             orderPane.initializeAction();
+            afterLoadDelegate("Order");
         }
         return orderPane;
     }
@@ -462,6 +510,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         if (servicePane == null) {
             servicePane = (EBICRMServiceView) EBISystem.getInstance().getMappedBean(EBICRMServiceView.class);
             servicePane.initializeAction();
+            afterLoadDelegate("Service");
         }
         return servicePane;
     }
@@ -471,11 +520,12 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
             prosolPane = (EBICRMProblemSolutionView) EBISystem.getInstance().getMappedBean(EBICRMProblemSolutionView.class);
             prosolPane.initialize(true);
             prosolPane.initializeAction();
+            afterLoadDelegate("Prosol");
         }
         return prosolPane;
     }
-    
-    public void invalidateProsolPane(){
+
+    public void invalidateProsolPane() {
         prosolPane = null;
     }
 
@@ -484,25 +534,26 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
             projectPane = (EBICRMPlanningView) EBISystem.getInstance().getMappedBean(EBICRMPlanningView.class);
             projectPane.initialize();
             projectPane.initializeAction();
+            afterLoadDelegate("Project");
         }
         return projectPane;
     }
-    
-    public void invalidateProjectPane(){
-        projectPane =null;
+
+    public void invalidateProjectPane() {
+        projectPane = null;
     }
-    
 
     public EBICRMInvoiceView getInvoicePane() {
         if (invoicePane == null) {
             invoicePane = (EBICRMInvoiceView) EBISystem.getInstance().getMappedBean(EBICRMInvoiceView.class);
             invoicePane.initialize(true);
             invoicePane.initializeAction();
+            afterLoadDelegate("Invoice");
         }
         return invoicePane;
     }
-    
-    public void invalidateInvoicePane(){
+
+    public void invalidateInvoicePane() {
         invoicePane = null;
     }
 
@@ -511,11 +562,12 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
             accountPane = (EBICRMAccountStackView) EBISystem.getInstance().getMappedBean(EBICRMAccountStackView.class);
             accountPane.initialize(true);
             accountPane.initializeAction();
+            afterLoadDelegate("Account");
         }
         return accountPane;
     }
-    
-    public void invalidateAccoutPane(){
+
+    public void invalidateAccoutPane() {
         accountPane = null;
     }
 
@@ -525,6 +577,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
             summaryPane.initialize();
             summaryPane.initializeAction();
             summaryPane.restoreProperties();
+            afterLoadDelegate("Summary");
         }
         return summaryPane;
     }
@@ -533,87 +586,94 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         if (bankPane == null) {
             bankPane = (EBICRMBankView) EBISystem.getInstance().getMappedBean(EBICRMBankView.class);
             bankPane.initializeAction();
+            afterLoadDelegate("Bank");
         }
         return bankPane;
     }
 
     public void resetUI(final boolean enableTab, final boolean reloading) {
-        try {
-            isExistCompany = false;
-            EBISystem.getInstance().setCompany(new Company());
-            EBISystem.getInstance().getCompany().setCompanyid(-1);
-            EBISystem.isSaveOrUpdate = false;
-            EBISystem.canRelease = true;
 
-            crmToolBar.enableToolbarButton(false);
-            // crmMenu.setDeleteItemEnabled(false);
+        EBIArbitration.arbitrate().begin("CRM_INITIALIZE", new EBIArbCallback() {
+            @Override
+            public boolean callback(Thread currentThread) {
+                try {
+                    isExistCompany = false;
+                    EBISystem.getInstance().setCompany(new Company());
+                    EBISystem.getInstance().getCompany().setCompanyid(-1);
+                    EBISystem.isSaveOrUpdate = false;
+                    EBISystem.canRelease = true;
 
-            final int selectedTab = ebiContainer.getSelectedTab();
-            if (EBISystem.gui().existView("Company")) {
-                getCompanyPane().initialize();
-                EBISystem.getInstance().gui().vpanel("Company").setID(-1);
-            }
-            if (EBISystem.gui().existView("Contact")) {
-                getContactPane().initialize(true);
-            }
-            if (EBISystem.gui().existView("Address")) {
-                getAddressPane().initialize(true);
-            }
-            if (EBISystem.gui().existView("Bank")) {
-                getBankdataPane().initialize(true);
-            }
-            if (EBISystem.gui().existView("MeetingCall")) {
-                getMeetingProtocol().initialize(true);
-            }
-            if (EBISystem.gui().existView("Activity")) {
-                getActivitiesPane().initialize(true);
-            }
-            if (EBISystem.gui().existView("Opportunity")) {
-                getOpportunityPane().initialize(true);
-            }
-            if (EBISystem.gui().existView("Offer")) {
-                getOfferPane().initialize(true);
-            }
-            if (EBISystem.gui().existView("Order")) {
-                getOrderPane().initialize(true);
-            }
+                    crmToolBar.enableToolbarButton(false);
+                    // crmMenu.setDeleteItemEnabled(false);
 
-            if (EBISystem.gui().existView("Service")) {
-                getServicePane().initialize(true);
-            }
-
-            if (reloading) {
-                if (EBISystem.gui().existView("Summary")) {
-                    getSummaryPane().initialize();
-                }
-                if (EBISystem.gui().existView("Leads")) {
-                    getLeadPane().initialize(true);
-                }
-            }
-
-            if (ebiContainer.getTabInstance().getTabCount() > 3) {
-                for (int i = EBISystem.gui().getProjectModuleEnabled(); i < EBISystem.gui().getProjectModuleCount(); i++) {
-                    ebiContainer.getTabInstance().setEnabledAt(i, enableTab);
-                }
-
-                if (enableTab) {
-                    ebiContainer.setSelectedTab(selectedTab);
-                } else {
-                    if (EBISystem.getInstance().getIEBIContainerInstance()
-                            .getIndexByTitle(EBISystem.i18n("EBI_LANG_C_COMPANY")) > -1
-                            && EBISystem.getInstance().getIEBIContainerInstance()
-                                    .getIndexByTitle(EBISystem.i18n("EBI_LANG_C_COMPANY")) <= EBISystem.getInstance()
-                            .getIEBIContainerInstance().getTabCount()) {
-
-                        ebiContainer.setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_COMPANY")));
+                    final int selectedTab = ebiContainer.getSelectedTab();
+                    if (EBISystem.gui().existView("Company")) {
+                        getCompanyPane().initialize();
+                        EBISystem.getInstance().gui().vpanel("Company").setID(-1);
                     }
-                }
-            }
+                    if (EBISystem.gui().existView("Contact")) {
+                        getContactPane().initialize(true);
+                    }
+                    if (EBISystem.gui().existView("Address")) {
+                        getAddressPane().initialize(true);
+                    }
+                    if (EBISystem.gui().existView("Bank")) {
+                        getBankdataPane().initialize(true);
+                    }
+                    if (EBISystem.gui().existView("MeetingCall")) {
+                        getMeetingProtocol().initialize(true);
+                    }
+                    if (EBISystem.gui().existView("Activity")) {
+                        getActivitiesPane().initialize(true);
+                    }
+                    if (EBISystem.gui().existView("Opportunity")) {
+                        getOpportunityPane().initialize(true);
+                    }
+                    if (EBISystem.gui().existView("Offer")) {
+                        getOfferPane().initialize(true);
+                    }
+                    if (EBISystem.gui().existView("Order")) {
+                        getOrderPane().initialize(true);
+                    }
 
-        } catch (final Exception ex) {
-            ex.printStackTrace();
-            logger.error(ex.getMessage(), ex.fillInStackTrace());
-        }
+                    if (EBISystem.gui().existView("Service")) {
+                        getServicePane().initialize(true);
+                    }
+
+                    if (reloading) {
+                        if (EBISystem.gui().existView("Summary")) {
+                            getSummaryPane().initialize();
+                        }
+                        if (EBISystem.gui().existView("Leads")) {
+                            getLeadPane().initialize(true);
+                        }
+                    }
+
+                    if (ebiContainer.getTabInstance().getTabCount() > 3) {
+                        for (int i = EBISystem.gui().getProjectModuleEnabled(); i < EBISystem.gui().getProjectModuleCount(); i++) {
+                            ebiContainer.getTabInstance().setEnabledAt(i, enableTab);
+                        }
+
+                        if (enableTab) {
+                            ebiContainer.setSelectedTab(selectedTab);
+                        } else {
+                            if (EBISystem.getInstance().getIEBIContainerInstance()
+                                    .getIndexByTitle(EBISystem.i18n("EBI_LANG_C_COMPANY")) > -1
+                                    && EBISystem.getInstance().getIEBIContainerInstance()
+                                            .getIndexByTitle(EBISystem.i18n("EBI_LANG_C_COMPANY")) <= EBISystem.getInstance()
+                                    .getIEBIContainerInstance().getTabCount()) {
+
+                                ebiContainer.setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_COMPANY")));
+                            }
+                        }
+                    }
+                } catch (final Exception ex) {
+                    ex.printStackTrace();
+                    logger.error(ex.getMessage(), ex.fillInStackTrace());
+                }
+                return true;
+            }
+        });
     }
 
     public boolean saveCompany(boolean checkCompany) {

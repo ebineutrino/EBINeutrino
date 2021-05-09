@@ -52,7 +52,7 @@
         <button name="deleteAccount" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="83,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMAccountStackView.deleteAccount" icon="delete.png"/>
         <button name="historyAccount" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="126,20" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMAccountStackView.historyAccount" icon="historysearch.png"/>
         <button name="reportAccount" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_REPORT" Location="161,20" Size="31,27" enabled="true" actionListener="org.modules.views.EBICRMAccountStackView.showAccountReport" icon="chart.png"/>
-
+        <button name="csvAccount" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_CSV" Location="161,20" Size="31,27" enabled="true" icon="exexp.png"/>
         <textfield name="filterTableText" Location="280,18" Size="400,30" placeHolder="EBI_LANG_FILTER"/>
         
         <label name="invoiceYear" title="EBI_LANG_YEAR" Location="730,20" Size="66,25"/>

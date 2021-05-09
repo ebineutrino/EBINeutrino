@@ -652,7 +652,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             if (lastPopup.isVisible()) {
                                 lastPopup.setVisible(false);
                                 lastPopup = null;
-                                 ((JTextField) e.getSource()).requestFocus();
+                                ((JTextField) e.getSource()).requestFocus();
                             }
                         }
                     }
@@ -1506,15 +1506,18 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                         }
 
                         binding.setVariable("namespace", nmSpace);
+                        EBIScriptComponentContainer compContainer = new EBIScriptComponentContainer();
                         while (ixt.hasNext()) {
                             final EBIGUINBean bx = (EBIGUINBean) ixt.next();
                             JComponent cmp = bx.getComponent();
                             if (bx.getComponent() instanceof JScrollPane) {
                                 cmp = bx.getScrollComponent();
                             }
-                            binding.setVariable(bx.getName(), cmp);
+                            compContainer.getComponents().put(bx.getName(), cmp);
                         }
-
+                        
+                        binding.setVariable(nmSpace, compContainer.getComponents());
+                        
                         if (PARAM != null) {
                             final Iterator<String> prmItr = PARAM.keySet().iterator();
                             while (prmItr.hasNext()) {
@@ -1529,7 +1532,9 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                         if (scr.getMetaClass().getMetaMethod("ebiEdit", null) != null
                                 || scr.getMetaClass().getMetaMethod("ebiDelete", null) != null
                                 || scr.getMetaClass().getMetaMethod("ebiNew", null) != null
-                                || scr.getMetaClass().getMetaMethod("ebiSave", null) != null) {
+                                || scr.getMetaClass().getMetaMethod("ebiSave", null) != null
+                                || scr.getMetaClass().getMetaMethod("ebiOnLoad", null) != null
+                                || scr.getMetaClass().getMetaMethod("ebiAfterLoad", null) != null) {
 
                             EBISystem.getInstance().setDataStore(cmpNamespace, scr);
                         }

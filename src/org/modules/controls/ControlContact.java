@@ -237,7 +237,8 @@ public class ControlContact {
     public void dataShow(boolean newRecord) {
         
         int row = EBISystem.gui().table("companyContacts", "Contact").getSelectedRow();
-        final int size = EBISystem.getInstance().getCompany().getCompanycontactses().size();
+        final int size = EBISystem.getInstance().getCompany().getCompanycontactses() == null 
+                        ? -1 : EBISystem.getInstance().getCompany().getCompanycontactses().size();
         if (size > 0) {
              EBISystem.getModule().getContactPane().getTableModel().setAvailableContacts(EBISystem.getInstance().getCompany().getCompanycontactses());
         }

@@ -178,12 +178,18 @@ public class EBISocketDownloader {
         try {
             if (fileLocalExist && fileOnlineExist) {
                 if (xmlLocal != null && xmlOnline != null) {
-                    if (!xmlLocal.getRootElement().getAttribute("version").getValue()
-                            .equals(xmlOnline.getRootElement().getAttribute("version").getValue())) {
-                        onlineVer = xmlOnline.getRootElement().getAttribute("version").getValue();
-                        localVer = xmlLocal.getRootElement().getAttribute("version").getValue();
-                        processElement(xmlOnline.getRootElement());
-                        ret = true;
+                    try {
+                        int localVersion = Integer.parseInt(xmlLocal.getRootElement().getAttribute("version").getValue().replace(".", "").toString());
+                        int onlineVersion = Integer.parseInt(xmlOnline.getRootElement().getAttribute("version").getValue().replace(".", "").toString());
+                        if (localVersion < onlineVersion) {
+                            onlineVer = xmlOnline.getRootElement().getAttribute("version").getValue();
+                            localVer = xmlLocal.getRootElement().getAttribute("version").getValue();
+                            processElement(xmlOnline.getRootElement());
+                            ret = true;
+                        }
+                    } catch (NumberFormatException ex) {
+                        ex.printStackTrace();
+                        ret = false;
                     }
                 } else {
                     ret = false;
@@ -355,7 +361,7 @@ public class EBISocketDownloader {
         try {
 
             File destDir = new File(".");
-            
+
             byte[] buffer = new byte[1024];
             ZipInputStream zis = new ZipInputStream(new FileInputStream(fileZip));
 

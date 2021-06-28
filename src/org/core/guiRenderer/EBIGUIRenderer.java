@@ -61,6 +61,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
     private EBIMain ebiMain = null;
     public TreeMap<String, Object> toToolbar = null;
+    public TreeMap<String, Object> ldComponent = null;
     public TreeMap<String, EBIGUIWidgetsBean> componentsTable = null;
     public TreeMap<String, List<Object>> resizeContainer = null;
     private TreeMap<String, HashMap<String, EBIGUIScripts>> scriptContainer = null;
@@ -86,6 +87,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     public EBIGUIRenderer(final EBIMain main) {
         ebiMain = main;
         toToolbar = new TreeMap();
+        ldComponent = new TreeMap();
         focusTraversal = new EBIFocusTraversalPolicy();
         componentGet = new TreeMap();
         binding = new Binding();
@@ -393,12 +395,9 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                 button.setEnabled(bean.isEnabled());
 
                 if (!"".equals(bean.getActionListener())) {
-                    button.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent actionEvent) {
-                            String action = EBISystem.gui().getComponentWidgetBean(((EBIButton) actionEvent.getSource()).getName()).getActionListener();
-                            EBIReflect.getInstance().reflectAction(action);
-                        }
+                    button.addActionListener((actionEvent) -> {
+                        String action = EBISystem.gui().getComponentWidgetBean(((EBIButton) actionEvent.getSource()).getName()).getActionListener();
+                        EBIReflect.getInstance().reflectAction(action);
                     });
                 }
 
@@ -818,7 +817,6 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                     ((JPanel) obj).add(radio, null);
                     res.setParentComponent((JComponent) obj);
                 }
-
             } else if ("textarea".equals(bean.getType())) {
 
                 final JTextArea textArea = new JTextArea();
@@ -1350,7 +1348,6 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             });
                         }
                     }).start();
-
                     isInit = false;
                     fileToTabPath = "";
                 }
@@ -1515,9 +1512,9 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             }
                             compContainer.getComponents().put(bx.getName(), cmp);
                         }
-                        
+
                         binding.setVariable(nmSpace, compContainer.getComponents());
-                        
+
                         if (PARAM != null) {
                             final Iterator<String> prmItr = PARAM.keySet().iterator();
                             while (prmItr.hasNext()) {
@@ -1619,9 +1616,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
             private final int calPY = 0;
 
             @Override
-            public final void componentShown(final java.awt.event.ComponentEvent e) {
-                // componentResized(e);
-            }
+            public final void componentShown(final java.awt.event.ComponentEvent e) {}
 
             @Override
             public final void componentResized(final java.awt.event.ComponentEvent e) {
@@ -1655,9 +1650,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
                     for (int i = 0; i < resizeContainer.get(compName).size(); i++) {
                         res = (EBIGUINBean) resizeContainer.get(compName).get(i);
-
                         if (res.getComponent() instanceof JComponent) {
-
                             if (res.isFitByResize()) {
                                 if (e.getSource() instanceof EBIDialog) {
                                     if (res.getParentComponent() == null) {
@@ -1741,8 +1734,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                     if (undo.canUndo()) {
                         undo.undo();
                     }
-                } catch (final CannotUndoException e) {
-                }
+                } catch (final CannotUndoException e) {}
             }
         });
 
@@ -1754,8 +1746,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                     if (undo.canRedo()) {
                         undo.redo();
                     }
-                } catch (final CannotRedoException e) {
-                }
+                } catch (final CannotRedoException e) {}
             }
         });
         comp.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
@@ -1764,14 +1755,12 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     @Override
     public final EBIVisualPanelTemplate vpanel(final String Name) {
         EBIVisualPanelTemplate retPanel;
-
         if (componentsTable.get(Name) != null && componentsTable.get(Name).getComponent() instanceof EBIDialog) {
             retPanel = (EBIVisualPanelTemplate) ((EBIDialog) componentsTable.get(Name).getComponent()).getContentPane();
         } else {
             retPanel = componentsTable.get(Name) == null ? null
                     : ((EBIVisualPanelTemplate) componentsTable.get(Name).getComponent());
         }
-
         return retPanel;
     }
 
@@ -1782,30 +1771,30 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
     @Override
     public final JToolBar getToolBar(final String name) {
-
         JToolBar bar = null;
-
-        if (toToolbar.get(name) != null) {
-            bar = (JToolBar) ((EBIGUIToolbar) toToolbar.get(name)).getComponent();
+        if(toToolbar.get(name) != null) {
+            bar = (JToolBar)((EBIGUIToolbar)toToolbar.get(name)).getComponent();
         }
-
         return bar;
     }
 
     @Override
     public final JComponent getToolBarComponent(final String name, final String packages) {
         JComponent comp = null;
-
-        if (toToolbar.get(packages) != null) {
-
-            final Iterator i = ((EBIGUIToolbar) toToolbar.get(packages)).getBarItem().iterator();
-            while (i.hasNext()) {
-                final EBIGUIToolbar tb = (EBIGUIToolbar) i.next();
-                if (name.equals(tb.getName())) {
-                    comp = tb.getComponent();
-                    break;
+        if (!ldComponent.containsKey(name)) {
+            if (toToolbar.get(packages) != null) {
+                final Iterator i = ((EBIGUIToolbar) toToolbar.get(packages)).getBarItem().iterator();
+                while (i.hasNext()) {
+                    final EBIGUIToolbar tb = (EBIGUIToolbar) i.next();
+                    if (name.equals(tb.getName())) {
+                        comp = tb.getComponent();
+                        ldComponent.put(name, comp);
+                        break;
+                    }
                 }
             }
+        } else {
+            comp = (JComponent) ldComponent.get(name);
         }
         return comp;
     }
@@ -1813,17 +1802,21 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     @Override
     public final JButton getToolBarButton(final String name, final String packages) {
         JButton bnt = null;
-
         final EBIGUIToolbar toolbar = ((EBIGUIToolbar) toToolbar.get(packages));
-        if (toolbar != null) {
-            final Iterator i = toolbar.getBarItem().iterator();
-            while (i.hasNext()) {
-                final EBIGUIToolbar tb = (EBIGUIToolbar) i.next();
-                if (name.equals(tb.getName())) {
-                    bnt = (JButton) tb.getComponent();
-                    break;
+        if (!ldComponent.containsKey(name)) {
+            if (toolbar != null) {
+                final Iterator i = toolbar.getBarItem().iterator();
+                while (i.hasNext()) {
+                    final EBIGUIToolbar tb = (EBIGUIToolbar) i.next();
+                    if (name.equals(tb.getName())) {
+                        bnt = (JButton) tb.getComponent();
+                        ldComponent.put(name, bnt);
+                        break;
+                    }
                 }
             }
+        } else {
+            bnt = (JButton) ldComponent.get(name);
         }
         return bnt;
     }

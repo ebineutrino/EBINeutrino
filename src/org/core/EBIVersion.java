@@ -3,7 +3,7 @@ package org.core;
 public class EBIVersion {
 
     private final String majVersion = "7";
-    private final String minVersion = "";
+    private final String minVersion = ".5";
     private final String build = "";
     public static EBIVersion version = null;
 

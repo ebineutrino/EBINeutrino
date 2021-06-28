@@ -22,4 +22,5 @@
         <button name="historyAddress"  i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_HISTORY" Location="151,23" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMAddressView.historyAddress" icon="historysearch.png"/>
         <textfield name="filterTableText"  Location="205,21" Size="250,30" placeHolder="EBI_LANG_FILTER" resizeWidth="true" />
     </panel>
+     <codecontrol name="groovy" path="Address/addressScript.groovy"/>
 </visualpanel>

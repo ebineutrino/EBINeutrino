@@ -116,15 +116,19 @@ public class EBITableExt extends JXTable implements MouseListener {
         };
     }
 
-    @Override
+   /* @Override
     public final Component prepareRenderer(final TableCellRenderer renderer, final int rowIndex, final int vColIndex) {
         Component c = null;
         try {
             c = super.prepareRenderer(renderer, rowIndex, vColIndex);
             if (c instanceof JComponent && getValueAt(rowIndex, vColIndex) != null) {
                 final JComponent jc = (JComponent) c;
+                
+                String val = getValueAt(rowIndex, vColIndex).toString().length() > 255 ?
+                                getValueAt(rowIndex, vColIndex).toString().substring(0,255)
+                                                    : getValueAt(rowIndex, vColIndex).toString();
                 jc.setToolTipText("<html><b>"
-                        + getValueAt(rowIndex, vColIndex).toString().replaceAll("\n", "<br>")
+                        +val.replaceAll("\n", "<br>")
                         + "</b></html>");
 
             }
@@ -132,7 +136,7 @@ public class EBITableExt extends JXTable implements MouseListener {
             e.printStackTrace();
         }
         return c;
-    }
+    }*/
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {

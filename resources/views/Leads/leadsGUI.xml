@@ -64,8 +64,9 @@
         <button name="editLeads" i18ntooltip="EBI_LANG_C_TOOL_TIP_EDIT_RECORD" Location="44,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMLeadsView.editLead" icon="edit.png"/>
         <button name="copyLeads" i18ntooltip="EBI_LANG_C_TOOL_TIP_COPY_RECORD" Location="78,25" Size="31,27"  enabled="false" actionListener="org.modules.views.EBICRMLeadsView.copyLead" icon="editcopy.png"/>
         <button name="deleteLeads" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_RECORD" Location="117,25" Size="31,27"  enabled="false" actionListener="org.modules.views.EBICRMLeadsView.deleteLead" icon="delete.png"/>
-
-        <textfield name="searchLeadsText" Location="200,23" Size="310,30" resizeWidth="true" placeHolder="EBI_LANG_SEARCH_LEADS"/>
         <button name="openComp" i18ntooltip="EBI_LANG_C_TOOL_TIP_LOAD_TO_COMPANY" Location="152,25" Size="31,27" enabled="false" actionListener="org.modules.views.EBICRMLeadsView.openCompany" icon="move.png"/>
+        <button name="exportLeads" i18ntooltip="EBI_LANG_C_TOOL_TIP_EXPORT" Location="188,25" Size="31,27" icon="exexp.png"/>
+        <textfield name="searchLeadsText" Location="230,23" Size="310,30" resizeWidth="true" placeHolder="EBI_LANG_SEARCH_LEADS"/>
     </panel>
+        <codecontrol name="groovy" path="Leads/leadsScript.groovy"/>
 </visualpanel>

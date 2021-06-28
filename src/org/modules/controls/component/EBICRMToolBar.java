@@ -1,6 +1,5 @@
 package org.modules.controls.component;
 
-import org.modules.EBIModule;
 import org.modules.controls.component.listener.EBICRMActionListener;
 import org.sdk.EBISystem;
 import javax.swing.*;

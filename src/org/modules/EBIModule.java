@@ -49,7 +49,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
 
 public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface {
 
@@ -223,25 +222,20 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                     //load setted crm / erp modules
                     loadModule();
 
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            if (summaryPane != null) {
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (final InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                summaryPane.searchSummary();
+                    SwingUtilities.invokeLater(() -> {
+                        if (summaryPane != null) {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (final InterruptedException e) {
+                                e.printStackTrace();
                             }
-
-                            allertTimer = new EBIAllertTimer();
-                            allertTimer.setUpAvailableTimer();
-
-                            final java.util.Timer timerFix = new java.util.Timer();
-                            timerFix.scheduleAtFixedRate(new EBITimerTaskFixRate(EBIModule.this), 12000, 32000);
+                            summaryPane.searchSummary();
                         }
+
+                        allertTimer = new EBIAllertTimer();
+                        allertTimer.setUpAvailableTimer();
+                        final java.util.Timer timerFix = new java.util.Timer();
+                        timerFix.scheduleAtFixedRate(new EBITimerTaskFixRate(EBIModule.this), 12000, 32000);
                     });
                     return true;
                 }
@@ -600,11 +594,8 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                     isExistCompany = false;
                     EBISystem.getInstance().setCompany(new Company());
                     EBISystem.getInstance().getCompany().setCompanyid(-1);
-                    EBISystem.isSaveOrUpdate = false;
-                    EBISystem.canRelease = true;
 
                     crmToolBar.enableToolbarButton(false);
-                    // crmMenu.setDeleteItemEnabled(false);
 
                     final int selectedTab = ebiContainer.getSelectedTab();
                     if (EBISystem.gui().existView("Company")) {
@@ -641,6 +632,8 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                     }
 
                     if (reloading) {
+                        EBISystem.isSaveOrUpdate = false;
+                        EBISystem.canRelease = true;
                         if (EBISystem.gui().existView("Summary")) {
                             getSummaryPane().initialize();
                         }
@@ -1051,67 +1044,74 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
      * @return
      */
     public boolean createUI(final int compNr, final boolean reload) {
-        try {
 
-            resetUI(true, reload);
-            EBISystem.isSaveOrUpdate = true;
-            crmToolBar.enableToolbarButton(true);
+        resetUI(true, reload);
+        
+        EBIArbitration.arbitrate().begin("LOAD_CRM_DATA", new EBIArbCallback() {
+            @Override
+            public boolean callback(Thread currentThread) {
+                try {
+                    EBIArbitration.arbitrate().waitJobDone("CRM_INITIALIZE");
+                    EBISystem.isSaveOrUpdate = true;
+                    crmToolBar.enableToolbarButton(true);
 
-            // Load company data
-            try {
-                EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
-                final Query query = EBISystem.hibernate().session("EBICRM_SESSION").createQuery("from Company c where c.companyid=?1 ");
-                query.setParameter(1, compNr);
+                    // Load company data
+                    try {
+                        EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
+                        final Query query = EBISystem.hibernate().session("EBICRM_SESSION").createQuery("from Company c where c.companyid=?1 ");
+                        query.setParameter(1, compNr);
 
-                final Iterator it = query.iterate();
-                if (it.hasNext()) {
-                    EBISystem.getInstance().setCompany((Company) it.next());
-                    isExistCompany = true;
-                    loadCompanyData();
-                    loadContactData();
-                    loadCompanyAdressData();
-                    loadBankData();
-                    loadCompanyMeetingProtocol();
-                    loadOpportunity();
-                    loadActivities();
-                    loadOfferData();
-                    loadOrderData();
-                    loadServiceData();
+                        final Iterator it = query.iterate();
+                        if (it.hasNext()) {
+                            EBISystem.getInstance().setCompany((Company) it.next());
+                            isExistCompany = true;
+                            loadCompanyData();
+                            loadContactData();
+                            loadCompanyAdressData();
+                            loadBankData();
+                            loadCompanyMeetingProtocol();
+                            loadOpportunity();
+                            loadActivities();
+                            loadOfferData();
+                            loadOrderData();
+                            loadServiceData();
 
-                    if (EBISystem.getInstance().getCompany() != null) {
-                        if (EBISystem.getInstance().getCompany().getIsactual() != null && EBISystem.getInstance().getCompany().getIsactual() == false) {
-                            if (EBISystem.gui().getCheckBox("mainContactText", "Contact") != null) {
-                                EBISystem.gui().getCheckBox("mainContactText", "Contact").setVisible(false);
+                            if (EBISystem.getInstance().getCompany() != null) {
+                                if (EBISystem.getInstance().getCompany().getIsactual() != null && EBISystem.getInstance().getCompany().getIsactual() == false) {
+                                    if (EBISystem.gui().getCheckBox("mainContactText", "Contact") != null) {
+                                        EBISystem.gui().getCheckBox("mainContactText", "Contact").setVisible(false);
+                                    }
+                                } else {
+                                    if (EBISystem.gui().getCheckBox("mainContactText", "Contact") != null) {
+                                        EBISystem.gui().getCheckBox("mainContactText", "Contact").setVisible(true);
+                                    }
+                                }
                             }
-                        } else {
-                            if (EBISystem.gui().getCheckBox("mainContactText", "Contact") != null) {
-                                EBISystem.gui().getCheckBox("mainContactText", "Contact").setVisible(true);
+
+                            if (EBISystem.getInstance().getCompany().getName() != null) {
+                                if (ebiContainer.companyPOSID != -1) {
+                                    ebiContainer.getTabInstance().setTitleAt(ebiContainer.companyPOSID, EBISystem.getInstance().getCompany().getName());
+                                }
                             }
                         }
-                    }
 
-                    if (EBISystem.getInstance().getCompany().getName() != null) {
-                        if (ebiContainer.companyPOSID != -1) {
-                            ebiContainer.getTabInstance().setTitleAt(ebiContainer.companyPOSID, EBISystem.getInstance().getCompany().getName());
-                        }
+                        ebiContainer.getTabInstance().setBackgroundAt(8, new Color(255, 173, 51));
+                        ebiContainer.getTabInstance().setBackgroundAt(9, new Color(255, 255, 0));
+                        ebiContainer.getTabInstance().setBackgroundAt(10, new Color(64, 255, 0));
+                        EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
+                    } catch (final org.hibernate.HibernateException ex) {
+                        EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
+                    } catch (final Exception ex) {
+                        ex.printStackTrace();
+                        EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.NEUTRINO_DEBUG_MESSAGE);
                     }
+                    EBISystem.canRelease = true;
+                } catch (final Exception ex) {
+                    logger.error(ex.getMessage(), ex.fillInStackTrace());
                 }
-
-                ebiContainer.getTabInstance().setBackgroundAt(8, new Color(255, 173, 51));
-                ebiContainer.getTabInstance().setBackgroundAt(9, new Color(255, 255, 0));
-                ebiContainer.getTabInstance().setBackgroundAt(10, new Color(64, 255, 0));
-                EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-            } catch (final org.hibernate.HibernateException ex) {
-                EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
-            } catch (final Exception ex) {
-                ex.printStackTrace();
-                EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.NEUTRINO_DEBUG_MESSAGE);
+                return true;
             }
-
-            EBISystem.canRelease = true;
-        } catch (final Exception ex) {
-            logger.error(ex.getMessage(), ex.fillInStackTrace());
-        }
+        });
 
         return true;
     }

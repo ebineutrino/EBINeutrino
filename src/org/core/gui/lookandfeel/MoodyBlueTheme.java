@@ -69,7 +69,7 @@ public class MoodyBlueTheme extends DefaultMetalTheme {
         final Border empty = new EmptyBorder(5, 5, 5, 5);
         final CompoundBorder border = new CompoundBorder(line, empty);
 
-        final Border line1 = BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(34, 34, 34));
+        final Border line1 = BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(39, 39, 39));
         final Border empty1 = new EmptyBorder(0, 0, 0, 0);
         final CompoundBorder border1 = new CompoundBorder(line1, empty1);
 
@@ -96,11 +96,11 @@ public class MoodyBlueTheme extends DefaultMetalTheme {
                 } else if (kl.indexOf("foreground") != -1) {
                     UIManager.put(key, new Color(192, 192, 192));
                 } else if (kl.indexOf("highlight") != -1 && kl.indexOf("focuscellhighlightborder") == -1) {
-                    UIManager.put(key, new Color(34, 34, 34));
+                    UIManager.put(key, new Color(95, 200, 101));
                 } else if (kl.indexOf("color") != -1 && kl.indexOf("title") != -1) {
                     UIManager.put(key, new Color(95, 101, 101));
                 } else if (kl.indexOf("color") != -1) {
-                    UIManager.put(key, new Color(51, 57, 57));
+                    UIManager.put(key, new Color(39, 39, 39));
                 } else if (kl.indexOf("font") != -1) {
                     UIManager.put(key, new Font("Tahoma", Font.PLAIN, 12));
                 }

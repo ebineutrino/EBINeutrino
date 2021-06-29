@@ -107,6 +107,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
         scriptContainer = new TreeMap<String, HashMap<String, EBIGUIScripts>>();
         componentGet = new TreeMap<String, Integer>();
         focusTraversal = new EBIFocusTraversalPolicy();
+        ldComponent = new TreeMap();
         fileToTabPath = "";
         isInit = true;
         projectCount = 0;
@@ -120,15 +121,12 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
         xmlGui1.setXmlPath("views/" + path);
         init();
         if (xmlGui1.loadXMLGUI()) {
-
             final Iterator ix = xmlGui1.getCompObjects().getSubWidgets().iterator();
-
             while (ix.hasNext()) {
                 final EBIGUIWidgetsBean bx = (EBIGUIWidgetsBean) ix.next();
                 if (bx.getType().toLowerCase().equals("includetoolbar")) {
-                    if (EBISystem.getUserRight().isAdministrator()) {
-                        addXMLToolBarGUI(bx);
-                    } else if (EBISystem.registeredModule.contains(bx.getPath())) {
+                    if (EBISystem.getUserRight().isAdministrator() 
+                           || EBISystem.registeredModule.contains(bx.getPath())) {
                         addXMLToolBarGUI(bx);
                     }
                 } else if ("codecontrol".equals(bx.getType().toLowerCase())) {
@@ -1403,8 +1401,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             inputMap = ((JPanel) ebiMain.getContentPane())
                                     .getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
                             inputMap.put(b.getKeyStroke(), b.getName() + "Action");
-                            ((JPanel) ebiMain.getContentPane()).getActionMap().put(b.getName() + "Action",
-                                    refreshAction);
+                            ((JPanel) ebiMain.getContentPane()).getActionMap().put(b.getName() + "Action", refreshAction);
                         }
                         b.setComponent(bx);
                         b.setId(NEW_ID);
@@ -1616,7 +1613,8 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
             private final int calPY = 0;
 
             @Override
-            public final void componentShown(final java.awt.event.ComponentEvent e) {}
+            public final void componentShown(final java.awt.event.ComponentEvent e) {
+            }
 
             @Override
             public final void componentResized(final java.awt.event.ComponentEvent e) {
@@ -1734,7 +1732,8 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                     if (undo.canUndo()) {
                         undo.undo();
                     }
-                } catch (final CannotUndoException e) {}
+                } catch (final CannotUndoException e) {
+                }
             }
         });
 
@@ -1746,7 +1745,8 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                     if (undo.canRedo()) {
                         undo.redo();
                     }
-                } catch (final CannotRedoException e) {}
+                } catch (final CannotRedoException e) {
+                }
             }
         });
         comp.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
@@ -1772,8 +1772,8 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     @Override
     public final JToolBar getToolBar(final String name) {
         JToolBar bar = null;
-        if(toToolbar.get(name) != null) {
-            bar = (JToolBar)((EBIGUIToolbar)toToolbar.get(name)).getComponent();
+        if (toToolbar.get(name) != null) {
+            bar = (JToolBar) ((EBIGUIToolbar) toToolbar.get(name)).getComponent();
         }
         return bar;
     }

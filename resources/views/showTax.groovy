@@ -13,6 +13,7 @@ system.gui.button("taxButton","Account").actionPerformed={
     }
 
     system.gui.button("viewTax","taxViewDialog").actionPerformed={
+        println "called view tax";
         if(!validateInput()){
             return
         }
@@ -24,6 +25,9 @@ system.gui.button("taxButton","Account").actionPerformed={
         String toPrint2 = "";
         toPrint += calculateTax(toPrint2,2);
        
+        if(toPrint == ""){
+            toPrint = system.i18n("EBI_LANG_RECORD_NOT_FOUND"); 
+        }
         system.gui.getEditor("viewtaxText","taxViewDialog").setText(toPrint)
     }
     system.gui.showGUI()

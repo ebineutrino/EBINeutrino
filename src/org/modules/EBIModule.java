@@ -151,7 +151,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         try {
             isExistCompany = false;
             RELOAD = false;
-
+           
             EBISystem.getInstance().gui().loadProject("project.xml");
             if (!EBISystem.getInstance().gui().isToolBarEmpty()) {
                 crmToolBar.setCRMToolBar();
@@ -1044,9 +1044,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
      * @return
      */
     public boolean createUI(final int compNr, final boolean reload) {
-
         resetUI(true, reload);
-        
         EBIArbitration.arbitrate().begin("LOAD_CRM_DATA", new EBIArbCallback() {
             @Override
             public boolean callback(Thread currentThread) {
@@ -1174,119 +1172,72 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         if (!EBISystem.gui().existView("Contact")) {
             return;
         }
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                contactPane.getControlContact().dataShow(false);
-                EBISystem.gui().combo("genderTex", "Contact").grabFocus();
-            }
-        });
-
+        contactPane.getControlContact().dataShow(false);
+        EBISystem.gui().combo("genderTex", "Contact").grabFocus();
     }
 
     private void loadCompanyAdressData() {
         if (!EBISystem.gui().existView("Address")) {
             return;
         }
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                addressPane.getAddressDataControl().dataShow(-1);
-                EBISystem.gui().combo("addressTypeText", "Address").setRequestFocusEnabled(true);
-                EBISystem.gui().combo("addressTypeText", "Address").grabFocus();
-            }
-        });
+        addressPane.getAddressDataControl().dataShow(-1);
+        EBISystem.gui().combo("addressTypeText", "Address").setRequestFocusEnabled(true);
+        EBISystem.gui().combo("addressTypeText", "Address").grabFocus();
     }
 
     private void loadCompanyMeetingProtocol() {
         if (!EBISystem.gui().existView("MeetingCall")) {
             return;
         }
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                meetingReport.getDataMeetingControl().dataShow(-1);
-                EBISystem.gui().textField("subjectMeetingText", "MeetingCall").grabFocus();
-            }
-        });
+        meetingReport.getDataMeetingControl().dataShow(-1);
+        EBISystem.gui().textField("subjectMeetingText", "MeetingCall").grabFocus();
     }
 
     private void loadOpportunity() {
         if (!EBISystem.gui().existView("Opportunity")) {
             return;
         }
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                opportunityPane.getDataOpportuniyControl().dataShow(-1);
-                EBISystem.gui().combo("opportunityNameText", "Opportunity").grabFocus();
-            }
-        });
+        opportunityPane.getDataOpportuniyControl().dataShow(-1);
+        EBISystem.gui().combo("opportunityNameText", "Opportunity").grabFocus();
     }
 
     private void loadActivities() {
         if (!EBISystem.gui().existView("Activity")) {
             return;
         }
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                activitiesPane.getDataControlActivity().dataShow(-1);
-                EBISystem.gui().textField("activityNameText", "Activity").grabFocus();
-            }
-        });
+        activitiesPane.getDataControlActivity().dataShow(-1);
+        EBISystem.gui().textField("activityNameText", "Activity").grabFocus();
     }
 
     private void loadBankData() {
         if (!EBISystem.gui().existView("Bank")) {
             return;
         }
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                bankPane.getBankDataControl().dataShow(-1);
-                EBISystem.gui().textField("bankNameText", "Bank").grabFocus();
-            }
-        });
+        bankPane.getBankDataControl().dataShow(-1);
+        EBISystem.gui().textField("bankNameText", "Bank").grabFocus();
     }
 
     private void loadOfferData() {
         if (!EBISystem.gui().existView("Offer")) {
             return;
         }
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                offerPane.getDataControlOffer().dataShow(-1);
-                EBISystem.gui().textField("offerNrText", "Offer").requestFocus();
-            }
-        });
+        offerPane.getDataControlOffer().dataShow(-1);
+        EBISystem.gui().textField("offerNrText", "Offer").requestFocus();
     }
 
     private void loadOrderData() {
         if (!EBISystem.gui().existView("Order")) {
             return;
         }
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                orderPane.getDataControlOrder().dataShow(-1);
-                EBISystem.gui().textField("orderNrText", "Order").requestFocus();
-            }
-        });
-
+        orderPane.getDataControlOrder().dataShow(-1);
+        EBISystem.gui().textField("orderNrText", "Order").requestFocus();
     }
 
     private void loadServiceData() {
         if (!EBISystem.gui().existView("Service")) {
             return;
         }
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                servicePane.showService();
-                EBISystem.gui().textField("serviceNrText", "Service").requestFocus();
-            }
-        });
+        servicePane.showService();
+        EBISystem.gui().textField("serviceNrText", "Service").requestFocus();
     }
 }

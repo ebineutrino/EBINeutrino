@@ -55,7 +55,7 @@ public class EBISystemSettingPanel extends JPanel {
         parseLanguageFileFromDir();
         final EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
 
-        if (!"".equals(properties.getValue("EBI_Neutrino_TextEditor_Path"))){
+        if (!"".equals(properties.getValue("EBI_Neutrino_TextEditor_Path"))) {
             jTextEditorPath.setText(properties.getValue("EBI_Neutrino_TextEditor_Path"));
         }
         if (!"".equals(properties.getValue("EBI_Neutrino_PDF"))) {
@@ -144,15 +144,24 @@ public class EBISystemSettingPanel extends JPanel {
             ImageIcon icon = new ImageIcon(jtextLogo.getText());
             Image image = icon.getImage(); // transform it
             Image newimg = null;
-            if(icon.getIconWidth() > logoView.getWidth()){
-                newimg = image.getScaledInstance(logoView.getWidth(), logoView.getHeight(), java.awt.Image.SCALE_SMOOTH);
-            }else{
-                newimg = image;
-            }
+            newimg = drawScaledImage(image, logoView.getWidth(), logoView.getHeight());
             logoView.setIcon(new ImageIcon(newimg));
             logoView.updateUI();
             logoView.setText("");
         }
+    }
+
+    public Image drawScaledImage(Image image, int w, int h) {
+        int imgWidth = image.getWidth(null);
+        int imgHeight = image.getHeight(null);
+
+        if(imgHeight > h && imgWidth > w){
+            while(imgWidth > w || imgHeight > h){
+                imgWidth  -=5;
+                imgHeight -=5;
+            }
+        }
+        return image.getScaledInstance(imgWidth, imgHeight, java.awt.Image.SCALE_SMOOTH);
     }
 
     private JPanel getJPanelSysAlg() {
@@ -282,7 +291,7 @@ public class EBISystemSettingPanel extends JPanel {
     public void saveSystemSetting() {
         boolean isSaved = false;
         final EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
-        
+
         properties.setValue("EBI_Neutrino_PDF", jtextPDFPath.getText());
         properties.setValue("EBI_Neutrino_Browser", jtextBrowserPath.getText());
         if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(this.jComboBoxLanguage.getSelectedItem().toString())) {
@@ -294,7 +303,7 @@ public class EBISystemSettingPanel extends JPanel {
         properties.setValue("EBI_Neutrino_TextEditor_Path", this.jTextEditorPath.getText());
         properties.setValue("EBI_Neutrino_Date_Format", this.jComboDateFormat.getEditor().getItem().toString());
         properties.setValue("EBI_Neutrino_Logo", this.jtextLogo.getText());
-        
+
         if (validateInput() == true) {
             saveEMailSetting();
         }

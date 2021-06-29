@@ -25,6 +25,7 @@ public class EBIExtensionContainer implements IEBIContainer {
     private JScrollPane jscrollPane = null;
     private final CloseableTabbedPaneListener lis = null;
     public final List<Object> registeredTabs = new ArrayList<Object>();
+    private int lastSelectedIndex = -1;
 
     public EBIExtensionContainer(final EBIMain main) {
         ebiMain = main;
@@ -63,6 +64,7 @@ public class EBIExtensionContainer implements IEBIContainer {
      */
     @Override
     public int addContainer(final String title, final JComponent component, final ImageIcon icon, final int mnemo_key) {
+        lastSelectedIndex = getSelectedTab();
         jTabbedPane.addTab(title, icon, component);
 
         if (mnemo_key != NON_MNEMO) {
@@ -85,6 +87,7 @@ public class EBIExtensionContainer implements IEBIContainer {
      */
     @Override
     public int addScrollableContainer(final String title, final JComponent component, final ImageIcon icon, final int mnemo_key) {
+        lastSelectedIndex = getSelectedTab();
         component.setPreferredSize(new Dimension(component.getWidth(), component.getHeight()));
         jscrollPane = new JScrollPane();
         jscrollPane.setViewportView(component);
@@ -120,6 +123,7 @@ public class EBIExtensionContainer implements IEBIContainer {
     @Override
     public int addScrollableClosableContainer(final String title, final JComponent component, final ImageIcon icon, final int mnemo_key, final CloseableTabbedPaneListener l) {
 
+        lastSelectedIndex = getSelectedTab();
         component.setPreferredSize(new Dimension(component.getWidth(), component.getHeight()));
         jscrollPane = new JScrollPane();
         jscrollPane.getVerticalScrollBar().setUnitIncrement(150);
@@ -144,7 +148,6 @@ public class EBIExtensionContainer implements IEBIContainer {
     @Override
     public int getIndexByTitle(final String title) {
         int index = -1;
-
         for (int i = 0; i < jTabbedPane.getTabCount(); i++) {
             final String tlt = jTabbedPane.getTitleAt(i);
             if (tlt.equals(title)) {
@@ -152,9 +155,7 @@ public class EBIExtensionContainer implements IEBIContainer {
                 break;
             }
         }
-
         return index;
-
     }
 
     @Override
@@ -162,16 +163,19 @@ public class EBIExtensionContainer implements IEBIContainer {
         try {
             EBISystem.gui().removeFileFromTab(index);
             this.jTabbedPane.remove(index);
-
-            for (int i = index - 1; i > 1; i--) {
-                if (this.jTabbedPane.isEnabledAt(i)) {
-                    this.jTabbedPane.setSelectedIndex(i);
-                    break;
+            if (lastSelectedIndex != -1) {
+                if (this.jTabbedPane.isEnabledAt(lastSelectedIndex)) {
+                    this.jTabbedPane.setSelectedIndex(lastSelectedIndex);
+                }
+            } else {
+                for (int i = index - 1; i > 1; i--) {
+                    if (this.jTabbedPane.isEnabledAt(i)) {
+                        this.jTabbedPane.setSelectedIndex(i);
+                        break;
+                    }
                 }
             }
-
             this.registeredTabs.remove(index);
-
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
@@ -180,6 +184,7 @@ public class EBIExtensionContainer implements IEBIContainer {
     @Override
     public void removeAllFromContainer() {
         try {
+            this.lastSelectedIndex = -1;
             this.jTabbedPane.removeAll();
             this.registeredTabs.clear();
         } catch (final Exception ex) {

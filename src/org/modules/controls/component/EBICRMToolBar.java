@@ -74,7 +74,6 @@ public class EBICRMToolBar extends EBICRMActionListener {
                 ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).setVisible(false);
             }
         }
-        
         if (EBISystem.gui().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar") != null) {
             if (EBISystem.registeredModule.contains("AccountStack/accountGUI.xml") || EBISystem.getUserRight().isAdministrator()) {
                 ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).addActionListener(windowsShowAccountTab());
@@ -82,7 +81,6 @@ public class EBICRMToolBar extends EBICRMActionListener {
                 ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).setVisible(false);
             }
         }
-
     }
 
     public void enableToolButtonProductModule() {

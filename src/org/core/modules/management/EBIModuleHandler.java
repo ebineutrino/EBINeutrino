@@ -220,7 +220,6 @@ public class EBIModuleHandler {
     }
 
     public void addTAction() {
-
         EBISystem.gui().addScriptBean("groovy", "Run/tests.groovy", "groovy", "", "Run");
         final Action refreshAction = new AbstractAction() {
             @Override
@@ -236,11 +235,14 @@ public class EBIModuleHandler {
 
     public void reloadSelectedModule() {
         ebiMain.setCursor(new Cursor(Cursor.WAIT_CURSOR));     
+        int selectedTabIndex = EBISystem.getUIContainer().getSelectedTab();
         final Object obj = getActiveModule();
         //Return object to restore
         final Object restore = releaseModule(obj);
         showModule(obj, restore, false);
         ebiMain.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        EBISystem.getUIContainer().setSelectedTab(selectedTabIndex);
+        
     }
 
     private void removeF5Action() {

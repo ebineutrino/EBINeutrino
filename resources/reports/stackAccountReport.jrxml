@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Account Stack Report" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty">
+<!-- Created with Jaspersoft Studio version 6.16.0.final utlizzo versione della libreria JasperReports6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Account Stack Report" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="8fa1434f-ee61-4d47-ae9e-77f9263771f7">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.4641000000000128"/>
@@ -51,7 +52,7 @@
 			<bottomPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="Crosstab Data Text" hTextAlign="Center" hImageAlign="Center"/>
 	<style name="table 2">
 		<box>
 			<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
@@ -96,8 +97,8 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="Table Dataset 1"/>
-	<subDataset name="Table Dataset 2"/>
+	<subDataset name="Table Dataset 1" uuid="daa8aa88-a716-46a8-b88b-4c4420e536f3"/>
+	<subDataset name="Table Dataset 2" uuid="8d0defb0-ba13-4f3a-ae3e-24b306815bb3"/>
 	<parameter name="COMPANYID" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="COMPANY_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="COMPANY_NAME" class="java.lang.String" isForPrompting="false"/>
@@ -125,15 +126,15 @@
 	<parameter name="EBI_LANG" class="java.util.Properties" isForPrompting="false"/>
 	<parameter name="COMPANY_NAME1" class="java.lang.String"/>
 	<parameter name="EBI_ISB2C" class="java.lang.Boolean"/>
-	<parameter name="startDate" class="java.util.Date"/>
-	<parameter name="endDate" class="java.util.Date"/>
+	<parameter name="START_DATE" class="java.util.Date"/>
+	<parameter name="END_DATE" class="java.util.Date"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["./reports/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
 act.* , comp.NAME as COMPNAME, comp.CUSTOMERNR, comp.ISACTUAL
-FROM COMPANY as comp, ACCOUNTSTACK act WHERE comp.ISACTUAL = 1 and act.ACCOUNTDATE BETWEEN $P{startDate} AND $P{endDate}]]>
+FROM COMPANY as comp, ACCOUNTSTACK act WHERE comp.ISACTUAL = 1 and act.ACCOUNTDATE BETWEEN $P{START_DATE} AND $P{END_DATE}]]>
 	</queryString>
 	<field name="ACSTACKID" class="java.lang.Integer"/>
 	<field name="ACCOUNTNR" class="java.lang.String"/>
@@ -166,39 +167,45 @@ FROM COMPANY as comp, ACCOUNTSTACK act WHERE comp.ISACTUAL = 1 and act.ACCOUNTDA
 	<title>
 		<band height="62" splitType="Stretch">
 			<line>
-				<reportElement key="line-1" x="14" y="59" width="521" height="1" forecolor="#CCCCFF" backcolor="#CCCCCC"/>
+				<reportElement key="line-1" x="14" y="59" width="521" height="1" forecolor="#CCCCFF" backcolor="#CCCCCC" uuid="74cba7ee-a593-40ba-a42d-bc4ef2c9a54a"/>
 			</line>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="13" y="0" width="466" height="20"/>
+				<reportElement key="textField" x="13" y="0" width="522" height="20" uuid="24a01dd1-f536-4e72-9ef4-54945084eff6"/>
 				<textElement textAlignment="Right">
 					<font size="13" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_NAME}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="70" y="40" width="80" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$P{startDate}]]></textFieldExpression>
+			<textField pattern="dd.MM.yyyy" isBlankWhenNull="true">
+				<reportElement x="65" y="40" width="80" height="20" uuid="bca93f40-a813-4c65-ad00-81e128ea85bf"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{START_DATE}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="183" y="39" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$P{endDate}]]></textFieldExpression>
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="178" y="39" width="100" height="20" uuid="86f8e7e4-a57d-480a-b8c6-979594a6a183"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{END_DATE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="150" y="40" width="14" height="20"/>
+				<reportElement x="145" y="40" width="14" height="20" uuid="a1a3253f-589e-4f55-90b1-7413277c35a7"/>
 				<textElement textAlignment="Left">
-					<font size="12" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[-]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="19" y="40" width="51" height="20"/>
-				<textElement/>
+				<reportElement x="14" y="40" width="51" height="20" uuid="92f33d0d-6b84-4b14-9767-617b76b78200"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_DATE")]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="13" y="20" width="466" height="20"/>
+				<reportElement key="textField" x="13" y="20" width="522" height="20" uuid="e86f58dc-6b88-4cd1-abd2-c25a355b6b3a"/>
 				<textElement textAlignment="Right">
 					<font size="11" isBold="false" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -210,65 +217,87 @@ FROM COMPANY as comp, ACCOUNTSTACK act WHERE comp.ISACTUAL = 1 and act.ACCOUNTDA
 		<band height="66" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="13" y="17" width="510" height="17"/>
+				<reportElement key="textField" x="10" y="30" width="381" height="17" uuid="66a92f24-6c09-4661-b709-0307df544cda"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_ECONOMY_STACK_REPORT")]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="435" y="44" width="100" height="20"/>
-				<textElement/>
+			<textField pattern="MMMM d, yyyy">
+				<reportElement x="460" y="5" width="75" height="20" uuid="5a35aec9-adf9-4cbe-9aaf-a610d4f98c01">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="400" y="44" width="35" height="20"/>
-				<textElement/>
+				<reportElement x="425" y="5" width="35" height="20" uuid="290e59c4-6c57-4916-9622-44de91963dd9">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_DATE")]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="82">
+		<band height="50">
 			<textField>
-				<reportElement x="13" y="11" width="85" height="20"/>
-				<textElement/>
+				<reportElement x="14" y="14" width="85" height="20" uuid="6012acc7-b024-42df-89d5-eef788fbf048"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ACCOUNTNR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="119" y="11" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="120" y="10" width="100" height="20" uuid="22adbf97-3edc-443b-96c4-5398143a9fe2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ACCOUNT_DEBIT}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="219" y="11" width="204" height="37"/>
-				<textElement/>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="220" y="10" width="204" height="20" uuid="ae86365d-998e-4b74-8908-d20236465e60"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ACCOUNT_D_NAME}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="100" y="1" width="1" height="47" forecolor="#CCCCCC"/>
+				<reportElement x="100" y="1" width="1" height="49" forecolor="#CCCCCC" uuid="ebe450d0-e3e7-4f2c-b1ba-b6ed06d7710a"/>
 			</line>
 			<line>
-				<reportElement x="14" y="0" width="521" height="1" forecolor="#CCCCCC"/>
+				<reportElement x="14" y="0" width="521" height="1" forecolor="#CCCCCC" uuid="191843c2-93d4-429c-b4b3-ebadd2319993"/>
 			</line>
 			<textField pattern="">
-				<reportElement x="423" y="11" width="112" height="20"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="424" y="10" width="112" height="20" uuid="9169160f-6fe0-4b62-8e3f-fbbc2621a541"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[NumberFormat.getCurrencyInstance().format($F{ACCOUNTVALUE})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="119" y="50" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="120" y="30" width="100" height="20" uuid="d27ef083-5594-466a-8d0c-fca911fbb0c3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ACCOUNT_CREDIT}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="219" y="50" width="204" height="32"/>
-				<textElement/>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="220" y="30" width="204" height="20" uuid="b867e65e-80a6-4937-9e1f-a44fcddb2e9a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ACCOUNT_C_NAME}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="423" y="50" width="112" height="20"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="424" y="30" width="112" height="20" uuid="14674913-26fe-4940-89c2-a1a2edf7a79b"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[NumberFormat.getCurrencyInstance().format($F{ACCOUNT_C_VALUE})]]></textFieldExpression>
 			</textField>
 		</band>
@@ -279,7 +308,7 @@ FROM COMPANY as comp, ACCOUNTSTACK act WHERE comp.ISACTUAL = 1 and act.ACCOUNTDA
 	<lastPageFooter>
 		<band height="12" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="391" y="0" width="144" height="12"/>
+				<reportElement key="textField" x="391" y="0" width="144" height="12" uuid="2e91f360-8a06-462f-896c-0a2a8c22c8cf"/>
 				<textElement textAlignment="Right">
 					<font size="6"/>
 				</textElement>

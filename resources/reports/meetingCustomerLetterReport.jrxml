@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.12.2.final utlizzo versione della libreria JasperReports6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<!-- Created with Jaspersoft Studio version 6.16.0.final utlizzo versione della libreria JasperReports6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="meetingCustomerLetterReport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="b68a2b66-086a-44d0-9d8d-e8706849e900">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
@@ -105,99 +105,141 @@ met.MEETINGPROTOCOLID = $P{ID} AND met.COMPANYID = comp.COMPANYID AND rec.MEETIN
 	<field name="LOCATION" class="java.lang.String"/>
 	<title>
 		<band height="100" splitType="Stretch">
-			<line>
-				<reportElement key="line-1" x="14" y="72" width="516" height="1" forecolor="#F0F0F0" backcolor="#CCCCCC" uuid="b8f8010a-63c5-4f46-8771-16062b0586cb"/>
-			</line>
 			<image scaleImage="RetainShape">
 				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="297" height="69" uuid="e2034c2a-995b-43b0-abbe-97f68c62272b"/>
 				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="311" y="52" width="219" height="18" uuid="365be2cf-b7cb-462a-881e-783b932e2cc1"/>
+				<reportElement key="textField" x="311" y="70" width="219" height="18" uuid="365be2cf-b7cb-462a-881e-783b932e2cc1"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_ZIP}+" "+$P{COMPANY_LOCATION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="311" y="37" width="219" height="15" uuid="fe9367ef-38dd-4407-b65b-b34b69d5ed80"/>
+				<reportElement key="textField" x="311" y="56" width="219" height="15" uuid="fe9367ef-38dd-4407-b65b-b34b69d5ed80"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_STR_NR}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="311" y="1" width="219" height="36" uuid="4aba5723-110b-4b81-872f-9a16ad706951"/>
+				<reportElement key="textField" x="311" y="1" width="219" height="20" uuid="4aba5723-110b-4b81-872f-9a16ad706951">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{COMPANY_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="311" y="25" width="219" height="19" uuid="4aba5723-110b-4b81-872f-9a16ad70695a"/>
 				<textElement textAlignment="Right">
 					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{COMPANY_NAME}+"\n"+$P{COMPANY_NAME1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{COMPANY_NAME1}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="286" splitType="Stretch">
+		<band height="240" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="8" y="167" width="522" height="17" uuid="ce02d623-ff9e-4fb0-a961-fbfee5a9bf23"/>
+				<reportElement key="textField" x="8" y="180" width="522" height="17" uuid="ce02d623-ff9e-4fb0-a961-fbfee5a9bf23"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MEETINGSUBJECT}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="356" y="10" width="174" height="20" uuid="1c04268e-ec8e-4888-883e-1e6c04bad625"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_CONTACT_NAME}+" "+$P{COMPANY_CONTACT_SURNAME}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="356" y="88" width="174" height="16" uuid="aa81b9ea-11af-416d-bbef-f1ffef802599"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["EMail: "+$P{COMPANY_CONTACT_EMAIL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="356" y="56" width="174" height="16" uuid="0b69fff0-ae50-474b-92f4-cfc947b03df8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Tel: "+$P{COMPANY_CONTACT_TELEPHONE}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="356" y="72" width="174" height="16" uuid="e69d4ca2-efbe-4094-bca2-945917160cd5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Fax: "+$P{COMPANY_CONTACT_FAX}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="356" y="30" width="174" height="20" uuid="fd8f1a40-155d-40c2-99c9-0facf0b55fa5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_CONTACT_POSITION}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="356" y="110" width="35" height="20" uuid="06c14e6d-f1b3-4e79-9305-78121ed2acae"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_DATE")]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement x="8" y="190" width="521" height="90" isRemoveLineWhenBlank="true" uuid="798f2c47-e9d8-4e9c-b255-274f8cf227ab"/>
+				<reportElement x="8" y="210" width="522" height="30" isRemoveLineWhenBlank="true" uuid="798f2c47-e9d8-4e9c-b255-274f8cf227ab"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{MEETING_TEXT_TOP}.equals("null") ? "" : $P{MEETING_TEXT_TOP}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="355" y="130" width="175" height="20" uuid="5d8b6ece-aaac-42de-8a05-d54105d96464"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_COMPANY_CUSTOMER_NUMBER")+":   "+$F{CUSTOMERNR}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="10" y="34" width="258" height="14" uuid="93ea4630-a8ed-4ee8-856c-5753167319ab"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{SURNAME}+" "+$F{RECNAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="10" y="17" width="297" height="16" uuid="69658137-a71e-4efa-89ab-467d36985788"/>
 				<textElement>
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_ISB2C} == false ? $F{COMPNAME} : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="10" y="67" width="258" height="20" uuid="5bfee950-7800-41ff-84ee-7692132f6b3d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ZIP}+" "+$F{LOCATION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="10" y="52" width="258" height="14" uuid="4f84b9bf-e7c3-41df-b69c-603a51c76f39"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{STREET}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
+			<textField pattern="MMMM d, yyyy">
 				<reportElement x="391" y="110" width="139" height="20" uuid="337e34c8-ff8c-4507-8898-89ed1919f5d3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{METINGDATE}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -206,6 +248,9 @@ met.MEETINGPROTOCOLID = $P{ID} AND met.COMPANYID = comp.COMPANYID AND rec.MEETIN
 		<band height="94" splitType="Stretch">
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement isPrintRepeatedValues="false" x="8" y="5" width="520" height="89" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="b2aa73c3-d192-4457-beee-4881afb02f0c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{PROTOCOL}]]></textFieldExpression>
 			</textField>
 		</band>

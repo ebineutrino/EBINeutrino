@@ -6,9 +6,6 @@
 	<property name="ireport.zoom" value="1.3310000000000024"/>
 	<property name="ireport.x" value="52"/>
 	<property name="ireport.y" value="135"/>
-	<import value="net.sf.jasperreports.engine.*"/>
-	<import value="java.util.*"/>
-	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -175,7 +172,7 @@ and pos.ORDERID=o.ORDERID and o.ORDERID=rec.ORDERID]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_NAME}]]></textFieldExpression>
 			</textField>
-                        <textField isBlankWhenNull="false">
+			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="322" y="30" width="207" height="20" uuid="487d79cd-ba42-4389-abd5-3016d335ef9a"/>
 				<textElement textAlignment="Right">
 					<font size="9" isBold="false"/>

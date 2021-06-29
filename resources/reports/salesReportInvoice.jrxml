@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesReportInvoice" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty">
+<!-- Created with Jaspersoft Studio version 6.16.0.final utlizzo versione della libreria JasperReports6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesReportInvoice" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="b4ad6f25-5044-49c4-90c4-ab2075005136">
 	<property name="ireport.zoom" value="0.8264462809917371"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="83"/>
@@ -14,7 +15,7 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="ID" class="java.lang.Integer"/>
-        <parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="COMPANY_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="COMPANY_NAME" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="COMPANY_STR_NR" class="java.lang.String" isForPrompting="false"/>
@@ -80,32 +81,43 @@ $F{NETAMOUNT} * $F{QUANTITY}]]></variableExpression>
 	<title>
 		<band height="86" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="571" y="46" width="207" height="15"/>
+				<reportElement key="textField" x="571" y="51" width="207" height="13" uuid="f1f2719b-f321-4050-9f5d-8e51d4f8f39a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Right">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMPANY_STR_NR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{COMPANY_STR_NR}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="571" y="10" width="207" height="36"/>
+				<reportElement key="textField" x="571" y="10" width="207" height="20" uuid="644bb028-a83c-46ce-bdb6-3c48e1d89d51"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{COMPANY_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="571" y="30" width="207" height="20" uuid="644bb028-a83c-46ce-bdb6-3c48e1d89d5a"/>
 				<textElement textAlignment="Right">
 					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMPANY_NAME}+"\n"+$P{COMPANY_NAME1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{COMPANY_NAME1}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="RetainShape">
-				<reportElement key="image-1" isPrintRepeatedValues="false" x="10" y="10" width="297" height="69"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
+				<reportElement key="image-1" isPrintRepeatedValues="false" x="10" y="10" width="297" height="69" uuid="3914fedf-ad7e-493e-aa31-290aa159c4c1"/>
+				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="571" y="61" width="207" height="18"/>
+				<reportElement key="textField" x="571" y="66" width="207" height="13" uuid="08e770d6-de53-454b-8d1f-bcbf6b5d1712">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Right">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMPANY_ZIP}+" "+$P{COMPANY_LOCATION}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{COMPANY_ZIP}+" "+$P{COMPANY_LOCATION}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="12" y="83" width="766" height="1" forecolor="#EEEEEE"/>
+				<reportElement x="12" y="83" width="766" height="1" forecolor="#EEEEEE" uuid="69294f8b-35ca-4603-badb-2ced7cd3ec5d"/>
 			</line>
 		</band>
 	</title>
@@ -115,7 +127,7 @@ $F{NETAMOUNT} * $F{QUANTITY}]]></variableExpression>
 	<columnHeader>
 		<band height="336" splitType="Stretch">
 			<subreport>
-				<reportElement x="10" y="53" width="779" height="283"/>
+				<reportElement x="10" y="53" width="779" height="283" uuid="8ab29e79-70da-44ef-920c-40b8e2bd486a"/>
 				<subreportParameter name="DATE_TO">
 					<subreportParameterExpression><![CDATA[$P{DATE_TO}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -123,61 +135,69 @@ $F{NETAMOUNT} * $F{QUANTITY}]]></variableExpression>
 					<subreportParameterExpression><![CDATA[$P{DATE_FROM}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "salesReportInvoice_subreport1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["salesReportInvoice_subreport1.jasper"]]></subreportExpression>
 			</subreport>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="26" y="5" width="403" height="20"/>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="10" y="13" width="188" height="20" uuid="627aabee-7c2e-4c22-9cbb-d97bff3e72a7"/>
 				<textElement>
-					<font size="16" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_SALES_INVOICE")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_SALES_INVOICE")]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="273" y="33" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.util.Date"><![CDATA[$P{DATE_FROM}]]></textFieldExpression>
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="290" y="33" width="100" height="20" uuid="37792f57-9d94-4694-ac34-475a5cb53a99"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DATE_FROM}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="471" y="33" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.util.Date"><![CDATA[$P{DATE_TO}]]></textFieldExpression>
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="488" y="33" width="100" height="20" uuid="ab3b93ca-c4ff-45cd-b1bc-a751f8ec134b"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DATE_TO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="198" y="33" width="75" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_ADDED_FROM_DATE")+":  "]]></textFieldExpression>
+				<reportElement x="215" y="33" width="75" height="20" uuid="47fd631a-7d16-4b50-ab05-071b8b0fdb2c"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_ADDED_FROM_DATE")+":  "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="398" y="33" width="73" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_ADDED_TO_DATE")+":  "]]></textFieldExpression>
+				<reportElement x="415" y="33" width="73" height="20" uuid="d005b0da-01dc-4aa1-bbda-285c5d7a1487"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_ADDED_TO_DATE")+":  "]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
 	<pageFooter>
 		<band height="28" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF"/>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="dab5732e-2b5e-4620-851e-3e8c511e4a9a"/>
 				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343"/>
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="1924b10d-5398-4f80-85c9-fadcb031bb5d"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343"/>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="d7a23808-550d-4c24-a1f1-1712f6cc3e62"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343"/>
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="0777b0e8-659b-4a47-ad55-bfae2800ac87"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
-					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -185,27 +205,27 @@ $F{NETAMOUNT} * $F{QUANTITY}]]></variableExpression>
 	<summary>
 		<band height="71" splitType="Stretch">
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="632" y="20" width="157" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="632" y="20" width="157" height="20" isPrintWhenDetailOverflows="true" uuid="bc135249-7ab4-4762-a230-f9e37e9d1e98"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$V{NETAMOUNTCOUNT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{NETAMOUNTCOUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="490" y="20" width="142" height="20"/>
+				<reportElement x="490" y="20" width="142" height="20" uuid="054bcf99-e9d5-4291-952e-d2b47dbb3aa2"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_TOTAL_NETAMOUNT")+": "]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_TOTAL_NETAMOUNT")+": "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="490" y="43" width="142" height="20"/>
+				<reportElement x="490" y="43" width="142" height="20" uuid="5f8fde53-42aa-4884-aab3-7c65f4a18ae5"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_TOTAL_GROSSAMOUNT")+": "]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_TOTAL_GROSSAMOUNT")+": "]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="632" y="43" width="157" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="632" y="43" width="157" height="20" isPrintWhenDetailOverflows="true" uuid="afbe10f4-46b8-494d-8f5e-9f15512dcdf3"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$V{NETAMOUNT_GROSS}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{NETAMOUNT_GROSS}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="330" y="12" width="459" height="1" forecolor="#D3D3D3"/>
+				<reportElement x="330" y="12" width="459" height="1" forecolor="#D3D3D3" uuid="0c4adbcb-4540-4acf-9816-c40a3512a8b3"/>
 			</line>
 		</band>
 	</summary>

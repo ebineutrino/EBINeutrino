@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.16.0.final utlizzo versione della libreria JasperReports6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoiceDeliveryReport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="1bb0d87c-c3b2-4104-b3d3-728092fb2f17">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoiceDeliveryReport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="52ca1439-98d6-4f12-8a96-9a370635aa95">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0000000000000022"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="419"/>
+	<property name="ireport.y" value="15"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -87,7 +87,7 @@
 	<parameter name="TAXDIFF_VALUE" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="DUNNING_NR" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT o.BEGINCHAR,o.INVOICENR,o.NAME,o.DUNNINGSTATUS,o.DATE,o.GENDER,o.POSITION,o.COMPANYNAME,o.CONTACTNAME,o.CONTACTSURNAME,o.CONTACTSTREET,
+		<![CDATA[SELECT o.BEGINCHAR,o.INVOICENR,o.NAME,o.DUNNINGSTATUS, o.DATE,o.GENDER,o.POSITION,o.COMPANYNAME,o.CONTACTNAME,o.CONTACTSURNAME,o.CONTACTSTREET,
 o.CONTACTZIP,o.CONTACTLOCATION,o.CONTACTPOSTCODE,o.CONTACTCOUNTRY,comp.NAME, comp.COMPANYNUMBER,comp.CUSTOMERNR,
 pos.INVOICEID,pos.PRODUCTNR, pos.PRODUCTNAME, pos.QUANTITY, pos.CATEGORY, pos.PRETAX, pos.NETAMOUNT, pos.DEDUCTION,
 pos.TAXTYPE, tax.NAME, tax.TAXVALUE FROM CRMINVOICE o LEFT JOIN COMPANY comp ON o.COMPANYNAME = comp.NAME , CRMINVOICEPOSITION pos LEFT JOIN COMPANYPRODUCTTAX tax ON tax.NAME = pos.TAXTYPE  WHERE o.INVOICEID=$P{ID} AND pos.INVOICEID=o.INVOICEID]]>
@@ -147,197 +147,234 @@ pos.TAXTYPE, tax.NAME, tax.TAXVALUE FROM CRMINVOICE o LEFT JOIN COMPANY comp ON 
 	<title>
 		<band height="100" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="317" y="0" width="207" height="36" uuid="54409aaa-3d9e-442d-96b5-21e5c6fe5685"/>
+				<reportElement key="textField" x="317" y="0" width="207" height="19" uuid="1339b017-4f77-44c3-9b5d-a2606248e5b7"/>
 				<textElement textAlignment="Right">
-					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+					<font size="12" isBold="false" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{COMPANY_NAME}+"\n"+$P{COMPANY_NAME1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{COMPANY_NAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="317" y="36" width="207" height="15" uuid="eea344d1-7487-4706-8d30-52160656d484"/>
+				<reportElement key="textField" x="317" y="36" width="207" height="15" uuid="86d1cddc-52c1-4a93-9085-1879a94e2de1"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_STR_NR}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="317" y="51" width="207" height="18" uuid="96f1d8b1-7d32-404e-9118-bf67865c045c"/>
+				<reportElement key="textField" x="317" y="51" width="207" height="18" uuid="3f0833ac-affa-4918-9274-c8c262b31b28"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_ZIP}+" "+$P{COMPANY_LOCATION}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-1" x="14" y="72" width="510" height="1" forecolor="#666666" backcolor="#CCCCCC" uuid="c0f10308-54e9-4341-88b2-dd6dcd2ad168"/>
+				<reportElement key="line-1" x="14" y="72" width="510" height="1" forecolor="#F0F0F0" backcolor="#CCCCCC" uuid="bb0a994f-1176-4ce9-97a3-1f31b1f17c2b"/>
 			</line>
 			<image scaleImage="RetainShape">
-				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="297" height="69" uuid="f211ea11-f7ab-4378-ba17-3610772fd0e9"/>
+				<reportElement key="image-1" isPrintRepeatedValues="false" x="14" y="0" width="297" height="69" uuid="ee9590f8-11c9-471a-8ada-368b33077ab5"/>
 				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="317" y="19" width="207" height="17" uuid="e292d425-efac-4ff1-9421-6ace8ae351d6"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{COMPANY_NAME1}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="304" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="47" y="50" width="258" height="14" uuid="88e892e3-0083-4641-98a1-6ba84ec7c6d1"/>
+				<reportElement key="textField" x="14" y="34" width="258" height="14" uuid="0a2dae4c-6efc-4139-9b9b-3498dc0faf00"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{CONTACTSURNAME}+" "+$F{CONTACTNAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="47" y="72" width="258" height="14" uuid="516b6308-ccf3-47e6-a72f-453bf51faa27"/>
+				<reportElement key="textField" x="14" y="56" width="258" height="14" uuid="22b35bca-9a3e-4be3-a492-dabcc3de3883"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{CONTACTSTREET}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="47" y="88" width="258" height="20" uuid="ecb5b9e1-5553-433f-b3f7-5fa48976c08f"/>
+				<reportElement key="textField" x="14" y="72" width="258" height="20" uuid="a7174df1-653b-4050-a047-67dda5fd0615"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{CONTACTZIP}+" "+$F{CONTACTLOCATION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="14" y="150" width="341" height="29" uuid="e5a2b951-b469-4111-8933-46a90388c760"/>
+				<reportElement key="textField" x="6" y="200" width="464" height="19" uuid="7003cda6-b211-4888-822a-77e1f241d00b"/>
 				<textElement>
-					<font size="11" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_DUNNING")+ " " + ("null".equals($P{DUNNINGSTATUS}) ? "" : $P{DUNNINGSTATUS})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_DUNNING")+ " " + ($F{DUNNINGSTATUS} == null ? "" :$F{DUNNINGSTATUS})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="47" y="30" width="258" height="16" uuid="f9f4c2b9-472e-431b-9289-e4c4131ccd88"/>
+				<reportElement key="textField" x="14" y="14" width="258" height="16" uuid="5d4e5dc0-b420-464f-a96e-23d271e44589"/>
 				<textElement>
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_ISB2C} == true ? "" : $F{COMPANYNAME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="356" y="10" width="174" height="20" uuid="3a976194-3f25-42fe-801f-e980ca8807f7"/>
+				<reportElement x="356" y="10" width="172" height="20" uuid="1e8a3c71-d2de-4eea-8507-bfb3375a3d6e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_CONTACT_NAME}+" "+$P{COMPANY_CONTACT_SURNAME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="356" y="88" width="172" height="16" uuid="ea29924d-6c4a-4b73-b70c-1cfdc17386ec"/>
+				<reportElement x="356" y="88" width="172" height="16" uuid="11895b73-654c-410d-b2cb-07d4221c95ab"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["EMail: "+$P{COMPANY_CONTACT_EMAIL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="356" y="56" width="172" height="16" uuid="c1442573-cb85-445d-8e22-a088d19ebd9c"/>
+				<reportElement x="356" y="56" width="172" height="16" uuid="f657f2f6-63de-4162-9ac0-3b8b83962c4e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Tel: "+$P{COMPANY_CONTACT_TELEPHONE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="356" y="72" width="172" height="16" uuid="58fb253d-90b6-4f16-aaa7-bf3613a365f8"/>
+				<reportElement x="356" y="72" width="172" height="16" uuid="dfc40e10-6f66-43ad-b34a-b8c3b14c885d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Fax: "+$P{COMPANY_CONTACT_FAX}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="356" y="30" width="172" height="20" uuid="f17b685f-46de-4a06-9735-e36e76eac79a"/>
+				<reportElement x="356" y="30" width="172" height="20" uuid="e7a8fe96-b057-4542-b32a-6648b1e7ece4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_CONTACT_POSITION}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="6" y="227" width="510" height="43" isRemoveLineWhenBlank="true" uuid="4ae66f84-1798-44fa-881b-217abc03463a"/>
+				<reportElement x="6" y="227" width="510" height="43" isRemoveLineWhenBlank="true" uuid="a906f8fe-fba3-4a66-9fd6-6402807933d2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{DUNNING_TOP_TEXT} == null ? "" : $P{DUNNING_TOP_TEXT}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="356" y="110" width="173" height="20" uuid="4cf89f93-78d7-41ac-9368-028c76ba8c5e"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_INVOICE_NR")+":   "+$F{BEGINCHAR}+$F{INVOICENR}]]></textFieldExpression>
+				<reportElement x="356" y="110" width="64" height="20" uuid="9dfc0a16-1326-40f9-99ac-b58ecbe1be52"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_INVOICE_NR")+":   "]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="372" y="179" width="90" height="20" uuid="cda07c3e-413d-4325-ab45-0b028c3c3797"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<reportElement x="356" y="150" width="64" height="20" uuid="f24fa945-a2d5-49a1-937a-aa05f99a360d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_INVOICE_DATE")+": "]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="462" y="179" width="63" height="21" uuid="1024c51e-0247-4665-92b5-d0e236136c58"/>
-				<textElement verticalAlignment="Middle"/>
+			<textField pattern="MMMM d, yyyy">
+				<reportElement x="420" y="150" width="90" height="20" uuid="88b7ed8d-b0fc-4c3f-80df-a9eca6c93bc6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="356" y="130" width="172" height="20" uuid="d6a5cb4b-3d90-40db-bdb3-f4f01be8cf5d"/>
-				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_COMPANY_CUSTOMER_NUMBER")+":   "+$F{CUSTOMERNR}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement isPrintRepeatedValues="false" x="8" y="275" width="92" height="20" uuid="2866db15-7a3d-44cd-87cb-5b61bae06bbc"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+				<reportElement x="356" y="130" width="64" height="20" uuid="bb12180a-4b4d-4d22-ac59-e711aece5c5a"/>
+				<textElement>
+					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_PRODUCT_NUMBER")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_COMPANY_CUSTOMER_NUMBER")+":"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="100" y="275" width="100" height="20" uuid="f641e54d-f6bc-4bf1-bc83-ef5fe9ccd9b3"/>
+				<reportElement isPrintRepeatedValues="false" x="8" y="275" width="192" height="20" uuid="e1e538d4-abf7-4d08-9304-be2ba15cc44c"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_NAME")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_PRODUCT_NUMBER")+", "+$P{EBI_LANG}.getProperty("EBI_LANG_NAME")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="200" y="275" width="100" height="20" uuid="650b33b0-919b-4e2d-9a8f-13af2e0d3e2f"/>
+				<reportElement isPrintRepeatedValues="false" x="200" y="275" width="100" height="20" uuid="339637eb-0cde-4244-8c54-a2103e2b16bf"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_CATEGORY")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="305" y="275" width="73" height="20" uuid="09e25d67-f479-46ac-bd22-a6205326e827"/>
+				<reportElement isPrintRepeatedValues="false" x="305" y="275" width="105" height="20" uuid="1e4e360a-9dd2-435f-a613-45431ea61f7e"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_QUANTITY")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="429" y="275" width="106" height="20" uuid="c917a561-eee8-4b80-82b6-51876d25441a"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+				<reportElement isPrintRepeatedValues="false" x="429" y="275" width="106" height="20" uuid="38ba9cef-e08e-4946-9cff-f63edd981401"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_PRICE")]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="6" y="298" width="529" height="1" forecolor="#999999" uuid="b9ad978e-04e0-4ea3-9b1d-555b6c599a20"/>
+				<reportElement x="6" y="298" width="529" height="1" forecolor="#F0F0F0" uuid="47616598-fc2d-47ea-926d-8731c41ce719"/>
 			</line>
+			<textField>
+				<reportElement x="420" y="130" width="90" height="20" uuid="149da75c-6881-43fc-886f-74d8c498ff2a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUSTOMERNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="420" y="110" width="90" height="20" uuid="26316acf-4f48-45c0-930a-f0dc49ad9fc8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BEGINCHAR}+$F{INVOICENR}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<detail>
 		<band height="56" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="28" y="25" width="344" height="18" isPrintWhenDetailOverflows="true" uuid="5473162b-1195-437f-aff0-45f6ecbe8fc8"/>
+				<reportElement key="textField" x="6" y="0" width="194" height="18" uuid="65e5fe39-0585-42a0-b038-904beffa5270"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PRODUCTNAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PRODUCTNR} +", "+$F{PRODUCTNAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="6" y="0" width="94" height="18" uuid="85d46dfc-ab78-427b-acbf-1631c471aaad"/>
+				<reportElement key="textField" x="200" y="0" width="100" height="18" uuid="e07baaeb-81bd-4c54-a2f0-2c67de6bebeb"/>
 				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PRODUCTNR}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="200" y="0" width="100" height="18" uuid="b098926d-7ccb-4a00-864d-df0f51768eaa"/>
-				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CATEGORY}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="305" y="0" width="79" height="18" uuid="b93b99bc-de01-431e-8fc9-1b890ff2fdac"/>
+				<reportElement key="textField" x="305" y="0" width="79" height="18" uuid="993ea355-c703-4377-bca4-522fc23058c9"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[NumberFormat.getCurrencyInstance().format($F{NETAMOUNT})+" * "+$F{QUANTITY}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="456" y="0" width="76" height="18" uuid="1c30db27-f6e6-4dbf-a6d8-9f3884d40367"/>
+				<reportElement x="430" y="0" width="95" height="18" uuid="f48e379b-1e51-4f99-af08-291eec527d90"/>
 				<textElement textAlignment="Right">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[NumberFormat.getCurrencyInstance().format($V{NET_AMOUNT})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="384" y="0" width="78" height="18" isRemoveLineWhenBlank="true" uuid="b3dedd05-94e3-4f05-af7f-a0ec99f3ef41"/>
+				<reportElement x="384" y="0" width="45" height="18" isRemoveLineWhenBlank="true" uuid="5bb4f443-ddb0-477d-aa12-1fe90af287da"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{DEDUCTION}.equals("") || $F{DEDUCTION}.equals("0") ) ? "" : $P{EBI_LANG}.getProperty("EBI_LANG_DEDUCTION")+": "+$F{DEDUCTION}+"%"]]></textFieldExpression>
 			</textField>
-			<ellipse>
-				<reportElement x="14" y="30" width="3" height="3" forecolor="#CCCCCC" backcolor="#999999" uuid="510af289-be7c-4c97-b99a-d8397994bbba"/>
-			</ellipse>
-			<line>
-				<reportElement x="4" y="47" width="526" height="1" forecolor="#EBE9E9" uuid="0edeb7bb-6c5b-49fb-9673-e0cfe497079e"/>
-			</line>
 		</band>
 	</detail>
 	<columnFooter>
@@ -349,63 +386,63 @@ pos.TAXTYPE, tax.NAME, tax.TAXVALUE FROM CRMINVOICE o LEFT JOIN COMPANY comp ON 
 	<lastPageFooter>
 		<band height="95" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="209" y="6" width="320" height="18" uuid="1d520121-5dc8-49ad-b880-7aca1fa3a9e3"/>
+				<reportElement key="textField" x="209" y="6" width="320" height="18" uuid="fe2de3a9-de34-42de-82e3-e7fbce8ff540"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_TAX_INFORMATION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="6" y="6" width="203" height="18" uuid="e867004f-808c-49c0-a4cb-f7d8e4218f43"/>
+				<reportElement key="textField" x="6" y="6" width="203" height="18" uuid="07ba0cef-0735-4991-ab2d-84b0efa4eac6"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_BANK_NAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="6" y="24" width="203" height="18" uuid="87260fbe-6dd4-4b43-89f5-d5909d9b6192"/>
+				<reportElement key="textField" x="6" y="24" width="203" height="18" uuid="c75a0865-8cd7-46df-ad64-f78de5be9fde"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_BANK_ACCOUNT_NR}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="6" y="42" width="203" height="18" uuid="83c3e589-b35d-486e-aab7-2787198fdc2c"/>
+				<reportElement key="textField" x="6" y="42" width="203" height="18" uuid="a21500e2-723e-4bdd-b89c-210d21b479b6"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_BANK_BSB}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="209" y="24" width="163" height="18" uuid="a63e9042-f6eb-444b-862c-bd4de03bff93"/>
+				<reportElement key="textField" x="209" y="24" width="163" height="18" uuid="b5a803cf-fb77-4b75-9130-d76fcb6c6c03"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Tel: "+$P{COMPANY_TELEPHONE}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="211" y="42" width="161" height="18" uuid="568480fd-b258-43a1-a797-c8a2a239e594"/>
+				<reportElement key="textField" x="211" y="42" width="161" height="18" uuid="860a55ed-ca1d-48e5-bf9b-69c20b67cef2"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Fax: "+$P{COMPANY_FAX}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="374" y="24" width="155" height="18" uuid="f16169c0-09e6-47b3-9f42-9baf1364469c"/>
+				<reportElement key="textField" x="374" y="24" width="155" height="18" uuid="e703fa77-62ed-4744-9364-9b7deb7385e2"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["EMail: "+$P{COMPANY_EMAIL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="374" y="40" width="155" height="20" uuid="d575afa2-b665-4e53-bc3d-ec14f35ccf72"/>
+				<reportElement x="374" y="40" width="155" height="20" uuid="ede31747-61f9-4324-9cbf-5f76515fdd31"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_WEB}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="128" y="83" width="144" height="12" uuid="15a0fdc4-abe2-4209-8b71-86f78ed919c3"/>
+				<reportElement key="textField" x="128" y="83" width="144" height="12" uuid="5692e93a-cff5-4812-9f9e-0b1f43d23870"/>
 				<textElement textAlignment="Right">
 					<font size="6"/>
 				</textElement>
@@ -415,45 +452,50 @@ pos.TAXTYPE, tax.NAME, tax.TAXVALUE FROM CRMINVOICE o LEFT JOIN COMPANY comp ON 
 	</lastPageFooter>
 	<summary>
 		<band height="184" splitType="Stretch">
-			<line>
-				<reportElement key="line-2" x="374" y="5" width="161" height="1" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="37433480-5e9f-4e1c-b0b7-59ebbdd47c40"/>
-			</line>
-			<line>
-				<reportElement key="line-2" x="429" y="93" width="106" height="1" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="4d04796a-3157-409d-a640-795076a8a8fa"/>
-			</line>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="356" y="95" width="87" height="18" isPrintWhenDetailOverflows="true" uuid="4354cf38-9fa8-40fd-a4cf-8d3f38bbc786"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="353" y="65" width="87" height="18" isPrintWhenDetailOverflows="true" uuid="24159f87-df0c-4c81-b506-dcc11f8d9449"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_TOTAL_GROSSAMOUNT")+":"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" pattern="" isBlankWhenNull="true">
-				<reportElement x="443" y="95" width="92" height="18" isPrintWhenDetailOverflows="true" uuid="6e292768-9a2c-42b4-b223-e7fd2e15e3b0"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="440" y="65" width="92" height="18" isPrintWhenDetailOverflows="true" uuid="dd500d55-28dc-4741-b86a-857bcc33af90"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[NumberFormat.getCurrencyInstance().format($V{SUM_GROSS})]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement x="443" y="15" width="89" height="45" isPrintWhenDetailOverflows="true" uuid="b9b6601a-4bd6-495d-b0de-f706a2ca5a23"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<reportElement x="440" y="10" width="92" height="45" isPrintWhenDetailOverflows="true" uuid="318ec615-450b-423c-a4a0-629b360bac94"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[!$V{DEDUCTION_VAL}.toString().equals("0.0") ?
-NumberFormat.getCurrencyInstance().format($V{SUM_AMOUNT})+"\n"+
-NumberFormat.getCurrencyInstance().format($V{DEDUCTION_VAL})+"\n"+
-$P{TAXDIFF_VALUE}+"\n" :
-NumberFormat.getCurrencyInstance().format($V{SUM_AMOUNT})+"\n"+
-$P{TAXDIFF_VALUE}+"\n"]]></textFieldExpression>
+NumberFormat.getCurrencyInstance().format($V{SUM_AMOUNT})+"\n\n"+
+NumberFormat.getCurrencyInstance().format($V{DEDUCTION_VAL})+"\n\n"+
+$P{TAXDIFF_VALUE}+"\n\n" :
+NumberFormat.getCurrencyInstance().format($V{SUM_AMOUNT})+"\n\n"+
+$P{TAXDIFF_VALUE}+"\n\n"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement x="355" y="15" width="88" height="45" isPrintWhenDetailOverflows="true" uuid="91f80320-84ec-4480-894a-f0ffe325671b"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<reportElement x="352" y="10" width="88" height="45" isPrintWhenDetailOverflows="true" uuid="f23375d9-08f0-419c-ad35-dcd3cd273622"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[!$V{DEDUCTION_VAL}.toString().equals("0.0") ?
 $P{EBI_LANG}.getProperty("EBI_LANG_TOTAL_NETAMOUNT")+":\n"+
-$P{EBI_LANG}.getProperty("EBI_LANG_DEDUCTION")+":\n"+
-$P{TAXDIFF_TEXT}+"\n"
+$P{EBI_LANG}.getProperty("EBI_LANG_DEDUCTION")+":\n\n"+
+$P{TAXDIFF_TEXT}+"\n\n"
 :
-$P{EBI_LANG}.getProperty("EBI_LANG_TOTAL_NETAMOUNT")+":\n"+
-$P{TAXDIFF_TEXT}+"\n"]]></textFieldExpression>
+$P{EBI_LANG}.getProperty("EBI_LANG_TOTAL_NETAMOUNT")+":\n\n"+
+$P{TAXDIFF_TEXT}+"\n\n"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement x="14" y="124" width="504" height="60" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="1104409a-505f-44b8-8782-117d946a7959"/>
+				<reportElement x="14" y="124" width="504" height="60" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="f115a4a8-31aa-44d0-a2b8-e24e58a0882c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{DUNNING_BOTTOM_TEXT} == null ? "" : $P{DUNNING_BOTTOM_TEXT}]]></textFieldExpression>
 			</textField>
 		</band>

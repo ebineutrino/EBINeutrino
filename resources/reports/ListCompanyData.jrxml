@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.12.2.final utlizzo versione della libreria JasperReports6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListCompanyData" language="java" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="24d1e82f-38e8-44cf-a102-ae6377fdc319">
+<!-- Created with Jaspersoft Studio version 6.16.0.final utlizzo versione della libreria JasperReports6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListCompanyData" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="24d1e82f-38e8-44cf-a102-ae6377fdc319">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="235"/>
@@ -11,7 +11,7 @@
 	<style name="Detail" fontSize="12"/>
 	<parameter name="COMPANYID" class="java.lang.Integer"/>
 	<parameter name="EBI_LANG" class="java.util.Properties" isForPrompting="false"/>
-        <parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT address.ADDRESSTYPE,address.STREET,address.ZIP,address.LOCATION,address.PBOX,address.COUNTRY,comp.BEGINCHAR,comp.COMPANYNUMBER,comp.CUSTOMERNR,comp.PHONE,comp.NAME,comp.NAME2,comp.FAX,comp.EMAIL,comp.EMPLOYEE,comp.QUALIFICATION,comp.CATEGORY,comp.COOPERATION,comp.ISLOCK,comp.WEB,comp.TAXNUMBER,comp.DESCRIPTION,contact.GENDER,contact.SURNAME,contact.TITLE,contact.POSITION,contact.DESCRIPTION as CDESCIPTION, contact.MITTELNAME,comp.NAME as CNAME,contact.NAME as CONNAME, contact.PHONE as CPHONE, contact.FAX as CFAX,contact.MOBILE, contact.EMAIL as CEMAIL FROM COMPANY as comp left join COMPANYCONTACTS as contact on contact.CONTACTID=comp.COMPANYID left join COMPANYCONTACTADDRESS as address on address.CONTACTID=contact.CONTACTID WHERE comp.COMPANYID=$P{COMPANYID}]]>
 	</queryString>
@@ -52,21 +52,21 @@
 	<title>
 		<band height="82" splitType="Stretch">
 			<textField>
-				<reportElement style="Detail" x="312" y="0" width="241" height="31" uuid="c4407ade-64df-485c-90c8-d7efa89bca1a"/>
+				<reportElement style="Detail" x="312" y="0" width="241" height="20" uuid="c4407ade-64df-485c-90c8-d7efa89bca1a"/>
 				<textElement textAlignment="Right">
-					<font size="18" isBold="true"/>
+					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="312" y="31" width="241" height="24" forecolor="#666666" uuid="86d2ed64-65e4-4f55-bb50-cac119e0e8e7"/>
+				<reportElement style="Detail" x="312" y="20" width="241" height="20" forecolor="#666666" uuid="86d2ed64-65e4-4f55-bb50-cac119e0e8e7"/>
 				<textElement textAlignment="Right">
-					<font size="14"/>
+					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAME2}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="RetainShape">
-				<reportElement key="image-1" isPrintRepeatedValues="false" x="0" y="0" width="150" height="31" uuid="5eb2baa6-bc22-4ab6-a1e0-62bd79cc53ba"/>
+				<reportElement key="image-1" isPrintRepeatedValues="false" x="11" y="0" width="219" height="70" uuid="5eb2baa6-bc22-4ab6-a1e0-62bd79cc53ba"/>
 				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<line>
@@ -168,10 +168,10 @@
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_VAT_NR")+": "]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement style="Detail" isPrintRepeatedValues="false" mode="Opaque" x="12" y="161" width="530" height="72" backcolor="#FCFFFC" uuid="3379242f-da0e-4458-a43c-91bc32ee8d0f"/>
+				<reportElement style="Detail" isPrintRepeatedValues="false" mode="Opaque" x="12" y="161" width="530" height="72" backcolor="#FCFCFC" uuid="3379242f-da0e-4458-a43c-91bc32ee8d0f"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
 				<textElement>
-					<font fontName="Serif" size="10"/>
+					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
 			</textField>

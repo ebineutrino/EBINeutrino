@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="economyReport_subreport1_subreport1" language="java" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<!-- Created with Jaspersoft Studio version 6.16.0.final utlizzo versione della libreria JasperReports6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="economyReport_subreport1_subreport1" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="343ad955-4d5a-4bfd-a26a-ea9388069fa0">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -28,9 +29,11 @@ FROM ACCOUNTSTACK act WHERE act.ACCOUNTDATE BETWEEN $P{startDate} AND $P{endDate
 	</background>
 	<summary>
 		<band height="20" splitType="Stretch">
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="113" height="20" isPrintWhenDetailOverflows="true"/>
-				<textElement/>
+			<textField textAdjust="StretchHeight" pattern="" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="113" height="20" isPrintWhenDetailOverflows="true" uuid="fdad2eeb-a9c9-40bd-bc49-7803a53491c4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[NumberFormat.getCurrencyInstance().format($V{ACCOUNTVALUE_3})]]></textFieldExpression>
 			</textField>
 		</band>

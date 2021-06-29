@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="productReport" pageWidth="742" pageHeight="595" orientation="Landscape" columnWidth="702" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<!-- Created with Jaspersoft Studio version 6.16.0.final utlizzo versione della libreria JasperReports6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="productReport" pageWidth="742" pageHeight="595" orientation="Landscape" columnWidth="702" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="17b1af3c-5d96-44ea-91db-75d9a8fa17e6">
 	<property name="ireport.zoom" value="1.3310000000000046"/>
 	<property name="ireport.x" value="250"/>
 	<property name="ireport.y" value="316"/>
@@ -14,7 +15,7 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="ID" class="java.lang.Integer"/>
-        <parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SYSTEM_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="EBI_LANG" class="java.util.Properties" isForPrompting="false"/>
 	<parameter name="COMPANY_LOGO" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="COMPANY_NAME" class="java.lang.String" isForPrompting="false"/>
@@ -42,8 +43,9 @@
 	<parameter name="COMPANY_NAME1" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT dim.NAME,dim.VALUE,dim.DIMENSIONID,dep.PRODUCTNR as PNR,dep.PRODUCTNAME as DPNAME, pro.PRODUCTID,pro.PRODUCTNR as PRONR,pro.PRODUCTNAME
-as PRONAME,pro.CATEGORY,pro.TYPE,pro.TAXTYPE,pro.NETAMOUNT,
-pro.PRETAX,pro.SALEPRICE, pro.PICTURE,pro.DESCRIPTION FROM (CRMPRODUCT as pro LEFT JOIN CRMPRODUCTDIMENSION as dim ON dim.PRODUCTID=pro.PRODUCTID) LEFT JOIN CRMPRODUCTDEPENDENCY as dep ON dep.PRODUCTID=pro.PRODUCTID where pro.PRODUCTID=$P{ID}]]>
+			as PRONAME,pro.CATEGORY,pro.TYPE,pro.TAXTYPE,pro.NETAMOUNT,
+			pro.PRETAX,pro.SALEPRICE, docs.FILES as PICTURE,pro.DESCRIPTION FROM 
+			CRMPRODUCT as pro LEFT JOIN CRMPRODUCTDIMENSION as dim ON dim.PRODUCTID=pro.PRODUCTID LEFT JOIN CRMPRODUCTDEPENDENCY as dep ON dep.PRODUCTID=pro.PRODUCTID left join CRMPRODUCTDOCS as docs on docs.PRODUCTID=pro.PRODUCTID where pro.PRODUCTID=$P{ID} limit 1]]>
 	</queryString>
 	<field name="NAME" class="java.lang.String"/>
 	<field name="VALUE" class="java.lang.String"/>
@@ -66,32 +68,39 @@ pro.PRETAX,pro.SALEPRICE, pro.PICTURE,pro.DESCRIPTION FROM (CRMPRODUCT as pro LE
 	<title>
 		<band height="77" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="471" y="0" width="207" height="36"/>
+				<reportElement key="textField" x="471" y="0" width="207" height="20" uuid="d1af510a-6066-4489-a2bb-b9d05ab903dc"/>
 				<textElement textAlignment="Right">
-					<font size="9" isBold="false" pdfFontName="Helvetica-Bold"/>
+					<font size="12" isBold="false" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{COMPANY_NAME}+"\n"+$P{COMPANY_NAME1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{COMPANY_NAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="471" y="36" width="207" height="15"/>
+				<reportElement key="textField" x="471" y="20" width="207" height="16" uuid="d1af510a-6066-4489-a2bb-b9d05ab903da"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{COMPANY_NAME1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="471" y="36" width="207" height="15" uuid="16cb3775-571f-4608-a286-7a73fafb4f7e"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_STR_NR}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="471" y="51" width="207" height="18"/>
+				<reportElement key="textField" x="471" y="51" width="207" height="18" uuid="12824c51-4a29-4b34-b65f-81ab1c4dd63f"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{COMPANY_ZIP}+" "+$P{COMPANY_LOCATION}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="RetainShape">
-				<reportElement key="image-1" isPrintRepeatedValues="false" x="13" y="0" width="297" height="69"/>
+				<reportElement key="image-1" isPrintRepeatedValues="false" x="13" y="0" width="297" height="69" uuid="5e306afc-958a-4ce4-962e-1308eff1d761"/>
 				<imageExpression><![CDATA[$P{SYSTEM_LOGO}]]></imageExpression>
 			</image>
 			<line>
-				<reportElement x="13" y="72" width="677" height="1" forecolor="#CCCCCC"/>
+				<reportElement x="13" y="72" width="677" height="1" forecolor="#F0F0F0" backcolor="#F0F0F0" uuid="6ec88be1-6c65-4aef-a752-6d9f617e632b"/>
 			</line>
 		</band>
 	</title>
@@ -102,207 +111,213 @@ pro.PRETAX,pro.SALEPRICE, pro.PICTURE,pro.DESCRIPTION FROM (CRMPRODUCT as pro LE
 		<band height="309">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 			<textField pattern="">
-				<reportElement x="22" y="13" width="302" height="20"/>
+				<reportElement x="22" y="13" width="302" height="20" uuid="aaeb3421-18fc-433c-b487-0a703f77fd39"/>
 				<textElement>
 					<font size="15" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_C_PRODUCT")]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="111" y="44" width="201" height="20" isRemoveLineWhenBlank="true"/>
-				<textElement/>
+				<reportElement x="111" y="44" width="201" height="20" isRemoveLineWhenBlank="true" uuid="ca9958c2-5bdd-42ac-8ec8-1498de105f12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{PRONR}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="111" y="64" width="201" height="20" isRemoveLineWhenBlank="true"/>
-				<textElement/>
+				<reportElement x="111" y="64" width="201" height="20" isRemoveLineWhenBlank="true" uuid="4816ea8d-66b0-4263-9c20-9136b63d1a45"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{PRONAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="113" y="84" width="199" height="20" isRemoveLineWhenBlank="true"/>
-				<textElement/>
+				<reportElement x="113" y="84" width="199" height="20" isRemoveLineWhenBlank="true" uuid="5511b882-8018-4bc2-88a0-ccd218b816e3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{CATEGORY}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="24" y="44" width="87" height="20"/>
-				<textElement/>
+				<reportElement x="24" y="44" width="87" height="20" uuid="5dd3b2dd-210f-41ce-bd76-af882862abbc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_PRODUCT_NUMBER")+ ": "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="24" y="64" width="89" height="20"/>
-				<textElement/>
+				<reportElement x="24" y="64" width="89" height="20" uuid="52214a00-7955-4223-9f3e-54d7f39f5192"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_NAME")+ ": "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="24" y="84" width="89" height="20"/>
-				<textElement/>
+				<reportElement x="24" y="84" width="89" height="20" uuid="e7ce4928-6ee8-49a6-adaf-1453ac62580b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_CATEGORY")+ ": "]]></textFieldExpression>
 			</textField>
 			<image scaleImage="FillFrame">
-				<reportElement x="374" y="0" width="293" height="180" isRemoveLineWhenBlank="true"/>
+				<reportElement x="374" y="0" width="293" height="180" isRemoveLineWhenBlank="true" uuid="8e4eb4ba-1d06-4b81-93e4-54c143b94fe8"/>
 				<imageExpression><![CDATA[$F{PICTURE}]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
-				<reportElement x="113" y="116" width="199" height="20" isRemoveLineWhenBlank="true"/>
-				<textElement/>
+				<reportElement x="113" y="116" width="199" height="20" isRemoveLineWhenBlank="true" uuid="9b102461-b9a7-4c0e-993a-38f48a4c5d51"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{TYPE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="24" y="116" width="89" height="20"/>
-				<textElement/>
+				<reportElement x="24" y="116" width="89" height="20" uuid="94d31616-a929-4d36-9986-c9779831b8d8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_TYPE")+ ": "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="24" y="155" width="300" height="117" isRemoveLineWhenBlank="true" backcolor="#F1F0F0"/>
-				<textElement/>
+				<reportElement mode="Opaque" x="24" y="155" width="300" height="117" isRemoveLineWhenBlank="true" backcolor="#FCFCFC" uuid="5dc8f447-eb86-4bba-bbd8-7f6d5962f066"/>
+				<box topPadding="7" leftPadding="7" bottomPadding="7" rightPadding="7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
-				<reportElement x="468" y="212" width="174" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="468" y="212" width="174" height="20" isRemoveLineWhenBlank="true" uuid="e7865d4d-441c-43ab-8058-8f49b7488e5a"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NETAMOUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="379" y="212" width="89" height="20"/>
+				<reportElement x="379" y="212" width="89" height="20" uuid="c0387f16-21cc-4647-894d-d967eccc14c5"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_CLEAR_PRICE")+ ": "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="379" y="192" width="89" height="20"/>
+				<reportElement x="379" y="192" width="89" height="20" uuid="a782c19f-7493-4483-a0af-4ee0e43782b4"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_TAX_TYPE")+ ": "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="468" y="190" width="199" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="468" y="190" width="199" height="20" isRemoveLineWhenBlank="true" uuid="f41b1b19-8609-42ef-b731-f0e2ec5b2e60"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{TAXTYPE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="379" y="232" width="89" height="20"/>
+				<reportElement x="379" y="232" width="89" height="20" uuid="b9f819a9-109e-4699-9707-496d3407c9e3"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_PRE_TAX_PRICE")+ ": "]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
-				<reportElement x="468" y="232" width="174" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="468" y="232" width="174" height="20" isRemoveLineWhenBlank="true" uuid="8c5fdc58-e360-41f8-8372-a11b677d89d3"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PRETAX}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="379" y="210" width="288" height="1" forecolor="#F0F0F0"/>
-			</line>
-			<line>
-				<reportElement x="379" y="251" width="288" height="1" forecolor="#F0F0F0"/>
-			</line>
 			<textField>
-				<reportElement x="379" y="252" width="89" height="20"/>
+				<reportElement x="379" y="252" width="89" height="20" uuid="3b40ebce-41d8-457e-9a17-6b5145170301"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_SALE_PRICE")+ ": "]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
-				<reportElement x="468" y="252" width="174" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="468" y="252" width="174" height="20" isRemoveLineWhenBlank="true" uuid="e375ece3-f4ef-4cb1-acb8-3662b47834b6"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SALEPRICE}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="25" y="283" width="288" height="1"/>
+				<reportElement x="25" y="283" width="288" height="1" forecolor="#FCFCFC" backcolor="#FCFCFC" uuid="729a9bb2-27a4-4cee-9c92-ac1fd289bce0"/>
 			</line>
 			<textField>
-				<reportElement x="25" y="286" width="285" height="20"/>
+				<reportElement x="25" y="286" width="285" height="20" uuid="c90aef87-edfd-4322-bedd-0890f92a6047"/>
 				<textElement>
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_PRODUCT_DEPENDENCY")+ ": "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="374" y="286" width="285" height="20"/>
+				<reportElement x="374" y="286" width="285" height="20" uuid="531bbf1b-c419-4163-84e4-2a0adc30c4e1"/>
 				<textElement>
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_PROPERTIES")+ ": "]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="374" y="283" width="288" height="1"/>
+				<reportElement x="374" y="283" width="288" height="1" forecolor="#FCFCFC" backcolor="#FCFCFC" uuid="3f059c9e-b6dd-4d79-9c9c-10babc941c20"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="40" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="25" y="0" width="288" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="25" y="0" width="288" height="20" isRemoveLineWhenBlank="true" uuid="03c50236-39bd-41c2-a3ff-e2afd7c7fb3d"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PNR} != null ? $P{EBI_LANG}.getProperty("EBI_LANG_C_PRODUCT_NUMBER")+ ": "+$F{PNR} : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="25" y="20" width="89" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="25" y="20" width="89" height="20" isRemoveLineWhenBlank="true" uuid="a6eb2716-1ff4-416c-80ba-7dce032349f2"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DPNAME} != null ? $P{EBI_LANG}.getProperty("EBI_LANG_NAME")+ ": " : ""]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="114" y="20" width="199" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="114" y="20" width="199" height="20" isRemoveLineWhenBlank="true" uuid="9fde68f7-caa8-4ef7-b9dd-8668a3dbb203"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DPNAME}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="374" y="0" width="116" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="374" y="0" width="116" height="20" isRemoveLineWhenBlank="true" uuid="0b5c1efd-5d08-4a3e-b9a1-9a566b30e2ee"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement x="490" y="0" width="212" height="20" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+			<textField textAdjust="StretchHeight" pattern="" isBlankWhenNull="true">
+				<reportElement x="490" y="0" width="212" height="20" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="af199874-dae6-4393-aae5-1a99a769c57c"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{VALUE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="4" splitType="Stretch">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="690" height="4"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
-		</band>
+		<band height="4" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="690" height="25" forecolor="#D0B48E" backcolor="#F0F0F0"/>
+				<reportElement mode="Opaque" x="0" y="0" width="690" height="25" forecolor="#FCFCFC" backcolor="#FCFCFC" uuid="83cc8b91-0078-47bb-bc22-8366e85eca1a"/>
 				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="650" y="3" width="40" height="20" forecolor="#000000"/>
+					<reportElement style="Column header" x="650" y="3" width="40" height="20" forecolor="#000000" uuid="98edcbc8-b098-4fbc-bdfe-6c4938c3b30b"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
-				<textField pattern="dd/MM/yyyy h.mm a">
-					<reportElement x="11" y="3" width="216" height="20"/>
+				<textField pattern="MMMM d, yyyy">
+					<reportElement x="11" y="3" width="216" height="20" uuid="868a67b5-db07-402d-aa9e-6d6a18043426"/>
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>

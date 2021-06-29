@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.12.2.final utlizzo versione della libreria JasperReports6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<!-- Created with Jaspersoft Studio version 6.16.0.final utlizzo versione della libreria JasperReports6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="opportunityReport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="9c3ab976-2953-4475-be2f-10b5c73128f5">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -54,14 +54,14 @@ WHERE opt.OPPORTUNITYID=$P{ID} and con.OPPORTUNITYID= opt.OPPORTUNITYID and comp
 			<textField>
 				<reportElement style="Detail" x="312" y="0" width="241" height="31" uuid="6acb3542-4426-4790-bf4b-78aabe9effc4"/>
 				<textElement textAlignment="Right">
-					<font size="18" isBold="true"/>
+					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{COMPNAME}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Detail" x="312" y="31" width="241" height="18" forecolor="#666666" uuid="ecf6a4cc-807d-419d-9149-3227efe1efcc"/>
 				<textElement textAlignment="Right">
-					<font size="14"/>
+					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAME2}]]></textFieldExpression>
 			</textField>
@@ -148,7 +148,7 @@ WHERE opt.OPPORTUNITYID=$P{ID} and con.OPPORTUNITYID= opt.OPPORTUNITYID and comp
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_PROBABILITY")+": "]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement style="Detail" isPrintRepeatedValues="false" mode="Opaque" x="12" y="161" width="541" height="72" backcolor="#F0F0F0" uuid="a4c4b98b-49d9-4316-8470-ae9f7567c4eb"/>
+				<reportElement style="Detail" isPrintRepeatedValues="false" mode="Opaque" x="12" y="161" width="541" height="72" backcolor="#FCFCFC" uuid="a4c4b98b-49d9-4316-8470-ae9f7567c4eb"/>
 				<textElement>
 					<font size="8" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -275,7 +275,7 @@ WHERE opt.OPPORTUNITYID=$P{ID} and con.OPPORTUNITYID= opt.OPPORTUNITYID and comp
 				<textFieldExpression><![CDATA[$P{EBI_LANG}.getProperty("EBI_LANG_EMAIL")+": "+$F{EMAIL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="12" y="105" width="541" height="90" isRemoveLineWhenBlank="true" backcolor="#F0F0F0" uuid="95775226-a5d4-4f76-8145-0e4378b7f254"/>
+				<reportElement mode="Opaque" x="12" y="105" width="541" height="90" isRemoveLineWhenBlank="true" backcolor="#FCFCFC" uuid="95775226-a5d4-4f76-8145-0e4378b7f254"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>

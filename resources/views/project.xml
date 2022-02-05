@@ -1,4 +1,5 @@
 <BusinessModule Name="EBICRM">
+ <includeToolbar Name="ebiToolBar" Path="CRMToolbar/crmToolbar.xml"/>
  <includeGUI Name="Dashboard" enabled="true" Path="Summary/summaryGUI.xml"/>
  <includeGUI Name="Leads" enabled="true" Path="Leads/leadsGUI.xml"/>
  <includeGUI Name="Company" enabled="true" Path="Company/companyGUI.xml"/>
@@ -11,5 +12,4 @@
  <includeGUI Name="Offer" enabled="false" Path="Offer/offerGUI.xml"/>
  <includeGUI Name="Order" enabled="false" Path="Order/orderGUI.xml"/>
  <includeGUI Name="Service" enabled="false" Path="CRMService/serviceGUI.xml"/>
- <includeToolbar Name="ebiToolBar" Path="CRMToolbar/crmToolbar.xml"/>
 </BusinessModule>

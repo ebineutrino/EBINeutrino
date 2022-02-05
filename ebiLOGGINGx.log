@@ -7126,3 +7126,398 @@ groovy.lang.MissingPropertyException: No such property: EBICRMToolBar for class:
  Cause :null
 
 2022-02-02 23:07:19,496 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Wollen Sie das Programm Schliessen?
+2022-02-05 13:20:17,074 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: EBICRMToolBar for class: summaryScript
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1543)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1464)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1344)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 13:20:17,084 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+2022-02-05 13:21:32,232 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: EBICRMToolBar for class: summaryScript
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1543)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1464)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1344)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 13:21:32,233 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+2022-02-05 14:49:46,558 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Wollen Sie das Programm Schliessen?
+2022-02-05 14:50:46,218 ERROR [INIT_CRM] org.sdk.EBISystem: /Users/francescobramante/NetBeansProjects/EBINeutrino/resources/views/views/CRMService/serviceGUI.xml (No such file or directory)
+ Cause :null
+
+java.io.FileNotFoundException: /Users/francescobramante/NetBeansProjects/EBINeutrino/resources/views/views/CRMService/serviceGUI.xml (No such file or directory)
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIXMLGUIReader.loadXMLGUI(EBIXMLGUIReader.java:53)
+	at org.core.guiRenderer.EBIGUIRenderer.loadGUIExt(EBIGUIRenderer.java:209)
+	at org.core.guiRenderer.EBIGUIRenderer.loadGUI(EBIGUIRenderer.java:181)
+	at org.modules.controls.component.EBICRMTabcontrol.showCheckableTab(EBICRMTabcontrol.java:183)
+	at org.modules.EBIModule.showClosableTabs(EBIModule.java:324)
+	at org.modules.EBIModule.access$000(EBIModule.java:54)
+	at org.modules.EBIModule$2.callback(EBIModule.java:218)
+	at org.sdk.arbitration.EBIArbitration$1.run(EBIArbitration.java:17)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-02-05 14:50:46,220 ERROR [INIT_CRM] org.sdk.gui.dialogs.EBIExceptionDialog: /Users/francescobramante/NetBeansProjects/EBINeutrino/resources/views/views/CRMService/serviceGUI.xml (No such file or directory)
+ Cause :null
+
+2022-02-05 14:50:46,224 ERROR [AWT-EventQueue-0] org.modules.EBIModule: EBI Neutrino CRM Error:
+java.lang.NullPointerException
+	at org.modules.EBIModule.ebiMain(EBIModule.java:247)
+	at org.core.modules.management.EBIModuleHandler.showModule(EBIModuleHandler.java:125)
+	at org.core.modules.management.EBIModuleHandler.reloadSelectedModule(EBIModuleHandler.java:242)
+	at org.core.modules.management.EBIModuleHandler$6.actionPerformed(EBIModuleHandler.java:214)
+	at java.desktop/javax.swing.SwingUtilities.notifyAction(SwingUtilities.java:1810)
+	at java.desktop/javax.swing.JComponent.processKeyBinding(JComponent.java:2900)
+	at java.desktop/javax.swing.KeyboardManager.fireBinding(KeyboardManager.java:311)
+	at java.desktop/javax.swing.KeyboardManager.fireKeyboardAction(KeyboardManager.java:253)
+	at java.desktop/javax.swing.JComponent.processKeyBindingsForAllComponents(JComponent.java:2993)
+	at java.desktop/javax.swing.JComponent.processKeyBindings(JComponent.java:2985)
+	at java.desktop/javax.swing.JComponent.processKeyEvent(JComponent.java:2862)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6409)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2263)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:5008)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2321)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4840)
+	at java.desktop/java.awt.KeyboardFocusManager.redispatchEvent(KeyboardFocusManager.java:1950)
+	at java.desktop/java.awt.DefaultKeyboardFocusManager.dispatchKeyEvent(DefaultKeyboardFocusManager.java:870)
+	at java.desktop/java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(DefaultKeyboardFocusManager.java:1139)
+	at java.desktop/java.awt.DefaultKeyboardFocusManager.pumpApprovedKeyEvents(DefaultKeyboardFocusManager.java:956)
+	at java.desktop/java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(DefaultKeyboardFocusManager.java:1055)
+	at java.desktop/java.awt.DefaultKeyboardFocusManager.dispatchEvent(DefaultKeyboardFocusManager.java:674)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4889)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2321)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4840)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:772)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:95)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:743)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 15:01:58,069 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: EBICRMToolBar for class: summaryScript
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1550)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1476)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1344)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 15:01:58,072 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+2022-02-05 15:02:13,840 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: EBICRMToolBar for class: summaryScript
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1550)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1476)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1344)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 15:02:13,840 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+2022-02-05 15:04:33,805 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: EBICRMToolBar for class: summaryScript
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1550)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1476)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1344)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 15:04:33,809 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+2022-02-05 15:04:47,306 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: EBICRMToolBar for class: summaryScript
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1550)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1476)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1344)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 15:04:47,306 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+2022-02-05 15:09:17,668 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: EBICRMToolBar for class: summaryScript
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1554)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1465)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1345)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 15:09:17,671 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+2022-02-05 15:09:42,184 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Wollen Sie das Programm Schliessen?
+2022-02-05 15:10:08,164 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: EBICRMToolBar for class: summaryScript
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1554)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1465)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1345)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 15:10:08,167 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+2022-02-05 15:11:21,398 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: EBICRMToolBar for class: summaryScript
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1554)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1465)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1345)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 15:11:21,402 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+2022-02-05 15:16:17,125 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: EBICRMToolBar for class: summaryScript
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1553)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1464)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1344)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 15:16:17,129 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+2022-02-05 15:29:56,036 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: EBICRMToolBar for class: summaryScript
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1554)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1465)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1345)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 15:29:56,040 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: EBICRMToolBar for class: summaryScript
+ Cause :null
+
+2022-02-05 15:30:35,690 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: Wollen Sie das Programm Schliessen?
+2022-02-05 15:59:59,640 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: toolTip for class: javax.swing.JButton
+Possible solutions: toolkit
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: toolTip for class: javax.swing.JButton
+Possible solutions: toolkit
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1554)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1465)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1345)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 15:59:59,645 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: toolTip for class: javax.swing.JButton
+Possible solutions: toolkit
+ Cause :null
+
+2022-02-05 16:00:54,725 ERROR [AWT-EventQueue-0] org.sdk.EBISystem: No such property: title for class: javax.swing.JButton
+Possible solutions: size
+ Cause :null
+
+groovy.lang.MissingPropertyException: No such property: title for class: javax.swing.JButton
+Possible solutions: size
+	at org.sdk.EBISystem.printStackTrace(EBISystem.java:719)
+	at org.core.guiRenderer.EBIGUIRenderer.excScript(EBIGUIRenderer.java:1554)
+	at org.core.guiRenderer.EBIGUIRenderer.initScript(EBIGUIRenderer.java:1465)
+	at org.core.guiRenderer.EBIGUIRenderer.access$200(EBIGUIRenderer.java:60)
+	at org.core.guiRenderer.EBIGUIRenderer$20$1.run(EBIGUIRenderer.java:1345)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:313)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:770)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:721)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:715)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:740)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2022-02-05 16:00:54,730 ERROR [AWT-EventQueue-0] org.sdk.gui.dialogs.EBIExceptionDialog: No such property: title for class: javax.swing.JButton
+Possible solutions: size
+ Cause :null
+

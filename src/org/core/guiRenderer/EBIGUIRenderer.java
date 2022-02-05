@@ -61,7 +61,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
     private EBIMain ebiMain = null;
     public TreeMap<String, Object> toToolbar = null;
-    public TreeMap<String, Object> loadedToolBarComponent = null;
+    public TreeMap<String, JComponent> cacheToolBarComponent = null;
     public TreeMap<String, EBIGUIWidgetsBean> componentsTable = null;
     public TreeMap<String, List<Object>> resizeContainer = null;
     private TreeMap<String, HashMap<String, EBIGUIScripts>> scriptContainer = null;
@@ -87,7 +87,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     public EBIGUIRenderer(final EBIMain main) {
         ebiMain = main;
         toToolbar = new TreeMap();
-        loadedToolBarComponent = new TreeMap();
+        cacheToolBarComponent = new TreeMap();
         focusTraversal = new EBIFocusTraversalPolicy();
         componentGet = new TreeMap();
         binding = new Binding();
@@ -107,7 +107,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
         scriptContainer = new TreeMap<String, HashMap<String, EBIGUIScripts>>();
         componentGet = new TreeMap<String, Integer>();
         focusTraversal = new EBIFocusTraversalPolicy();
-        loadedToolBarComponent = new TreeMap();
+        cacheToolBarComponent = new TreeMap();
         fileToTabPath = "";
         isInit = true;
         projectCount = 0;
@@ -1292,6 +1292,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
         if (canShow) {
             renderToolbar(toVisualPanel);
             initToolbar(name);
+            initToolbarComponentForScripts();
             initScript(componentNamespace);
             isInit = false;
         }
@@ -1463,18 +1464,28 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     private synchronized final void initScript(final String namespace) {
         excScript(namespace, null);
     }
+    
+    private synchronized final void initToolbarComponentForScripts(){
+        final Iterator<String> iter = toToolbar.keySet().iterator();
+        while(iter.hasNext()){
+            String tbnameSpace = iter.next();
+            final Iterator<EBIGUIToolbar> i = ((EBIGUIToolbar) toToolbar.get(tbnameSpace)).getBarItem().iterator();
+            EBIScriptComponentContainer compContainerToolabr = new EBIScriptComponentContainer();
+            while (i.hasNext()) {
+                final EBIGUIToolbar tb = i.next();
+                compContainerToolabr.getComponents().put(tb.getName(), tb.getComponent());
+            }
+            binding.setVariable(tbnameSpace, compContainerToolabr.getComponents());
+        }
+    }
+    
 
     @Override
     public synchronized final void excScript(final String cmpNamespace, final HashMap<String, String> PARAM) {
 
         if (scriptContainer.get(cmpNamespace) != null) {
-            final Iterator<String> iter = scriptContainer.get(cmpNamespace).keySet().iterator();
             
-            Iterator<String> tkey = loadedToolBarComponent.keySet().iterator();
-            while(tkey.hasNext()){
-                String key = tkey.next();
-                binding.setVariable(key, loadedToolBarComponent.get(key));
-            }
+            final Iterator<String> iter = scriptContainer.get(cmpNamespace).keySet().iterator();
             
             while (iter.hasNext()) {
 
@@ -1779,20 +1790,20 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     @Override
     public final JComponent getToolBarComponent(final String name, final String packages) {
         JComponent comp = null;
-        if (!loadedToolBarComponent.containsKey(name)) {
+        if (!cacheToolBarComponent.containsKey(name)) {
             if (toToolbar.get(packages) != null) {
                 final Iterator i = ((EBIGUIToolbar) toToolbar.get(packages)).getBarItem().iterator();
                 while (i.hasNext()) {
                     final EBIGUIToolbar tb = (EBIGUIToolbar) i.next();
                     if (name.equals(tb.getName())) {
                         comp = tb.getComponent();
-                        loadedToolBarComponent.put(name, comp);
+                        cacheToolBarComponent.put(name, comp);
                         break;
                     }
                 }
             }
         } else {
-            comp = (JComponent) loadedToolBarComponent.get(name);
+            comp = (JComponent) cacheToolBarComponent.get(name);
         }
         return comp;
     }
@@ -1801,20 +1812,20 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     public final JButton getToolBarButton(final String name, final String packages) {
         JButton bnt = null;
         final EBIGUIToolbar toolbar = ((EBIGUIToolbar) toToolbar.get(packages));
-        if (!loadedToolBarComponent.containsKey(name)) {
+        if (!cacheToolBarComponent.containsKey(name)) {
             if (toolbar != null) {
                 final Iterator i = toolbar.getBarItem().iterator();
                 while (i.hasNext()) {
                     final EBIGUIToolbar tb = (EBIGUIToolbar) i.next();
                     if (name.equals(tb.getName())) {
                         bnt = (JButton) tb.getComponent();
-                        loadedToolBarComponent.put(name, bnt);
+                        cacheToolBarComponent.put(name, bnt);
                         break;
                     }
                 }
             }
         } else {
-            bnt = (JButton) loadedToolBarComponent.get(name);
+            bnt = (JButton) cacheToolBarComponent.get(name);
         }
         return bnt;
     }

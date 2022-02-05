@@ -61,7 +61,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
     private EBIMain ebiMain = null;
     public TreeMap<String, Object> toToolbar = null;
-    public TreeMap<String, Object> ldComponent = null;
+    public TreeMap<String, Object> loadedToolBarComponent = null;
     public TreeMap<String, EBIGUIWidgetsBean> componentsTable = null;
     public TreeMap<String, List<Object>> resizeContainer = null;
     private TreeMap<String, HashMap<String, EBIGUIScripts>> scriptContainer = null;
@@ -87,7 +87,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     public EBIGUIRenderer(final EBIMain main) {
         ebiMain = main;
         toToolbar = new TreeMap();
-        ldComponent = new TreeMap();
+        loadedToolBarComponent = new TreeMap();
         focusTraversal = new EBIFocusTraversalPolicy();
         componentGet = new TreeMap();
         binding = new Binding();
@@ -107,7 +107,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
         scriptContainer = new TreeMap<String, HashMap<String, EBIGUIScripts>>();
         componentGet = new TreeMap<String, Integer>();
         focusTraversal = new EBIFocusTraversalPolicy();
-        ldComponent = new TreeMap();
+        loadedToolBarComponent = new TreeMap();
         fileToTabPath = "";
         isInit = true;
         projectCount = 0;
@@ -1381,12 +1381,9 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                         EBISystem.getInstance().getIEBIToolBarInstance().addButtonSeparator();
                     } else if ("toolbaritem".equals(b.getType().toLowerCase())) {
 
-                        final int NEW_ID = EBISystem.getInstance().getIEBIToolBarInstance().addToolButton(b.getIcon(),
-                                null);
-                        EBISystem.getInstance().getIEBIToolBarInstance().setComponentToolTipp(NEW_ID,
-                                "<html><body><br><b>" + b.getToolTip() + "</b><br><br></body></html>");
-                        final JButton bx = ((JButton) (EBISystem.getInstance().getIEBIToolBarInstance()
-                                .getToolbarComponent(NEW_ID)));
+                        final int NEW_ID = EBISystem.getInstance().getIEBIToolBarInstance().addToolButton(b.getIcon(), null);
+                        EBISystem.getInstance().getIEBIToolBarInstance().setComponentToolTipp(NEW_ID,"<html><body><br><b>" + b.getToolTip() + "</b><br><br></body></html>");
+                        final JButton bx = ((JButton) (EBISystem.getInstance().getIEBIToolBarInstance().getToolbarComponent(NEW_ID)));
 
                         InputMap inputMap;
                         if (b.getKeyStroke() != null) {
@@ -1398,8 +1395,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                                     }
                                 }
                             };
-                            inputMap = ((JPanel) ebiMain.getContentPane())
-                                    .getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+                            inputMap = ((JPanel) ebiMain.getContentPane()).getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
                             inputMap.put(b.getKeyStroke(), b.getName() + "Action");
                             ((JPanel) ebiMain.getContentPane()).getActionMap().put(b.getName() + "Action", refreshAction);
                         }
@@ -1422,17 +1418,13 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                                     }
                                 }
                             };
-                            inputMap = ((JPanel) ebiMain.getContentPane())
-                                    .getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+                            inputMap = ((JPanel) ebiMain.getContentPane()).getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
                             inputMap.put(b.getKeyStroke(), b.getName() + "Action");
-                            ((JPanel) ebiMain.getContentPane()).getActionMap().put(b.getName() + "Action",
-                                    refreshAction);
+                            ((JPanel) ebiMain.getContentPane()).getActionMap().put(b.getName() + "Action", refreshAction);
                         }
 
-                        final int NEW_ID = EBISystem.getInstance().getIEBIToolBarInstance()
-                                .addCustomToolBarComponent(check);
-                        EBISystem.getInstance().getIEBIToolBarInstance().setComponentToolTipp(NEW_ID,
-                                "<html><body><br><b>" + b.getToolTip() + "</b><br><br></body></html>");
+                        final int NEW_ID = EBISystem.getInstance().getIEBIToolBarInstance().addCustomToolBarComponent(check);
+                        EBISystem.getInstance().getIEBIToolBarInstance().setComponentToolTipp(NEW_ID,"<html><body><br><b>" + b.getToolTip() + "</b><br><br></body></html>");
                         b.setComponent(EBISystem.getInstance().getIEBIToolBarInstance().getToolbarComponent(NEW_ID));
                         b.setId(NEW_ID);
                     }
@@ -1476,9 +1468,14 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     public synchronized final void excScript(final String cmpNamespace, final HashMap<String, String> PARAM) {
 
         if (scriptContainer.get(cmpNamespace) != null) {
-
             final Iterator<String> iter = scriptContainer.get(cmpNamespace).keySet().iterator();
-
+            
+            Iterator<String> tkey = loadedToolBarComponent.keySet().iterator();
+            while(tkey.hasNext()){
+                String key = tkey.next();
+                binding.setVariable(key, loadedToolBarComponent.get(key));
+            }
+            
             while (iter.hasNext()) {
 
                 final EBIGUIScripts script = scriptContainer.get(cmpNamespace).get(iter.next());
@@ -1500,6 +1497,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                         }
 
                         binding.setVariable("namespace", nmSpace);
+                        //todo if comContainer is already created avoid it to reistantiate
                         EBIScriptComponentContainer compContainer = new EBIScriptComponentContainer();
                         while (ixt.hasNext()) {
                             final EBIGUINBean bx = (EBIGUINBean) ixt.next();
@@ -1781,20 +1779,20 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     @Override
     public final JComponent getToolBarComponent(final String name, final String packages) {
         JComponent comp = null;
-        if (!ldComponent.containsKey(name)) {
+        if (!loadedToolBarComponent.containsKey(name)) {
             if (toToolbar.get(packages) != null) {
                 final Iterator i = ((EBIGUIToolbar) toToolbar.get(packages)).getBarItem().iterator();
                 while (i.hasNext()) {
                     final EBIGUIToolbar tb = (EBIGUIToolbar) i.next();
                     if (name.equals(tb.getName())) {
                         comp = tb.getComponent();
-                        ldComponent.put(name, comp);
+                        loadedToolBarComponent.put(name, comp);
                         break;
                     }
                 }
             }
         } else {
-            comp = (JComponent) ldComponent.get(name);
+            comp = (JComponent) loadedToolBarComponent.get(name);
         }
         return comp;
     }
@@ -1803,20 +1801,20 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     public final JButton getToolBarButton(final String name, final String packages) {
         JButton bnt = null;
         final EBIGUIToolbar toolbar = ((EBIGUIToolbar) toToolbar.get(packages));
-        if (!ldComponent.containsKey(name)) {
+        if (!loadedToolBarComponent.containsKey(name)) {
             if (toolbar != null) {
                 final Iterator i = toolbar.getBarItem().iterator();
                 while (i.hasNext()) {
                     final EBIGUIToolbar tb = (EBIGUIToolbar) i.next();
                     if (name.equals(tb.getName())) {
                         bnt = (JButton) tb.getComponent();
-                        ldComponent.put(name, bnt);
+                        loadedToolBarComponent.put(name, bnt);
                         break;
                     }
                 }
             }
         } else {
-            bnt = (JButton) ldComponent.get(name);
+            bnt = (JButton) loadedToolBarComponent.get(name);
         }
         return bnt;
     }

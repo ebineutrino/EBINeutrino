@@ -49,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface {
 
@@ -151,7 +152,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         try {
             isExistCompany = false;
             RELOAD = false;
-           
+
             EBISystem.getInstance().gui().loadProject("project.xml");
             if (!EBISystem.getInstance().gui().isToolBarEmpty()) {
                 crmToolBar.setCRMToolBar();
@@ -391,7 +392,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                         EBIArbitration.arbitrate().waitJobDone("CRM_INITIALIZE");
                         if (EBISystem.getInstance().containDataStore(nameSpace, "ebiAfterLoad")) {
                             EBISystem.getInstance().getDataStore(nameSpace, "ebiAfterLoad");
-                            System.out.println("called xy");
                         }
                         return true;
                     }
@@ -630,9 +630,9 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                     if (EBISystem.gui().existView("Service")) {
                         getServicePane().initialize(true);
                     }
-
-                    if (reloading) {
-                        EBISystem.isSaveOrUpdate = false;
+                    EBISystem.isSaveOrUpdate = false;
+                    
+                    if (reloading) {    
                         EBISystem.canRelease = true;
                         if (EBISystem.gui().existView("Summary")) {
                             getSummaryPane().initialize();
@@ -672,7 +672,8 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
     public boolean saveCompany(boolean checkCompany) {
         try {
             EBISystem.showInActionStatus("Company");
-            if (EBISystem.getInstance().getCompany() != null) {
+            if (EBISystem.getInstance().getCompany() != null
+                    && EBISystem.getInstance().getCompany().getCompanyid() != -1) {
                 ebiUpdate(checkCompany);
             } else {
                 ebiSave(checkCompany);
@@ -1026,6 +1027,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
 
                 resetUI(false, false);
                 EBISystem.canRelease = true;
+                EBISystem.isSaveOrUpdate = false;
             } else {
                 ret = false;
             }

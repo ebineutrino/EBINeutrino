@@ -13,8 +13,7 @@
         <timepicker name="summaryCreatedFromText" Location="121,151" Size="275,25"/>
         <label name="summaryCreatedTo" title="EBI_LANG_CREATED_TO" Location="6,181" Size="113,25"/>
         <timepicker name="summaryCreatedToText" Location="121,181" Size="275,25"/>
-        <button name="searchSummary" title="EBI_LANG_UPDATE" Location="211,213" Size="182,32" 
-                actionListener="org.modules.views.EBICRMSummaryView.searchSummary" />
+        <button name="searchSummary" title="EBI_LANG_UPDATE" Location="211,213" Size="182,32" actionListener="org.modules.views.EBICRMSummaryView.searchSummary" />
         <label name="company" title="EBI_LANG_COMPANY" Location="6,25" Size="114,25"/>
         <textfield name="companyText" Location="121,25" Size="75,25"/>
         <button name="seachCompName" i18ntooltip="EBI_LANG_C_TOOL_TIP_SEARCH_COMPANY" 
@@ -24,13 +23,10 @@
     <panel name="avSummary" title="EBI_LANG_C_AVAILABLE_SUMMARY" resizewidth="true" resizeheight="true" Location="10,264" Size="875,375" >
         <table name="companySummaryTable" resizewidth="true" resizeheight="true" Location="8,60" Size="855,306"/>
         
-        <button name="showSummary" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_RECORD" Location="45,22" Size="31,27"
+        <button name="showSummary" i18ntooltip="EBI_LANG_C_TOOL_TIP_SHOW_RECORD" Location="10,22" Size="31,27"
                     enabled="false" actionListener="org.modules.views.EBICRMSummaryView.showSummaryObjectView" icon="down.png"/>
         
-         <button name="exportSummary" i18ntooltip="EBI_LANG_C_TOOL_TIP_EXPORT" Location="10,22" Size="31,27"
-                    enabled="true" icon="exexp.png"/>
-        
-        <textfield name="filterTableText" Location="85,21" Size="461,30" resizeWidth="true" placeHolder="EBI_LANG_FILTER"/>
+        <textfield name="filterTableText" Location="50,21" Size="461,30" resizeWidth="true" placeHolder="EBI_LANG_FILTER"/>
         <codecontrol name="groovy" path="Summary/summaryScript.groovy"/>
     </panel>
 </visualpanel>

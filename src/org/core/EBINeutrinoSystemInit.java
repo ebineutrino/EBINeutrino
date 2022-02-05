@@ -116,15 +116,7 @@ public class EBINeutrinoSystemInit extends EBISystem {
             toReturn = EBISystem.getInstance().fillComboWithUser();
             if (toReturn) {
                 //configure hibernate
-                if ("apache derby".equals(dbType.toLowerCase())) {
-                    cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");
-                    cfg.setProperty("javax.persistence.jdbc.driver", "org.apache.derby.jdbc.EmbeddedDriver");
-
-                    String jdbcURL = "jdbc:derby:" + data + "://"
-                            + ClassLoader.getSystemResource("database").toURI().toString() + ";create=true";
-                    cfg.setProperty("hibernate.connection.url", jdbcURL);
-
-                } else if ("mysql".equals(dbType.toLowerCase())) {
+                if ("mysql".equals(dbType.toLowerCase())) {
                     cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");
                     cfg.setProperty("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
                     cfg.setProperty("hibernate.connection.url", "jdbc:mysql://" + EBISystem.host.trim() + ":3306/" + data + "?serverTimezone=UTC");

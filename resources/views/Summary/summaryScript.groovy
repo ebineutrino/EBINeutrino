@@ -1,4 +1,3 @@
 
-Summary.exportSummary.actionPerformed = {   
-    println "export csv";
-}
+
+EBICRMToolBar.toolbarItemTerminalModule.actionPerformed = { println "hallo world";}

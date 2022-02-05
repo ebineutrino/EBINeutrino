@@ -16,9 +16,7 @@ public class EBIGUIToolbar {
     private List<EBIGUIToolbar> barItem = null;
     private JComponent component = null;
     private KeyStroke keyStroke = null;
-
-
-
+    
     public EBIGUIToolbar(){
         barItem = new ArrayList<EBIGUIToolbar>();
     }

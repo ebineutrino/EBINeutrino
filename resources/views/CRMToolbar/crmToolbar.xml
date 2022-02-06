@@ -13,13 +13,16 @@
          <toolbaritem name="toolbarItemDelete" keyStroke="D" title="Delete company" i18ntooltip="EBI_LANG_C_TOOL_TIP_DELETE_COMPANY" icon="Tdelete.png"/>
          <separator />
          <toolbaritemcheckable name="toolbarItemProductModule" keyStroke="1" title="Product Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_PRODUCT_MODUL" icon="product.png"/>
-         <toolbaritemcheckable name="toolbarItemInvoiceModule" keyStroke="2" title="Invoice Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_INVOICE_MODUL" icon="pexport.png"/>
+         <separator />
+         <toolbaritemcheckable name="toolbarItemProjectModule" keyStroke="6" title="Project Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_PROJECT_MODUL" icon="run.png"/>
+         <separator />toolbaritemcheckable name="toolbarItemInvoiceModule" keyStroke="2" title="Invoice Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_INVOICE_MODUL" icon="pexport.png"/>
          <toolbaritemcheckable name="toolbarItemAccountModule" keyStroke="3" title="Account Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_ACCOUNT_MODUL" icon="account.png"/>
          <separator />
          <toolbaritemcheckable name="toolbarItemProSolModule" keyStroke="5"  title="Problem / Solution Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_PROBLEM_SOLUTION_MODUL" icon="crm_kl.png"/>
          <separator />
          <toolbaritemcheckable name="toolbarItemProjectModule" keyStroke="6" title="Project Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_PROJECT_MODUL" icon="run.png"/>
          <separator />
-         <toolbaritem name="toolbarItemTerminalModule" keyStroke="7" title="Terminal Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_TERMINAL_MODUL" icon="product.png"/>
-      </toolbar>
+         <toolbaritem name="toolbarItemTerminalModule" keyStroke="7" title="Terminal Module" i18ntooltip="EBI_LANG_C_TOOL_TIP_CRM_SHOW_TERMINAL_MODUL" icon="terminal.png"/>
+        </toolbar>
+        <codecontrol name="groovy" path="CRMToolbar/crmToolbar.groovy"/>
 </ebibar>

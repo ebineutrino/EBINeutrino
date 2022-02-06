@@ -1,6 +1,5 @@
 package org.core;
 
-
 import org.modules.EBIModule;
 import org.core.guiRenderer.EBIGUIRenderer;
 import org.core.gui.dialogs.EBISplashScreen;
@@ -91,7 +90,6 @@ public class EBIMain extends JFrame {
                 }
             });
 
-
             //check for update
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -129,9 +127,18 @@ public class EBIMain extends JFrame {
             EBISystem.getInstance().setIEBIDatabase(conn);
 
             new EBINeutrinoSystemInit(splash);
-
             if (EBINeutrinoSystemInit.isConfigured) {
                 initializeTheSystem();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            Thread.sleep(3000);
+                            EBISystem.getInstance().addScripts();
+                        }catch(Exception ex){}
+                        
+                    }
+                }).start();
             }
         } catch (final Exception ex) {
             ex.printStackTrace();

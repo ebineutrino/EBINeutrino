@@ -27,6 +27,5 @@
                     enabled="false" actionListener="org.modules.views.EBICRMSummaryView.showSummaryObjectView" icon="down.png"/>
         
         <textfield name="filterTableText" Location="50,21" Size="461,30" resizeWidth="true" placeHolder="EBI_LANG_FILTER"/>
-        <codecontrol name="groovy" path="Summary/summaryScript.groovy"/>
     </panel>
 </visualpanel>

@@ -1,5 +1,6 @@
 package org.sdk;
 
+import groovy.lang.Binding;
 import org.modules.EBIModule;
 import org.core.EBIDatabase;
 import org.core.EBIMain;
@@ -37,8 +38,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Stream;
 import lombok.Getter;
 import lombok.Setter;
+import org.beryx.textio.TextIO;
+import org.beryx.textio.TextTerminal;
+import org.beryx.textio.swing.SwingTextTerminal;
 import org.sdk.interfaces.IEBIContainer;
 import org.sdk.interfaces.IEBIGUIRenderer;
 import org.sdk.interfaces.IEBIHibernate;
@@ -103,6 +108,16 @@ public class EBISystem {
     @Setter
     private EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
 
+    private static TextIO textIO;
+    private SwingTextTerminal textTerminal;
+
+    private String helpTerminal = "";
+    
+    @Getter
+    @Setter
+    private Binding vars = null;
+    
+    
     @Getter
     @Setter
     private String resourceImagePath = System.getProperty("user.dir")
@@ -116,6 +131,11 @@ public class EBISystem {
             + File.separator + "resources"
             + File.separator + "tmp"
             + File.separator;
+
+    private String scriptRunPath = System.getProperty("user.dir")
+            + File.separator + "resources"
+            + File.separator + "views"
+            + File.separator + "Run";
 
     public EBISystem() {
         calendar = new GregorianCalendar();
@@ -671,9 +691,9 @@ public class EBISystem {
             }
         }
     }
-    
-    public boolean containDataStore(final String packageName, final String method){
-        boolean ret= false;
+
+    public boolean containDataStore(final String packageName, final String method) {
+        boolean ret = false;
         if (storableFactory.get(packageName) != null) {
             if (storableFactory.get(packageName).getMetaClass().getMetaMethod(method, null) != null) {
                 ret = true;
@@ -1033,6 +1053,91 @@ public class EBISystem {
         ImageIcon icon = new ImageIcon(resourceImagePath + iconPath);
 
         return icon;
+    }
+
+    public void showConsole() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                textTerminal = new SwingTextTerminal();
+                textTerminal.init();
+                
+                textTerminal.getFrame().setTitle("EBI Neutrino Console");
+                textIO = new TextIO(textTerminal);
+
+                textTerminal.getFrame().setVisible(false);
+                textTerminal.getFrame().setAlwaysOnTop(true);
+                textTerminal.getFrame().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                for (int i = 0; i < textTerminal.getFrame().getWindowListeners().length; i++) {
+                    textTerminal.getFrame().removeWindowListener(textTerminal.getFrame().getWindowListeners()[i]);
+                }
+
+                String cmd = "";
+                textTerminal.setBookmark("CONSOLE");
+                while (!cmd.equals("exit")) {
+                    textIO.getTextTerminal().print("> ");
+                    cmd = textIO.getTextTerminal().read(false);
+                    handleCommand(cmd);
+                }
+
+                textTerminal.getFrame().setVisible(false);
+            }
+        }).start();
+    }
+
+    public static TextTerminal getTerminal() {
+        return textIO.getTextTerminal();
+    }
+
+    public void addScripts() {
+        
+        Stream.of(new File(scriptRunPath).listFiles()).forEach(e -> {
+            if (!e.isDirectory() && e.getName().indexOf(".groovy") != -1) {
+                String name = e.getName().replace(".groovy", "");
+                helpTerminal += name+ " ";
+                this.gui.addScriptBean("groovy", "Run/" + e.getName(), "groovy", "", "run " + name);
+            }
+        });
+    }
+
+    private void handleCommand(final String cmd) {
+        String[] cmds = cmd.split(" ");
+        if (cmds[0] != null) {
+            switch (cmds[0]) {
+                case "run":
+                    if(cmds[1] != null){
+                        EBISystem.gui().excScript(cmds[0]+" "+cmds[1], mapScriptParams(cmds));
+                    }
+                break;
+                
+                case "help":
+                    textTerminal.println("---------------------------------------------------------------");
+                    textTerminal.println("scripts:");
+                    textTerminal.println(helpTerminal);
+                    textTerminal.println("---------------------------------------------------------------");
+                    textTerminal.println("terminal commands:");
+                    textTerminal.println("[run ..scriptName.. ..param1 ...param2 ...] [clear] [help]");
+                    textTerminal.println("---------------------------------------------------------------");
+                break;
+                    
+                case "clear":
+                     textTerminal.resetToBookmark("CONSOLE");
+                break;
+            }
+        }
+    }
+    
+    private HashMap<String, String> mapScriptParams(String[] cmds){
+        HashMap<String, String> params = new HashMap<String, String>();
+        int c =1;
+        for(int i=2; i<cmds.length; i++){
+            if(cmds[i] != null){
+                params.put("PARAM"+c, cmds[i]);
+                c++;
+            }
+        }
+        return params;
     }
 
     public static EBISystem getInstance() {

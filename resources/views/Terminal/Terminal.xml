@@ -1,1 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<dialog name="terminalDialog" title="EBI_LANG_TERMINAL_DIALOG" Location="100,100" Size="570,420" visualproperties="false" assignable="false" resizable="true" >
+     
+    <editor name="terminalOutput" min="1" resizewidth="true" resizeHeight="true"  Location="10,40" Size="550,320"/>
+    <codecontrol name="groovy" path="Summary/summaryScript.groovy"/>
+</dialog>

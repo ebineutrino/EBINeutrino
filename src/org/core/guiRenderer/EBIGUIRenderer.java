@@ -125,8 +125,8 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
             while (ix.hasNext()) {
                 final EBIGUIWidgetsBean bx = (EBIGUIWidgetsBean) ix.next();
                 if (bx.getType().toLowerCase().equals("includetoolbar")) {
-                    if (EBISystem.getUserRight().isAdministrator() 
-                           || EBISystem.registeredModule.contains(bx.getPath())) {
+                    if (EBISystem.getUserRight().isAdministrator()
+                            || EBISystem.registeredModule.contains(bx.getPath())) {
                         addXMLToolBarGUI(bx);
                     }
                 } else if ("codecontrol".equals(bx.getType().toLowerCase())) {
@@ -1383,7 +1383,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                     } else if ("toolbaritem".equals(b.getType().toLowerCase())) {
 
                         final int NEW_ID = EBISystem.getInstance().getIEBIToolBarInstance().addToolButton(b.getIcon(), null);
-                        EBISystem.getInstance().getIEBIToolBarInstance().setComponentToolTipp(NEW_ID,"<html><body><br><b>" + b.getToolTip() + "</b><br><br></body></html>");
+                        EBISystem.getInstance().getIEBIToolBarInstance().setComponentToolTipp(NEW_ID, "<html><body><br><b>" + b.getToolTip() + "</b><br><br></body></html>");
                         final JButton bx = ((JButton) (EBISystem.getInstance().getIEBIToolBarInstance().getToolbarComponent(NEW_ID)));
 
                         InputMap inputMap;
@@ -1425,7 +1425,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                         }
 
                         final int NEW_ID = EBISystem.getInstance().getIEBIToolBarInstance().addCustomToolBarComponent(check);
-                        EBISystem.getInstance().getIEBIToolBarInstance().setComponentToolTipp(NEW_ID,"<html><body><br><b>" + b.getToolTip() + "</b><br><br></body></html>");
+                        EBISystem.getInstance().getIEBIToolBarInstance().setComponentToolTipp(NEW_ID, "<html><body><br><b>" + b.getToolTip() + "</b><br><br></body></html>");
                         b.setComponent(EBISystem.getInstance().getIEBIToolBarInstance().getToolbarComponent(NEW_ID));
                         b.setId(NEW_ID);
                     }
@@ -1452,22 +1452,28 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
             EBISystem.getInstance().getIEBIToolBarInstance().showToolBar(true);
         }
     }
-
+    
+    private void resetVars(){
+        binding = new Binding();
+        binding.setVariable("system", EBISystem.getInstance());
+        initToolbarComponentForScripts();
+    }
+    
     @Override
-    public synchronized final void initScripts() {
+    public final void initScripts() {
         final Iterator itr = scriptContainer.keySet().iterator();
         while (itr.hasNext()) {
             excScript((String) itr.next(), null);
         }
     }
 
-    private synchronized final void initScript(final String namespace) {
+    private final void initScript(final String namespace) {
         excScript(namespace, null);
     }
-    
-    private synchronized final void initToolbarComponentForScripts(){
+
+    private final void initToolbarComponentForScripts() {
         final Iterator<String> iter = toToolbar.keySet().iterator();
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             String tbnameSpace = iter.next();
             final Iterator<EBIGUIToolbar> i = ((EBIGUIToolbar) toToolbar.get(tbnameSpace)).getBarItem().iterator();
             EBIScriptComponentContainer compContainerToolabr = new EBIScriptComponentContainer();
@@ -1479,14 +1485,14 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
         }
     }
     
-
+    
     @Override
-    public synchronized final void excScript(final String cmpNamespace, final HashMap<String, String> PARAM) {
+    public final void excScript(final String cmpNamespace, final HashMap<String, String> PARAM) {
 
         if (scriptContainer.get(cmpNamespace) != null) {
             
             final Iterator<String> iter = scriptContainer.get(cmpNamespace).keySet().iterator();
-            
+             
             while (iter.hasNext()) {
 
                 final EBIGUIScripts script = scriptContainer.get(cmpNamespace).get(iter.next());
@@ -1528,7 +1534,9 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                                 binding.setVariable(key, PARAM.get(key));
                             }
                         }
-
+                            
+                        
+                        EBISystem.getInstance().setVars(binding);
                         gse.run(script.getPath(), binding);
                         final Script scr = gse.createScript(script.getPath(), binding);
 
@@ -1542,6 +1550,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
                             EBISystem.getInstance().setDataStore(cmpNamespace, scr);
                         }
 
+                        resetVars();
                     } catch (final ResourceException ex) {
                         EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex))
                                 .Show(EBIMessage.ERROR_MESSAGE);

@@ -100,7 +100,6 @@ public class EBIModuleHandler {
                 @Override
                 public void run() {
                     addF5Action();
-                    addTAction();
                     addAltShowToolbar();
                     addAltTabNavigation();
                 }
@@ -131,7 +130,6 @@ public class EBIModuleHandler {
                 @Override
                 public void run() {
                     addF5Action();
-                    addTAction();
                     addAltShowToolbar();
                     addAltTabNavigation();
                 }
@@ -217,20 +215,6 @@ public class EBIModuleHandler {
         final InputMap inputMap = ((JPanel) ebiMain.getContentPane()).getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         inputMap.put(KeyStroke.getKeyStroke(KeyStroke.getKeyStroke("F5").getKeyCode(), InputEvent.CTRL_DOWN_MASK, true), "REFRESH");
         ((JPanel) ebiMain.getContentPane()).getActionMap().put("REFRESH", refreshAction);
-    }
-
-    public void addTAction() {
-        EBISystem.gui().addScriptBean("groovy", "Run/tests.groovy", "groovy", "", "Run");
-        final Action refreshAction = new AbstractAction() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                //todo call script in Run Folder
-                EBISystem.gui().excScript("Run", null);
-            }
-        };
-        final InputMap inputMap = ((JPanel) ebiMain.getContentPane()).getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK, true), "RunScript");
-        ((JPanel) ebiMain.getContentPane()).getActionMap().put("RunScript", refreshAction);
     }
 
     public void reloadSelectedModule() {

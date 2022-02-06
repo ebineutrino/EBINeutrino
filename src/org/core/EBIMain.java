@@ -16,9 +16,6 @@ import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
 import org.sdk.interfaces.IEBISecurity;
 import org.sdk.interfaces.IEBIToolBar;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
@@ -48,7 +45,6 @@ public class EBIMain extends JFrame {
     public static boolean canReleaseUser = false;
     public String appTitle = "EBI Neutrino R1 CRM / ERP Framework";
     public EBISystemSetting systemSetting = null;
-    public static Logger logger = Logger.getLogger(EBIMain.class.getName());
     public EBIToolbar ebiBar = null;
     public EBIExtensionContainer container = null;
     protected static boolean showUpdateInfo = false;
@@ -100,7 +96,6 @@ public class EBIMain extends JFrame {
 
         } catch (final Exception exx) {
             exx.printStackTrace();
-            logger.error(EBISystem.printStackTrace(exx));
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             EBIExceptionDialog.getInstance(EBISystem.printStackTrace(exx)).Show(EBIMessage.NEUTRINO_DEBUG_MESSAGE);
             System.exit(1);
@@ -120,7 +115,6 @@ public class EBIMain extends JFrame {
             EBISystem.getInstance().addMainFrame(this);
 
             splash = new EBISplashScreen();
-            PropertyConfigurator.configure(resourceLoggerPath + "config/ebiLogger.config");
             splash.setVisible(true);
 
             final EBIDatabase conn = new EBIDatabase();
@@ -143,7 +137,6 @@ public class EBIMain extends JFrame {
         } catch (final Exception ex) {
             ex.printStackTrace();
             EBISystem.getInstance().getMessage().debug(EBISystem.printStackTrace(ex));
-            logger.error("Exception", ex.fillInStackTrace());
         }
     }
 
@@ -229,7 +222,6 @@ public class EBIMain extends JFrame {
                         }
                     }
                 } catch (final Exception ex) {
-                    logger.error("Exception", ex.fillInStackTrace());
                     ex.printStackTrace();
                 }
             }
@@ -264,7 +256,6 @@ public class EBIMain extends JFrame {
                         try {
                             systemSetting.listName.report.newReport();
                         } catch (final Exception ex) {
-                            logger.error("Exception", ex.fillInStackTrace());
                             ex.printStackTrace();
                         }
                     }

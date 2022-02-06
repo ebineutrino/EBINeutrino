@@ -69,11 +69,9 @@ public class EBIDatabase implements IEBIDatabase {
 
         } catch (final SQLException ex) {
             ex.printStackTrace();
-            EBISystem.logger.error("Error connection to the database", ex.fillInStackTrace());
             return false;
         } catch (final Exception ex) {
             ex.printStackTrace();
-            EBISystem.logger.error("Error connection to the database", ex.fillInStackTrace());
             return false;
         }
         return true;
@@ -92,11 +90,9 @@ public class EBIDatabase implements IEBIDatabase {
 
         } catch (final SQLException ex) {
             exceptionHandle(ex);
-            EBISystem.logger.error("Error connection to the database", ex.fillInStackTrace());
             return false;
         } catch (final Exception ex) {
             ex.printStackTrace();
-            EBISystem.logger.error("Error connection to the database", ex.fillInStackTrace());
             return false;
         }
         return true;

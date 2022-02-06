@@ -337,7 +337,6 @@ public class EBICRMSettingEMailTemplate {
             jEditorMessageView = new JEditorPane();
         } catch (final Exception e) {
             e.printStackTrace();
-            EBIModule.logger.error("ERROR Initialize Editor: ", e.fillInStackTrace());
         }
     }
 }

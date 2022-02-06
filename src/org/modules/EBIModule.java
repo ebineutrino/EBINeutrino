@@ -35,7 +35,6 @@ import org.sdk.interfaces.IEBIModule;
 import org.sdk.interfaces.IEBIStoreInterface;
 import org.sdk.model.hibernate.Company;
 import org.sdk.model.hibernate.Companyhirarchie;
-import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 
@@ -49,7 +48,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface {
 
@@ -78,7 +76,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
     public EBICRMToolBar crmToolBar = null;
     public int EBICRM_SESSION = 0;
     public EBICRMHistoryCreator hcreator = null;
-    public static final Logger logger = Logger.getLogger(EBIModule.class.getName());
     public EBICRMAutomate storeAutomate = null;
     public EBIAllertTimer allertTimer = null;
 
@@ -244,7 +241,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
 
         } catch (final Exception ex) {
             ex.printStackTrace();
-            logger.error("EBI Neutrino CRM Error:", ex.fillInStackTrace());
         }
         return true;
     }
@@ -662,7 +658,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                     }
                 } catch (final Exception ex) {
                     ex.printStackTrace();
-                    logger.error(ex.getMessage(), ex.fillInStackTrace());
                 }
                 return true;
             }
@@ -681,7 +676,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
             EBISystem.canRelease = true;
         } catch (final Exception ex) {
             ex.printStackTrace();
-            logger.error("Error save record", ex.fillInStackTrace());
         }
         return true;
     }
@@ -831,7 +825,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                 }
             }
         } catch (final SQLException e) {
-            logger.error("Exception", e.fillInStackTrace());
             e.printStackTrace();
         } finally {
 
@@ -840,7 +833,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                     ps.close();
                     rsSet.close();
                 } catch (final SQLException e) {
-                    logger.error("Exception", e.fillInStackTrace());
                     e.printStackTrace();
                 }
             }
@@ -997,7 +989,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         try {
             hcreator.setDataToCreate(new EBICRMHistoryDataUtil(com.getCompanyid(), "Company", list));
         } catch (final Exception e) {
-            logger.error("Exception", e.fillInStackTrace());
             e.printStackTrace();
         }
     }
@@ -1018,10 +1009,8 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                     EBISystem.hibernate().session("EBICRM_SESSION").delete(EBISystem.getInstance().getCompany());
                     EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
                 } catch (final HibernateException e) {
-                    logger.error("Exception", e.fillInStackTrace());
                     e.printStackTrace();
                 } catch (final Exception e) {
-                    logger.error("Exception", e.fillInStackTrace());
                     e.printStackTrace();
                 }
 
@@ -1033,7 +1022,6 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
             }
         } catch (final Exception ex) {
             ret = false;
-            logger.error("Error delete record: ", ex.fillInStackTrace());
         }
         return ret;
     }
@@ -1107,7 +1095,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                     }
                     EBISystem.canRelease = true;
                 } catch (final Exception ex) {
-                    logger.error(ex.getMessage(), ex.fillInStackTrace());
+                    ex.printStackTrace();
                 }
                 return true;
             }

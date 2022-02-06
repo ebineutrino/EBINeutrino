@@ -20,7 +20,6 @@ import org.sdk.workflow.security.EBISystemUserRights;
 import groovy.lang.Script;
 import org.sdk.interfaces.IEBIDatabase;
 import org.sdk.interfaces.IEBISystemUserRights;
-import org.apache.log4j.Logger;
 import org.hibernate.query.Query;
 
 import javax.swing.*;
@@ -80,7 +79,6 @@ public class EBISystem {
     @Getter
     @Setter
     private Company company = null;
-    public static Logger logger = Logger.getLogger(EBISystem.class.getName());
     public static boolean canRelease = true;
     public static boolean isSaveOrUpdate = false;
     public EBISecurityManagement security = null;
@@ -178,7 +176,6 @@ public class EBISystem {
             }
         } catch (final Exception ex) {
             ex.printStackTrace();
-            logger.error("Exception", ex.fillInStackTrace());
         }
     }
 
@@ -198,7 +195,6 @@ public class EBISystem {
                 EBIPropertiesLang.getProperties().saveProperties();
             }
         } catch (final NullPointerException ex) {
-            logger.error("Exception", ex.fillInStackTrace());
             return key;
         }
         return val;
@@ -248,13 +244,11 @@ public class EBISystem {
 
         } catch (final SQLException ex) {
             ex.printStackTrace();
-            logger.error("Exception", ex.fillInStackTrace());
         } finally {
             if (set != null) {
                 try {
                     set.close();
                 } catch (final SQLException e) {
-                    logger.error("Exception", e.fillInStackTrace());
                     e.printStackTrace();
                 }
             }
@@ -303,7 +297,6 @@ public class EBISystem {
             try {
                 date = df.parse(source);
             } catch (final ParseException ex) {
-                logger.error("Exception", ex.fillInStackTrace());
                 EBIExceptionDialog.getInstance("Date format Error\n " + EBISystem.printStackTrace(ex))
                         .Show(EBIMessage.ERROR_MESSAGE);
             }
@@ -396,12 +389,9 @@ public class EBISystem {
             loadStandardCompanyData();
         } catch (final org.hibernate.HibernateException ex) {
             ex.printStackTrace();
-            logger.error("Exception", ex.fillInStackTrace());
             EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
             return false;
         } catch (final Exception ex) {
-            ex.printStackTrace();
-            logger.error("Exception", ex.fillInStackTrace());
             ex.printStackTrace();
         }
 
@@ -460,7 +450,6 @@ public class EBISystem {
 
         } catch (final Exception ex) {
             ex.printStackTrace();
-            logger.error("Exception", ex.fillInStackTrace());
             EBIExceptionDialog.getInstance(i18n("EBI_LANG_ERROR_PDF_PROG_NOT_FOUND")).Show(EBIMessage.ERROR_MESSAGE);
         }
     }
@@ -662,7 +651,6 @@ public class EBISystem {
                 }
             } catch (final SQLException ex) {
                 ex.printStackTrace();
-                logger.error("Exception", ex.fillInStackTrace());
                 ret = false;
 
             } finally {
@@ -670,7 +658,6 @@ public class EBISystem {
                     resultSet.close();
                 } catch (final SQLException ex) {
                     ex.printStackTrace();
-                    logger.error("Exception", ex.fillInStackTrace());
                     ret = false;
 
                 }
@@ -734,9 +721,6 @@ public class EBISystem {
 
         buildTrace.append("" + ex.getMessage() + "\n");
         buildTrace.append(" Cause :" + ex.getCause() + "\n");
-
-        logger.error(buildTrace.toString(), ex.fillInStackTrace());
-        logger.info(buildTrace.toString());
         return buildTrace.toString();
     }
 
@@ -876,7 +860,6 @@ public class EBISystem {
 
         } catch (final SQLException ex) {
             ex.printStackTrace();
-            logger.error("Exception", ex.fillInStackTrace());
         } finally {
             try {
                 if (set != null) {
@@ -886,7 +869,6 @@ public class EBISystem {
                     set1.close();
                 }
             } catch (final SQLException ex) {
-                logger.error("Exception", ex.fillInStackTrace());
                 ex.printStackTrace();
             }
         }

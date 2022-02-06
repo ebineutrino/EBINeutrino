@@ -1,8 +1,6 @@
 package org.sdk.gui.dialogs;
 
 import org.sdk.EBISystem;
-import org.apache.log4j.Logger;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,7 +10,6 @@ public class EBIExceptionDialog extends EBIDialogExt {
     public static final JTextArea jTextException = new JTextArea();
     private JScrollPane jScrollPane = null;
     public String Msg = "";
-    private static final Logger logger = Logger.getLogger(EBIExceptionDialog.class.getName());
     private static EBIExceptionDialog messageDialog = null;
     private Component parentComponent = null;
 
@@ -29,9 +26,6 @@ public class EBIExceptionDialog extends EBIDialogExt {
         storeLocation(true);
         storeSize(true);
         initialize();
-        if (logger != null) {
-            logger.error("" + Msg);
-        }
     }
 
     /**
@@ -126,20 +120,17 @@ public class EBIExceptionDialog extends EBIDialogExt {
     public static EBIExceptionDialog getInstance(final Component parent, final String Message) {
         getInstance().parentComponent = parent;
         getInstance().Msg = Message;
-        logger.error(Message);
         return messageDialog;
     }
 
     public static EBIExceptionDialog getInstance(final String Message) {
         getInstance().Msg = Message;
-        logger.error(Message);
         return messageDialog;
     }
 
     
     public static EBIExceptionDialog getInstance(final String Message, Throwable e) {
         getInstance().Msg = e.getMessage()+" Cause: "+(e.getCause() != null ? e.getCause().getMessage() : "");
-        logger.error(Message);
         return messageDialog;
     }
     

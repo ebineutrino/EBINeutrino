@@ -112,12 +112,11 @@ public class EBISystem {
     private SwingTextTerminal textTerminal;
 
     private String helpTerminal = "";
-    
+
     @Getter
     @Setter
     private Binding vars = null;
-    
-    
+
     @Getter
     @Setter
     private String resourceImagePath = System.getProperty("user.dir")
@@ -1061,7 +1060,7 @@ public class EBISystem {
             public void run() {
                 textTerminal = new SwingTextTerminal();
                 textTerminal.init();
-                
+
                 textTerminal.getFrame().setTitle("EBI Neutrino Console");
                 textIO = new TextIO(textTerminal);
 
@@ -1091,26 +1090,25 @@ public class EBISystem {
     }
 
     public void addScripts() {
-        
         Stream.of(new File(scriptRunPath).listFiles()).forEach(e -> {
             if (!e.isDirectory() && e.getName().indexOf(".groovy") != -1) {
                 String name = e.getName().replace(".groovy", "");
-                helpTerminal += name+ " ";
+                helpTerminal += name + " ";
                 this.gui.addScriptBean("groovy", "Run/" + e.getName(), "groovy", "", "run " + name);
             }
         });
     }
 
-    private void handleCommand(final String cmd) {
+    public void handleCommand(final String cmd) {
         String[] cmds = cmd.split(" ");
         if (cmds[0] != null) {
             switch (cmds[0]) {
                 case "run":
-                    if(cmds[1] != null){
-                        EBISystem.gui().excScript(cmds[0]+" "+cmds[1], mapScriptParams(cmds));
+                    if (cmds[1] != null) {
+                        EBISystem.gui().excScript(cmds[0] + " " + cmds[1], mapScriptParams(cmds));
                     }
-                break;
-                
+                    break;
+
                 case "help":
                     textTerminal.println("---------------------------------------------------------------");
                     textTerminal.println("scripts:");
@@ -1119,21 +1117,21 @@ public class EBISystem {
                     textTerminal.println("terminal commands:");
                     textTerminal.println("[run ..scriptName.. ..param1 ...param2 ...] [clear] [help]");
                     textTerminal.println("---------------------------------------------------------------");
-                break;
-                    
+                    break;
+
                 case "clear":
-                     textTerminal.resetToBookmark("CONSOLE");
-                break;
+                    textTerminal.resetToBookmark("CONSOLE");
+                    break;
             }
         }
     }
-    
-    private HashMap<String, String> mapScriptParams(String[] cmds){
+
+    private HashMap<String, String> mapScriptParams(String[] cmds) {
         HashMap<String, String> params = new HashMap<String, String>();
-        int c =1;
-        for(int i=2; i<cmds.length; i++){
-            if(cmds[i] != null){
-                params.put("PARAM"+c, cmds[i]);
+        int c = 1;
+        for (int i = 2; i < cmds.length; i++) {
+            if (cmds[i] != null) {
+                params.put("PARAM" + c, cmds[i]);
                 c++;
             }
         }

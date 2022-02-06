@@ -32,6 +32,7 @@ public class EBIXMLGUIReader {
     public EBIXMLGUIReader(final String xmlPath) {
         builder = new SAXBuilder();
         widgetsObject = new EBIGUIWidgetsBean();
+        builder.setExpandEntities(false);
         this.xmlPath = xmlPath;
         stepOne = true;
     }
@@ -39,6 +40,7 @@ public class EBIXMLGUIReader {
     public EBIXMLGUIReader() {
         builder = new SAXBuilder();
         widgetsObject = new EBIGUIWidgetsBean();
+        builder.setExpandEntities(false);
         stepOne = true;
     }
 

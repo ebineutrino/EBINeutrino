@@ -43,7 +43,7 @@ public class EBIDialogSearchCompany {
         jSetterFieldName = new ArrayList<String>();
         jSetterComponent = new ArrayList<JComponent>();
         tableModel = new ModelSearchCompany();
-        EBISystem.gui().loadGUI("CRMDialog/crmCompanySearch.xml");
+        EBISystem.builder().loadGUI("CRMDialog/crmCompanySearch.xml");
         setVisible();
     }
 
@@ -52,28 +52,28 @@ public class EBIDialogSearchCompany {
      */
 
     private void setVisible() {
-        EBISystem.gui().dialog("searchCRMCompany").setTitle(EBISystem.i18n("EBI_LANG_C_SEARCH_COMPANY"));
-        EBISystem.gui().vpanel("searchCRMCompany").setModuleTitle(EBISystem.i18n("EBI_LANG_C_SEARCH_COMPANY"));
+        EBISystem.builder().dialog("searchCRMCompany").setTitle(EBISystem.i18n("EBI_LANG_C_SEARCH_COMPANY"));
+        EBISystem.builder().vpanel("searchCRMCompany").setModuleTitle(EBISystem.i18n("EBI_LANG_C_SEARCH_COMPANY"));
 
-        EBISystem.gui().button("compSearchsearchButton", "searchCRMCompany").setText(EBISystem.i18n("EBI_LANG_SEARCH"));
-        EBISystem.gui().button("compSearchsearchButton", "searchCRMCompany").addActionListener(new ActionListener() {
+        EBISystem.builder().button("compSearchsearchButton", "searchCRMCompany").setText(EBISystem.i18n("EBI_LANG_SEARCH"));
+        EBISystem.builder().button("compSearchsearchButton", "searchCRMCompany").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 searchCompany();
             }
         });
 
-        EBISystem.gui().button("compSearchcancelButton", "searchCRMCompany").setText(EBISystem.i18n("EBI_LANG_CANCEL"));
-        EBISystem.gui().button("compSearchcancelButton", "searchCRMCompany").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("compSearchcancelButton", "searchCRMCompany").setText(EBISystem.i18n("EBI_LANG_CANCEL"));
+        EBISystem.builder().button("compSearchcancelButton", "searchCRMCompany").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                EBISystem.gui().dialog("searchCRMCompany").setVisible(false);
+                EBISystem.builder().dialog("searchCRMCompany").setVisible(false);
             }
         });
 
-        EBISystem.gui().button("compSearchapplyButton", "searchCRMCompany").setText(EBISystem.i18n("EBI_LANG_APPLY"));
-        EBISystem.gui().button("compSearchapplyButton", "searchCRMCompany").setEnabled(false);
-        EBISystem.gui().button("compSearchapplyButton", "searchCRMCompany").addActionListener(new ActionListener() {
+        EBISystem.builder().button("compSearchapplyButton", "searchCRMCompany").setText(EBISystem.i18n("EBI_LANG_APPLY"));
+        EBISystem.builder().button("compSearchapplyButton", "searchCRMCompany").setEnabled(false);
+        EBISystem.builder().button("compSearchapplyButton", "searchCRMCompany").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 applySearch();
@@ -89,11 +89,11 @@ public class EBIDialogSearchCompany {
             }
         };
 
-        EBISystem.gui().textField("filterTableText", "searchCRMCompany").addKeyListener(adapt);
+        EBISystem.builder().textField("filterTableText", "searchCRMCompany").addKeyListener(adapt);
 
-        EBISystem.gui().table("searchCompanyTable", "searchCRMCompany").setModel(tableModel);
-        EBISystem.gui().table("searchCompanyTable", "searchCRMCompany").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("searchCompanyTable", "searchCRMCompany").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").setModel(tableModel);
+        EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             @Override
             public void valueChanged(final ListSelectionEvent e) {
@@ -104,19 +104,19 @@ public class EBIDialogSearchCompany {
 
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("compSearchapplyButton", "searchCRMCompany").setEnabled(false);
+                    EBISystem.builder().button("compSearchapplyButton", "searchCRMCompany").setEnabled(false);
                 } else {
                     if (lsm.getMinSelectionIndex() > 0) {
-                        selRowSearch = EBISystem.gui().table("searchCompanyTable", "searchCRMCompany").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                        selRowSearch = EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").convertRowIndexToModel(lsm.getMinSelectionIndex());
                     }
                     if (!tableModel.data[selRowSearch][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                        EBISystem.gui().button("compSearchapplyButton", "searchCRMCompany").setEnabled(true);
+                        EBISystem.builder().button("compSearchapplyButton", "searchCRMCompany").setEnabled(true);
                     }
                 }
             }
         });
 
-        new JTableActionMaps(EBISystem.gui().table("searchCompanyTable", "searchCRMCompany")).setTableAction(new AbstractTableKeyAction() {
+        new JTableActionMaps(EBISystem.builder().table("searchCompanyTable", "searchCRMCompany")).setTableAction(new AbstractTableKeyAction() {
 
             @Override
             public void setArrowDownKeyAction(final int selRow) {
@@ -141,13 +141,13 @@ public class EBIDialogSearchCompany {
             }
         });
 
-        EBISystem.gui().table("searchCompanyTable", "searchCRMCompany").addMouseListener(new java.awt.event.MouseAdapter() {
+        EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").addMouseListener(new java.awt.event.MouseAdapter() {
 
             @Override
             public void mouseClicked(final java.awt.event.MouseEvent e) {
 
-                if (EBISystem.gui().table("searchCompanyTable", "searchCRMCompany").rowAtPoint(e.getPoint()) != -1) {
-                    selRowSearch = EBISystem.gui().table("searchCompanyTable", "searchCRMCompany").convertRowIndexToModel(EBISystem.gui().table("searchCompanyTable", "searchCRMCompany").rowAtPoint(e.getPoint()));
+                if (EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").rowAtPoint(e.getPoint()) != -1) {
+                    selRowSearch = EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").convertRowIndexToModel(EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").rowAtPoint(e.getPoint()));
                 }
 
                 if (e.getClickCount() == 2) {
@@ -155,16 +155,16 @@ public class EBIDialogSearchCompany {
                 }
             }
         });
-        EBISystem.gui().showGUI();
+        EBISystem.builder().showGUI();
     }
 
     private void searchCompany() {
 
-        EBISystem.gui().dialog("searchCRMCompany").setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        EBISystem.builder().dialog("searchCRMCompany").setCursor(new Cursor(Cursor.WAIT_CURSOR));
 
         ResultSet set = null;
         try {
-            EBISystem.gui().table("searchCompanyTable", "searchCRMCompany").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "searchCRMCompany").getText()));
+            EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "searchCRMCompany").getText()));
             final PreparedStatement ps2 = EBISystem.getInstance().iDB().initPreparedStatement("SELECT COMPANYID,COMPANYNUMBER,CUSTOMERNR,BEGINCHAR,NAME,CATEGORY,COOPERATION,QUALIFICATION,ISLOCK FROM COMPANY");
 
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps2);
@@ -191,14 +191,14 @@ public class EBIDialogSearchCompany {
                     }
 
                     tableModel.fireTableDataChanged();
-                    EBISystem.gui().table("searchCompanyTable", "searchCRMCompany").changeSelection(0, 0, false, false);
-                    EBISystem.gui().table("searchCompanyTable", "searchCRMCompany").requestFocus();
+                    EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").changeSelection(0, 0, false, false);
+                    EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").requestFocus();
 
                 } else {
                     EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_NO_COMPANY_FOUND")).Show(EBIMessage.INFO_MESSAGE);
                 }
             }
-            EBISystem.gui().dialog("searchCRMCompany").setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            EBISystem.builder().dialog("searchCRMCompany").setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         } catch (final Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -221,7 +221,7 @@ public class EBIDialogSearchCompany {
             return;
         }
 
-        EBISystem.gui().dialog("searchCRMCompany").setVisible(false);
+        EBISystem.builder().dialog("searchCRMCompany").setVisible(false);
         wait.setVisible(true);
 
         new Thread(new Runnable() {

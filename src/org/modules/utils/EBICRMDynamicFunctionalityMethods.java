@@ -142,16 +142,16 @@ public final class EBICRMDynamicFunctionalityMethods {
         
         EBICRMCompanyView.categories = getStatusProperties("COMPANYCATEGORY");
         
-        if (EBISystem.gui().existView("Company")) {
+        if (EBISystem.builder().existView("Company")) {
             EBICRMCompanyView.cooperations = getStatusProperties("COMPANYCOOPERATION");
             EBICRMCompanyView.classification = getStatusProperties("COMPANYCLASSIFICATION");
         }
 
-        if (EBISystem.gui().existView("MeetingCall")) {
+        if (EBISystem.builder().existView("MeetingCall")) {
             EBIMeetingProtocolView.art = getStatusProperties("COMPANYMEETINGTYPE");
         }
 
-        if (EBISystem.gui().existView("Opportunity")) {
+        if (EBISystem.builder().existView("Opportunity")) {
             EBICRMOpportunityView.oppBussinesType = getStatusProperties("COMPANYOPPORTUNITYBUSTYP");
             EBICRMOpportunityView.oppSalesStage = getStatusProperties("COMPANYOPPORTUNITYSSTAGE");
             EBICRMOpportunityView.oppStatus = getStatusProperties("COMPANYOPPORTUNITYSTATUS");
@@ -159,24 +159,24 @@ public final class EBICRMDynamicFunctionalityMethods {
             EBICRMOpportunityView.oppEvalStatus = getStatusProperties("COMPANYOPPORTUNITYEVSTATUS");
         }
 
-        if (EBISystem.gui().existView("Address")) {
+        if (EBISystem.builder().existView("Address")) {
             EBICRMAddressView.AddressType = getStatusProperties("CRMADDRESSTYPE");
         }
 
-        if (EBISystem.gui().existView("Activity")) {
+        if (EBISystem.builder().existView("Activity")) {
             EBICRMCompanyActivityView.actType = getStatusProperties("COMPANYACTIVITYTYPE");
             EBICRMCompanyActivityView.actStatus = getStatusProperties("COMPANYACTIVITYSTATUS");
         }
 
-        if (EBISystem.gui().existView("Offer")) {
+        if (EBISystem.builder().existView("Offer")) {
             EBICRMOfferView.offerStatus = getStatusProperties("COMPANYOFFERSTATUS");
         }
 
-        if (EBISystem.gui().existView("Order")) {
+        if (EBISystem.builder().existView("Order")) {
             EBICRMOrderView.orderStatus = getStatusProperties("COMPANYORDERSTATUS");
         }
 
-        if (EBISystem.gui().existView("Service")) {
+        if (EBISystem.builder().existView("Service")) {
             EBICRMServiceView.serviceStatus = getStatusProperties("COMPANYSERVICESTATUS");
             EBICRMServiceView.serviceType = getStatusProperties("COMPANYSERVICETYPE");
             EBICRMServiceView.serviceCategory = getStatusProperties("COMPANYSERVICECATEGORY");
@@ -190,54 +190,54 @@ public final class EBICRMDynamicFunctionalityMethods {
                 EBICRMProblemSolutionView.prosolType = getStatusProperties("CRMPROBLEMSOLTYPE");
                 EBICRMProblemSolutionView.prosolCategory = getStatusProperties("CRMPROBLEMSOLCATEGORY");
                 EBICRMProblemSolutionView.prosolClassification = getStatusProperties("CRMPROBLEMSOLCLASS");
-                if (EBISystem.gui().existView("Prosol")) {
-                    EBISystem.gui().combo("prosolStatusText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolStatus));
-                    EBISystem.gui().combo("prosolTypeText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolType));
-                    EBISystem.gui().combo("prosolCategoryText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolCategory));
-                    EBISystem.gui().combo("prosolClassificationText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolClassification));
+                if (EBISystem.builder().existView("Prosol")) {
+                    EBISystem.builder().combo("prosolStatusText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolStatus));
+                    EBISystem.builder().combo("prosolTypeText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolType));
+                    EBISystem.builder().combo("prosolCategoryText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolCategory));
+                    EBISystem.builder().combo("prosolClassificationText", "Prosol").setModel(new DefaultComboBoxModel(EBICRMProblemSolutionView.prosolClassification));
                 }
 
                 EBICRMProductView.category = getStatusProperties("COMPANYPRODUCTCATEGORY");
                 EBICRMProductView.type = getStatusProperties("COMPANYPRODUCTTYPE");
                 EBICRMProductView.taxType = getStatusProperties("COMPANYPRODUCTTAX");
-                if (EBISystem.gui().existView("Product")) {
-                    EBISystem.gui().combo("ProductCategoryText", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.category));
-                    EBISystem.gui().combo("ProductTypeText", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.type));
-                    EBISystem.gui().combo("productTaxTypeTex", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.taxType));
+                if (EBISystem.builder().existView("Product")) {
+                    EBISystem.builder().combo("ProductCategoryText", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.category));
+                    EBISystem.builder().combo("ProductTypeText", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.type));
+                    EBISystem.builder().combo("productTaxTypeTex", "Product").setModel(new DefaultComboBoxModel(EBICRMProductView.taxType));
                 }
                 
                 EBICRMPlanningView.projectStatus = getStatusProperties("CRMPROJECTSTATUS");
-                if (EBISystem.gui().existView("Project")) {
-                    EBISystem.gui().combo("prjStatusText", "Project").setModel(new DefaultComboBoxModel(EBICRMPlanningView.projectStatus));
+                if (EBISystem.builder().existView("Project")) {
+                    EBISystem.builder().combo("prjStatusText", "Project").setModel(new DefaultComboBoxModel(EBICRMPlanningView.projectStatus));
                 }
 
                 EBINewProjectTaskDialog.taskStatus = getStatusProperties("CRMPROJECTTASKSTATUS");
                 EBINewProjectTaskDialog.taskType = getStatusProperties("CRMPROJECTTASKTYPE");
-                if (EBISystem.gui().existView("projectTaskDialog")) {
-                    EBISystem.gui().combo("taskStatusText", "projectTaskDialog").setModel(new DefaultComboBoxModel(EBINewProjectTaskDialog.taskStatus));
-                    EBISystem.gui().combo("taskTypeText", "projectTaskDialog").setModel(new DefaultComboBoxModel(EBINewProjectTaskDialog.taskType));
+                if (EBISystem.builder().existView("projectTaskDialog")) {
+                    EBISystem.builder().combo("taskStatusText", "projectTaskDialog").setModel(new DefaultComboBoxModel(EBINewProjectTaskDialog.taskStatus));
+                    EBISystem.builder().combo("taskTypeText", "projectTaskDialog").setModel(new DefaultComboBoxModel(EBINewProjectTaskDialog.taskType));
                 }
                 
                 EBIDialogProperties.projectCost = getStatusProperties("CRMPROJECTCOSTS");
-                if (EBISystem.gui().existView("costValueDialog")) {
-                      EBISystem.gui().combo("propertiesText", "costValueDialog").setModel(new DefaultComboBoxModel(EBIDialogProperties.projectCost));
+                if (EBISystem.builder().existView("costValueDialog")) {
+                      EBISystem.builder().combo("propertiesText", "costValueDialog").setModel(new DefaultComboBoxModel(EBIDialogProperties.projectCost));
                 }
                 
                 EBIDialogProperties.projectProperty = getStatusProperties("CRMPROJECTPROPS");
-                if (EBISystem.gui().existView("projectPropertiesDialog")) {
-                      EBISystem.gui().combo("propertiesText", "projectPropertiesDialog").setModel(new DefaultComboBoxModel(EBIDialogProperties.projectProperty));
+                if (EBISystem.builder().existView("projectPropertiesDialog")) {
+                      EBISystem.builder().combo("propertiesText", "projectPropertiesDialog").setModel(new DefaultComboBoxModel(EBIDialogProperties.projectProperty));
                 }
                 
                 EBIDialogProperties.productDimension = getStatusProperties("CRMPRODUCTDIMENSIONS");
-                if (EBISystem.gui().existView("propertiesDialog")) {
-                      EBISystem.gui().combo("propertiesText", "propertiesDialog").setModel(new DefaultComboBoxModel(EBIDialogProperties.productDimension));
+                if (EBISystem.builder().existView("propertiesDialog")) {
+                      EBISystem.builder().combo("propertiesText", "propertiesDialog").setModel(new DefaultComboBoxModel(EBIDialogProperties.productDimension));
                 }
                 
                 EBICRMInvoiceView.invoiceCategory = getStatusProperties("CRMINVOICECATEGORY");
                 EBICRMInvoiceView.invoiceStatus = getStatusProperties("CRMINVOICESTATUS");
-                if (EBISystem.gui().existView("Invoice")) {
-                    EBISystem.gui().combo("invoiceStatusText", "Invoice").setModel(new DefaultComboBoxModel(EBICRMInvoiceView.invoiceStatus));
-                    EBISystem.gui().combo("categoryText", "Invoice").setModel(new DefaultComboBoxModel(EBICRMInvoiceView.invoiceCategory));
+                if (EBISystem.builder().existView("Invoice")) {
+                    EBISystem.builder().combo("invoiceStatusText", "Invoice").setModel(new DefaultComboBoxModel(EBICRMInvoiceView.invoiceStatus));
+                    EBISystem.builder().combo("categoryText", "Invoice").setModel(new DefaultComboBoxModel(EBICRMInvoiceView.invoiceCategory));
                 }
                 return true;
             }
@@ -245,46 +245,46 @@ public final class EBICRMDynamicFunctionalityMethods {
 
         if (reload) {
             //reload combos values
-            if (EBISystem.gui().existView("Company")) {
-                EBISystem.gui().combo("companyCategoryText", "Summary").setModel(new DefaultComboBoxModel(EBICRMCompanyView.categories));
-                EBISystem.gui().combo("categoryText", "Company").setModel(new DefaultComboBoxModel(EBICRMCompanyView.categories));
-                EBISystem.gui().combo("cooperationText", "Company").setModel(new DefaultComboBoxModel(EBICRMCompanyView.cooperations));
-                EBISystem.gui().combo("classificationText", "Company").setModel(new DefaultComboBoxModel(EBICRMCompanyView.classification));
+            if (EBISystem.builder().existView("Company")) {
+                EBISystem.builder().combo("companyCategoryText", "Summary").setModel(new DefaultComboBoxModel(EBICRMCompanyView.categories));
+                EBISystem.builder().combo("categoryText", "Company").setModel(new DefaultComboBoxModel(EBICRMCompanyView.categories));
+                EBISystem.builder().combo("cooperationText", "Company").setModel(new DefaultComboBoxModel(EBICRMCompanyView.cooperations));
+                EBISystem.builder().combo("classificationText", "Company").setModel(new DefaultComboBoxModel(EBICRMCompanyView.classification));
             }
 
-            if (EBISystem.gui().existView("MeetingCall")) {
-                EBISystem.gui().combo("meetingTypeText", "MeetingCall").setModel(new DefaultComboBoxModel(EBIMeetingProtocolView.art));
+            if (EBISystem.builder().existView("MeetingCall")) {
+                EBISystem.builder().combo("meetingTypeText", "MeetingCall").setModel(new DefaultComboBoxModel(EBIMeetingProtocolView.art));
             }
 
-            if (EBISystem.gui().existView("Opportunity")) {
-                EBISystem.gui().combo("oppBustypeText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOpportunityView.oppBussinesType));
-                EBISystem.gui().combo("statusOppText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOpportunityView.oppStatus));
-                EBISystem.gui().combo("oppBdgStatusText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOpportunityView.oppBudgetStatus));
-                EBISystem.gui().combo("oppEvalStatusText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOpportunityView.oppEvalStatus));
-                EBISystem.gui().combo("oppSaleStateText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOpportunityView.oppSalesStage));
+            if (EBISystem.builder().existView("Opportunity")) {
+                EBISystem.builder().combo("oppBustypeText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOpportunityView.oppBussinesType));
+                EBISystem.builder().combo("statusOppText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOpportunityView.oppStatus));
+                EBISystem.builder().combo("oppBdgStatusText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOpportunityView.oppBudgetStatus));
+                EBISystem.builder().combo("oppEvalStatusText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOpportunityView.oppEvalStatus));
+                EBISystem.builder().combo("oppSaleStateText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOpportunityView.oppSalesStage));
             }
 
-            if (EBISystem.gui().existView("Address")) {
-                EBISystem.gui().combo("addressTypeText", "Address").setModel(new javax.swing.DefaultComboBoxModel(EBICRMAddressView.AddressType));
+            if (EBISystem.builder().existView("Address")) {
+                EBISystem.builder().combo("addressTypeText", "Address").setModel(new javax.swing.DefaultComboBoxModel(EBICRMAddressView.AddressType));
             }
 
-            if (EBISystem.gui().existView("Activity")) {
-                EBISystem.gui().combo("activityTypeText", "Activity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMCompanyActivityView.actType));
-                EBISystem.gui().combo("activityStatusText", "Activity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMCompanyActivityView.actStatus));
+            if (EBISystem.builder().existView("Activity")) {
+                EBISystem.builder().combo("activityTypeText", "Activity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMCompanyActivityView.actType));
+                EBISystem.builder().combo("activityStatusText", "Activity").setModel(new javax.swing.DefaultComboBoxModel(EBICRMCompanyActivityView.actStatus));
             }
 
-            if (EBISystem.gui().existView("Offer")) {
-                EBISystem.gui().combo("offerStatusText", "Offer").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOfferView.offerStatus));
+            if (EBISystem.builder().existView("Offer")) {
+                EBISystem.builder().combo("offerStatusText", "Offer").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOfferView.offerStatus));
             }
 
-            if (EBISystem.gui().existView("Order")) {
-                EBISystem.gui().combo("orderStatusText", "Order").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOrderView.orderStatus));
+            if (EBISystem.builder().existView("Order")) {
+                EBISystem.builder().combo("orderStatusText", "Order").setModel(new javax.swing.DefaultComboBoxModel(EBICRMOrderView.orderStatus));
             }
 
-            if (EBISystem.gui().existView("Service")) {
-                EBISystem.gui().combo("serviceStatusText", "Service").setModel(new javax.swing.DefaultComboBoxModel(EBICRMServiceView.serviceStatus));
-                EBISystem.gui().combo("serviceTypeText", "Service").setModel(new javax.swing.DefaultComboBoxModel(EBICRMServiceView.serviceType));
-                EBISystem.gui().combo("serviceCategoryText", "Service").setModel(new javax.swing.DefaultComboBoxModel(EBICRMServiceView.serviceCategory));
+            if (EBISystem.builder().existView("Service")) {
+                EBISystem.builder().combo("serviceStatusText", "Service").setModel(new javax.swing.DefaultComboBoxModel(EBICRMServiceView.serviceStatus));
+                EBISystem.builder().combo("serviceTypeText", "Service").setModel(new javax.swing.DefaultComboBoxModel(EBICRMServiceView.serviceType));
+                EBISystem.builder().combo("serviceCategoryText", "Service").setModel(new javax.swing.DefaultComboBoxModel(EBICRMServiceView.serviceCategory));
             }
 
         }

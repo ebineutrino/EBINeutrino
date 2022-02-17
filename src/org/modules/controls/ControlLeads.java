@@ -46,7 +46,7 @@ public class ControlLeads {
                 isEdit = true;
             }
 
-            company.setName(EBISystem.gui().textField("compNameText", "Leads").getText());
+            company.setName(EBISystem.builder().textField("compNameText", "Leads").getText());
             if (!isEdit) {
                 company.setCategory("Leads");
                 company.setCustomernr("-1");
@@ -56,61 +56,61 @@ public class ControlLeads {
                 company.setIslock(false);
                 company.setIsactual(false);
             }
-            company.setWeb(EBISystem.gui().textField("internetText", "Leads").getText());
+            company.setWeb(EBISystem.builder().textField("internetText", "Leads").getText());
 
-            if (EBISystem.gui().combo("classificationText", "Leads").getEditor().getItem() != null) {
-                company.setQualification(EBISystem.gui().combo("classificationText", "Leads")
+            if (EBISystem.builder().combo("classificationText", "Leads").getEditor().getItem() != null) {
+                company.setQualification(EBISystem.builder().combo("classificationText", "Leads")
                         .getEditor().getItem().toString());
             }
 
-            company.setDescription(EBISystem.gui().textArea("descriptionText", "Leads").getText());
+            company.setDescription(EBISystem.builder().textArea("descriptionText", "Leads").getText());
 
             contact.setCompany(company);
-            if (EBISystem.gui().combo("genderText", "Leads").getEditor().getItem() != null) {
+            if (EBISystem.builder().combo("genderText", "Leads").getEditor().getItem() != null) {
                 if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(
-                        EBISystem.gui().combo("genderText", "Leads").getEditor().getItem().toString())) {
+                        EBISystem.builder().combo("genderText", "Leads").getEditor().getItem().toString())) {
                     contact.setGender(
-                            EBISystem.gui().combo("genderText", "Leads").getEditor().getItem().toString());
+                            EBISystem.builder().combo("genderText", "Leads").getEditor().getItem().toString());
                 }
             }
 
-            contact.setTitle(EBISystem.gui().textField("titleText", "Leads").getText());
-            contact.setPosition(EBISystem.gui().textField("positionText", "Leads").getText());
-            contact.setName(EBISystem.gui().textField("contactNameText", "Leads").getText());
-            contact.setSurname(EBISystem.gui().textField("contactSurnameText", "Leads").getText());
-            contact.setPhone(EBISystem.gui().textField("telephoneText", "Leads").getText());
-            contact.setMobile(EBISystem.gui().textField("contactMobileText", "Leads").getText());
-            contact.setFax(EBISystem.gui().textField("faxText", "Leads").getText());
-            contact.setEmail(EBISystem.gui().textField("emailText", "Leads").getText());
+            contact.setTitle(EBISystem.builder().textField("titleText", "Leads").getText());
+            contact.setPosition(EBISystem.builder().textField("positionText", "Leads").getText());
+            contact.setName(EBISystem.builder().textField("contactNameText", "Leads").getText());
+            contact.setSurname(EBISystem.builder().textField("contactSurnameText", "Leads").getText());
+            contact.setPhone(EBISystem.builder().textField("telephoneText", "Leads").getText());
+            contact.setMobile(EBISystem.builder().textField("contactMobileText", "Leads").getText());
+            contact.setFax(EBISystem.builder().textField("faxText", "Leads").getText());
+            contact.setEmail(EBISystem.builder().textField("emailText", "Leads").getText());
             address.setAddresstype(address.getAddresstype() == null ? "" : address.getAddresstype());
             address.setCompany(company);
-            address.setZip(EBISystem.gui().textField("addressZipText", "Leads").getText());
-            address.setLocation(EBISystem.gui().textField("addressCityText", "Leads").getText());
-            address.setStreet(EBISystem.gui().textField("addressStrNrText", "Leads").getText());
-            address.setCountry(EBISystem.gui().textField("addressCountryText", "Leads").getText());
+            address.setZip(EBISystem.builder().textField("addressZipText", "Leads").getText());
+            address.setLocation(EBISystem.builder().textField("addressCityText", "Leads").getText());
+            address.setStreet(EBISystem.builder().textField("addressStrNrText", "Leads").getText());
+            address.setCountry(EBISystem.builder().textField("addressCountryText", "Leads").getText());
 
             company.getCompanyaddresses().add(address);
             company.getCompanycontactses().add(contact);
 
             // Fill Visitcard
-            EBISystem.gui().label("compNameLabel", "Leads").setText(company.getName() == null ? "" : company.getName());
+            EBISystem.builder().label("compNameLabel", "Leads").setText(company.getName() == null ? "" : company.getName());
 
             String cName = contact.getGender() == null ? "" : contact.getGender() + " ";
             cName += contact.getTitle() == null ? "" : contact.getTitle() + " ";
             cName += contact.getName() == null ? "" : contact.getName() + " ";
             cName += contact.getSurname() == null ? "" : contact.getSurname();
-            EBISystem.gui().label("cName", "Leads").setText(cName);
+            EBISystem.builder().label("cName", "Leads").setText(cName);
 
-            EBISystem.gui().label("addressLabel", "Leads").setText(address.getStreet() == null ? "" : address.getStreet());
+            EBISystem.builder().label("addressLabel", "Leads").setText(address.getStreet() == null ? "" : address.getStreet());
 
-            EBISystem.gui().label("zipLocationLabel", "Leads").setText(address.getZip() == null ? "" : address.getZip() + " " + address.getLocation() == null ? "" : address.getLocation());
+            EBISystem.builder().label("zipLocationLabel", "Leads").setText(address.getZip() == null ? "" : address.getZip() + " " + address.getLocation() == null ? "" : address.getLocation());
 
-            EBISystem.gui().label("phoneLabel", "Leads").setText(contact.getPhone() == null ? "" : EBISystem.i18n("EBI_LANG_C_TELEPHONE") + ": " + contact.getPhone());
-            EBISystem.gui().label("faxLabel", "Leads").setText(contact.getPhone() == null ? "" : EBISystem.i18n("EBI_LANG_FAX") + ": " + contact.getPhone());
-            EBISystem.gui().label("positionLabel", "Leads").setText(contact.getPosition() == null ? "" : contact.getPosition());
-            EBISystem.gui().label("webLabel", "Leads").setText(company.getWeb() == null ? "" : company.getWeb());
-            EBISystem.gui().label("mobileLabel", "Leads").setText(contact.getMobile() == null ? "" : EBISystem.i18n("EBI_LANG_C_MOBILE_PHONE") + ": " + contact.getMobile());
-            EBISystem.gui().label("emailLabel", "Leads").setText(contact.getEmail() == null ? "" : contact.getEmail());
+            EBISystem.builder().label("phoneLabel", "Leads").setText(contact.getPhone() == null ? "" : EBISystem.i18n("EBI_LANG_C_TELEPHONE") + ": " + contact.getPhone());
+            EBISystem.builder().label("faxLabel", "Leads").setText(contact.getPhone() == null ? "" : EBISystem.i18n("EBI_LANG_FAX") + ": " + contact.getPhone());
+            EBISystem.builder().label("positionLabel", "Leads").setText(contact.getPosition() == null ? "" : contact.getPosition());
+            EBISystem.builder().label("webLabel", "Leads").setText(company.getWeb() == null ? "" : company.getWeb());
+            EBISystem.builder().label("mobileLabel", "Leads").setText(contact.getMobile() == null ? "" : EBISystem.i18n("EBI_LANG_C_MOBILE_PHONE") + ": " + contact.getMobile());
+            EBISystem.builder().label("emailLabel", "Leads").setText(contact.getEmail() == null ? "" : contact.getEmail());
 
             EBISystem.getInstance().getDataStore("Leads", "ebiSave");
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(company);
@@ -120,7 +120,7 @@ public class ControlLeads {
 
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
             if (!isEdit) {
-                EBISystem.gui().vpanel("Leads").setID(company.getCompanyid());
+                EBISystem.builder().vpanel("Leads").setID(company.getCompanyid());
             }
             leadID = company.getCompanyid();
             isEdit = true;
@@ -223,7 +223,7 @@ public class ControlLeads {
             final Iterator iter = query.iterate();
             if (iter.hasNext()) {
                 company = (Company) iter.next();
-                EBISystem.gui().vpanel("Leads").setID(company.getCompanyid());
+                EBISystem.builder().vpanel("Leads").setID(company.getCompanyid());
                 EBISystem.hibernate().session("EBICRM_SESSION").refresh(company);
                 final Iterator cit = company.getCompanycontactses().iterator();
                 while (cit.hasNext()) {
@@ -237,21 +237,21 @@ public class ControlLeads {
                         cName += contact.getName() == null ? "" : contact.getName() + " ";
                         cName += contact.getSurname() == null ? "" : contact.getSurname();
 
-                        EBISystem.gui().label("cName", "Leads").setText(cName);
-                        EBISystem.gui().combo("genderText", "Leads").setSelectedItem(contact.getGender() == null ? EBISystem.i18n("EBI_LANG_PLEASE_SELECT") : contact.getGender());
-                        EBISystem.gui().textField("titleText", "Leads").setText(contact.getTitle() == null ? "" : contact.getTitle());
-                        EBISystem.gui().textField("positionText", "Leads").setText(contact.getPosition() == null ? "" : contact.getPosition());
-                        EBISystem.gui().label("positionLabel", "Leads").setText(contact.getPosition() == null ? "" : contact.getPosition());
-                        EBISystem.gui().textField("contactNameText", "Leads").setText(contact.getName() == null ? "" : contact.getName());
-                        EBISystem.gui().textField("contactSurnameText", "Leads").setText(contact.getSurname() == null ? "" : contact.getSurname());
-                        EBISystem.gui().textField("telephoneText", "Leads").setText(contact.getPhone() == null ? "" : contact.getPhone());
-                        EBISystem.gui().label("phoneLabel", "Leads").setText(contact.getPhone() == null ? "" : EBISystem.i18n("EBI_LANG_C_TELEPHONE") + ": " + contact.getPhone());
-                        EBISystem.gui().textField("faxText", "Leads").setText(contact.getFax() == null ? "" : contact.getFax());
-                        EBISystem.gui().label("faxLabel", "Leads").setText(contact.getPhone() == null ? "" : EBISystem.i18n("EBI_LANG_FAX") + ": " + contact.getPhone());
-                        EBISystem.gui().textField("emailText", "Leads").setText(contact.getEmail() == null ? "" : contact.getEmail());
-                        EBISystem.gui().label("emailLabel", "Leads").setText(contact.getEmail() == null ? "" : contact.getEmail());
-                        EBISystem.gui().textField("contactMobileText", "Leads").setText(contact.getMobile() == null ? "" : contact.getMobile());
-                        EBISystem.gui().label("mobileLabel", "Leads").setText(contact.getMobile() == null ? "" : EBISystem.i18n("EBI_LANG_C_MOBILE_PHONE") + ": " + contact.getMobile());
+                        EBISystem.builder().label("cName", "Leads").setText(cName);
+                        EBISystem.builder().combo("genderText", "Leads").setSelectedItem(contact.getGender() == null ? EBISystem.i18n("EBI_LANG_PLEASE_SELECT") : contact.getGender());
+                        EBISystem.builder().textField("titleText", "Leads").setText(contact.getTitle() == null ? "" : contact.getTitle());
+                        EBISystem.builder().textField("positionText", "Leads").setText(contact.getPosition() == null ? "" : contact.getPosition());
+                        EBISystem.builder().label("positionLabel", "Leads").setText(contact.getPosition() == null ? "" : contact.getPosition());
+                        EBISystem.builder().textField("contactNameText", "Leads").setText(contact.getName() == null ? "" : contact.getName());
+                        EBISystem.builder().textField("contactSurnameText", "Leads").setText(contact.getSurname() == null ? "" : contact.getSurname());
+                        EBISystem.builder().textField("telephoneText", "Leads").setText(contact.getPhone() == null ? "" : contact.getPhone());
+                        EBISystem.builder().label("phoneLabel", "Leads").setText(contact.getPhone() == null ? "" : EBISystem.i18n("EBI_LANG_C_TELEPHONE") + ": " + contact.getPhone());
+                        EBISystem.builder().textField("faxText", "Leads").setText(contact.getFax() == null ? "" : contact.getFax());
+                        EBISystem.builder().label("faxLabel", "Leads").setText(contact.getPhone() == null ? "" : EBISystem.i18n("EBI_LANG_FAX") + ": " + contact.getPhone());
+                        EBISystem.builder().textField("emailText", "Leads").setText(contact.getEmail() == null ? "" : contact.getEmail());
+                        EBISystem.builder().label("emailLabel", "Leads").setText(contact.getEmail() == null ? "" : contact.getEmail());
+                        EBISystem.builder().textField("contactMobileText", "Leads").setText(contact.getMobile() == null ? "" : contact.getMobile());
+                        EBISystem.builder().label("mobileLabel", "Leads").setText(contact.getMobile() == null ? "" : EBISystem.i18n("EBI_LANG_C_MOBILE_PHONE") + ": " + contact.getMobile());
                         break;
                     }
                 }
@@ -265,34 +265,34 @@ public class ControlLeads {
                             getTabModel().data[EBISystem.getModule().
                                     getLeadPane().getSelectedRow()][13].toString()) == address.getAddressid()) {
 
-                        EBISystem.gui().label("addressLabel", "Leads").setText(address.getStreet() == null ? "" : address.getStreet());
-                        EBISystem.gui().textField("addressStrNrText", "Leads").setText(address.getStreet() == null ? "" : address.getStreet());
+                        EBISystem.builder().label("addressLabel", "Leads").setText(address.getStreet() == null ? "" : address.getStreet());
+                        EBISystem.builder().textField("addressStrNrText", "Leads").setText(address.getStreet() == null ? "" : address.getStreet());
 
                         String zipLocation = address.getZip() == null ? "" : address.getZip() + " ";
                         zipLocation += address.getLocation() == null ? "" : address.getLocation();
-                        EBISystem.gui().label("zipLocationLabel", "Leads").setText(zipLocation);
+                        EBISystem.builder().label("zipLocationLabel", "Leads").setText(zipLocation);
 
-                        EBISystem.gui().textField("addressZipText", "Leads").setText(address.getZip() == null ? "" : address.getZip());
-                        EBISystem.gui().textField("addressCityText", "Leads").setText(address.getLocation() == null ? "" : address.getLocation());
-                        EBISystem.gui().textField("addressCountryText", "Leads").setText(address.getCountry() == null ? "" : address.getCountry());
+                        EBISystem.builder().textField("addressZipText", "Leads").setText(address.getZip() == null ? "" : address.getZip());
+                        EBISystem.builder().textField("addressCityText", "Leads").setText(address.getLocation() == null ? "" : address.getLocation());
+                        EBISystem.builder().textField("addressCountryText", "Leads").setText(address.getCountry() == null ? "" : address.getCountry());
                         break;
                     }
                 }
 
-                EBISystem.gui().vpanel("Leads").setCreatedDate(EBISystem.getInstance().getDateToString(company.getCreateddate()));
-                EBISystem.gui().vpanel("Leads").setCreatedFrom(company.getCreatedfrom());
+                EBISystem.builder().vpanel("Leads").setCreatedDate(EBISystem.getInstance().getDateToString(company.getCreateddate()));
+                EBISystem.builder().vpanel("Leads").setCreatedFrom(company.getCreatedfrom());
 
                 if (company.getCreateddate() != null) {
-                    EBISystem.gui().vpanel("Leads").setChangedDate(EBISystem.getInstance().getDateToString(company.getChangeddate()));
-                    EBISystem.gui().vpanel("Leads").setChangedFrom(company.getChangedfrom());
+                    EBISystem.builder().vpanel("Leads").setChangedDate(EBISystem.getInstance().getDateToString(company.getChangeddate()));
+                    EBISystem.builder().vpanel("Leads").setChangedFrom(company.getChangedfrom());
                 }
 
-                EBISystem.gui().label("compNameLabel", "Leads").setText(company.getName() == null ? "" : company.getName());
-                EBISystem.gui().textField("compNameText", "Leads").setText(company.getName() == null ? "" : company.getName());
-                EBISystem.gui().textField("internetText", "Leads").setText(company.getWeb() == null ? "" : company.getWeb());
-                EBISystem.gui().combo("classificationText", "Leads").setSelectedItem(company.getQualification() == null ? "" : company.getQualification());
-                EBISystem.gui().textArea("descriptionText", "Leads").setText(company.getDescription() == null ? "" : company.getDescription());
-                EBISystem.gui().label("webLabel", "Leads").setText(company.getWeb() == null ? "" : company.getWeb());
+                EBISystem.builder().label("compNameLabel", "Leads").setText(company.getName() == null ? "" : company.getName());
+                EBISystem.builder().textField("compNameText", "Leads").setText(company.getName() == null ? "" : company.getName());
+                EBISystem.builder().textField("internetText", "Leads").setText(company.getWeb() == null ? "" : company.getWeb());
+                EBISystem.builder().combo("classificationText", "Leads").setSelectedItem(company.getQualification() == null ? "" : company.getQualification());
+                EBISystem.builder().textArea("descriptionText", "Leads").setText(company.getDescription() == null ? "" : company.getDescription());
+                EBISystem.builder().label("webLabel", "Leads").setText(company.getWeb() == null ? "" : company.getWeb());
                 isEdit = true;
 
             } else {
@@ -301,7 +301,7 @@ public class ControlLeads {
 
             EBISystem.getInstance().getDataStore("Leads", "ebiEdit");
             EBISystem.hibernate().transaction("EBICRM_SESSION").commit();
-            EBISystem.gui().getPanel("businessCard", "Leads").updateUI();
+            EBISystem.builder().getPanel("businessCard", "Leads").updateUI();
 
         } catch (final Exception ex) {
             EBIExceptionDialog.getInstance(ex.getMessage(), ex.getCause()).Show(EBIMessage.ERROR_MESSAGE);
@@ -337,7 +337,7 @@ public class ControlLeads {
 
         ResultSet set = null;
         PreparedStatement ps1 = null;
-        int selRow = EBISystem.gui().table("leadsTable", "Leads").getSelectedRow() + id;
+        int selRow = EBISystem.builder().table("leadsTable", "Leads").getSelectedRow() + id;
         try {
             ps1 = EBISystem.getInstance().iDB().initPreparedStatement(""
                     + " SELECT COMPANY.COMPANYID,COMPANY.NAME,COMPANY.CATEGORY,COMPANY.WEB,COMPANY.QUALIFICATION,COMPANY.DESCRIPTION,COMPANYCONTACTS.GENDER,"
@@ -403,8 +403,8 @@ public class ControlLeads {
         }
 
         if (selRow > -1) {
-            selRow = EBISystem.gui().table("leadsTable", "Leads").convertRowIndexToView(selRow);
-            EBISystem.gui().table("leadsTable", "Leads").changeSelection(selRow, 0, false, false);
+            selRow = EBISystem.builder().table("leadsTable", "Leads").convertRowIndexToView(selRow);
+            EBISystem.builder().table("leadsTable", "Leads").changeSelection(selRow, 0, false, false);
         }
     }
 
@@ -412,9 +412,9 @@ public class ControlLeads {
         ResultSet set = null;
         PreparedStatement ps1 = null;
 
-        final int srow = EBISystem.gui().table("leadsTable", "Leads").getSelectedRow();
+        final int srow = EBISystem.builder().table("leadsTable", "Leads").getSelectedRow();
         try {
-            EBISystem.gui().vpanel("Leads").setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            EBISystem.builder().vpanel("Leads").setCursor(new Cursor(Cursor.WAIT_CURSOR));
             ps1 = EBISystem.getInstance().iDB().initPreparedStatement(""
                     + " SELECT COMPANY.COMPANYID,COMPANY.NAME,COMPANY.COOPERATION,COMPANY.CATEGORY,COMPANY.WEB,COMPANY.QUALIFICATION,COMPANY.DESCRIPTION,COMPANYCONTACTS.GENDER,"
                     + " COMPANYCONTACTS.CREATEDDATE, COMPANYCONTACTS.CONTACTID,COMPANYCONTACTS.TITLE,COMPANYCONTACTS.SURNAME,COMPANYCONTACTS.NAME,COMPANYCONTACTS.POSITION,COMPANYCONTACTS.PHONE,COMPANYCONTACTS.FAX,COMPANYCONTACTS.MOBILE,COMPANYCONTACTS.EMAIL,"
@@ -522,9 +522,9 @@ public class ControlLeads {
                     e.printStackTrace();
                 }
             }
-            EBISystem.gui().vpanel("Leads").setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            EBISystem.builder().vpanel("Leads").setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
-        EBISystem.gui().table("leadsTable", "Leads").changeSelection(srow, 0, false, false);
+        EBISystem.builder().table("leadsTable", "Leads").changeSelection(srow, 0, false, false);
     }
 
     public void dataNew(boolean reload) {

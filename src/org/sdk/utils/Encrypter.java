@@ -53,7 +53,6 @@ public class Encrypter {
             final byte[] enc = ecipher.doFinal(utf8);
             
             return  Base64.getEncoder().encodeToString(enc);
-            
         } catch (final javax.crypto.BadPaddingException e) {
         } catch (final IllegalBlockSizeException e) {
         } catch (final java.io.IOException e) {

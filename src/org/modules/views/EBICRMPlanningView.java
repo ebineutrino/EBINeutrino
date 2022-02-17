@@ -51,35 +51,35 @@ public class EBICRMPlanningView {
         valueFormat.setMinimumFractionDigits(2);
         valueFormat.setMaximumFractionDigits(2);
 
-        model = (EBIAbstractTableModel) EBISystem.gui().table("projectTable", "Project").getModel();
-        EBISystem.gui().textField("filterTableText", "Project").addKeyListener(
+        model = (EBIAbstractTableModel) EBISystem.builder().table("projectTable", "Project").getModel();
+        EBISystem.builder().textField("filterTableText", "Project").addKeyListener(
                 new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 super.keyReleased(e);
-                EBISystem.gui().table("projectTable", "Project").setRowFilter(RowFilters.regexFilter(
-                        "(?i)" + EBISystem.gui().textField("filterTableText", "Project").getText()));
+                EBISystem.builder().table("projectTable", "Project").setRowFilter(RowFilters.regexFilter(
+                        "(?i)" + EBISystem.builder().textField("filterTableText", "Project").getText()));
             }
         });
 
-        EBISystem.gui().vpanel("Project").setCreatedFrom(EBISystem.ebiUser);
-        EBISystem.gui().vpanel("Project")
+        EBISystem.builder().vpanel("Project").setCreatedFrom(EBISystem.ebiUser);
+        EBISystem.builder().vpanel("Project")
                 .setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
 
-        EBISystem.gui().vpanel("Project").setChangedFrom("");
-        EBISystem.gui().vpanel("Project").setChangedDate("");
+        EBISystem.builder().vpanel("Project").setChangedFrom("");
+        EBISystem.builder().vpanel("Project").setChangedDate("");
 
-        EBISystem.gui().combo("prjStatusText", "Project")
+        EBISystem.builder().combo("prjStatusText", "Project")
                 .setModel(new DefaultComboBoxModel(projectStatus));
 
-        EBISystem.gui().FormattedField("budgetText", "Project").setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(valueFormat)));
-        EBISystem.gui().FormattedField("budgetText", "Project").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.FLOAT));
-        EBISystem.gui().FormattedField("budgetText", "Project").setColumns(10);
+        EBISystem.builder().FormattedField("budgetText", "Project").setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(valueFormat)));
+        EBISystem.builder().FormattedField("budgetText", "Project").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.FLOAT));
+        EBISystem.builder().FormattedField("budgetText", "Project").setColumns(10);
 
-        EBISystem.gui().FormattedField("actualCostText", "Project").setEditable(false);
-        EBISystem.gui().FormattedField("actualCostText", "Project").setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(valueFormat)));
-        EBISystem.gui().FormattedField("actualCostText", "Project").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.FLOAT));
-        EBISystem.gui().FormattedField("actualCostText", "Project").setColumns(10);
+        EBISystem.builder().FormattedField("actualCostText", "Project").setEditable(false);
+        EBISystem.builder().FormattedField("actualCostText", "Project").setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(valueFormat)));
+        EBISystem.builder().FormattedField("actualCostText", "Project").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.FLOAT));
+        EBISystem.builder().FormattedField("actualCostText", "Project").setColumns(10);
 
         /*
 		 * EBISystem.getGUIRenderer().getFormattedTextfield("remainingCost","Project").
@@ -222,24 +222,24 @@ public class EBICRMPlanningView {
                 return saveRelation;
             }
         });
-        EBISystem.gui().getPanel("taskGraph", "Project").setLayout(new BorderLayout());
-        EBISystem.gui().getPanel("taskGraph", "Project").add(grcManagement.getScrollComponent(), BorderLayout.CENTER);
+        EBISystem.builder().getPanel("taskGraph", "Project").setLayout(new BorderLayout());
+        EBISystem.builder().getPanel("taskGraph", "Project").add(grcManagement.getScrollComponent(), BorderLayout.CENTER);
     }
 
     public void initializeAction() {
 
-        EBISystem.gui().timePicker("prjstartDateText", "Project").addActionListener(new ActionListener() {
+        EBISystem.builder().timePicker("prjstartDateText", "Project").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent actionEvent) {
 
-                if (EBISystem.gui().timePicker("prjendDateText", "Project").getDate() != null) {
-                    if (EBISystem.gui().timePicker("prjendDateText", "Project").getDate()
-                            .getTime() > EBISystem.gui().timePicker("prjstartDateText", "Project")
+                if (EBISystem.builder().timePicker("prjendDateText", "Project").getDate() != null) {
+                    if (EBISystem.builder().timePicker("prjendDateText", "Project").getDate()
+                            .getTime() > EBISystem.builder().timePicker("prjstartDateText", "Project")
                                     .getDate().getTime()) {
 
                         grcManagement.setStartEnd(
-                                EBISystem.gui().timePicker("prjstartDateText", "Project").getDate(),
-                                EBISystem.gui().timePicker("prjendDateText", "Project").getDate());
+                                EBISystem.builder().timePicker("prjstartDateText", "Project").getDate(),
+                                EBISystem.builder().timePicker("prjendDateText", "Project").getDate());
                     } else {
                         EBIExceptionDialog
                                 .getInstance(EBISystem.i18n("EBI_LANG_ERROR_MESSAGE_STARTDATE_SMALL_ENDDATE"))
@@ -249,17 +249,17 @@ public class EBICRMPlanningView {
             }
         });
 
-        EBISystem.gui().timePicker("prjendDateText", "Project").addActionListener(new ActionListener() {
+        EBISystem.builder().timePicker("prjendDateText", "Project").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent actionEvent) {
-                if (EBISystem.gui().timePicker("prjstartDateText", "Project").getDate() != null) {
-                    if (EBISystem.gui().timePicker("prjendDateText", "Project").getDate()
-                            .getTime() > EBISystem.gui().timePicker("prjstartDateText", "Project")
+                if (EBISystem.builder().timePicker("prjstartDateText", "Project").getDate() != null) {
+                    if (EBISystem.builder().timePicker("prjendDateText", "Project").getDate()
+                            .getTime() > EBISystem.builder().timePicker("prjstartDateText", "Project")
                                     .getDate().getTime()) {
 
                         grcManagement.setStartEnd(
-                                EBISystem.gui().timePicker("prjstartDateText", "Project").getDate(),
-                                EBISystem.gui().timePicker("prjendDateText", "Project").getDate());
+                                EBISystem.builder().timePicker("prjstartDateText", "Project").getDate(),
+                                EBISystem.builder().timePicker("prjendDateText", "Project").getDate());
                     } else {
                         EBIExceptionDialog
                                 .getInstance(EBISystem.i18n("EBI_LANG_ERROR_MESSAGE_STARTDATE_SMALL_ENDDATE"))
@@ -276,13 +276,13 @@ public class EBICRMPlanningView {
         /**
          * **********************************************************
          */
-        final EBIAbstractTableModel model = (EBIAbstractTableModel) EBISystem.gui()
+        final EBIAbstractTableModel model = (EBIAbstractTableModel) EBISystem.builder()
                 .table("projectTable", "Project").getModel();
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                final TableColumn col7 = EBISystem.gui().table("projectTable", "Project").getColumnModel().getColumn(7);
+                final TableColumn col7 = EBISystem.builder().table("projectTable", "Project").getColumnModel().getColumn(7);
                 col7.setCellRenderer(new DefaultTableCellRenderer() {
                     @Override
                     public Component getTableCellRendererComponent(final JTable table, final Object value,
@@ -294,7 +294,7 @@ public class EBICRMPlanningView {
                     }
                 });
 
-                final TableColumn col6 = EBISystem.gui().table("projectTable", "Project").getColumnModel().getColumn(6);
+                final TableColumn col6 = EBISystem.builder().table("projectTable", "Project").getColumnModel().getColumn(6);
                 col6.setCellRenderer(new DefaultTableCellRenderer() {
                     @Override
                     public Component getTableCellRendererComponent(final JTable table, final Object value,
@@ -309,30 +309,30 @@ public class EBICRMPlanningView {
             }
         });
 
-        EBISystem.gui().table("projectTable", "Project").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("projectTable", "Project").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        EBISystem.gui().table("projectTable", "Project").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("projectTable", "Project").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() != -1) {
                     try {
-                        selectedProjectRow = EBISystem.gui().table("projectTable", "Project").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                        selectedProjectRow = EBISystem.builder().table("projectTable", "Project").convertRowIndexToModel(lsm.getMinSelectionIndex());
                         if (lsm.isSelectionEmpty()) {
-                            EBISystem.gui().button("editProject", "Project").setEnabled(false);
-                            EBISystem.gui().button("deleteProject", "Project").setEnabled(false);
-                            EBISystem.gui().button("historyProject", "Project").setEnabled(false);
-                            EBISystem.gui().button("reportProject", "Project").setEnabled(false);
-                            EBISystem.gui().button("createProduct", "Project").setEnabled(false);
-                            EBISystem.gui().button("copyProject", "Project").setEnabled(false);
+                            EBISystem.builder().button("editProject", "Project").setEnabled(false);
+                            EBISystem.builder().button("deleteProject", "Project").setEnabled(false);
+                            EBISystem.builder().button("historyProject", "Project").setEnabled(false);
+                            EBISystem.builder().button("reportProject", "Project").setEnabled(false);
+                            EBISystem.builder().button("createProduct", "Project").setEnabled(false);
+                            EBISystem.builder().button("copyProject", "Project").setEnabled(false);
                         } else if (!model.data[selectedProjectRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                            EBISystem.gui().button("editProject", "Project").setEnabled(true);
-                            EBISystem.gui().button("deleteProject", "Project").setEnabled(true);
-                            EBISystem.gui().button("historyProject", "Project").setEnabled(true);
-                            EBISystem.gui().button("reportProject", "Project").setEnabled(true);
-                            EBISystem.gui().button("createProduct", "Project").setEnabled(true);
-                            EBISystem.gui().button("copyProject", "Project").setEnabled(true);
+                            EBISystem.builder().button("editProject", "Project").setEnabled(true);
+                            EBISystem.builder().button("deleteProject", "Project").setEnabled(true);
+                            EBISystem.builder().button("historyProject", "Project").setEnabled(true);
+                            EBISystem.builder().button("reportProject", "Project").setEnabled(true);
+                            EBISystem.builder().button("createProduct", "Project").setEnabled(true);
+                            EBISystem.builder().button("copyProject", "Project").setEnabled(true);
                         }
                     } catch (final IndexOutOfBoundsException ex) {
                     }
@@ -340,7 +340,7 @@ public class EBICRMPlanningView {
             }
         });
 
-        EBISystem.gui().table("projectTable", "Project").addKeyAction(new EBIUICallback() {
+        EBISystem.builder().table("projectTable", "Project").addKeyAction(new EBIUICallback() {
             @Override
             public void tableKeyUp(int selRow) {
                 super.tableKeyUp(selRow);
@@ -369,12 +369,12 @@ public class EBICRMPlanningView {
             }
         });
 
-        EBISystem.gui().table("projectTable", "Project").setMouseCallback(new MouseAdapter() {
+        EBISystem.builder().table("projectTable", "Project").setMouseCallback(new MouseAdapter() {
             @Override
             public void mouseReleased(final java.awt.event.MouseEvent e) {
-                if (EBISystem.gui().table("projectTable", "Project").rowAtPoint(e.getPoint()) != -1) {
-                    selectedProjectRow = EBISystem.gui().table("projectTable", "Project")
-                            .convertRowIndexToModel(EBISystem.gui().table("projectTable", "Project").rowAtPoint(e.getPoint()));
+                if (EBISystem.builder().table("projectTable", "Project").rowAtPoint(e.getPoint()) != -1) {
+                    selectedProjectRow = EBISystem.builder().table("projectTable", "Project")
+                            .convertRowIndexToModel(EBISystem.builder().table("projectTable", "Project").rowAtPoint(e.getPoint()));
                 }
                 if (selectedProjectRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(model.data[selectedProjectRow][0].toString())) {
                     return;
@@ -401,10 +401,10 @@ public class EBICRMPlanningView {
             return false;
         }
         EBISystem.showInActionStatus("Project");
-        int row = EBISystem.gui().table("projectTable", "Project").getSelectedRow();
+        int row = EBISystem.builder().table("projectTable", "Project").getSelectedRow();
         Integer id = dataControlProject.dataStore();
         dataControlProject.dataShow(id);
-        EBISystem.gui().table("projectTable", "Project").changeSelection(row, 0, false, false);
+        EBISystem.builder().table("projectTable", "Project").changeSelection(row, 0, false, false);
         return false;
     }
 
@@ -471,10 +471,10 @@ public class EBICRMPlanningView {
 
     private boolean validateInput() {
         boolean ret = true;
-        if ("".equals(EBISystem.gui().textField("prjNrText", "Project").getText())) {
+        if ("".equals(EBISystem.builder().textField("prjNrText", "Project").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_INSERT_PROJ_NR")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if ("".equals(EBISystem.gui().textField("prjNameText", "Project").getText())) {
+        } else if ("".equals(EBISystem.builder().textField("prjNameText", "Project").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_INSERT_PROJ_NAME")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
         }
@@ -483,7 +483,7 @@ public class EBICRMPlanningView {
 
     public void calculateActualCost() {
 
-        if (EBISystem.gui().FormattedField("budgetText", "Project").getValue() != null) {
+        if (EBISystem.builder().FormattedField("budgetText", "Project").getValue() != null) {
 
             final Iterator iter = dataControlProject.getProjectBean().getCrmprojecttasks().iterator();
 
@@ -499,10 +499,10 @@ public class EBICRMPlanningView {
                 }
 
             }
-            if (value > Double.parseDouble(EBISystem.gui().FormattedField("budgetText", "Project").getValue().toString())) {
-                EBISystem.gui().FormattedField("actualCostText", "Project").setForeground(new Color(255, 0, 0));
+            if (value > Double.parseDouble(EBISystem.builder().FormattedField("budgetText", "Project").getValue().toString())) {
+                EBISystem.builder().FormattedField("actualCostText", "Project").setForeground(new Color(255, 0, 0));
             }
-            EBISystem.gui().FormattedField("actualCostText", "Project").setValue(value);
+            EBISystem.builder().FormattedField("actualCostText", "Project").setValue(value);
         }
     }
 }

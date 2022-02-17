@@ -44,12 +44,12 @@ import org.beryx.textio.TextIO;
 import org.beryx.textio.TextTerminal;
 import org.beryx.textio.swing.SwingTextTerminal;
 import org.sdk.interfaces.IEBIContainer;
-import org.sdk.interfaces.IEBIGUIRenderer;
 import org.sdk.interfaces.IEBIHibernate;
 import org.sdk.interfaces.IEBIModule;
 import org.sdk.interfaces.IEBIReportSystem;
 import org.sdk.interfaces.IEBISecurity;
 import org.sdk.interfaces.IEBIToolBar;
+import org.sdk.interfaces.IEBIBuilder;
 
 /**
  * Factory Database, Reporting, GUI, Resources
@@ -76,6 +76,10 @@ public class EBISystem {
     public static String DateFormat = "";
     public static String DATABASE_SYSTEM = "";
     public static String selectedLanguage = "";
+    private String webOut="";
+    @Getter
+    @Setter
+    private String webMimeType = "";
     @Getter
     @Setter
     private Company company = null;
@@ -87,7 +91,7 @@ public class EBISystem {
     private IEBIContainer container = null;
     private IEBIDatabase database = null;
     private IEBIReportSystem report = null;
-    private IEBIGUIRenderer gui = null;
+    private IEBIBuilder builder = null;
     public IEBIModule ebiModule = null;
     private EBISystemUserRights userRights = null;
     private IEBISystemUserRights iuserRights = null;
@@ -130,9 +134,7 @@ public class EBISystem {
             + File.separator;
 
     private String scriptRunPath = System.getProperty("user.dir")
-            + File.separator + "resources"
-            + File.separator + "views"
-            + File.separator + "Run";
+            + File.separator + "resources";
 
     public EBISystem() {
         calendar = new GregorianCalendar();
@@ -597,16 +599,16 @@ public class EBISystem {
      *
      * @return
      */
-    public IEBIGUIRenderer getIEBIGUIRendererInstance() {
-        return this.gui;
+    public IEBIBuilder getIEBIBuilderInstance() {
+        return this.builder;
     }
 
     public void setIEBIGUIRendererInstance(final Object renderer) {
-        this.gui = (IEBIGUIRenderer) renderer;
+        this.builder = (IEBIBuilder) renderer;
     }
 
-    public static IEBIGUIRenderer gui() {
-        return EBISystem.getInstance().getIEBIGUIRendererInstance();
+    public static IEBIBuilder builder() {
+        return EBISystem.getInstance().getIEBIBuilderInstance();
     }
 
     /**
@@ -698,7 +700,7 @@ public class EBISystem {
             @Override
             public void run() {
                 try {
-                    EBISystem.gui().vpanel(name).drawProgress(true);
+                    EBISystem.builder().vpanel(name).drawProgress(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -1071,14 +1073,30 @@ public class EBISystem {
         return textIO.getTextTerminal();
     }
 
+    public File[] listScriptFile() {
+        return new File(scriptRunPath + "/views/Run").listFiles();     
+    }
+    
+    public File[] listCodeFile() {
+        return new File(scriptRunPath + "/code").listFiles();     
+    }
+
     public void addScripts() {
-        Stream.of(new File(scriptRunPath).listFiles()).forEach(e -> {
-            if (!e.isDirectory() && e.getName().indexOf(".groovy") != -1) {
-                String name = e.getName().replace(".groovy", "");
-                helpTerminal += name + " ";
-                this.gui.addScriptBean("groovy", "Run/" + e.getName(), "groovy", "", "run " + name);
-            }
+        Stream.of(listScriptFile()).forEach(e -> {
+            handleScriptFile(e);
         });
+        
+        Stream.of(listCodeFile()).forEach(e -> {
+            handleScriptFile(e);
+        });
+    }
+
+    private void handleScriptFile(File e) {
+        if (!e.isDirectory() && e.getName().indexOf(".groovy") != -1) {
+            String name = e.getName().replace(".groovy", "");
+            helpTerminal += name + " ";
+            this.builder.addScriptBean("groovy", e.getName(), "groovy", "", "run " + name);
+        }
     }
 
     public void handleCommand(final String cmd) {
@@ -1087,7 +1105,7 @@ public class EBISystem {
             switch (cmds[0]) {
                 case "run":
                     if (cmds[1] != null) {
-                        EBISystem.gui().excScript(cmds[0] + " " + cmds[1], mapScriptParams(cmds));
+                        EBISystem.builder().excScript(cmds[0] + " " + cmds[1], mapScriptParams(cmds));
                     }
                     break;
 
@@ -1118,6 +1136,26 @@ public class EBISystem {
             }
         }
         return params;
+    }
+    
+    public void clearWebOutput(){
+        webOut = "";
+    }
+    
+    public void webOut(String text){
+        webOut += text;
+    }
+    
+    public String getWebOut(){
+        return webOut;
+    }
+    
+    public void bindVariable(String name, Object value){
+        builder.bindVariable(name, value);
+    }
+    
+    public Object getVariable(String name){
+        return builder.getVariable(name);
     }
 
     public static EBISystem getInstance() {

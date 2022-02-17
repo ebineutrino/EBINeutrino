@@ -148,10 +148,10 @@ class CashRegisterPrinter implements Printable {
 }
 
 int selectedCashRow=-1;
-final EBIAbstractTableModel model = (EBIAbstractTableModel)system.gui.getTable("tableCashRegister","CashRegister").getModel();
-system.gui.getButton("printCash","CashRegister").setEnabled(false)
+final EBIAbstractTableModel model = (EBIAbstractTableModel)system.builder.getTable("tableCashRegister","CashRegister").getModel();
+system.builder.getButton("printCash","CashRegister").setEnabled(false)
 
-system.gui.getTable("tableCashRegister","CashRegister").getSelectionModel().valueChanged={e->
+system.builder.getTable("tableCashRegister","CashRegister").getSelectionModel().valueChanged={e->
     if (e.getValueIsAdjusting()) {
         return;
     }
@@ -159,23 +159,23 @@ system.gui.getTable("tableCashRegister","CashRegister").getSelectionModel().valu
 
     if(lsm.getMinSelectionIndex() != -1){
         try{
-            selectedCashRow = system.gui.getTable("tableCashRegister","CashRegister").convertRowIndexToModel(lsm.getMinSelectionIndex());
+            selectedCashRow = system.builder.getTable("tableCashRegister","CashRegister").convertRowIndexToModel(lsm.getMinSelectionIndex());
         }catch(IndexOutOfBoundsException ex){}
 
     }
     try{
         if (lsm.isSelectionEmpty()) {
-            system.gui.getButton("printCash","CashRegister").setEnabled(false);
+            system.builder.getButton("printCash","CashRegister").setEnabled(false);
         } else if (!model.data[selectedCashRow][0].toString().equals(system.i18n("EBI_LANG_PLEASE_SELECT"))) {
-            system.gui.getButton("printCash","CashRegister").setEnabled(true);
+            system.builder.getButton("printCash","CashRegister").setEnabled(true);
         }
     }catch(ArrayIndexOutOfBoundsException ex){
-        system.gui.getButton("printCash","CashRegister").setEnabled(false);
+        system.builder.getButton("printCash","CashRegister").setEnabled(false);
 
     }
 }
 
-system.gui.getButton("printCash","CashRegister").actionPerformed={
+system.builder.getButton("printCash","CashRegister").actionPerformed={
 
     PrinterJob job = PrinterJob.getPrinterJob();
 
@@ -206,7 +206,7 @@ system.gui.getButton("printCash","CashRegister").actionPerformed={
 }
 
 
-system.gui.getButton("bntSave","CashRegister").actionPerformed={ rCash =0.0;      }
+system.builder.getButton("bntSave","CashRegister").actionPerformed={ rCash =0.0;      }
 
 public def updateReturnCash(val, text){
 
@@ -225,55 +225,55 @@ public def updateReturnCash(val, text){
 
     String txt =  system.globalVariable.get("valueEditCashR").toString().replaceAll("</table>","</table>"+newText)
 
-    system.gui.getEditor("cashView","CashRegister").setText(txt.replaceAll("<table>","<table style='color:#ffffff; font-family: Verdana;'>"))
+    system.builder.getEditor("cashView","CashRegister").setText(txt.replaceAll("<table>","<table style='color:#ffffff; font-family: Verdana;'>"))
 
 }
 
-system.gui.getButton("cashBnt5","CashRegister").actionPerformed={
+system.builder.getButton("cashBnt5","CashRegister").actionPerformed={
 
     rCash += 5
-    updateReturnCash(rCash,system.gui.getEditor("cashView","CashRegister").getText())
+    updateReturnCash(rCash,system.builder.getEditor("cashView","CashRegister").getText())
 }
 
 
-system.gui.getButton("cashBnt10","CashRegister").actionPerformed={
+system.builder.getButton("cashBnt10","CashRegister").actionPerformed={
 
     rCash += 10
-    updateReturnCash(rCash,system.gui.getEditor("cashView","CashRegister").getText())
+    updateReturnCash(rCash,system.builder.getEditor("cashView","CashRegister").getText())
 }
 
 
-system.gui.getButton("cashBnt50","CashRegister").actionPerformed={
+system.builder.getButton("cashBnt50","CashRegister").actionPerformed={
 
     rCash += 50
-    updateReturnCash(rCash,system.gui.getEditor("cashView","CashRegister").getText())
+    updateReturnCash(rCash,system.builder.getEditor("cashView","CashRegister").getText())
 }
 
-system.gui.getButton("cashBnt100","CashRegister").actionPerformed={
+system.builder.getButton("cashBnt100","CashRegister").actionPerformed={
 
     rCash += 100
-    updateReturnCash(rCash,system.gui.getEditor("cashView","CashRegister").getText())
+    updateReturnCash(rCash,system.builder.getEditor("cashView","CashRegister").getText())
 }
 
-system.gui.getButton("cashBnt500","CashRegister").actionPerformed={
+system.builder.getButton("cashBnt500","CashRegister").actionPerformed={
 
     rCash += 500
-    updateReturnCash(rCash,system.gui.getEditor("cashView","CashRegister").getText())
+    updateReturnCash(rCash,system.builder.getEditor("cashView","CashRegister").getText())
 }
 
-system.gui.getButton("cashBnt1000","CashRegister").actionPerformed={
+system.builder.getButton("cashBnt1000","CashRegister").actionPerformed={
     rCash += 1000
-    updateReturnCash(rCash,system.gui.getEditor("cashView","CashRegister").getText())
+    updateReturnCash(rCash,system.builder.getEditor("cashView","CashRegister").getText())
 }
 
-system.gui.getButton("buttonC","CashRegister").actionPerformed={
+system.builder.getButton("buttonC","CashRegister").actionPerformed={
     rCash =0.0
-    updateReturnCash(rCash,system.gui.getEditor("cashView","CashRegister").getText())
+    updateReturnCash(rCash,system.builder.getEditor("cashView","CashRegister").getText())
 }
 
-/*system.gui.getVisualPanel("CashRegister").getPanel().drawRepeatedImageWidth(new ImageIcon("images/cashBG.png").getImage(),
-520,233, system.gui.getVisualPanel("CashRegister").getPanel().getWidth()-10,10,null)
-system.gui.getVisualPanel("CashRegister").getPanel().drawRepeatedImageWidth(new ImageIcon("images/cashBG1.png").getImage(),
+/*system.builder.getVisualPanel("CashRegister").getPanel().drawRepeatedImageWidth(new ImageIcon("images/cashBG.png").getImage(),
+520,233, system.builder.getVisualPanel("CashRegister").getPanel().getWidth()-10,10,null)
+system.builder.getVisualPanel("CashRegister").getPanel().drawRepeatedImageWidth(new ImageIcon("images/cashBG1.png").getImage(),
 155,297, 510,10,null)*/
 
 

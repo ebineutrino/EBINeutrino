@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 
 /**
  * Module management class
@@ -42,7 +41,7 @@ public class EBIModuleHandler {
                 EBISystem.isSaveOrUpdate = false;
                 ebiExtension = null;
                 this.module = null;
-                EBISystem.gui().init();
+                EBISystem.builder().init();
                 EBISystem.hibernate().removeAllHibernateSessions();
                 System.gc();
             }
@@ -62,7 +61,7 @@ public class EBIModuleHandler {
                 EBISystem.isSaveOrUpdate = false;
                 ebiExtension = null;
                 this.module = null;
-                EBISystem.gui().init();
+                EBISystem.builder().init();
                 EBISystem.hibernate().removeAllHibernateSessions();
                 System.gc();
             }

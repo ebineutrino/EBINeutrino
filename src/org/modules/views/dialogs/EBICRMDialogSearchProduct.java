@@ -97,7 +97,7 @@ public class EBICRMDialogSearchProduct {
     }
 
     private void initialzeDialog() {
-        EBISystem.gui().loadGUI("CRMDialog/productSearchDialog.xml");
+        EBISystem.builder().loadGUI("CRMDialog/productSearchDialog.xml");
         try {
             EBISystem.hibernate().openHibernateSession("SEARCH_PRODUCT_SESSION");
         } catch (final Exception e) {
@@ -106,31 +106,31 @@ public class EBICRMDialogSearchProduct {
     }
 
     public void setVisible() {
-        EBISystem.gui().dialog("searchProduct").setTitle(EBISystem.i18n("EBI_LANG_PRODUCT_SEARCH"));
-        EBISystem.gui().vpanel("searchProduct").setModuleTitle(EBISystem.i18n("EBI_LANG_PRODUCT_SEARCH"));
+        EBISystem.builder().dialog("searchProduct").setTitle(EBISystem.i18n("EBI_LANG_PRODUCT_SEARCH"));
+        EBISystem.builder().vpanel("searchProduct").setModuleTitle(EBISystem.i18n("EBI_LANG_PRODUCT_SEARCH"));
 
-        EBISystem.gui().label("category", "searchProduct").setText(EBISystem.i18n("EBI_LANG_CATEGORY"));
-        EBISystem.gui().label("productName", "searchProduct").setText(EBISystem.i18n("EBI_LANG_NAME"));
-        EBISystem.gui().label("productNr", "searchProduct").setText(EBISystem.i18n("EBI_LANG_PRODUCT_NUMBER"));
+        EBISystem.builder().label("category", "searchProduct").setText(EBISystem.i18n("EBI_LANG_CATEGORY"));
+        EBISystem.builder().label("productName", "searchProduct").setText(EBISystem.i18n("EBI_LANG_NAME"));
+        EBISystem.builder().label("productNr", "searchProduct").setText(EBISystem.i18n("EBI_LANG_PRODUCT_NUMBER"));
 
-        EBISystem.gui().getTreeTable("treetableProduct", "searchProduct").setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        EBISystem.builder().getTreeTable("treetableProduct", "searchProduct").setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
-        EBISystem.gui().textField("productNrText", "searchProduct").requestFocus();
-        EBISystem.gui().textField("productNrText", "searchProduct").registerKeyboardAction(new ActionListener() {
+        EBISystem.builder().textField("productNrText", "searchProduct").requestFocus();
+        EBISystem.builder().textField("productNrText", "searchProduct").registerKeyboardAction(new ActionListener() {
             @Override
 			public void actionPerformed(final ActionEvent ev) {
                 searchProduct();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_FOCUSED);
 
-        EBISystem.gui().textField("productNameText", "searchProduct").registerKeyboardAction(new ActionListener() {
+        EBISystem.builder().textField("productNameText", "searchProduct").registerKeyboardAction(new ActionListener() {
             @Override
 			public void actionPerformed(final ActionEvent ev) {
                 searchProduct();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_FOCUSED);
 
-        final TreeSelectionModel rowSM = EBISystem.gui().getTreeTable("treetableProduct", "searchProduct").getTreeSelectionModel();
+        final TreeSelectionModel rowSM = EBISystem.builder().getTreeTable("treetableProduct", "searchProduct").getTreeSelectionModel();
         rowSM.addTreeSelectionListener(new TreeSelectionListener() {
 
             @Override
@@ -139,7 +139,7 @@ public class EBICRMDialogSearchProduct {
                     final TreeSelectionModel lsm = (TreeSelectionModel) e.getSource();
 
                     if (lsm.isSelectionEmpty()) {
-                        EBISystem.gui().button("applyButton", "searchProduct").setEnabled(false);
+                        EBISystem.builder().button("applyButton", "searchProduct").setEnabled(false);
                     } else {
 
                         final javax.swing.tree.TreePath Node = lsm.getLeadSelectionPath();
@@ -149,9 +149,9 @@ public class EBICRMDialogSearchProduct {
                         if(selectedNode != null && selectedNode.getProductID() != null) {
                             if (!selectedNode.getProductID().equals(
                                     EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                                EBISystem.gui().button("applyButton", "searchProduct").setEnabled(true);
+                                EBISystem.builder().button("applyButton", "searchProduct").setEnabled(true);
                             }else{
-                                EBISystem.gui().button("applyButton", "searchProduct").setEnabled(false);
+                                EBISystem.builder().button("applyButton", "searchProduct").setEnabled(false);
                             }
                         }
                     }
@@ -161,8 +161,8 @@ public class EBICRMDialogSearchProduct {
             }
         });
 
-        EBISystem.gui().button("productSearchButton", "searchProduct").setText(EBISystem.i18n("EBI_LANG_SEARCH"));
-        EBISystem.gui().button("productSearchButton", "searchProduct").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("productSearchButton", "searchProduct").setText(EBISystem.i18n("EBI_LANG_SEARCH"));
+        EBISystem.builder().button("productSearchButton", "searchProduct").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
 			public void actionPerformed(final java.awt.event.ActionEvent e) {
@@ -170,9 +170,9 @@ public class EBICRMDialogSearchProduct {
             }
         });
 
-        EBISystem.gui().button("applyButton", "searchProduct").setText(EBISystem.i18n("EBI_LANG_APPLY"));
-        EBISystem.gui().button("applyButton", "searchProduct").setEnabled(false);
-        EBISystem.gui().button("applyButton", "searchProduct").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("applyButton", "searchProduct").setText(EBISystem.i18n("EBI_LANG_APPLY"));
+        EBISystem.builder().button("applyButton", "searchProduct").setEnabled(false);
+        EBISystem.builder().button("applyButton", "searchProduct").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
 			public void actionPerformed(final java.awt.event.ActionEvent e) {
@@ -180,17 +180,17 @@ public class EBICRMDialogSearchProduct {
             }
         });
 
-        EBISystem.gui().button("cancelButton", "searchProduct").setText(EBISystem.i18n("EBI_LANG_CANCEL"));
-        EBISystem.gui().button("cancelButton", "searchProduct").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("cancelButton", "searchProduct").setText(EBISystem.i18n("EBI_LANG_CANCEL"));
+        EBISystem.builder().button("cancelButton", "searchProduct").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
 			public void actionPerformed(final java.awt.event.ActionEvent e) {
-                EBISystem.gui().dialog("searchProduct").setVisible(false);
+                EBISystem.builder().dialog("searchProduct").setVisible(false);
             }
         });
 
-        EBISystem.gui().getTreeTable("treetableProduct", "searchProduct").setTreeTableModel(tabModel);
-        EBISystem.gui().getTreeTable("treetableProduct", "searchProduct").addKeyListener(new java.awt.event.KeyAdapter() {
+        EBISystem.builder().getTreeTable("treetableProduct", "searchProduct").setTreeTableModel(tabModel);
+        EBISystem.builder().getTreeTable("treetableProduct", "searchProduct").addKeyListener(new java.awt.event.KeyAdapter() {
 
             @Override
 			public void keyPressed(final java.awt.event.KeyEvent e) {
@@ -206,7 +206,7 @@ public class EBICRMDialogSearchProduct {
             }
         });
 
-        EBISystem.gui().getTreeTable("treetableProduct", "searchProduct").addMouseListener(new java.awt.event.MouseAdapter() {
+        EBISystem.builder().getTreeTable("treetableProduct", "searchProduct").addMouseListener(new java.awt.event.MouseAdapter() {
 
             @Override
 			public void mouseClicked(final java.awt.event.MouseEvent e) {
@@ -220,15 +220,15 @@ public class EBICRMDialogSearchProduct {
             }
         });
 
-        EBISystem.gui().combo("categoryText", "searchProduct").setModel(new DefaultComboBoxModel(EBICRMProductView.category));
-        EBISystem.gui().combo("categoryText", "searchProduct").registerKeyboardAction(new ActionListener() {
+        EBISystem.builder().combo("categoryText", "searchProduct").setModel(new DefaultComboBoxModel(EBICRMProductView.category));
+        EBISystem.builder().combo("categoryText", "searchProduct").registerKeyboardAction(new ActionListener() {
             @Override
 			public void actionPerformed(final ActionEvent ev) {
                 searchProduct();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_FOCUSED);
 
-        EBISystem.gui().showGUI();
+        EBISystem.builder().showGUI();
     }
 
     private void searchProduct() {
@@ -247,12 +247,12 @@ public class EBICRMDialogSearchProduct {
             boolean param2 = false;
             boolean param3 = false;
 
-            if (!"".equals(EBISystem.gui().textField("productNrText", "searchProduct").getText())) {
+            if (!"".equals(EBISystem.builder().textField("productNrText", "searchProduct").getText())) {
                 param1 = true;
                 strQuery.append(" WHERE PRODUCTNR LIKE ? ");
             }
 
-            if (!"".equals(EBISystem.gui().textField("productNameText", "searchProduct").getText())) {
+            if (!"".equals(EBISystem.builder().textField("productNameText", "searchProduct").getText())) {
                 param2 = true;
                 if (param1 == false) {
                     strQuery.append(" WHERE PRODUCTNAME LIKE ? ");
@@ -262,9 +262,9 @@ public class EBICRMDialogSearchProduct {
             }
 
             if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
-                    equals(EBISystem.gui().combo("categoryText", "searchProduct")
+                    equals(EBISystem.builder().combo("categoryText", "searchProduct")
                             .getEditor().getItem().toString()) &&
-                    !"".equals(EBISystem.gui().combo("categoryText", "searchProduct")
+                    !"".equals(EBISystem.builder().combo("categoryText", "searchProduct")
                                     .getEditor().getItem().toString())) {
 
                 param3 = true;
@@ -281,14 +281,14 @@ public class EBICRMDialogSearchProduct {
 
             final PreparedStatement pst = EBISystem.getInstance().iDB().initPreparedStatement(strQuery.toString());
             if (param1) {
-                pst.setString(1, "%" + EBISystem.gui().textField("productNrText", "searchProduct").getText() + "%");
+                pst.setString(1, "%" + EBISystem.builder().textField("productNrText", "searchProduct").getText() + "%");
             }
             if (param2) {
-                pst.setString(param1 ? 2 : 1, "%" + EBISystem.gui().textField("productNameText", "searchProduct").getText() + "%");
+                pst.setString(param1 ? 2 : 1, "%" + EBISystem.builder().textField("productNameText", "searchProduct").getText() + "%");
             }
             if (param3) {
                 pst.setString((param1 && param2) ? 3 : (param1 || param2) ? 2 : 1,
-                        "%" + EBISystem.gui().combo("categoryText", "searchProduct").getEditor().getItem().toString() + "%");
+                        "%" + EBISystem.builder().combo("categoryText", "searchProduct").getEditor().getItem().toString() + "%");
             }
 
             set = EBISystem.getInstance().iDB().executePreparedQuery(pst);
@@ -330,10 +330,10 @@ public class EBICRMDialogSearchProduct {
                 }
 
                 this.tabModel = new ModelCRMProductSearch(root);
-                EBISystem.gui().getTreeTable("treetableProduct", "searchProduct").setTreeTableModel(tabModel);
-                EBISystem.gui().getTreeTable("treetableProduct", "searchProduct").updateUI();
-                EBISystem.gui().getTreeTable("treetableProduct", "searchProduct").changeSelection(0, 0, false, false);
-                EBISystem.gui().getTreeTable("treetableProduct", "searchProduct").requestFocus();
+                EBISystem.builder().getTreeTable("treetableProduct", "searchProduct").setTreeTableModel(tabModel);
+                EBISystem.builder().getTreeTable("treetableProduct", "searchProduct").updateUI();
+                EBISystem.builder().getTreeTable("treetableProduct", "searchProduct").changeSelection(0, 0, false, false);
+                EBISystem.builder().getTreeTable("treetableProduct", "searchProduct").requestFocus();
                 pst.close();
             } else {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_PRODUCT_NOT_FOUND")).Show(EBIMessage.INFO_MESSAGE);
@@ -375,14 +375,14 @@ public class EBICRMDialogSearchProduct {
             fillProductFromInvoice();
             this.addProduct.fillHTMLForm();
         }
-        if (EBISystem.gui().button("applyButton", "productInsertDialog") != null) {
-            EBISystem.gui().button("applyButton", "productInsertDialog").setEnabled(true);
+        if (EBISystem.builder().button("applyButton", "productInsertDialog") != null) {
+            EBISystem.builder().button("applyButton", "productInsertDialog").setEnabled(true);
 
         }
         if (this.addProduct != null) {
             this.addProduct.canSave = true;
         }
-        EBISystem.gui().dialog("searchProduct").setVisible(false);
+        EBISystem.builder().dialog("searchProduct").setVisible(false);
     }
 
 

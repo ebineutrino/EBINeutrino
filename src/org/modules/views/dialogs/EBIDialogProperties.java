@@ -40,19 +40,19 @@ public class EBIDialogProperties {
     private String pack = "";
 
     public EBIDialogProperties(final Crmproduct prd, final Crmproductdimension dims) {
-        EBISystem.gui().loadGUI("CRMDialog/propertiesDialog.xml");
+        EBISystem.builder().loadGUI("CRMDialog/propertiesDialog.xml");
         product = prd;
         EBISystem.hibernate().openHibernateSession("EBI_PROPERTIES");
         EBISystem.hibernate().transaction("EBI_PROPERTIES").begin();
-        EBISystem.gui().combo("propertiesText", "propertiesDialog").setModel(new javax.swing.DefaultComboBoxModel(productDimension));
+        EBISystem.builder().combo("propertiesText", "propertiesDialog").setModel(new javax.swing.DefaultComboBoxModel(productDimension));
         if (dims != null) {
             dimension = dims;
-            EBISystem.gui().textArea("propertiesValueText", "propertiesDialog").setText(dims.getValue());
-            EBISystem.gui().combo("propertiesText", "propertiesDialog").setSelectedItem(dims.getName());
+            EBISystem.builder().textArea("propertiesValueText", "propertiesDialog").setText(dims.getValue());
+            EBISystem.builder().combo("propertiesText", "propertiesDialog").setSelectedItem(dims.getName());
 
-            if (EBISystem.gui().combo("propertiesText", "propertiesDialog").getEditor().getItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                EBISystem.gui().combo("propertiesText", "propertiesDialog").insertItemAt(dims.getName(), 1);
-                EBISystem.gui().combo("propertiesText", "propertiesDialog").setSelectedIndex(1);
+            if (EBISystem.builder().combo("propertiesText", "propertiesDialog").getEditor().getItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
+                EBISystem.builder().combo("propertiesText", "propertiesDialog").insertItemAt(dims.getName(), 1);
+                EBISystem.builder().combo("propertiesText", "propertiesDialog").setSelectedIndex(1);
             }
             isEdit = true;
         }
@@ -66,13 +66,13 @@ public class EBIDialogProperties {
         EBISystem.hibernate().transaction("EBI_PROPERTIES").begin();
         if (isCost) {
             projectCosts = (Crmprojectcost) prop;
-            EBISystem.gui().loadGUI("CRMDialog/costValueDialog.xml");
-            EBISystem.gui().combo("propertiesText", "costValueDialog").setModel(new javax.swing.DefaultComboBoxModel(projectCost));
+            EBISystem.builder().loadGUI("CRMDialog/costValueDialog.xml");
+            EBISystem.builder().combo("propertiesText", "costValueDialog").setModel(new javax.swing.DefaultComboBoxModel(projectCost));
             isProjectCost = true;
         } else {
             projectProperties = (Crmprojectprop) prop;
-            EBISystem.gui().loadGUI("CRMDialog/projectPropertiesDialog.xml");
-            EBISystem.gui().combo("propertiesText", "projectPropertiesDialog").setModel(new javax.swing.DefaultComboBoxModel(projectProperty));
+            EBISystem.builder().loadGUI("CRMDialog/projectPropertiesDialog.xml");
+            EBISystem.builder().combo("propertiesText", "projectPropertiesDialog").setModel(new javax.swing.DefaultComboBoxModel(projectProperty));
             isProjectProperties = true;
         }
 
@@ -82,20 +82,20 @@ public class EBIDialogProperties {
             if (isCost) {
                 name = ((Crmprojectcost) prop).getName();
                 value = ((Crmprojectcost) prop).getValue();
-                EBISystem.gui().FormattedField("nameValue", "costValueDialog").setValue(value);
-                EBISystem.gui().combo("propertiesText", "costValueDialog").setSelectedItem(name);
-                if (EBISystem.gui().combo("propertiesText", "costValueDialog").getEditor().getItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().combo("propertiesText", "costValueDialog").insertItemAt(name, 1);
-                    EBISystem.gui().combo("propertiesText", "costValueDialog").setSelectedIndex(1);
+                EBISystem.builder().FormattedField("nameValue", "costValueDialog").setValue(value);
+                EBISystem.builder().combo("propertiesText", "costValueDialog").setSelectedItem(name);
+                if (EBISystem.builder().combo("propertiesText", "costValueDialog").getEditor().getItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
+                    EBISystem.builder().combo("propertiesText", "costValueDialog").insertItemAt(name, 1);
+                    EBISystem.builder().combo("propertiesText", "costValueDialog").setSelectedIndex(1);
                 }
             } else {
                 name = ((Crmprojectprop) prop).getName();
                 value = ((Crmprojectprop) prop).getValue();
-                EBISystem.gui().textArea("propertiesValueText", "projectPropertiesDialog").setText(value.toString());
-                EBISystem.gui().combo("propertiesText", "projectPropertiesDialog").setSelectedItem(name);
-                if (EBISystem.gui().combo("propertiesText", "projectPropertiesDialog").getEditor().getItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().combo("propertiesText", "projectPropertiesDialog").insertItemAt(name, 1);
-                    EBISystem.gui().combo("propertiesText", "projectPropertiesDialog").setSelectedIndex(1);
+                EBISystem.builder().textArea("propertiesValueText", "projectPropertiesDialog").setText(value.toString());
+                EBISystem.builder().combo("propertiesText", "projectPropertiesDialog").setSelectedItem(name);
+                if (EBISystem.builder().combo("propertiesText", "projectPropertiesDialog").getEditor().getItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
+                    EBISystem.builder().combo("propertiesText", "projectPropertiesDialog").insertItemAt(name, 1);
+                    EBISystem.builder().combo("propertiesText", "projectPropertiesDialog").setSelectedIndex(1);
                 }
             }
             isEdit = true;
@@ -106,11 +106,11 @@ public class EBIDialogProperties {
 
         if (!isProjectCost) {
             pack = "propertiesDialog";
-            EBISystem.gui().dialog(pack).setTitle(EBISystem.i18n("EBI_LANG_PROPERTIES"));
-            EBISystem.gui().vpanel(pack).setModuleTitle(EBISystem.i18n("EBI_LANG_PROPERTIES"));
+            EBISystem.builder().dialog(pack).setTitle(EBISystem.i18n("EBI_LANG_PROPERTIES"));
+            EBISystem.builder().vpanel(pack).setModuleTitle(EBISystem.i18n("EBI_LANG_PROPERTIES"));
 
-            EBISystem.gui().label("value", pack).setText(EBISystem.i18n("EBI_LANG_VALUE"));
-            EBISystem.gui().label("properties", pack).setText(EBISystem.i18n("EBI_LANG_PROPERTIES"));
+            EBISystem.builder().label("value", pack).setText(EBISystem.i18n("EBI_LANG_VALUE"));
+            EBISystem.builder().label("properties", pack).setText(EBISystem.i18n("EBI_LANG_PROPERTIES"));
 
         } else {
             pack = "costValueDialog";
@@ -118,24 +118,24 @@ public class EBIDialogProperties {
             taxFormat.setMinimumFractionDigits(2);
             taxFormat.setMaximumFractionDigits(3);
 
-            EBISystem.gui().FormattedField("nameValue", pack).setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(taxFormat)));
+            EBISystem.builder().FormattedField("nameValue", pack).setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(taxFormat)));
         }
 
-        EBISystem.gui().button("closeButton", pack).setText(EBISystem.i18n("EBI_LANG_CANCEL"));
-        EBISystem.gui().button("closeButton", pack).addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("closeButton", pack).setText(EBISystem.i18n("EBI_LANG_CANCEL"));
+        EBISystem.builder().button("closeButton", pack).addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                EBISystem.gui().dialog(pack).setVisible(false);
+                EBISystem.builder().dialog(pack).setVisible(false);
                 cancel = true;
             }
         });
 
-        EBISystem.gui().button("applyButton", pack).setText(EBISystem.i18n("EBI_LANG_APPLY"));
+        EBISystem.builder().button("applyButton", pack).setText(EBISystem.i18n("EBI_LANG_APPLY"));
         if (!isEdit) {
-            EBISystem.gui().button("applyButton", pack).setEnabled(false);
+            EBISystem.builder().button("applyButton", pack).setEnabled(false);
         }
 
-        EBISystem.gui().button("applyButton", pack).addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("applyButton", pack).addActionListener(new java.awt.event.ActionListener() {
 
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
@@ -159,15 +159,15 @@ public class EBIDialogProperties {
             }
         });
 
-        EBISystem.gui().combo("propertiesText", pack).addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().combo("propertiesText", pack).addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui().combo("propertiesText", pack).getEditor().getItem().toString())) {
-                    EBISystem.gui().button("applyButton", pack).setEnabled(true);
+                if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.builder().combo("propertiesText", pack).getEditor().getItem().toString())) {
+                    EBISystem.builder().button("applyButton", pack).setEnabled(true);
                 }
             }
         });
-        EBISystem.gui().showGUI();
+        EBISystem.builder().showGUI();
     }
 
     private void saveProductProperties() {
@@ -178,14 +178,14 @@ public class EBIDialogProperties {
         dimension.setCrmproduct(EBISystem.getModule().getEBICRMProductPane().getDataControlProduct().getProduct());
         dimension.setCreateddate(new Date());
         dimension.setCreatedfrom(EBISystem.ebiUser);
-        dimension.setName(EBISystem.gui().combo("propertiesText", "propertiesDialog").getEditor().getItem().toString());
-        dimension.setValue(EBISystem.gui().textArea("propertiesValueText", "propertiesDialog").getText());
+        dimension.setName(EBISystem.builder().combo("propertiesText", "propertiesDialog").getEditor().getItem().toString());
+        dimension.setValue(EBISystem.builder().textArea("propertiesValueText", "propertiesDialog").getText());
         product.getCrmproductdimensions().add(dimension);
         EBISystem.getModule().getEBICRMProductPane().showDimension();
 
-        EBISystem.gui().textArea("propertiesValueText", "propertiesDialog").setText("");
-        EBISystem.gui().combo("propertiesText", "propertiesDialog").setSelectedIndex(0);
-        EBISystem.gui().combo("propertiesText", "propertiesDialog").grabFocus();
+        EBISystem.builder().textArea("propertiesValueText", "propertiesDialog").setText("");
+        EBISystem.builder().combo("propertiesText", "propertiesDialog").setSelectedIndex(0);
+        EBISystem.builder().combo("propertiesText", "propertiesDialog").grabFocus();
     }
  
     private void saveProjectProperties() {
@@ -197,8 +197,8 @@ public class EBIDialogProperties {
         projectProperties.setCrmprojecttask(projectTask);
         projectProperties.setCreateddate(new Date());
         projectProperties.setCreatedfrom(EBISystem.ebiUser);
-        projectProperties.setName(EBISystem.gui().combo("propertiesText", "propertiesDialog").getEditor().getItem().toString());
-        projectProperties.setValue(EBISystem.gui().textArea("propertiesValueText", "propertiesDialog").getText());
+        projectProperties.setName(EBISystem.builder().combo("propertiesText", "propertiesDialog").getEditor().getItem().toString());
+        projectProperties.setValue(EBISystem.builder().textArea("propertiesValueText", "propertiesDialog").getText());
         projectTask.getCrmprojectprops().add(projectProperties);
         EBISystem.getModule().getProjectPane().getProjTask().showProperties();
     }
@@ -211,14 +211,14 @@ public class EBIDialogProperties {
         projectCosts.setCrmprojecttask(projectTask);
         projectCosts.setCreateddate(new Date());
         projectCosts.setCreatedfrom(EBISystem.ebiUser);
-        projectCosts.setName(EBISystem.gui().combo("propertiesText", "costValueDialog").getEditor().getItem().toString());
-        projectCosts.setValue(Double.parseDouble(EBISystem.gui().FormattedField("nameValue", "costValueDialog").getValue().toString()));
+        projectCosts.setName(EBISystem.builder().combo("propertiesText", "costValueDialog").getEditor().getItem().toString());
+        projectCosts.setValue(Double.parseDouble(EBISystem.builder().FormattedField("nameValue", "costValueDialog").getValue().toString()));
         projectTask.getCrmprojectcosts().add(projectCosts);
         EBISystem.getModule().getProjectPane().getProjTask().showCost();
     }
 
     private boolean validateInput() {
-        if ("".equals(EBISystem.gui().textArea("propertiesValueText", "propertiesDialog").getText())) {
+        if ("".equals(EBISystem.builder().textArea("propertiesValueText", "propertiesDialog").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_INSERT_PROPERTY_VALUE")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }
@@ -226,7 +226,7 @@ public class EBIDialogProperties {
     }
 
     private boolean validateInputCost() {
-        if ("".equals(EBISystem.gui().FormattedField("nameValue", "costValueDialog").getText())) {
+        if ("".equals(EBISystem.builder().FormattedField("nameValue", "costValueDialog").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_INSERT_PROPERTY_VALUE")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }

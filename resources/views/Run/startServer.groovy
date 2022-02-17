@@ -31,22 +31,22 @@ StandardContext ctx = (StandardContext) tomcat.addWebapp("/", resourcePath+"web"
 WebResourceRoot resources = new StandardRoot(ctx);
 resources.addPreResources(new DirResourceSet(resources, "/reports", resourcePath+"reports", "/"));
 resources.addPreResources(new DirResourceSet(resources, "/images", resourcePath+"images", "/"));
-
 ctx.setResources(resources);
 
-Tomcat.addServlet(ctx, "ebi", new HttpServlet() {
-    @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/plain");
-        try (Writer writer = response.getWriter()) {
-            writer.write("Hello, World from EBI Neutrino Software!");
-            writer.flush();
-        }
+system.listCodeFile().each{ v-> 
+    if(v.isFile()){
+        String servletName = v.getName().replace(".groovy", "");
+        Tomcat.addServlet(ctx, servletName, new HttpServlet() {
+                @Override
+                protected void service(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
+                    system.bindVariable("request",request);
+                    system.bindVariable("response",response);
+                    system.builder.excScript("run " + servletName, null);
+                }
+            }).setAsyncSupported(true);
+        ctx.addServletMappingDecoded("/"+servletName, servletName);
     }
-});
-ctx.addServletMappingDecoded("/ebi", "ebi");
+}
 tomcat.start();
 //tomcat.getServer().await();
-//println "hallo world: "+resourcePath;

@@ -31,57 +31,57 @@ public class EBICRMAddressView {
     private int selectedRow = -1;
 
     public void initializeAction() {
-        EBISystem.getInstance().getIEBIGUIRendererInstance().textField("filterTableText", "Address").addKeyListener(new KeyListener() {
+        EBISystem.getInstance().getIEBIBuilderInstance().textField("filterTableText", "Address").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.getInstance().getIEBIGUIRendererInstance().table("companyAddess", "Address")
-                        .setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui()
+                EBISystem.getInstance().getIEBIBuilderInstance().table("companyAddess", "Address")
+                        .setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder()
                                 .textField("filterTableText", "Address").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.getInstance().getIEBIGUIRendererInstance().table("companyAddess", "Address")
+                EBISystem.getInstance().getIEBIBuilderInstance().table("companyAddess", "Address")
                         .setRowFilter(RowFilters
-                                .regexFilter("(?i)" + EBISystem.getInstance().getIEBIGUIRendererInstance()
+                                .regexFilter("(?i)" + EBISystem.getInstance().getIEBIBuilderInstance()
                                         .textField("filterTableText", "Address").getText()));
             }
         });
 
-        EBISystem.gui().table("companyAddess", "Address").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("companyAddess", "Address").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("companyAddess", "Address").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("companyAddess", "Address").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedRow = EBISystem.gui().table("companyAddess", "Address")
+                    selectedRow = EBISystem.builder().table("companyAddess", "Address")
                             .convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (tabModel.data.length > selectedRow) {
                     if (lsm.isSelectionEmpty()) {
-                        EBISystem.gui().button("editAddress", "Address").setEnabled(false);
-                        EBISystem.gui().button("deleteAddress", "Address").setEnabled(false);
-                        EBISystem.gui().button("historyAddress", "Address").setEnabled(false);
-                        EBISystem.gui().button("copyAddress", "Address").setEnabled(false);
+                        EBISystem.builder().button("editAddress", "Address").setEnabled(false);
+                        EBISystem.builder().button("deleteAddress", "Address").setEnabled(false);
+                        EBISystem.builder().button("historyAddress", "Address").setEnabled(false);
+                        EBISystem.builder().button("copyAddress", "Address").setEnabled(false);
                     } else if (!tabModel.data[selectedRow][0].toString()
                             .equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                        EBISystem.gui().button("editAddress", "Address").setEnabled(true);
-                        EBISystem.gui().button("deleteAddress", "Address").setEnabled(true);
-                        EBISystem.gui().button("historyAddress", "Address").setEnabled(true);
-                        EBISystem.gui().button("copyAddress", "Address").setEnabled(true);
+                        EBISystem.builder().button("editAddress", "Address").setEnabled(true);
+                        EBISystem.builder().button("deleteAddress", "Address").setEnabled(true);
+                        EBISystem.builder().button("historyAddress", "Address").setEnabled(true);
+                        EBISystem.builder().button("copyAddress", "Address").setEnabled(true);
                     }
                 }
             }
         });
 
-        EBISystem.gui().table("companyAddess", "Address").addKeyAction(new EBIUICallback() {
+        EBISystem.builder().table("companyAddess", "Address").addKeyAction(new EBIUICallback() {
             @Override
             public void tableKeyUp(int selRow) {
                 super.tableKeyUp(selRow);
@@ -108,13 +108,13 @@ public class EBICRMAddressView {
             }
         });
 
-        EBISystem.gui().table("companyAddess", "Address").setMouseCallback(new MouseAdapter() {
+        EBISystem.builder().table("companyAddess", "Address").setMouseCallback(new MouseAdapter() {
             @Override
             public void mouseReleased(final java.awt.event.MouseEvent e) {
-                if (EBISystem.gui().table("companyAddess", "Address")
+                if (EBISystem.builder().table("companyAddess", "Address")
                         .rowAtPoint(e.getPoint()) != -1) {
-                    selectedRow = EBISystem.gui().table("companyAddess", "Address")
-                            .convertRowIndexToModel(EBISystem.gui()
+                    selectedRow = EBISystem.builder().table("companyAddess", "Address")
+                            .convertRowIndexToModel(EBISystem.builder()
                                     .table("companyAddess", "Address").rowAtPoint(e.getPoint()));
                 }
                 editAddress();
@@ -127,20 +127,20 @@ public class EBICRMAddressView {
 
         if (reload) {
             tabModel = new ModelCRMAddress();
-            EBISystem.gui().table("companyAddess", "Address").setModel(tabModel);
+            EBISystem.builder().table("companyAddess", "Address").setModel(tabModel);
         }
 
-        EBISystem.gui().vpanel("Address").setCreatedDate(EBISystem.getInstance().getDateToString(new java.util.Date()));
-        EBISystem.gui().vpanel("Address").setCreatedFrom(EBISystem.ebiUser);
-        EBISystem.gui().vpanel("Address").setChangedDate("");
-        EBISystem.gui().vpanel("Address").setChangedFrom("");
-        EBISystem.gui().combo("addressTypeText", "Address").setModel(new javax.swing.DefaultComboBoxModel(AddressType));
-        EBISystem.gui().combo("addressTypeText", "Address").setEditable(true);
-        EBISystem.gui().textField("streetText", "Address").setText("");
-        EBISystem.gui().textField("zipText", "Address").setText("");
-        EBISystem.gui().textField("LocationText", "Address").setText("");
-        EBISystem.gui().textField("postcodeText", "Address").setText("");
-        EBISystem.gui().textField("countryText", "Address").setText("");
+        EBISystem.builder().vpanel("Address").setCreatedDate(EBISystem.getInstance().getDateToString(new java.util.Date()));
+        EBISystem.builder().vpanel("Address").setCreatedFrom(EBISystem.ebiUser);
+        EBISystem.builder().vpanel("Address").setChangedDate("");
+        EBISystem.builder().vpanel("Address").setChangedFrom("");
+        EBISystem.builder().combo("addressTypeText", "Address").setModel(new javax.swing.DefaultComboBoxModel(AddressType));
+        EBISystem.builder().combo("addressTypeText", "Address").setEditable(true);
+        EBISystem.builder().textField("streetText", "Address").setText("");
+        EBISystem.builder().textField("zipText", "Address").setText("");
+        EBISystem.builder().textField("LocationText", "Address").setText("");
+        EBISystem.builder().textField("postcodeText", "Address").setText("");
+        EBISystem.builder().textField("countryText", "Address").setText("");
     }
 
     public void editAddress() {
@@ -185,10 +185,10 @@ public class EBICRMAddressView {
             return false;
         }
         EBISystem.showInActionStatus("Address");
-        int row = EBISystem.gui().table("companyAddess", "Address").getSelectedRow();
+        int row = EBISystem.builder().table("companyAddess", "Address").getSelectedRow();
         Integer id = addressDataControl.dataStore();
         addressDataControl.dataShow(id);
-        EBISystem.gui().table("companyAddess", "Address").changeSelection(row, 0, false, false);
+        EBISystem.builder().table("companyAddess", "Address").changeSelection(row, 0, false, false);
         return true;
     }
 
@@ -201,18 +201,18 @@ public class EBICRMAddressView {
 
     private boolean validateInput() {
         boolean ret = true;
-        if (EBISystem.gui().combo("addressTypeText", "Address").getSelectedIndex() == 0) {
+        if (EBISystem.builder().combo("addressTypeText", "Address").getSelectedIndex() == 0) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_SELECT_ADRESS_TYPE")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if (EBISystem.gui().textField("streetText", "Address").getText().equals("")) {
+        } else if (EBISystem.builder().textField("streetText", "Address").getText().equals("")) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_STREET"))
                     .Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if ("".equals(EBISystem.gui().textField("LocationText", "Address").getText())) {
+        } else if ("".equals(EBISystem.builder().textField("LocationText", "Address").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_LOCATION"))
                     .Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if ("".equals(EBISystem.gui().textField("zipText", "Address").getText())) {
+        } else if ("".equals(EBISystem.builder().textField("zipText", "Address").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_ZIP"))
                     .Show(EBIMessage.ERROR_MESSAGE);
             ret = false;

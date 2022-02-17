@@ -47,28 +47,28 @@ public class EBICRMProblemSolutionView {
 
     public void initializeAction() {
 
-        EBISystem.gui().textField("filterTableText", "Prosol").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("filterTableText", "Prosol").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("prosolTable", "Prosol").setRowFilter(RowFilters.regexFilter(
-                        "(?i)" + EBISystem.gui().textField("filterTableText", "Prosol").getText()));
+                EBISystem.builder().table("prosolTable", "Prosol").setRowFilter(RowFilters.regexFilter(
+                        "(?i)" + EBISystem.builder().textField("filterTableText", "Prosol").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("prosolTable", "Prosol").setRowFilter(RowFilters.regexFilter(
-                        "(?i)" + EBISystem.gui().textField("filterTableText", "Prosol").getText()));
+                EBISystem.builder().table("prosolTable", "Prosol").setRowFilter(RowFilters.regexFilter(
+                        "(?i)" + EBISystem.builder().textField("filterTableText", "Prosol").getText()));
             }
         });
 
-        EBISystem.gui().combo("prosolStatusText", "Prosol").setModel(new DefaultComboBoxModel(prosolStatus));
-        EBISystem.gui().combo("prosolTypeText", "Prosol").setModel(new DefaultComboBoxModel(prosolType));
-        EBISystem.gui().combo("prosolCategoryText", "Prosol").setModel(new DefaultComboBoxModel(prosolCategory));
-        EBISystem.gui().combo("prosolClassificationText", "Prosol").setModel(new DefaultComboBoxModel(prosolClassification));
+        EBISystem.builder().combo("prosolStatusText", "Prosol").setModel(new DefaultComboBoxModel(prosolStatus));
+        EBISystem.builder().combo("prosolTypeText", "Prosol").setModel(new DefaultComboBoxModel(prosolType));
+        EBISystem.builder().combo("prosolCategoryText", "Prosol").setModel(new DefaultComboBoxModel(prosolCategory));
+        EBISystem.builder().combo("prosolClassificationText", "Prosol").setModel(new DefaultComboBoxModel(prosolClassification));
 
         /**
          * ***********************************************************************************
@@ -77,21 +77,21 @@ public class EBICRMProblemSolutionView {
         /**
          * ***********************************************************************************
          */
-        EBISystem.gui().table("prosolTableDocument", "Prosol").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("prosolTableDocument", "Prosol").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("prosolTableDocument", "Prosol").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("prosolTableDocument", "Prosol").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.gui().table("prosolTableDocument", "Prosol").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedDocRow = EBISystem.builder().table("prosolTableDocument", "Prosol").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("showprosolDoc", "Prosol").setEnabled(false);
-                    EBISystem.gui().button("deleteprosolDoc", "Prosol").setEnabled(false);
+                    EBISystem.builder().button("showprosolDoc", "Prosol").setEnabled(false);
+                    EBISystem.builder().button("deleteprosolDoc", "Prosol").setEnabled(false);
                 } else if (!tabModDoc.data[selectedDocRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("showprosolDoc", "Prosol").setEnabled(true);
-                    EBISystem.gui().button("deleteprosolDoc", "Prosol").setEnabled(true);
+                    EBISystem.builder().button("showprosolDoc", "Prosol").setEnabled(true);
+                    EBISystem.builder().button("deleteprosolDoc", "Prosol").setEnabled(true);
                 }
             }
         });
@@ -106,7 +106,7 @@ public class EBICRMProblemSolutionView {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                final TableColumn col7 = EBISystem.gui().table("tableprosolProduct", "Prosol").getColumnModel().getColumn(4);
+                final TableColumn col7 = EBISystem.builder().table("tableprosolProduct", "Prosol").getColumnModel().getColumn(4);
                 col7.setCellRenderer(new DefaultTableCellRenderer() {
                     @Override
                     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected,
@@ -121,22 +121,22 @@ public class EBICRMProblemSolutionView {
             }
         });
 
-        EBISystem.gui().table("tableprosolProduct", "Prosol").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("tableprosolProduct", "Prosol").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("tableprosolProduct", "Prosol").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("tableprosolProduct", "Prosol").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedProductRow = EBISystem.gui().table("tableprosolProduct", "Prosol")
+                    selectedProductRow = EBISystem.builder().table("tableprosolProduct", "Prosol")
                             .convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("deleteprosolProduct", "Prosol").setEnabled(false);
+                    EBISystem.builder().button("deleteprosolProduct", "Prosol").setEnabled(false);
                 } else if (!tabModProduct.data[selectedProductRow][0].toString()
                         .equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("deleteprosolProduct", "Prosol").setEnabled(true);
+                    EBISystem.builder().button("deleteprosolProduct", "Prosol").setEnabled(true);
                 }
             }
         });
@@ -148,10 +148,10 @@ public class EBICRMProblemSolutionView {
         /**
          * ***********************************************************************************
          */
-        EBISystem.gui().table("prosolTable", "Prosol").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("prosolTable", "Prosol").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // jTableAvalprosol.setDefaultRenderer(Object.class, new
         // MyOwnCellRederer(false));
-        EBISystem.gui().table("prosolTable", "Prosol").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("prosolTable", "Prosol").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
@@ -159,30 +159,30 @@ public class EBICRMProblemSolutionView {
 
                 if (lsm.getMinSelectionIndex() != -1) {
                     try {
-                        selectedprosolRow = EBISystem.gui().table("prosolTable", "Prosol")
+                        selectedprosolRow = EBISystem.builder().table("prosolTable", "Prosol")
                                 .convertRowIndexToModel(lsm.getMinSelectionIndex());
                     } catch (final IndexOutOfBoundsException ex) {
                     }
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("editprosol", "Prosol").setEnabled(false);
-                    EBISystem.gui().button("reportprosol", "Prosol").setEnabled(false);
-                    EBISystem.gui().button("deleteprosol", "Prosol").setEnabled(false);
-                    EBISystem.gui().button("historyprosol", "Prosol").setEnabled(false);
-                    EBISystem.gui().button("copyprosol", "Prosol").setEnabled(false);
+                    EBISystem.builder().button("editprosol", "Prosol").setEnabled(false);
+                    EBISystem.builder().button("reportprosol", "Prosol").setEnabled(false);
+                    EBISystem.builder().button("deleteprosol", "Prosol").setEnabled(false);
+                    EBISystem.builder().button("historyprosol", "Prosol").setEnabled(false);
+                    EBISystem.builder().button("copyprosol", "Prosol").setEnabled(false);
                 } else if (!tabModProsol.data[selectedprosolRow][0].toString()
                         .equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("editprosol", "Prosol").setEnabled(true);
-                    EBISystem.gui().button("reportprosol", "Prosol").setEnabled(true);
-                    EBISystem.gui().button("deleteprosol", "Prosol").setEnabled(true);
-                    EBISystem.gui().button("historyprosol", "Prosol").setEnabled(true);
-                    EBISystem.gui().button("copyprosol", "Prosol").setEnabled(true);
+                    EBISystem.builder().button("editprosol", "Prosol").setEnabled(true);
+                    EBISystem.builder().button("reportprosol", "Prosol").setEnabled(true);
+                    EBISystem.builder().button("deleteprosol", "Prosol").setEnabled(true);
+                    EBISystem.builder().button("historyprosol", "Prosol").setEnabled(true);
+                    EBISystem.builder().button("copyprosol", "Prosol").setEnabled(true);
                 }
             }
         });
 
-        EBISystem.gui().table("prosolTable", "Prosol").addKeyAction(new EBIUICallback() {
+        EBISystem.builder().table("prosolTable", "Prosol").addKeyAction(new EBIUICallback() {
             @Override
             public void tableKeyUp(int selRow) {
                 super.tableKeyUp(selRow);
@@ -211,12 +211,12 @@ public class EBICRMProblemSolutionView {
         }
         );
 
-        EBISystem.gui().table("prosolTable", "Prosol").setMouseCallback(new MouseAdapter() {
+        EBISystem.builder().table("prosolTable", "Prosol").setMouseCallback(new MouseAdapter() {
             @Override
             public void mouseReleased(final java.awt.event.MouseEvent e) {
-                if (EBISystem.gui().table("prosolTable", "Prosol").rowAtPoint(e.getPoint()) > -1) {
-                    selectedprosolRow = EBISystem.gui().table("prosolTable", "Prosol").convertRowIndexToModel(
-                            EBISystem.gui().table("prosolTable", "Prosol").rowAtPoint(e.getPoint()));
+                if (EBISystem.builder().table("prosolTable", "Prosol").rowAtPoint(e.getPoint()) > -1) {
+                    selectedprosolRow = EBISystem.builder().table("prosolTable", "Prosol").convertRowIndexToModel(
+                            EBISystem.builder().table("prosolTable", "Prosol").rowAtPoint(e.getPoint()));
                 }
                 if (selectedprosolRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT")
                         .equals(tabModProsol.data[selectedprosolRow][0].toString())) {
@@ -234,23 +234,23 @@ public class EBICRMProblemSolutionView {
             tabModProduct = new ModelProsolPosition();
             tabModProsol = new ModelProblemSolution();
             dataControlProsol = new ControlProblemSolution();
-            EBISystem.gui().table("prosolTableDocument", "Prosol").setModel(tabModDoc);
-            EBISystem.gui().table("tableprosolProduct", "Prosol").setModel(tabModProduct);
-            EBISystem.gui().table("prosolTable", "Prosol").setModel(tabModProsol);
+            EBISystem.builder().table("prosolTableDocument", "Prosol").setModel(tabModDoc);
+            EBISystem.builder().table("tableprosolProduct", "Prosol").setModel(tabModProduct);
+            EBISystem.builder().table("prosolTable", "Prosol").setModel(tabModProsol);
         }
 
         EBISystem.hibernate().openHibernateSession("PROSOL_SESSION");
 
-        EBISystem.gui().vpanel("Prosol").setCreatedFrom(EBISystem.ebiUser);
-        EBISystem.gui().vpanel("Prosol").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
-        EBISystem.gui().vpanel("Prosol").setChangedFrom("");
-        EBISystem.gui().vpanel("Prosol").setChangedDate("");
-        EBISystem.gui().textField("prosolNrText", "Prosol").setText("");
-        EBISystem.gui().textField("prosolNameText", "Prosol").setText("");
-        EBISystem.gui().textArea("prosolDescriptionText", "Prosol").setText("");
-        EBISystem.gui().button("showprosolDoc", "Prosol").setEnabled(false);
-        EBISystem.gui().button("deleteprosolDoc", "Prosol").setEnabled(false);
-        EBISystem.gui().button("deleteprosolProduct", "Prosol").setEnabled(false);
+        EBISystem.builder().vpanel("Prosol").setCreatedFrom(EBISystem.ebiUser);
+        EBISystem.builder().vpanel("Prosol").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
+        EBISystem.builder().vpanel("Prosol").setChangedFrom("");
+        EBISystem.builder().vpanel("Prosol").setChangedDate("");
+        EBISystem.builder().textField("prosolNrText", "Prosol").setText("");
+        EBISystem.builder().textField("prosolNameText", "Prosol").setText("");
+        EBISystem.builder().textArea("prosolDescriptionText", "Prosol").setText("");
+        EBISystem.builder().button("showprosolDoc", "Prosol").setEnabled(false);
+        EBISystem.builder().button("deleteprosolDoc", "Prosol").setEnabled(false);
+        EBISystem.builder().button("deleteprosolProduct", "Prosol").setEnabled(false);
     }
 
     public void newDocs() {
@@ -343,10 +343,10 @@ public class EBICRMProblemSolutionView {
 
     private boolean validateInput() {
         boolean ret = true;
-        if ("".equals(EBISystem.gui().textField("prosolNrText", "Prosol").getText())) {
+        if ("".equals(EBISystem.builder().textField("prosolNrText", "Prosol").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_NAME")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if (EBISystem.gui().combo("prosolStatusText", "Prosol").getSelectedIndex() == 0) {
+        } else if (EBISystem.builder().combo("prosolStatusText", "Prosol").getSelectedIndex() == 0) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_SELECT_STATUS"))
                     .Show(EBIMessage.ERROR_MESSAGE);
             ret = false;

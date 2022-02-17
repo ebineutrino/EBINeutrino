@@ -458,9 +458,9 @@ public class EBIReportSystem implements IEBIReportSystem {
                     String subject = "";
                     String bodyText = "";
 
-                    if (EBISystem.gui().existView("sendEMailMessage")) {
-                        subject = EBISystem.gui().textField("SubjectText", "sendEMailMessage").getText();
-                        bodyText = EBISystem.gui().getEditor("MessageAreaText", "sendEMailMessage").getText();
+                    if (EBISystem.builder().existView("sendEMailMessage")) {
+                        subject = EBISystem.builder().textField("SubjectText", "sendEMailMessage").getText();
+                        bodyText = EBISystem.builder().getEditor("MessageAreaText", "sendEMailMessage").getText();
                     }
 
                     final HashMap<String, String> EMAIL_PARAM = new HashMap<String, String>();
@@ -469,10 +469,10 @@ public class EBIReportSystem implements IEBIReportSystem {
                     EMAIL_PARAM.put("_BODY", bodyText);
                     EMAIL_PARAM.put("_ATTACHMENT", fileToRet);
 
-                    EBISystem.gui().addScriptBean("groovy",
+                    EBISystem.builder().addScriptBean("groovy",
                             "Run/sendEMailViaClient.groovy", "groovy", "", "EMail");
                     
-                    EBISystem.gui().excScript("EMail", EMAIL_PARAM);
+                    EBISystem.builder().excScript("EMail", EMAIL_PARAM);
                 }
 
             } else {

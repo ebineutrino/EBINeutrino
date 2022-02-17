@@ -34,15 +34,15 @@ public class ControlAddress {
                 address.setChangedfrom(EBISystem.ebiUser);
             }
 
-            if (EBISystem.gui().combo("addressTypeText", "Address").getEditor().getItem() != null) {
-                address.setAddresstype(EBISystem.gui().combo("addressTypeText", "Address").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("addressTypeText", "Address").getEditor().getItem() != null) {
+                address.setAddresstype(EBISystem.builder().combo("addressTypeText", "Address").getEditor().getItem().toString());
             }
 
-            address.setStreet(EBISystem.gui().textField("streetText", "Address").getText());
-            address.setZip(EBISystem.gui().textField("zipText", "Address").getText());
-            address.setLocation(EBISystem.gui().textField("LocationText", "Address").getText());
-            address.setPbox(EBISystem.gui().textField("postcodeText", "Address").getText());
-            address.setCountry(EBISystem.gui().textField("countryText", "Address").getText());
+            address.setStreet(EBISystem.builder().textField("streetText", "Address").getText());
+            address.setZip(EBISystem.builder().textField("zipText", "Address").getText());
+            address.setLocation(EBISystem.builder().textField("LocationText", "Address").getText());
+            address.setPbox(EBISystem.builder().textField("postcodeText", "Address").getText());
+            address.setCountry(EBISystem.builder().textField("countryText", "Address").getText());
 
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(address);
 
@@ -52,7 +52,7 @@ public class ControlAddress {
             EBISystem.getInstance().getCompany().getCompanyaddresses().add(address);
             
             if (!isEdit) {
-                EBISystem.gui().vpanel("Address").setID(address.getAddressid());
+                EBISystem.builder().vpanel("Address").setID(address.getAddressid());
             }
 
             if (address.getCompany().getIsactual() != null && address.getCompany().getIsactual()) {
@@ -115,25 +115,25 @@ public class ControlAddress {
                 }
             }
 
-            EBISystem.gui().vpanel("Address").setID(address.getAddressid());
+            EBISystem.builder().vpanel("Address").setID(address.getAddressid());
 
             if (address.getAddresstype() != null) {
-                EBISystem.gui().combo("addressTypeText", "Address")
+                EBISystem.builder().combo("addressTypeText", "Address")
                         .setSelectedItem(address.getAddresstype());
             }
 
-            EBISystem.gui().textField("streetText", "Address").setText(address.getStreet());
-            EBISystem.gui().textField("zipText", "Address").setText(address.getZip());
-            EBISystem.gui().textField("LocationText", "Address").setText(address.getLocation());
-            EBISystem.gui().textField("postcodeText", "Address").setText(address.getPbox());
-            EBISystem.gui().textField("countryText", "Address").setText(address.getCountry());
+            EBISystem.builder().textField("streetText", "Address").setText(address.getStreet());
+            EBISystem.builder().textField("zipText", "Address").setText(address.getZip());
+            EBISystem.builder().textField("LocationText", "Address").setText(address.getLocation());
+            EBISystem.builder().textField("postcodeText", "Address").setText(address.getPbox());
+            EBISystem.builder().textField("countryText", "Address").setText(address.getCountry());
 
-            EBISystem.gui().vpanel("Address").setCreatedDate(EBISystem.getInstance().getDateToString(address.getCreateddate() == null ? new Date() : address.getCreateddate()));
-            EBISystem.gui().vpanel("Address").setCreatedFrom(address.getCreatedfrom() == null ? EBISystem.ebiUser : address.getCreatedfrom());
+            EBISystem.builder().vpanel("Address").setCreatedDate(EBISystem.getInstance().getDateToString(address.getCreateddate() == null ? new Date() : address.getCreateddate()));
+            EBISystem.builder().vpanel("Address").setCreatedFrom(address.getCreatedfrom() == null ? EBISystem.ebiUser : address.getCreatedfrom());
 
             if (address.getChangeddate() != null) {
-                EBISystem.gui().vpanel("Address").setChangedDate(EBISystem.getInstance().getDateToString(address.getChangeddate()));
-                EBISystem.gui().vpanel("Address").setChangedFrom(EBISystem.ebiUser);
+                EBISystem.builder().vpanel("Address").setChangedDate(EBISystem.getInstance().getDateToString(address.getChangeddate()));
+                EBISystem.builder().vpanel("Address").setChangedFrom(EBISystem.ebiUser);
             }
 
             EBISystem.getInstance().getDataStore("Address", "ebiEdit");
@@ -157,7 +157,7 @@ public class ControlAddress {
 
     public void dataShow(Integer id) {
 
-        int selRow = EBISystem.gui().table("companyAddess", "Address").getSelectedRow() + id;
+        int selRow = EBISystem.builder().table("companyAddess", "Address").getSelectedRow() + id;
         final int size = EBISystem.getInstance().getCompany().getCompanyaddresses() == null ? -1 :
                             EBISystem.getInstance().getCompany().getCompanyaddresses().size();
 
@@ -190,8 +190,8 @@ public class ControlAddress {
         }
         
         if(selRow > -1){
-            selRow = EBISystem.gui().table("companyAddess", "Address").convertRowIndexToView(selRow);
-            EBISystem.gui().table("companyAddess", "Address").changeSelection(selRow, 0, false, false);
+            selRow = EBISystem.builder().table("companyAddess", "Address").convertRowIndexToView(selRow);
+            EBISystem.builder().table("companyAddess", "Address").changeSelection(selRow, 0, false, false);
         }
     }
 
@@ -199,7 +199,7 @@ public class ControlAddress {
         address = new Companyaddress();
         EBISystem.getModule().getAddressPane().initialize(false);
         EBISystem.getInstance().getDataStore("Address", "ebiNew");
-        EBISystem.gui().vpanel("Address").setID(-1);
+        EBISystem.builder().vpanel("Address").setID(-1);
     }
 
     private void createHistory(final Company com) {
@@ -227,7 +227,7 @@ public class ControlAddress {
         if (address.getAddresstype() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_ADRESS_TYPE") + ": "
                     + (address.getAddresstype()
-                            .equals(EBISystem.gui().combo("addressTypeText", "Address")
+                            .equals(EBISystem.builder().combo("addressTypeText", "Address")
                                     .getSelectedItem().toString()) == true ? address.getAddresstype()
                             : address.getAddresstype() + "$"));
         }
@@ -235,16 +235,16 @@ public class ControlAddress {
         if (address.getStreet() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_STREET_NR") + ": "
                     + (address.getStreet()
-                            .equals(EBISystem.gui().textField("streetText", "Address").getText()) == true
+                            .equals(EBISystem.builder().textField("streetText", "Address").getText()) == true
                     ? address.getStreet()
                     : address.getStreet() + "$"));
         }
 
         if (address.getZip() != null) {
             String zLch = "";
-            if (!address.getZip().equals(EBISystem.gui().textField("zipText", "Address").getText())
+            if (!address.getZip().equals(EBISystem.builder().textField("zipText", "Address").getText())
                     || !address.getLocation()
-                            .equals(EBISystem.gui().textField("LocationText", "Address").getText())) {
+                            .equals(EBISystem.builder().textField("LocationText", "Address").getText())) {
                 zLch = "$";
             }
             list.add(EBISystem.i18n("EBI_LANG_C_ZIP_LOCATION") + ": " + address.getZip() + " "
@@ -254,7 +254,7 @@ public class ControlAddress {
         if (address.getPbox() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_POST_CODE") + ": "
                     + (address.getPbox().equals(
-                            EBISystem.gui().textField("postcodeText", "Address").getText()) == true
+                            EBISystem.builder().textField("postcodeText", "Address").getText()) == true
                     ? address.getPbox()
                     : address.getPbox() + "$"));
         }
@@ -262,7 +262,7 @@ public class ControlAddress {
         if (address.getCountry() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_COUNTRY") + ": "
                     + (address.getCountry()
-                            .equals(EBISystem.gui().textField("countryText", "Address").getText()) == true
+                            .equals(EBISystem.builder().textField("countryText", "Address").getText()) == true
                     ? address.getCountry()
                     : address.getCountry() + "$"));
         }

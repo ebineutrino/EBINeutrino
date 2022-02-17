@@ -13,13 +13,17 @@ import javax.swing.text.Document;
 import java.util.HashMap;
 import java.util.TreeMap;
 
-public interface IEBIGUIRenderer {
+public interface IEBIBuilder {
 
     EBIGUIWidgetsBean getGUIComponents(String root);
 
     void addScriptBean(String type, String path, String name, String clsName, String cmpNamespace);
 
     void excScript(final String cmpNamespace, HashMap<String, String> PARAM);
+    
+    void bindVariable(String name, Object value);
+    
+    Object getVariable(String name);
 
     void addUndoManager(Document doc, JComponent comp);
 

@@ -59,19 +59,19 @@ public class EBICRMServiceView {
     private int selectedProductRow = -1;
 
     public void initializeAction() {
-        EBISystem.gui().textField("filterTableText", "Service").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("filterTableText", "Service").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("companyServiceTable", "Service").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Service").getText()));
+                EBISystem.builder().table("companyServiceTable", "Service").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Service").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("companyServiceTable", "Service").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Service").getText()));
+                EBISystem.builder().table("companyServiceTable", "Service").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Service").getText()));
             }
         });
 
@@ -82,23 +82,23 @@ public class EBICRMServiceView {
         /**
          * ***********************************************************************************
          */
-        EBISystem.gui().table("tableServiceDocument", "Service").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("tableServiceDocument", "Service").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("tableServiceDocument", "Service").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("tableServiceDocument", "Service").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.gui().table("tableServiceDocument", "Service").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedDocRow = EBISystem.builder().table("tableServiceDocument", "Service").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("showServiceDoc", "Service").setEnabled(false);
-                    EBISystem.gui().button("deleteServiceDoc", "Service").setEnabled(false);
+                    EBISystem.builder().button("showServiceDoc", "Service").setEnabled(false);
+                    EBISystem.builder().button("deleteServiceDoc", "Service").setEnabled(false);
                 } else if (!tabModDoc.data[selectedDocRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("showServiceDoc", "Service").setEnabled(true);
-                    EBISystem.gui().button("deleteServiceDoc", "Service").setEnabled(true);
+                    EBISystem.builder().button("showServiceDoc", "Service").setEnabled(true);
+                    EBISystem.builder().button("deleteServiceDoc", "Service").setEnabled(true);
                 }
             }
         });
@@ -110,21 +110,21 @@ public class EBICRMServiceView {
         /**
          * ***********************************************************************************
          */
-        EBISystem.gui().table("tableServiceProduct", "Service").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("tableServiceProduct", "Service").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("tableServiceProduct", "Service").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("tableServiceProduct", "Service").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedProductRow = EBISystem.gui().table("tableServiceProduct", "Service").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedProductRow = EBISystem.builder().table("tableServiceProduct", "Service").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("deleteServiceProduct", "Service").setEnabled(false);
+                    EBISystem.builder().button("deleteServiceProduct", "Service").setEnabled(false);
                 } else if (!tabModProduct.data[selectedProductRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("deleteServiceProduct", "Service").setEnabled(true);
+                    EBISystem.builder().button("deleteServiceProduct", "Service").setEnabled(true);
                 }
             }
         });
@@ -136,8 +136,8 @@ public class EBICRMServiceView {
         /**
          * ***********************************************************************************
          */
-        EBISystem.gui().table("tableServiceProsol", "Service").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("tableServiceProsol", "Service").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("tableServiceProsol", "Service").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("tableServiceProsol", "Service").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
@@ -145,13 +145,13 @@ public class EBICRMServiceView {
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedProsolRow = EBISystem.gui().table("tableServiceProsol", "Service").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedProsolRow = EBISystem.builder().table("tableServiceProsol", "Service").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("deleteServiceProsol", "Service").setEnabled(false);
+                    EBISystem.builder().button("deleteServiceProsol", "Service").setEnabled(false);
                 } else if (!tabModProsol.data[selectedProsolRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("deleteServiceProsol", "Service").setEnabled(true);
+                    EBISystem.builder().button("deleteServiceProsol", "Service").setEnabled(true);
                 }
             }
         });
@@ -163,9 +163,9 @@ public class EBICRMServiceView {
         /**
          * ***********************************************************************************
          */
-        EBISystem.gui().table("companyServiceTable", "Service").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("companyServiceTable", "Service").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         //jTableAvalService.setDefaultRenderer(Object.class, new MyOwnCellRederer(false));
-        EBISystem.gui().table("companyServiceTable", "Service").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("companyServiceTable", "Service").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
@@ -173,30 +173,30 @@ public class EBICRMServiceView {
 
                 if (lsm.getMinSelectionIndex() != -1) {
                     try {
-                        selectedServiceRow = EBISystem.gui().table("companyServiceTable", "Service").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                        selectedServiceRow = EBISystem.builder().table("companyServiceTable", "Service").convertRowIndexToModel(lsm.getMinSelectionIndex());
                     } catch (final IndexOutOfBoundsException ex) {
                     }
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("editService", "Service").setEnabled(false);
-                    EBISystem.gui().button("reportService", "Service").setEnabled(false);
-                    EBISystem.gui().button("deleteService", "Service").setEnabled(false);
-                    EBISystem.gui().button("historyService", "Service").setEnabled(false);
-                    EBISystem.gui().button("createInvoice", "Service").setEnabled(false);
-                    EBISystem.gui().button("copyService", "Service").setEnabled(false);
+                    EBISystem.builder().button("editService", "Service").setEnabled(false);
+                    EBISystem.builder().button("reportService", "Service").setEnabled(false);
+                    EBISystem.builder().button("deleteService", "Service").setEnabled(false);
+                    EBISystem.builder().button("historyService", "Service").setEnabled(false);
+                    EBISystem.builder().button("createInvoice", "Service").setEnabled(false);
+                    EBISystem.builder().button("copyService", "Service").setEnabled(false);
                 } else if (!tabModService.data[selectedServiceRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("editService", "Service").setEnabled(true);
-                    EBISystem.gui().button("reportService", "Service").setEnabled(true);
-                    EBISystem.gui().button("deleteService", "Service").setEnabled(true);
-                    EBISystem.gui().button("historyService", "Service").setEnabled(true);
-                    EBISystem.gui().button("createInvoice", "Service").setEnabled(true);
-                    EBISystem.gui().button("copyService", "Service").setEnabled(true);
+                    EBISystem.builder().button("editService", "Service").setEnabled(true);
+                    EBISystem.builder().button("reportService", "Service").setEnabled(true);
+                    EBISystem.builder().button("deleteService", "Service").setEnabled(true);
+                    EBISystem.builder().button("historyService", "Service").setEnabled(true);
+                    EBISystem.builder().button("createInvoice", "Service").setEnabled(true);
+                    EBISystem.builder().button("copyService", "Service").setEnabled(true);
                 }
             }
         });
 
-        EBISystem.gui().table("companyServiceTable", "Service").addKeyAction(new EBIUICallback() {
+        EBISystem.builder().table("companyServiceTable", "Service").addKeyAction(new EBIUICallback() {
             @Override
             public void tableKeyUp(int selRow) {
                 super.tableKeyUp(selRow);
@@ -224,11 +224,11 @@ public class EBICRMServiceView {
             }
         });
 
-        EBISystem.gui().table("companyServiceTable", "Service").setMouseCallback(new java.awt.event.MouseAdapter() {
+        EBISystem.builder().table("companyServiceTable", "Service").setMouseCallback(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseReleased(final java.awt.event.MouseEvent e) {
-                if (EBISystem.gui().table("companyServiceTable", "Service").rowAtPoint(e.getPoint()) > -1) {
-                    selectedServiceRow = EBISystem.gui().table("companyServiceTable", "Service").convertRowIndexToModel(EBISystem.gui().table("companyServiceTable", "Service").rowAtPoint(e.getPoint()));
+                if (EBISystem.builder().table("companyServiceTable", "Service").rowAtPoint(e.getPoint()) > -1) {
+                    selectedServiceRow = EBISystem.builder().table("companyServiceTable", "Service").convertRowIndexToModel(EBISystem.builder().table("companyServiceTable", "Service").rowAtPoint(e.getPoint()));
                 }
                 if (selectedServiceRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                         equals(tabModService.data[selectedServiceRow][0].toString())) {
@@ -245,25 +245,25 @@ public class EBICRMServiceView {
             tabModProsol = new ModelProblemSolution();
             tabModProduct = new ModelCRMProduct();
             tabModService = new ModelService();
-            EBISystem.gui().table("tableServiceDocument", "Service").setModel(tabModDoc);
-            EBISystem.gui().table("tableServiceProduct", "Service").setModel(tabModProduct);
-            EBISystem.gui().table("tableServiceProsol", "Service").setModel(tabModProsol);
-            EBISystem.gui().table("companyServiceTable", "Service").setModel(tabModService);
+            EBISystem.builder().table("tableServiceDocument", "Service").setModel(tabModDoc);
+            EBISystem.builder().table("tableServiceProduct", "Service").setModel(tabModProduct);
+            EBISystem.builder().table("tableServiceProsol", "Service").setModel(tabModProsol);
+            EBISystem.builder().table("companyServiceTable", "Service").setModel(tabModService);
         }
 
-        EBISystem.gui().combo("serviceStatusText", "Service").setModel(new javax.swing.DefaultComboBoxModel(serviceStatus));
-        EBISystem.gui().combo("serviceTypeText", "Service").setModel(new javax.swing.DefaultComboBoxModel(serviceType));
-        EBISystem.gui().combo("serviceCategoryText", "Service").setModel(new javax.swing.DefaultComboBoxModel(serviceCategory));
+        EBISystem.builder().combo("serviceStatusText", "Service").setModel(new javax.swing.DefaultComboBoxModel(serviceStatus));
+        EBISystem.builder().combo("serviceTypeText", "Service").setModel(new javax.swing.DefaultComboBoxModel(serviceType));
+        EBISystem.builder().combo("serviceCategoryText", "Service").setModel(new javax.swing.DefaultComboBoxModel(serviceCategory));
 
-        EBISystem.gui().vpanel("Service").setCreatedDate(EBISystem.getInstance().getDateToString(new java.util.Date()));
-        EBISystem.gui().vpanel("Service").setCreatedFrom(EBISystem.ebiUser);
-        EBISystem.gui().vpanel("Service").setChangedDate("");
-        EBISystem.gui().vpanel("Service").setChangedFrom("");
+        EBISystem.builder().vpanel("Service").setCreatedDate(EBISystem.getInstance().getDateToString(new java.util.Date()));
+        EBISystem.builder().vpanel("Service").setCreatedFrom(EBISystem.ebiUser);
+        EBISystem.builder().vpanel("Service").setChangedDate("");
+        EBISystem.builder().vpanel("Service").setChangedFrom("");
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                final TableColumn col7 = EBISystem.gui().table("tableServiceProduct", "Service").getColumnModel().getColumn(5);
+                final TableColumn col7 = EBISystem.builder().table("tableServiceProduct", "Service").getColumnModel().getColumn(5);
                 col7.setCellRenderer(new DefaultTableCellRenderer() {
                     @Override
                     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
@@ -276,13 +276,13 @@ public class EBICRMServiceView {
             }
         });
 
-        EBISystem.gui().combo("serviceStatusText", "Service").setSelectedIndex(0);
-        EBISystem.gui().combo("serviceTypeText", "Service").setSelectedIndex(0);
-        EBISystem.gui().combo("serviceCategoryText", "Service").setSelectedIndex(0);
+        EBISystem.builder().combo("serviceStatusText", "Service").setSelectedIndex(0);
+        EBISystem.builder().combo("serviceTypeText", "Service").setSelectedIndex(0);
+        EBISystem.builder().combo("serviceCategoryText", "Service").setSelectedIndex(0);
 
-        EBISystem.gui().textField("serviceNrText", "Service").setText("");
-        EBISystem.gui().textField("serviceNameText", "Service").setText("");
-        EBISystem.gui().textArea("serviceDescriptionText", "Service").setText("");
+        EBISystem.builder().textField("serviceNrText", "Service").setText("");
+        EBISystem.builder().textField("serviceNameText", "Service").setText("");
+        EBISystem.builder().textArea("serviceDescriptionText", "Service").setText("");
     }
 
     public void newDocs() {
@@ -320,13 +320,13 @@ public class EBICRMServiceView {
             return false;
         }
         EBISystem.showInActionStatus("Service");
-        int row = EBISystem.gui().table("companyServiceTable", "Service").getSelectedRow();
+        int row = EBISystem.builder().table("companyServiceTable", "Service").getSelectedRow();
         Integer id = dataControlService.dataStore();
         dataControlService.dataShow(id);
         dataControlService.dataShowDoc();
         dataControlService.dataShowProduct();
         dataControlService.dataShowProblemSolution();
-        EBISystem.gui().table("companyServiceTable", "Service").changeSelection(row, 0, false, false);
+        EBISystem.builder().table("companyServiceTable", "Service").changeSelection(row, 0, false, false);
         return true;
     }
 
@@ -388,15 +388,15 @@ public class EBICRMServiceView {
 
     private boolean validateInput() {
         boolean ret = true;
-        if ("".equals(EBISystem.gui().textField("serviceNrText", "Service").getText())) {
+        if ("".equals(EBISystem.builder().textField("serviceNrText", "Service").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_NAME")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if (EBISystem.gui().combo("serviceStatusText", "Service").getSelectedIndex() == 0) {
+        } else if (EBISystem.builder().combo("serviceStatusText", "Service").getSelectedIndex() == 0) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_SELECT_STATUS")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
         } else if (dataControlService.isEdit == false) {
             for (int i = 0; i < this.tabModService.data.length; i++) {
-                if (this.tabModService.data[i][0].equals(EBISystem.gui().textField("serviceNrText", "Service").getText())) {
+                if (this.tabModService.data[i][0].equals(EBISystem.builder().textField("serviceNrText", "Service").getText())) {
                     EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_SERVICE_EXIST_WITH_SAME_NAME")).Show(EBIMessage.ERROR_MESSAGE);
                     ret = false;
                 }

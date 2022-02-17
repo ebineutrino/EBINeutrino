@@ -39,7 +39,7 @@ public class ControlOffer {
 
             if (isEdit == false) {
                 compOffer.setCreateddate(new Date());
-                compOffer.setCreatedfrom(EBISystem.gui().vpanel("Offer").getCreatedFrom());
+                compOffer.setCreatedfrom(EBISystem.builder().vpanel("Offer").getCreatedFrom());
                 compOffer.setCompany(EBISystem.getInstance().getCompany());
             } else {
                 createHistory(EBISystem.getInstance().getCompany());
@@ -47,26 +47,26 @@ public class ControlOffer {
                 compOffer.setChangedfrom(EBISystem.ebiUser);
             }
 
-            if (EBISystem.gui().timePicker("offerReceiverText", "Offer").getDate() != null) {
-                compOffer.setOfferdate(EBISystem.gui().timePicker("offerReceiverText", "Offer").getDate());
+            if (EBISystem.builder().timePicker("offerReceiverText", "Offer").getDate() != null) {
+                compOffer.setOfferdate(EBISystem.builder().timePicker("offerReceiverText", "Offer").getDate());
             }
 
-            if (EBISystem.gui().timePicker("validToText", "Offer").getDate() != null) {
-                compOffer.setValidto(EBISystem.gui().timePicker("validToText", "Offer").getDate());
+            if (EBISystem.builder().timePicker("validToText", "Offer").getDate() != null) {
+                compOffer.setValidto(EBISystem.builder().timePicker("validToText", "Offer").getDate());
             }
 
-            compOffer.setDescription(EBISystem.gui().textArea("offerDescriptionText", "Offer").getText());
-            compOffer.setOffernr(EBISystem.gui().textField("offerNrText", "Offer").getText());
-            compOffer.setName(EBISystem.gui().textField("offerNameText", "Offer").getText());
+            compOffer.setDescription(EBISystem.builder().textArea("offerDescriptionText", "Offer").getText());
+            compOffer.setOffernr(EBISystem.builder().textField("offerNrText", "Offer").getText());
+            compOffer.setName(EBISystem.builder().textField("offerNameText", "Offer").getText());
 
-            compOffer.setIsrecieved(EBISystem.gui().getCheckBox("offerPurchase", "Offer").isSelected());
+            compOffer.setIsrecieved(EBISystem.builder().getCheckBox("offerPurchase", "Offer").isSelected());
 
-            if (!"".equals(EBISystem.gui().textField("offerOpportunityText", "Offer").getText())) {
+            if (!"".equals(EBISystem.builder().textField("offerOpportunityText", "Offer").getText())) {
                 compOffer.setOpportunityid(opportunityID);
             }
 
-            if (EBISystem.gui().combo("offerStatusText", "Offer").getEditor().getItem() != null) {
-                compOffer.setStatus(EBISystem.gui().combo("offerStatusText", "Offer").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("offerStatusText", "Offer").getEditor().getItem() != null) {
+                compOffer.setStatus(EBISystem.builder().combo("offerStatusText", "Offer").getEditor().getItem().toString());
             }
 
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(compOffer);
@@ -116,7 +116,7 @@ public class ControlOffer {
             EBISystem.getInstance().getCompany().getCompanyoffers().add(compOffer);
 
             if (!isEdit) {
-                EBISystem.gui().vpanel("Offer").setID(compOffer.getOfferid());
+                EBISystem.builder().vpanel("Offer").setID(compOffer.getOfferid());
             }
 
             offerID = compOffer.getOfferid();
@@ -250,42 +250,42 @@ public class ControlOffer {
                 }
             }
 
-            EBISystem.gui().vpanel("Offer").setID(compOffer.getOfferid());
-            EBISystem.gui().vpanel("Offer").setCreatedDate(EBISystem.getInstance().getDateToString(compOffer.getCreateddate() == null ? new Date() : compOffer.getCreateddate()));
-            EBISystem.gui().vpanel("Offer").setCreatedFrom(compOffer.getCreatedfrom() == null ? EBISystem.ebiUser : compOffer.getCreatedfrom());
+            EBISystem.builder().vpanel("Offer").setID(compOffer.getOfferid());
+            EBISystem.builder().vpanel("Offer").setCreatedDate(EBISystem.getInstance().getDateToString(compOffer.getCreateddate() == null ? new Date() : compOffer.getCreateddate()));
+            EBISystem.builder().vpanel("Offer").setCreatedFrom(compOffer.getCreatedfrom() == null ? EBISystem.ebiUser : compOffer.getCreatedfrom());
 
             if (compOffer.getOfferdate() != null) {
-                EBISystem.gui().timePicker("offerReceiverText", "Offer").setDate(compOffer.getOfferdate());
-                EBISystem.gui().timePicker("offerReceiverText", "Offer").getEditor().setText(EBISystem.getInstance().getDateToString(compOffer.getOfferdate()));
+                EBISystem.builder().timePicker("offerReceiverText", "Offer").setDate(compOffer.getOfferdate());
+                EBISystem.builder().timePicker("offerReceiverText", "Offer").getEditor().setText(EBISystem.getInstance().getDateToString(compOffer.getOfferdate()));
             }
 
             if (compOffer.getValidto() != null) {
-                EBISystem.gui().timePicker("validToText", "Offer").setDate(compOffer.getValidto());
-                EBISystem.gui().timePicker("validToText", "Offer").getEditor().setText(EBISystem.getInstance().getDateToString(compOffer.getValidto()));
+                EBISystem.builder().timePicker("validToText", "Offer").setDate(compOffer.getValidto());
+                EBISystem.builder().timePicker("validToText", "Offer").getEditor().setText(EBISystem.getInstance().getDateToString(compOffer.getValidto()));
             }
 
             if (compOffer.getChangeddate() != null) {
-                EBISystem.gui().vpanel("Offer").setChangedDate(EBISystem.getInstance().getDateToString(compOffer.getChangeddate()));
-                EBISystem.gui().vpanel("Offer").setChangedFrom(compOffer.getChangedfrom());
+                EBISystem.builder().vpanel("Offer").setChangedDate(EBISystem.getInstance().getDateToString(compOffer.getChangeddate()));
+                EBISystem.builder().vpanel("Offer").setChangedFrom(compOffer.getChangedfrom());
             } else {
-                EBISystem.gui().vpanel("Offer").setChangedDate("");
-                EBISystem.gui().vpanel("Offer").setChangedFrom("");
+                EBISystem.builder().vpanel("Offer").setChangedDate("");
+                EBISystem.builder().vpanel("Offer").setChangedFrom("");
             }
 
-            EBISystem.gui().textField("offerNrText", "Offer").setText(compOffer.getOffernr() == null ? "" : compOffer.getOffernr());
-            EBISystem.gui().textField("offerNameText", "Offer").setText(compOffer.getName());
+            EBISystem.builder().textField("offerNrText", "Offer").setText(compOffer.getOffernr() == null ? "" : compOffer.getOffernr());
+            EBISystem.builder().textField("offerNameText", "Offer").setText(compOffer.getName());
 
-            EBISystem.gui().getCheckBox("offerPurchase", "Offer").setSelected(compOffer.getIsrecieved() != null ? compOffer.getIsrecieved() : false);
+            EBISystem.builder().getCheckBox("offerPurchase", "Offer").setSelected(compOffer.getIsrecieved() != null ? compOffer.getIsrecieved() : false);
 
             if (compOffer.getStatus() != null) {
-                EBISystem.gui().combo("offerStatusText", "Offer").setSelectedItem(compOffer.getStatus());
+                EBISystem.builder().combo("offerStatusText", "Offer").setSelectedItem(compOffer.getStatus());
             }
 
             if (compOffer.getOpportunityid() != null) {
-                EBISystem.gui().textField("offerOpportunityText", "Offer").setText(getOpportunityName(compOffer.getOpportunityid()));
+                EBISystem.builder().textField("offerOpportunityText", "Offer").setText(getOpportunityName(compOffer.getOpportunityid()));
             }
 
-            EBISystem.gui().textArea("offerDescriptionText", "Offer").setText(compOffer.getDescription());
+            EBISystem.builder().textArea("offerDescriptionText", "Offer").setText(compOffer.getDescription());
             EBISystem.getInstance().getDataStore("Offer", "ebiEdit");
 
         } else {
@@ -305,13 +305,13 @@ public class ControlOffer {
                 }
             }
 
-            EBISystem.gui().textField("orderNrText", "Order").setText(ofr.getOffernr() == null ? "" : ofr.getOffernr());
-            EBISystem.gui().textField("orderNameText", "Order").setText(ofr.getName());
+            EBISystem.builder().textField("orderNrText", "Order").setText(ofr.getOffernr() == null ? "" : ofr.getOffernr());
+            EBISystem.builder().textField("orderNameText", "Order").setText(ofr.getName());
 
-            EBISystem.gui().textField("orderOfferText", "Order").setText(ofr.getName());
+            EBISystem.builder().textField("orderOfferText", "Order").setText(ofr.getName());
             EBISystem.getModule().getOrderPane().getDataControlOrder().setOfferID(id);
 
-            EBISystem.gui().textArea("orderDescription", "Order").setText(ofr.getDescription());
+            EBISystem.builder().textArea("orderDescription", "Order").setText(ofr.getDescription());
             EBISystem.getModule().ebiContainer.setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_ORDER")));
 
             if (ofr.getCompanyofferpositionses().size() > 0) {
@@ -409,7 +409,7 @@ public class ControlOffer {
 
     public void dataShow(Integer id) {
 
-        int selRow = EBISystem.gui().table("companyOfferTable", "Offer").getSelectedRow() + id;
+        int selRow = EBISystem.builder().table("companyOfferTable", "Offer").getSelectedRow() + id;
         final int size = EBISystem.getInstance().getCompany().getCompanyoffers().size();
 
         if (size > 0) {
@@ -437,8 +437,8 @@ public class ControlOffer {
 
         EBISystem.getModule().getOfferPane().getTabModoffer().fireTableDataChanged();
         if (selRow > -1) {
-            selRow = EBISystem.gui().table("companyOfferTable", "Offer").convertRowIndexToView(selRow);
-            EBISystem.gui().table("companyOfferTable", "Offer").changeSelection(selRow, 0, false, false);
+            selRow = EBISystem.builder().table("companyOfferTable", "Offer").convertRowIndexToView(selRow);
+            EBISystem.builder().table("companyOfferTable", "Offer").changeSelection(selRow, 0, false, false);
         }
     }
 
@@ -579,7 +579,7 @@ public class ControlOffer {
         compOffer = new Companyoffer();
         EBISystem.getModule().getOfferPane().initialize(false);
         EBISystem.getInstance().getDataStore("Offer", "ebiNew");
-        EBISystem.gui().vpanel("Offer").setID(-1);
+        EBISystem.builder().vpanel("Offer").setID(-1);
     }
 
     private void createHistory(final Company com) {
@@ -594,13 +594,13 @@ public class ControlOffer {
             list.add(EBISystem.i18n("EBI_LANG_CHANGED_FROM") + ": " + compOffer.getChangedfrom());
         }
 
-        list.add(EBISystem.i18n("EBI_LANG_OFFER_NUMBER") + ": " + (compOffer.getOffernr().equals(EBISystem.gui().textField("offerNrText", "Offer").getText()) == true ? compOffer.getOffernr() : compOffer.getOffernr() + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_NAME") + ": " + (compOffer.getName().equals(EBISystem.gui().textField("offerNameText", "Offer").getText()) == true ? compOffer.getName() : compOffer.getName() + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": " + (compOffer.getStatus().equals(EBISystem.gui().combo("offerStatusText", "Offer").getSelectedItem().toString()) == true ? compOffer.getStatus() : compOffer.getStatus() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_OFFER_NUMBER") + ": " + (compOffer.getOffernr().equals(EBISystem.builder().textField("offerNrText", "Offer").getText()) == true ? compOffer.getOffernr() : compOffer.getOffernr() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_NAME") + ": " + (compOffer.getName().equals(EBISystem.builder().textField("offerNameText", "Offer").getText()) == true ? compOffer.getName() : compOffer.getName() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": " + (compOffer.getStatus().equals(EBISystem.builder().combo("offerStatusText", "Offer").getSelectedItem().toString()) == true ? compOffer.getStatus() : compOffer.getStatus() + "$"));
 
-        list.add(EBISystem.i18n("EBI_LANG_SEND_DATE") + ": " + (EBISystem.getInstance().getDateToString(compOffer.getOfferdate()).equals(EBISystem.gui().timePicker("offerReceiverText", "Offer").getEditor().getText()) == true ? EBISystem.getInstance().getDateToString(compOffer.getOfferdate()) : EBISystem.getInstance().getDateToString(compOffer.getOfferdate()) + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_VALID_TO") + ": " + (EBISystem.getInstance().getDateToString(compOffer.getValidto()).equals(EBISystem.gui().timePicker("validToText", "Offer").getEditor().getText()) == true ? EBISystem.getInstance().getDateToString(compOffer.getValidto()) : EBISystem.getInstance().getDateToString(compOffer.getValidto()) + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": " + (compOffer.getDescription().equals(EBISystem.gui().textArea("offerDescriptionText", "Offer").getText()) == true ? compOffer.getDescription() : compOffer.getDescription() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_SEND_DATE") + ": " + (EBISystem.getInstance().getDateToString(compOffer.getOfferdate()).equals(EBISystem.builder().timePicker("offerReceiverText", "Offer").getEditor().getText()) == true ? EBISystem.getInstance().getDateToString(compOffer.getOfferdate()) : EBISystem.getInstance().getDateToString(compOffer.getOfferdate()) + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_VALID_TO") + ": " + (EBISystem.getInstance().getDateToString(compOffer.getValidto()).equals(EBISystem.builder().timePicker("validToText", "Offer").getEditor().getText()) == true ? EBISystem.getInstance().getDateToString(compOffer.getValidto()) : EBISystem.getInstance().getDateToString(compOffer.getValidto()) + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": " + (compOffer.getDescription().equals(EBISystem.builder().textArea("offerDescriptionText", "Offer").getText()) == true ? compOffer.getDescription() : compOffer.getDescription() + "$"));
 
         list.add("*EOR*"); // END OF RECORD
 

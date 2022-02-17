@@ -71,9 +71,9 @@ public class EBIExtensionContainer implements IEBIContainer {
             this.jTabbedPane.setMnemonicAt((this.jTabbedPane.getTabCount() - 1), mnemo_key);
         }
         // Used for the GUIDesigner to identify the selected component xml file
-        EBISystem.gui().getHashTabtoFile().put((this.jTabbedPane.getTabCount() - 1),
-                "".equals(EBISystem.gui().getFileToPath())
-                ? title : EBISystem.gui().getFileToPath());
+        EBISystem.builder().getHashTabtoFile().put((this.jTabbedPane.getTabCount() - 1),
+                "".equals(EBISystem.builder().getFileToPath())
+                ? title : EBISystem.builder().getFileToPath());
 
         this.registeredTabs.add((this.jTabbedPane.getTabCount() - 1), new String[]{component.getName(), title});
 
@@ -106,9 +106,9 @@ public class EBIExtensionContainer implements IEBIContainer {
 
         // Used for the GUIDesigner to identify the selected xml component
         final int index = this.jTabbedPane.getTabCount() - 1 == -1 ? 0 : this.jTabbedPane.getTabCount() - 1;
-        EBISystem.gui().getHashTabtoFile().put(index,
-                "".equals(EBISystem.gui().getFileToPath())
-                ? title : EBISystem.gui().getFileToPath());
+        EBISystem.builder().getHashTabtoFile().put(index,
+                "".equals(EBISystem.builder().getFileToPath())
+                ? title : EBISystem.builder().getFileToPath());
 
         this.registeredTabs.add(index, new String[]{component.getName(), title});
 
@@ -136,9 +136,9 @@ public class EBIExtensionContainer implements IEBIContainer {
         }
 
         // Used for the GUIDesigner to identify the selected component xml file
-        EBISystem.gui().getHashTabtoFile().put((this.jTabbedPane.getTabCount() - 1),
-                "".equals(EBISystem.gui().getFileToPath())
-                ? title : EBISystem.gui().getFileToPath());
+        EBISystem.builder().getHashTabtoFile().put((this.jTabbedPane.getTabCount() - 1),
+                "".equals(EBISystem.builder().getFileToPath())
+                ? title : EBISystem.builder().getFileToPath());
 
         this.registeredTabs.add((this.jTabbedPane.getTabCount() - 1), new String[]{component.getName(), title});
 
@@ -161,7 +161,7 @@ public class EBIExtensionContainer implements IEBIContainer {
     @Override
     public void removeContainer(final int index) {
         try {
-            EBISystem.gui().removeFileFromTab(index);
+            EBISystem.builder().removeFileFromTab(index);
             this.jTabbedPane.remove(index);
             if (lastSelectedIndex != -1) {
                 if (this.jTabbedPane.isEnabledAt(lastSelectedIndex)) {

@@ -4,15 +4,15 @@ import org.sdk.model.hibernate.Accountstack;
 import java.text.NumberFormat
 
 //Add functionality to a show tax button
-system.gui.button("taxButton","Account").actionPerformed={
-    system.gui.loadGUI("CRMDialog/accountShowPTAX.xml")
-    system.gui.getEditor("viewtaxText","taxViewDialog").setEditable(false)
+system.builder.button("taxButton","Account").actionPerformed={
+    system.builder.loadGUI("CRMDialog/accountShowPTAX.xml")
+    system.builder.getEditor("viewtaxText","taxViewDialog").setEditable(false)
 
-    system.gui.button("closeButton","taxViewDialog").actionPerformed={ 
-        system.gui.dialog("taxViewDialog").setVisible(false)   
+    system.builder.button("closeButton","taxViewDialog").actionPerformed={ 
+        system.builder.dialog("taxViewDialog").setVisible(false)   
     }
 
-    system.gui.button("viewTax","taxViewDialog").actionPerformed={
+    system.builder.button("viewTax","taxViewDialog").actionPerformed={
         println "called view tax";
         if(!validateInput()){
             return
@@ -28,19 +28,19 @@ system.gui.button("taxButton","Account").actionPerformed={
         if(toPrint == ""){
             toPrint = system.i18n("EBI_LANG_RECORD_NOT_FOUND"); 
         }
-        system.gui.getEditor("viewtaxText","taxViewDialog").setText(toPrint)
+        system.builder.getEditor("viewtaxText","taxViewDialog").setText(toPrint)
     }
-    system.gui.showGUI()
+    system.builder.showGUI()
 }
 
 boolean validateInput(){
     
-    if(system.gui.timePicker("dateFromText","taxViewDialog").getEditor().getText().equals("")
-        || system.gui.timePicker("dateFromText","taxViewDialog").getDate() == null ){
+    if(system.builder.timePicker("dateFromText","taxViewDialog").getEditor().getText().equals("")
+        || system.builder.timePicker("dateFromText","taxViewDialog").getDate() == null ){
         system.message.error(system.i18n("EBI_LANG_MESSAGE_ILLEGAL_DATE"))
         return false
-    }else if(system.gui.timePicker("dateToText","taxViewDialog").getEditor().getText().equals("")
-        || system.gui.timePicker("dateToText","taxViewDialog").getDate() == null ){
+    }else if(system.builder.timePicker("dateToText","taxViewDialog").getEditor().getText().equals("")
+        || system.builder.timePicker("dateToText","taxViewDialog").getDate() == null ){
         system.message.error(system.i18n("EBI_LANG_MESSAGE_ILLEGAL_DATE"))        
         return false
     }
@@ -53,8 +53,8 @@ String calculateTax(String toPrint, int type){
     try {
 
         query = system.hibernate.session("EBIACCOUNT_SESSION").createQuery("from Accountstack ac where ac.accountdate between ?1 and ?2 and accountType=?3");
-        query.setDate(1, system.gui.timePicker("dateFromText","taxViewDialog").getDate());
-        query.setDate(2, system.gui.timePicker("dateToText","taxViewDialog").getDate());
+        query.setDate(1, system.builder.timePicker("dateFromText","taxViewDialog").getDate());
+        query.setDate(2, system.builder.timePicker("dateToText","taxViewDialog").getDate());
         query.setInteger(3, type);
 
         Hashtable<String,Double> thash = new Hashtable<String,Double>()

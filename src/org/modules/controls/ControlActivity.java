@@ -35,53 +35,53 @@ public class ControlActivity {
                 companyActivity.setChangeddate(new Date());
                 companyActivity.setChangedfrom(EBISystem.ebiUser);
             } else {
-                companyActivity.setCreatedfrom(EBISystem.gui().vpanel("Activity").getCreatedFrom());
+                companyActivity.setCreatedfrom(EBISystem.builder().vpanel("Activity").getCreatedFrom());
                 companyActivity.setCreateddate(new Date());
                 companyActivity.setCompany(EBISystem.getInstance().getCompany());
             }
 
-            companyActivity.setActivityname(EBISystem.gui().textField("activityNameText", "Activity").getText());
-            if (EBISystem.gui().combo("activityTypeText", "Activity").getEditor().getItem() != null) {
-                companyActivity.setActivitytype(EBISystem.gui().combo("activityTypeText", "Activity").getEditor().getItem().toString());
+            companyActivity.setActivityname(EBISystem.builder().textField("activityNameText", "Activity").getText());
+            if (EBISystem.builder().combo("activityTypeText", "Activity").getEditor().getItem() != null) {
+                companyActivity.setActivitytype(EBISystem.builder().combo("activityTypeText", "Activity").getEditor().getItem().toString());
             }
-            companyActivity.setTimerdisabled(EBISystem.gui().getCheckBox("timerActiveBox", "Activity").isSelected() ? 1 : 0);
+            companyActivity.setTimerdisabled(EBISystem.builder().getCheckBox("timerActiveBox", "Activity").isSelected() ? 1 : 0);
 
             int tstart = 0;
-            if (EBISystem.gui().combo("timerStartText", "Activity").getEditor().getItem() != null) {
-                if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui().combo("timerStartText", "Activity").getEditor().getItem().toString())) {
+            if (EBISystem.builder().combo("timerStartText", "Activity").getEditor().getItem() != null) {
+                if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.builder().combo("timerStartText", "Activity").getEditor().getItem().toString())) {
                     try {
-                        tstart = Integer.parseInt(EBISystem.gui().combo("timerStartText", "Activity").getEditor().getItem().toString().split(" ")[0]);
+                        tstart = Integer.parseInt(EBISystem.builder().combo("timerStartText", "Activity").getEditor().getItem().toString().split(" ")[0]);
                     } catch (final NumberFormatException ex) {
                         ex.printStackTrace();
                     }
                 }
             }
             companyActivity.setTimerstart(tstart);
-            if (EBISystem.gui().combo("activityStatusText", "Activity").getEditor().getItem() != null) {
-                if (EBISystem.gui().combo("activityStatusText", "Activity").getSelectedIndex() != 0) {
-                    companyActivity.setActivitystatus(EBISystem.gui().combo("activityStatusText", "Activity").getSelectedItem().toString());
+            if (EBISystem.builder().combo("activityStatusText", "Activity").getEditor().getItem() != null) {
+                if (EBISystem.builder().combo("activityStatusText", "Activity").getSelectedIndex() != 0) {
+                    companyActivity.setActivitystatus(EBISystem.builder().combo("activityStatusText", "Activity").getSelectedItem().toString());
                 }
             }
 
-            if (EBISystem.gui().timePicker("activityTODOText", "Activity").getDate() != null) {
+            if (EBISystem.builder().timePicker("activityTODOText", "Activity").getDate() != null) {
                 final Calendar eDate = new GregorianCalendar();
-                eDate.setTime(EBISystem.gui().timePicker("activityTODOText", "Activity").getDate());
-                eDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(EBISystem.gui().textField("dueH", "Activity").getText()));
-                eDate.set(Calendar.MINUTE, Integer.parseInt(EBISystem.gui().textField("dueMin", "Activity").getText()));
+                eDate.setTime(EBISystem.builder().timePicker("activityTODOText", "Activity").getDate());
+                eDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(EBISystem.builder().textField("dueH", "Activity").getText()));
+                eDate.set(Calendar.MINUTE, Integer.parseInt(EBISystem.builder().textField("dueMin", "Activity").getText()));
                 eDate.set(Calendar.SECOND, 0);
                 eDate.set(Calendar.MILLISECOND, 0);
                 companyActivity.setDuedate(eDate.getTime());
             }
-            companyActivity.setDuration(Integer.parseInt(EBISystem.gui().textField("durationText", "Activity").getText()));
+            companyActivity.setDuration(Integer.parseInt(EBISystem.builder().textField("durationText", "Activity").getText()));
             final StringBuffer color = new StringBuffer();
-            color.append(EBISystem.gui().getPanel("colorPanel", "Activity").getBackground().getRed());
+            color.append(EBISystem.builder().getPanel("colorPanel", "Activity").getBackground().getRed());
             color.append(",");
-            color.append(EBISystem.gui().getPanel("colorPanel", "Activity").getBackground().getGreen());
+            color.append(EBISystem.builder().getPanel("colorPanel", "Activity").getBackground().getGreen());
             color.append(",");
-            color.append(EBISystem.gui().getPanel("colorPanel", "Activity").getBackground().getBlue());
+            color.append(EBISystem.builder().getPanel("colorPanel", "Activity").getBackground().getBlue());
 
             companyActivity.setAcolor(color.toString());
-            companyActivity.setActivitydescription(EBISystem.gui().textArea("activityDescription", "Activity").getText());
+            companyActivity.setActivitydescription(EBISystem.builder().textArea("activityDescription", "Activity").getText());
 
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(companyActivity);
 
@@ -104,7 +104,7 @@ public class ControlActivity {
             EBISystem.getInstance().getCompany().getCompanyactivitieses().add(companyActivity);
 
             if (!isEdit) {
-                EBISystem.gui().vpanel("Activity").setID(companyActivity.getActivityid());
+                EBISystem.builder().vpanel("Activity").setID(companyActivity.getActivityid());
             }
             activityID = companyActivity.getActivityid();
             isEdit = true;
@@ -194,34 +194,34 @@ public class ControlActivity {
                 }
             }
 
-            EBISystem.gui().vpanel("Activity").setID(companyActivity.getActivityid());
-            EBISystem.gui().vpanel("Activity").setCreatedDate(EBISystem.getInstance().getDateToString(companyActivity.getCreateddate() == null ? new Date() : companyActivity.getCreateddate()));
+            EBISystem.builder().vpanel("Activity").setID(companyActivity.getActivityid());
+            EBISystem.builder().vpanel("Activity").setCreatedDate(EBISystem.getInstance().getDateToString(companyActivity.getCreateddate() == null ? new Date() : companyActivity.getCreateddate()));
 
-            EBISystem.gui().vpanel("Activity").setCreatedFrom(companyActivity.getCreatedfrom() == null ? EBISystem.ebiUser : companyActivity.getCreatedfrom());
+            EBISystem.builder().vpanel("Activity").setCreatedFrom(companyActivity.getCreatedfrom() == null ? EBISystem.ebiUser : companyActivity.getCreatedfrom());
 
             if (companyActivity.getChangeddate() != null) {
-                EBISystem.gui().vpanel("Activity").setChangedDate(EBISystem.getInstance().getDateToString(companyActivity.getChangeddate()));
-                EBISystem.gui().vpanel("Activity").setChangedFrom(companyActivity.getChangedfrom());
+                EBISystem.builder().vpanel("Activity").setChangedDate(EBISystem.getInstance().getDateToString(companyActivity.getChangeddate()));
+                EBISystem.builder().vpanel("Activity").setChangedFrom(companyActivity.getChangedfrom());
             } else {
-                EBISystem.gui().vpanel("Activity").setChangedDate("");
-                EBISystem.gui().vpanel("Activity").setChangedFrom("");
+                EBISystem.builder().vpanel("Activity").setChangedDate("");
+                EBISystem.builder().vpanel("Activity").setChangedFrom("");
             }
 
-            EBISystem.gui().textField("activityNameText", "Activity").setText(companyActivity.getActivityname());
+            EBISystem.builder().textField("activityNameText", "Activity").setText(companyActivity.getActivityname());
             if (companyActivity.getDuedate() != null) {
-                EBISystem.gui().timePicker("activityTODOText", "Activity").setDate(companyActivity.getDuedate());
-                EBISystem.gui().timePicker("activityTODOText", "Activity").getEditor().setText(EBISystem.getInstance().getDateToString(companyActivity.getDuedate()));
+                EBISystem.builder().timePicker("activityTODOText", "Activity").setDate(companyActivity.getDuedate());
+                EBISystem.builder().timePicker("activityTODOText", "Activity").getEditor().setText(EBISystem.getInstance().getDateToString(companyActivity.getDuedate()));
             }
 
             if (companyActivity.getTimerdisabled() != null) {
-                EBISystem.gui().getCheckBox("timerActiveBox", "Activity").setSelected(companyActivity.getTimerdisabled() == 1 ? true : false);
+                EBISystem.builder().getCheckBox("timerActiveBox", "Activity").setSelected(companyActivity.getTimerdisabled() == 1 ? true : false);
             }
 
             if (companyActivity.getTimerstart() != null) {
-                EBISystem.gui().combo("timerStartText", "Activity").setSelectedItem(companyActivity.getTimerstart() + " min");
+                EBISystem.builder().combo("timerStartText", "Activity").setSelectedItem(companyActivity.getTimerstart() + " min");
             }
 
-            EBISystem.gui().textField("durationText", "Activity").setText(String.valueOf(companyActivity.getDuration() == null ? 0 : companyActivity.getDuration()));
+            EBISystem.builder().textField("durationText", "Activity").setText(String.valueOf(companyActivity.getDuration() == null ? 0 : companyActivity.getDuration()));
 
             int r;
             int g;
@@ -232,9 +232,9 @@ public class ControlActivity {
                 g = Integer.parseInt(splCol[1]);
                 b = Integer.parseInt(splCol[2]);
 
-                EBISystem.gui().getPanel("colorPanel", "Activity").setBackground(new Color(r, g, b));
+                EBISystem.builder().getPanel("colorPanel", "Activity").setBackground(new Color(r, g, b));
             } else {
-                EBISystem.gui().getPanel("colorPanel", "Activity").setBackground(Color.gray);
+                EBISystem.builder().getPanel("colorPanel", "Activity").setBackground(Color.gray);
             }
 
             final GregorianCalendar startDate = new GregorianCalendar();
@@ -242,18 +242,18 @@ public class ControlActivity {
             startDate.set(Calendar.SECOND, 0);
             startDate.set(Calendar.MILLISECOND, 0);
 
-            EBISystem.gui().textField("dueH", "Activity").setText(String.valueOf(startDate.get(Calendar.HOUR_OF_DAY)));
-            EBISystem.gui().textField("dueMin", "Activity").setText(String.valueOf(startDate.get(Calendar.MINUTE)));
+            EBISystem.builder().textField("dueH", "Activity").setText(String.valueOf(startDate.get(Calendar.HOUR_OF_DAY)));
+            EBISystem.builder().textField("dueMin", "Activity").setText(String.valueOf(startDate.get(Calendar.MINUTE)));
 
             if (companyActivity.getActivitytype() != null) {
-                EBISystem.gui().combo("activityTypeText", "Activity").setSelectedItem(companyActivity.getActivitytype());
+                EBISystem.builder().combo("activityTypeText", "Activity").setSelectedItem(companyActivity.getActivitytype());
             }
 
             if (companyActivity.getActivitystatus() != null) {
-                EBISystem.gui().combo("activityStatusText", "Activity").setSelectedItem(companyActivity.getActivitystatus());
+                EBISystem.builder().combo("activityStatusText", "Activity").setSelectedItem(companyActivity.getActivitystatus());
             }
 
-            EBISystem.gui().textArea("activityDescription", "Activity").setText(companyActivity.getActivitydescription());
+            EBISystem.builder().textArea("activityDescription", "Activity").setText(companyActivity.getActivitydescription());
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(companyActivity);
             EBISystem.getInstance().getDataStore("Activity", "ebiEdit");
@@ -291,7 +291,7 @@ public class ControlActivity {
 
         try {
 
-            int srow = EBISystem.gui().table("tableActivity", "Activity").getSelectedRow() + id;
+            int srow = EBISystem.builder().table("tableActivity", "Activity").getSelectedRow() + id;
             final int size = EBISystem.getInstance().getCompany().getCompanyactivitieses().size();
 
             if (size > 0) {
@@ -341,8 +341,8 @@ public class ControlActivity {
             EBISystem.getModule().getActivitiesPane().getTabModel().fireTableDataChanged();
 
             if (srow > -1) {
-                srow = EBISystem.gui().table("tableActivity", "Activity").convertRowIndexToView(srow);
-                EBISystem.gui().table("tableActivity", "Activity").changeSelection(srow, 0, false, false);
+                srow = EBISystem.builder().table("tableActivity", "Activity").convertRowIndexToView(srow);
+                EBISystem.builder().table("tableActivity", "Activity").changeSelection(srow, 0, false, false);
             }
 
         } catch (final Exception e) {
@@ -363,7 +363,7 @@ public class ControlActivity {
 
         list.add(EBISystem.i18n("EBI_LANG_NAME") + ": "
                 + (companyActivity.getActivityname().equals(
-                        EBISystem.gui().textField("activityNameText", "Activity").getText()) == true
+                        EBISystem.builder().textField("activityNameText", "Activity").getText()) == true
                 ? companyActivity.getActivityname()
                 : companyActivity.getActivityname() + "$"));
         final GregorianCalendar startDate = new GregorianCalendar();
@@ -386,7 +386,7 @@ public class ControlActivity {
         }
         list.add(EBISystem.i18n("EBI_LANG_DUE_DATE") + ": "
                 + (EBISystem.getInstance().getDateToString(companyActivity.getDuedate())
-                        .equals(EBISystem.gui().timePicker("activityTODOText", "Activity").getEditor()
+                        .equals(EBISystem.builder().timePicker("activityTODOText", "Activity").getEditor()
                                 .getText()) == true
                         ? EBISystem.getInstance().getDateToString(companyActivity.getDuedate()) + hour
                         + ":" + min
@@ -394,38 +394,38 @@ public class ControlActivity {
                         + ":" + min + "$"));
         list.add(EBISystem.i18n("EBI_LANG_C_DESCRIPTION") + ": "
                 + (companyActivity.getActivitydescription().equals(
-                        EBISystem.gui().textArea("activityDescription", "Activity").getText()) == true
+                        EBISystem.builder().textArea("activityDescription", "Activity").getText()) == true
                 ? companyActivity.getActivitydescription()
                 : companyActivity.getActivitydescription() + "$"));
         if (companyActivity.getActivitystatus() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": "
                     + (companyActivity.getActivitystatus()
-                            .equals(EBISystem.gui().combo("activityStatusText", "Activity")
+                            .equals(EBISystem.builder().combo("activityStatusText", "Activity")
                                     .getSelectedItem().toString()) == true ? companyActivity.getActivitystatus()
                             : companyActivity.getActivitystatus() + "$"));
         }
         if (companyActivity.getActivitytype() != null) {
             list.add(EBISystem.i18n("EBI_LANG_TYPE") + ": "
                     + (companyActivity.getActivitytype()
-                            .equals(EBISystem.gui().combo("activityTypeText", "Activity")
+                            .equals(EBISystem.builder().combo("activityTypeText", "Activity")
                                     .getSelectedItem().toString()) == true ? companyActivity.getActivitytype()
                             : companyActivity.getActivitytype() + "$"));
         }
         list.add(EBISystem.i18n("EBI_LANG_DURATION") + ": "
                 + (("" + companyActivity.getDuration())
-                        .equals(EBISystem.gui().textField("durationText", "Activity").getText()) == true
+                        .equals(EBISystem.builder().textField("durationText", "Activity").getText()) == true
                 ? companyActivity.getDuration()
                 : companyActivity.getDuration() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_TIMER_START") + ": "
-                + (("" + companyActivity.getTimerstart()).equals(EBISystem.gui()
+                + (("" + companyActivity.getTimerstart()).equals(EBISystem.builder()
                         .combo("timerStartText", "Activity").getSelectedItem().toString()) == true
                 ? companyActivity.getTimerstart()
                 : companyActivity.getTimerstart() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_TIMER_DISABLED") + ": "
                 + (("" + companyActivity.getTimerdisabled())
-                        .equals(EBISystem.gui().getCheckBox("timerActiveBox", "Activity").isSelected() ? "1"
+                        .equals(EBISystem.builder().getCheckBox("timerActiveBox", "Activity").isSelected() ? "1"
                                 : "0") == true ? companyActivity.getTimerdisabled()
                         : companyActivity.getTimerdisabled() + "$"));
 

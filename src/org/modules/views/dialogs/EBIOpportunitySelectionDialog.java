@@ -26,34 +26,34 @@ public class EBIOpportunitySelectionDialog {
         tabModel = new ModelOpportunity();
         this.opList = opList;
 
-        EBISystem.gui().loadGUI("CRMDialog/crmSelectionDialog.xml");
+        EBISystem.builder().loadGUI("CRMDialog/crmSelectionDialog.xml");
 
         showCollectionList();
     }
 
     public void setVisible() {
-        EBISystem.gui().dialog("abstractSelectionDialog").setTitle(EBISystem.i18n("EBI_LANG_C_OPPORTUNITY_LIST"));
-        EBISystem.gui().vpanel("abstractSelectionDialog").setModuleTitle(EBISystem.i18n("EBI_LANG_C_OPPORTUNITY_LIST"));
+        EBISystem.builder().dialog("abstractSelectionDialog").setTitle(EBISystem.i18n("EBI_LANG_C_OPPORTUNITY_LIST"));
+        EBISystem.builder().vpanel("abstractSelectionDialog").setModuleTitle(EBISystem.i18n("EBI_LANG_C_OPPORTUNITY_LIST"));
 
-        EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("filterTableText", "abstractSelectionDialog").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));
+                EBISystem.builder().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "abstractSelectionDialog").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));
+                EBISystem.builder().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "abstractSelectionDialog").getText()));
             }
         });
 
-        EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setModel(tabModel);
-        EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        EBISystem.gui().table("abstractTable", "abstractSelectionDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        EBISystem.builder().table("abstractTable", "abstractSelectionDialog").setModel(tabModel);
+        EBISystem.builder().table("abstractTable", "abstractSelectionDialog").setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        EBISystem.builder().table("abstractTable", "abstractSelectionDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             @Override
             public void valueChanged(final ListSelectionEvent e) {
@@ -63,23 +63,23 @@ public class EBIOpportunitySelectionDialog {
 
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selRow = EBISystem.gui().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selRow = EBISystem.builder().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("applyButton", "abstractSelectionDialog").setEnabled(false);
+                    EBISystem.builder().button("applyButton", "abstractSelectionDialog").setEnabled(false);
                     selRow = -1;
                 } else if (!tabModel.getRow(0)[0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
                     selRow = lsm.getMinSelectionIndex();
-                    EBISystem.gui().button("applyButton", "abstractSelectionDialog").setEnabled(true);
+                    EBISystem.builder().button("applyButton", "abstractSelectionDialog").setEnabled(true);
                 }
             }
         });
-        EBISystem.gui().table("abstractTable", "abstractSelectionDialog").addMouseListener(new java.awt.event.MouseAdapter() {
+        EBISystem.builder().table("abstractTable", "abstractSelectionDialog").addMouseListener(new java.awt.event.MouseAdapter() {
 
             @Override
             public void mouseClicked(final java.awt.event.MouseEvent e) {
-                if (EBISystem.gui().table("abstractTable", "abstractSelectionDialog").rowAtPoint(e.getPoint()) != -1) {
-                    selRow = EBISystem.gui().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(EBISystem.gui().table("abstractTable", "abstractSelectionDialog").rowAtPoint(e.getPoint()));
+                if (EBISystem.builder().table("abstractTable", "abstractSelectionDialog").rowAtPoint(e.getPoint()) != -1) {
+                    selRow = EBISystem.builder().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(EBISystem.builder().table("abstractTable", "abstractSelectionDialog").rowAtPoint(e.getPoint()));
 
                     if (e.getClickCount() == 2) {
 
@@ -88,7 +88,7 @@ public class EBIOpportunitySelectionDialog {
                             return;
                         }
 
-                        EBISystem.gui().dialog("abstractSelectionDialog").setVisible(false);
+                        EBISystem.builder().dialog("abstractSelectionDialog").setVisible(false);
                         copyCollection(selRow);
                         shouldSave = true;
 
@@ -97,9 +97,9 @@ public class EBIOpportunitySelectionDialog {
             }
         });
 
-        EBISystem.gui().button("applyButton", "abstractSelectionDialog").setText(EBISystem.i18n("EBI_LANG_APPLY"));
-        EBISystem.gui().button("applyButton", "abstractSelectionDialog").setEnabled(false);
-        EBISystem.gui().button("applyButton", "abstractSelectionDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("applyButton", "abstractSelectionDialog").setText(EBISystem.i18n("EBI_LANG_APPLY"));
+        EBISystem.builder().button("applyButton", "abstractSelectionDialog").setEnabled(false);
+        EBISystem.builder().button("applyButton", "abstractSelectionDialog").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
@@ -109,21 +109,21 @@ public class EBIOpportunitySelectionDialog {
                 }
                 copyCollection(selRow);
                 shouldSave = true;
-                EBISystem.gui().dialog("abstractSelectionDialog").setVisible(false);
+                EBISystem.builder().dialog("abstractSelectionDialog").setVisible(false);
 
             }
         });
 
-        EBISystem.gui().button("closeButton", "abstractSelectionDialog").setText(EBISystem.i18n("EBI_LANG_CANCEL"));
-        EBISystem.gui().button("closeButton", "abstractSelectionDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("closeButton", "abstractSelectionDialog").setText(EBISystem.i18n("EBI_LANG_CANCEL"));
+        EBISystem.builder().button("closeButton", "abstractSelectionDialog").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                EBISystem.gui().dialog("abstractSelectionDialog").setVisible(false);
+                EBISystem.builder().dialog("abstractSelectionDialog").setVisible(false);
             }
         });
 
-        EBISystem.gui().showGUI();
+        EBISystem.builder().showGUI();
     }
 
     private void copyCollection(final int row) {

@@ -28,49 +28,49 @@ public class EBICRMBankView {
     private int selectedRow = -1;
 
     public void initializeAction() {
-        EBISystem.gui().textField("filterTableText", "Bank").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("filterTableText", "Bank").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("companyBankTable", "Bank").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Bank").getText()));
+                EBISystem.builder().table("companyBankTable", "Bank").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Bank").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("companyBankTable", "Bank").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Bank").getText()));
+                EBISystem.builder().table("companyBankTable", "Bank").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Bank").getText()));
             }
         });
 
-        EBISystem.gui().table("companyBankTable", "Bank").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("companyBankTable", "Bank").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("companyBankTable", "Bank").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("companyBankTable", "Bank").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow() != -1) {
-                    selectedRow = EBISystem.gui().table("companyBankTable", "Bank").convertRowIndexToModel(EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow());
+                if (EBISystem.builder().table("companyBankTable", "Bank").getSelectedRow() != -1) {
+                    selectedRow = EBISystem.builder().table("companyBankTable", "Bank").convertRowIndexToModel(EBISystem.builder().table("companyBankTable", "Bank").getSelectedRow());
 
                     if (lsm.isSelectionEmpty()) {
-                        EBISystem.gui().button("editBank", "Bank").setEnabled(false);
-                        EBISystem.gui().button("deleteBank", "Bank").setEnabled(false);
-                        EBISystem.gui().button("historyBank", "Bank").setEnabled(false);
-                        EBISystem.gui().button("copyBank", "Bank").setEnabled(false);
+                        EBISystem.builder().button("editBank", "Bank").setEnabled(false);
+                        EBISystem.builder().button("deleteBank", "Bank").setEnabled(false);
+                        EBISystem.builder().button("historyBank", "Bank").setEnabled(false);
+                        EBISystem.builder().button("copyBank", "Bank").setEnabled(false);
                     } else if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(tabModel.data[selectedRow][0].toString())) {
-                        EBISystem.gui().button("editBank", "Bank").setEnabled(true);
-                        EBISystem.gui().button("deleteBank", "Bank").setEnabled(true);
-                        EBISystem.gui().button("historyBank", "Bank").setEnabled(true);
-                        EBISystem.gui().button("copyBank", "Bank").setEnabled(true);
+                        EBISystem.builder().button("editBank", "Bank").setEnabled(true);
+                        EBISystem.builder().button("deleteBank", "Bank").setEnabled(true);
+                        EBISystem.builder().button("historyBank", "Bank").setEnabled(true);
+                        EBISystem.builder().button("copyBank", "Bank").setEnabled(true);
 
                     }
                 }
             }
         });
 
-        EBISystem.gui().table("companyBankTable", "Bank").addKeyAction(new EBIUICallback() {
+        EBISystem.builder().table("companyBankTable", "Bank").addKeyAction(new EBIUICallback() {
             @Override
             public void tableKeyUp(int selRow) {
                 super.tableKeyUp(selRow);
@@ -93,11 +93,11 @@ public class EBICRMBankView {
             }
         });
 
-        EBISystem.gui().table("companyBankTable", "Bank").setMouseCallback(new MouseAdapter() {
+        EBISystem.builder().table("companyBankTable", "Bank").setMouseCallback(new MouseAdapter() {
             @Override
             public void mouseReleased(final java.awt.event.MouseEvent e) {
-                if (EBISystem.gui().table("companyBankTable", "Bank").rowAtPoint(e.getPoint()) != -1) {
-                    selectedRow = EBISystem.gui().table("companyBankTable", "Bank").convertRowIndexToModel(EBISystem.gui().table("companyBankTable", "Bank").rowAtPoint(e.getPoint()));
+                if (EBISystem.builder().table("companyBankTable", "Bank").rowAtPoint(e.getPoint()) != -1) {
+                    selectedRow = EBISystem.builder().table("companyBankTable", "Bank").convertRowIndexToModel(EBISystem.builder().table("companyBankTable", "Bank").rowAtPoint(e.getPoint()));
                 }
                 editBank();
             }
@@ -107,19 +107,19 @@ public class EBICRMBankView {
     public void initialize(boolean reload) {
         if (reload) {
             tabModel = new ModelCRMBankdata();
-            EBISystem.gui().table("companyBankTable", "Bank").setModel(tabModel);
+            EBISystem.builder().table("companyBankTable", "Bank").setModel(tabModel);
         }
-        EBISystem.gui().vpanel("Bank").setCreatedDate(EBISystem.getInstance().getDateToString(new java.util.Date()));
-        EBISystem.gui().vpanel("Bank").setCreatedFrom(EBISystem.ebiUser);
-        EBISystem.gui().vpanel("Bank").setChangedDate("");
-        EBISystem.gui().vpanel("Bank").setChangedFrom("");
+        EBISystem.builder().vpanel("Bank").setCreatedDate(EBISystem.getInstance().getDateToString(new java.util.Date()));
+        EBISystem.builder().vpanel("Bank").setCreatedFrom(EBISystem.ebiUser);
+        EBISystem.builder().vpanel("Bank").setChangedDate("");
+        EBISystem.builder().vpanel("Bank").setChangedFrom("");
 
-        EBISystem.gui().textField("bankNameText", "Bank").setText("");
-        EBISystem.gui().textField("abaNrText", "Bank").setText("");
-        EBISystem.gui().textField("accountNrText", "Bank").setText("");
-        EBISystem.gui().textField("bicText", "Bank").setText("");
-        EBISystem.gui().textField("ibanText", "Bank").setText("");
-        EBISystem.gui().textField("countryBankText", "Bank").setText("");
+        EBISystem.builder().textField("bankNameText", "Bank").setText("");
+        EBISystem.builder().textField("abaNrText", "Bank").setText("");
+        EBISystem.builder().textField("accountNrText", "Bank").setText("");
+        EBISystem.builder().textField("bicText", "Bank").setText("");
+        EBISystem.builder().textField("ibanText", "Bank").setText("");
+        EBISystem.builder().textField("countryBankText", "Bank").setText("");
     }
 
     public void newBank() {
@@ -158,10 +158,10 @@ public class EBICRMBankView {
             return false;
         }
         EBISystem.showInActionStatus("Bank");
-        int row = EBISystem.gui().table("companyBankTable", "Bank").getSelectedRow();
+        int row = EBISystem.builder().table("companyBankTable", "Bank").getSelectedRow();
         Integer id = bankDataControl.dataStore();
         bankDataControl.dataShow(id);
-        EBISystem.gui().table("companyBankTable", "Bank").changeSelection(row, 0, false, false);
+        EBISystem.builder().table("companyBankTable", "Bank").changeSelection(row, 0, false, false);
         return true;
     }
 
@@ -185,13 +185,13 @@ public class EBICRMBankView {
 
     private boolean validateInput() {
         boolean ret = true;
-        if ("".equals(EBISystem.gui().textField("bankNameText", "Bank").getText())) {
+        if ("".equals(EBISystem.builder().textField("bankNameText", "Bank").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_BANK_NAME")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if ("".equals(EBISystem.gui().textField("abaNrText", "Bank").getText())) {
+        } else if ("".equals(EBISystem.builder().textField("abaNrText", "Bank").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_BANK_CODE")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if ("".equals(EBISystem.gui().textField("accountNrText", "Bank").getText())) {
+        } else if ("".equals(EBISystem.builder().textField("accountNrText", "Bank").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_BANK_NR")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
         }

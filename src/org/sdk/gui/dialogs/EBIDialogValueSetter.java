@@ -25,18 +25,18 @@ public class EBIDialogValueSetter {
     public EBIDialogValueSetter(final String tab) {
 
         tabMod = new MyTableModelValueSetter();
-        EBISystem.gui().loadGUI("CRMDialog/valueSetDialog.xml");
+        EBISystem.builder().loadGUI("CRMDialog/valueSetDialog.xml");
         Tab = tab.toUpperCase();
         initialize();
         load();
-        EBISystem.gui().button("deleteBnt", "valueSetterDialog").setEnabled(false);
-        EBISystem.gui().button("editBnt", "valueSetterDialog").setEnabled(false);
-        EBISystem.gui().button("deleteBnt", "valueSetterDialog").requestFocus();
+        EBISystem.builder().button("deleteBnt", "valueSetterDialog").setEnabled(false);
+        EBISystem.builder().button("editBnt", "valueSetterDialog").setEnabled(false);
+        EBISystem.builder().button("deleteBnt", "valueSetterDialog").requestFocus();
     }
 
     private void initialize() {
 
-        final ListSelectionModel rowSM = EBISystem.gui().table("valueTable", "valueSetterDialog")
+        final ListSelectionModel rowSM = EBISystem.builder().table("valueTable", "valueSetterDialog")
                 .getSelectionModel();
         rowSM.addListSelectionListener(new ListSelectionListener() {
 
@@ -49,18 +49,18 @@ public class EBIDialogValueSetter {
 
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("deleteBnt", "valueSetterDialog").setEnabled(false);
-                    EBISystem.gui().button("editBnt", "valueSetterDialog").setEnabled(false);
+                    EBISystem.builder().button("deleteBnt", "valueSetterDialog").setEnabled(false);
+                    EBISystem.builder().button("editBnt", "valueSetterDialog").setEnabled(false);
                 } else {
                     selRow = lsm.getMinSelectionIndex();
                     if (selRow <= tabMod.data.length && selRow != -1) {
-                        if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui()
+                        if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.builder()
                                 .table("valueTable", "valueSetterDialog").getValueAt(selRow, 0).toString())) {
-                            EBISystem.gui().button("deleteBnt", "valueSetterDialog").setEnabled(true);
-                            EBISystem.gui().button("editBnt", "valueSetterDialog").setEnabled(true);
+                            EBISystem.builder().button("deleteBnt", "valueSetterDialog").setEnabled(true);
+                            EBISystem.builder().button("editBnt", "valueSetterDialog").setEnabled(true);
                             isSaveOrUpdate = true;
                             loadEdit();
-                            EBISystem.gui().textField("nameValue", "valueSetterDialog").requestFocus();
+                            EBISystem.builder().textField("nameValue", "valueSetterDialog").requestFocus();
                         }
                     }
                 }
@@ -69,16 +69,16 @@ public class EBIDialogValueSetter {
     }
 
     public void setVisible() {
-        EBISystem.gui().dialog("valueSetterDialog")
+        EBISystem.builder().dialog("valueSetterDialog")
                 .setTitle(EBISystem.i18n("EBI_LANG_SETTINGS"));
-        EBISystem.gui().vpanel("valueSetterDialog")
+        EBISystem.builder().vpanel("valueSetterDialog")
                 .setModuleTitle(EBISystem.i18n("EBI_LANG_SETTINGS"));
 
-        EBISystem.gui().label("name", "valueSetterDialog").setText(EBISystem.i18n("EBI_LANG_NAME"));
+        EBISystem.builder().label("name", "valueSetterDialog").setText(EBISystem.i18n("EBI_LANG_NAME"));
 
-        EBISystem.gui().button("saveValue", "valueSetterDialog")
+        EBISystem.builder().button("saveValue", "valueSetterDialog")
                 .setText(EBISystem.i18n("EBI_LANG_SAVE"));
-        EBISystem.gui().button("saveValue", "valueSetterDialog")
+        EBISystem.builder().button("saveValue", "valueSetterDialog")
                 .addActionListener(new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(final java.awt.event.ActionEvent e) {
@@ -91,18 +91,18 @@ public class EBIDialogValueSetter {
                     }
                 });
 
-        EBISystem.gui().button("closeDialog", "valueSetterDialog")
+        EBISystem.builder().button("closeDialog", "valueSetterDialog")
                 .setText(EBISystem.i18n("EBI_LANG_CLOSE"));
-        EBISystem.gui().button("closeDialog", "valueSetterDialog")
+        EBISystem.builder().button("closeDialog", "valueSetterDialog")
                 .addActionListener(new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(final java.awt.event.ActionEvent e) {
-                        EBISystem.gui().dialog("valueSetterDialog").setVisible(false);
+                        EBISystem.builder().dialog("valueSetterDialog").setVisible(false);
                     }
                 });
 
-        EBISystem.gui().button("newBnt", "valueSetterDialog").setIcon(EBISystem.getInstance().getIconResource("new.png"));
-        EBISystem.gui().button("newBnt", "valueSetterDialog")
+        EBISystem.builder().button("newBnt", "valueSetterDialog").setIcon(EBISystem.getInstance().getIconResource("new.png"));
+        EBISystem.builder().button("newBnt", "valueSetterDialog")
                 .addActionListener(new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(final java.awt.event.ActionEvent e) {
@@ -110,20 +110,20 @@ public class EBIDialogValueSetter {
                     }
                 });
 
-        EBISystem.gui().button("editBnt", "valueSetterDialog").setIcon(EBISystem.getInstance().getIconResource("down.png"));
-        EBISystem.gui().button("editBnt", "valueSetterDialog")
+        EBISystem.builder().button("editBnt", "valueSetterDialog").setIcon(EBISystem.getInstance().getIconResource("down.png"));
+        EBISystem.builder().button("editBnt", "valueSetterDialog")
                 .addActionListener(new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(final java.awt.event.ActionEvent e) {
-                        if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui()
+                        if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.builder()
                                 .table("valueTable", "valueSetterDialog").getValueAt(selRow, 0).toString())) {
                             loadEdit();
                         }
                     }
                 });
 
-        EBISystem.gui().button("deleteBnt", "valueSetterDialog").setIcon(EBISystem.getInstance().getIconResource("delete.png"));
-        EBISystem.gui().button("deleteBnt", "valueSetterDialog")
+        EBISystem.builder().button("deleteBnt", "valueSetterDialog").setIcon(EBISystem.getInstance().getIconResource("delete.png"));
+        EBISystem.builder().button("deleteBnt", "valueSetterDialog")
                 .addActionListener(new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(final java.awt.event.ActionEvent e) {
@@ -132,9 +132,9 @@ public class EBIDialogValueSetter {
                     }
                 });
 
-        EBISystem.gui().table("valueTable", "valueSetterDialog").setModel(tabMod);
+        EBISystem.builder().table("valueTable", "valueSetterDialog").setModel(tabMod);
 
-        EBISystem.gui().textField("nameValue", "valueSetterDialog")
+        EBISystem.builder().textField("nameValue", "valueSetterDialog")
                 .addKeyListener(new java.awt.event.KeyAdapter() {
                     @Override
                     public void keyPressed(final KeyEvent e) {
@@ -147,23 +147,23 @@ public class EBIDialogValueSetter {
 
                             load();
                             newRecord();
-                            EBISystem.gui().textField("nameValue", "valueSetterDialog").requestFocus();
+                            EBISystem.builder().textField("nameValue", "valueSetterDialog").requestFocus();
                         }
                     }
                 });
 
-        EBISystem.gui().showGUI();
+        EBISystem.builder().showGUI();
     }
 
     private boolean validateInput() {
-        if ("".equals(EBISystem.gui().textField("nameValue", "valueSetterDialog").getText())) {
+        if ("".equals(EBISystem.builder().textField("nameValue", "valueSetterDialog").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_NAME"))
                     .Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }
         if (!isSaveOrUpdate) {
             for (int i = 0; i < tabMod.data.length; i++) {
-                if (tabMod.data[i][1].toString().toLowerCase().equals(EBISystem.gui()
+                if (tabMod.data[i][1].toString().toLowerCase().equals(EBISystem.builder()
                         .textField("nameValue", "valueSetterDialog").getText().toLowerCase())) {
                     EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_SAME_RECORD_EXSIST"))
                             .Show(EBIMessage.ERROR_MESSAGE);
@@ -181,7 +181,7 @@ public class EBIDialogValueSetter {
         }
         try {
             final PreparedStatement ps1 = EBISystem.getInstance().iDB().initPreparedStatement("INSERT INTO " + Tab + "  (NAME) VALUES(?)");
-            ps1.setString(1, EBISystem.gui().textField("nameValue", "valueSetterDialog").getText());
+            ps1.setString(1, EBISystem.builder().textField("nameValue", "valueSetterDialog").getText());
             EBISystem.getInstance().iDB().executePreparedStmt(ps1);
         } catch (final Exception e) {
             e.printStackTrace();
@@ -197,7 +197,7 @@ public class EBIDialogValueSetter {
         }
         try {
             final PreparedStatement ps1 = EBISystem.getInstance().iDB().initPreparedStatement("UPDATE " + Tab + "  SET  NAME=? where id=?");
-            ps1.setString(1, EBISystem.gui().textField("nameValue", "valueSetterDialog").getText());
+            ps1.setString(1, EBISystem.builder().textField("nameValue", "valueSetterDialog").getText());
             ps1.setInt(2, id);
             EBISystem.getInstance().iDB().executePreparedStmt(ps1);
         } catch (final Exception e) {
@@ -266,7 +266,7 @@ public class EBIDialogValueSetter {
 
             final PreparedStatement ps1 = EBISystem.getInstance().iDB()
                     .initPreparedStatement("SELECT * FROM " + this.Tab + " WHERE ID=?");
-            ps1.setString(1, tabMod.data[EBISystem.gui().table("valueTable", "valueSetterDialog")
+            ps1.setString(1, tabMod.data[EBISystem.builder().table("valueTable", "valueSetterDialog")
                     .convertRowIndexToModel(selRow)][0].toString());
             set = EBISystem.getInstance().iDB().executePreparedQuery(ps1);
 
@@ -275,7 +275,7 @@ public class EBIDialogValueSetter {
                 set.beforeFirst();
                 set.next();
                 this.id = set.getInt("ID");
-                EBISystem.gui().textField("nameValue", "valueSetterDialog")
+                EBISystem.builder().textField("nameValue", "valueSetterDialog")
                         .setText(set.getString("NAME"));
             }
             set.close();
@@ -296,7 +296,7 @@ public class EBIDialogValueSetter {
 
     private void newRecord() {
         isSaveOrUpdate = false;
-        EBISystem.gui().textField("nameValue", "valueSetterDialog").setText("");
+        EBISystem.builder().textField("nameValue", "valueSetterDialog").setText("");
         this.id = 0;
         load();
     }

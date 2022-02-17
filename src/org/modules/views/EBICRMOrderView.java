@@ -46,19 +46,19 @@ public class EBICRMOrderView {
     private int selectedProductRow = -1;
 
     public void initializeAction() {
-        EBISystem.gui().textField("filterTableText", "Order").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("filterTableText", "Order").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("companyorderTable", "Order").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Order").getText()));
+                EBISystem.builder().table("companyorderTable", "Order").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Order").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("companyorderTable", "Order").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Order").getText()));
+                EBISystem.builder().table("companyorderTable", "Order").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Order").getText()));
             }
         });
 
@@ -69,23 +69,23 @@ public class EBICRMOrderView {
         /**
          * ***********************************************************************************
          */
-        EBISystem.gui().table("tableorderDocument", "Order").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("tableorderDocument", "Order").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("tableorderDocument", "Order").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("tableorderDocument", "Order").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.gui().table("tableorderDocument", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedDocRow = EBISystem.builder().table("tableorderDocument", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("showorderDoc", "Order").setEnabled(false);
-                    EBISystem.gui().button("deleteorderDoc", "Order").setEnabled(false);
+                    EBISystem.builder().button("showorderDoc", "Order").setEnabled(false);
+                    EBISystem.builder().button("deleteorderDoc", "Order").setEnabled(false);
                 } else if (!tabModDoc.data[selectedDocRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("showorderDoc", "Order").setEnabled(true);
-                    EBISystem.gui().button("deleteorderDoc", "Order").setEnabled(true);
+                    EBISystem.builder().button("showorderDoc", "Order").setEnabled(true);
+                    EBISystem.builder().button("deleteorderDoc", "Order").setEnabled(true);
                 }
             }
         });
@@ -97,22 +97,22 @@ public class EBICRMOrderView {
         /**
          * ***********************************************************************************
          */
-        EBISystem.gui().table("tableorderProduct", "Order").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("tableorderProduct", "Order").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("tableorderProduct", "Order").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("tableorderProduct", "Order").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedProductRow = EBISystem.gui().table("tableorderProduct", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedProductRow = EBISystem.builder().table("tableorderProduct", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (tabModProduct.data.length > 0) {
                     if (lsm.isSelectionEmpty()) {
-                        EBISystem.gui().button("deleteorderProduct", "Order").setEnabled(false);
+                        EBISystem.builder().button("deleteorderProduct", "Order").setEnabled(false);
                     } else if (!tabModProduct.data[selectedProductRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                        EBISystem.gui().button("deleteorderProduct", "Order").setEnabled(true);
+                        EBISystem.builder().button("deleteorderProduct", "Order").setEnabled(true);
                     }
                 }
             }
@@ -125,22 +125,22 @@ public class EBICRMOrderView {
         /**
          * ***********************************************************************************
          */
-        EBISystem.gui().table("tableOrderReceiver", "Order").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("tableOrderReceiver", "Order").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("tableOrderReceiver", "Order").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("tableOrderReceiver", "Order").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedReceiverRow = EBISystem.gui().table("tableOrderReceiver", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedReceiverRow = EBISystem.builder().table("tableOrderReceiver", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("deleteorderReceiver", "Order").setEnabled(false);
-                    EBISystem.gui().button("editOrderReceiver", "Order").setEnabled(false);
+                    EBISystem.builder().button("deleteorderReceiver", "Order").setEnabled(false);
+                    EBISystem.builder().button("editOrderReceiver", "Order").setEnabled(false);
                 } else if (!tabModReceiver.data[selectedReceiverRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("deleteorderReceiver", "Order").setEnabled(true);
-                    EBISystem.gui().button("editOrderReceiver", "Order").setEnabled(true);
+                    EBISystem.builder().button("deleteorderReceiver", "Order").setEnabled(true);
+                    EBISystem.builder().button("editOrderReceiver", "Order").setEnabled(true);
                 }
             }
         });
@@ -152,41 +152,41 @@ public class EBICRMOrderView {
         /**
          * ***********************************************************************************
          */
-        EBISystem.gui().table("companyorderTable", "Order").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("companyorderTable", "Order").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         //jTableAvalOrder.setDefaultRenderer(Object.class, new MyOwnCellRederer(false));
-        EBISystem.gui().table("companyorderTable", "Order").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("companyorderTable", "Order").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedOrderRow = EBISystem.gui().table("companyorderTable", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedOrderRow = EBISystem.builder().table("companyorderTable", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("editorder", "Order").setEnabled(false);
-                    EBISystem.gui().button("reportorder", "Order").setEnabled(false);
-                    EBISystem.gui().button("deleteorder", "Order").setEnabled(false);
-                    EBISystem.gui().button("historyorder", "Order").setEnabled(false);
-                    EBISystem.gui().button("mailOrder", "Order").setEnabled(false);
-                    EBISystem.gui().button("createService", "Order").setEnabled(false);
-                    EBISystem.gui().button("createInvoice", "Order").setEnabled(false);
-                    EBISystem.gui().button("copyorder", "Order").setEnabled(false);
+                    EBISystem.builder().button("editorder", "Order").setEnabled(false);
+                    EBISystem.builder().button("reportorder", "Order").setEnabled(false);
+                    EBISystem.builder().button("deleteorder", "Order").setEnabled(false);
+                    EBISystem.builder().button("historyorder", "Order").setEnabled(false);
+                    EBISystem.builder().button("mailOrder", "Order").setEnabled(false);
+                    EBISystem.builder().button("createService", "Order").setEnabled(false);
+                    EBISystem.builder().button("createInvoice", "Order").setEnabled(false);
+                    EBISystem.builder().button("copyorder", "Order").setEnabled(false);
                 } else if (!tabModOrder.data[selectedOrderRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("editorder", "Order").setEnabled(true);
-                    EBISystem.gui().button("reportorder", "Order").setEnabled(true);
-                    EBISystem.gui().button("deleteorder", "Order").setEnabled(true);
-                    EBISystem.gui().button("historyorder", "Order").setEnabled(true);
-                    EBISystem.gui().button("mailOrder", "Order").setEnabled(true);
-                    EBISystem.gui().button("createService", "Order").setEnabled(true);
-                    EBISystem.gui().button("createInvoice", "Order").setEnabled(true);
-                    EBISystem.gui().button("copyorder", "Order").setEnabled(true);
+                    EBISystem.builder().button("editorder", "Order").setEnabled(true);
+                    EBISystem.builder().button("reportorder", "Order").setEnabled(true);
+                    EBISystem.builder().button("deleteorder", "Order").setEnabled(true);
+                    EBISystem.builder().button("historyorder", "Order").setEnabled(true);
+                    EBISystem.builder().button("mailOrder", "Order").setEnabled(true);
+                    EBISystem.builder().button("createService", "Order").setEnabled(true);
+                    EBISystem.builder().button("createInvoice", "Order").setEnabled(true);
+                    EBISystem.builder().button("copyorder", "Order").setEnabled(true);
                 }
             }
         });
 
-        EBISystem.gui().table("companyorderTable", "Order").addKeyAction(new EBIUICallback() {
+        EBISystem.builder().table("companyorderTable", "Order").addKeyAction(new EBIUICallback() {
             @Override
             public void tableKeyUp(int selRow) {
                 super.tableKeyUp(selRow);
@@ -213,12 +213,12 @@ public class EBICRMOrderView {
             }
         });
 
-        EBISystem.gui().table("companyorderTable", "Order").setMouseCallback(new MouseAdapter() {
+        EBISystem.builder().table("companyorderTable", "Order").setMouseCallback(new MouseAdapter() {
             @Override
             public void mouseReleased(final java.awt.event.MouseEvent e) {
-                if (EBISystem.gui().table("companyorderTable", "Order").rowAtPoint(e.getPoint()) != -1) {
-                    selectedOrderRow = EBISystem.gui().table("companyorderTable", "Order")
-                            .convertRowIndexToModel(EBISystem.gui().table("companyorderTable", "Order").rowAtPoint(e.getPoint()));
+                if (EBISystem.builder().table("companyorderTable", "Order").rowAtPoint(e.getPoint()) != -1) {
+                    selectedOrderRow = EBISystem.builder().table("companyorderTable", "Order")
+                            .convertRowIndexToModel(EBISystem.builder().table("companyorderTable", "Order").rowAtPoint(e.getPoint()));
                 }
                 if (selectedOrderRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                         equals(tabModOrder.data[selectedOrderRow][0].toString())) {
@@ -237,23 +237,23 @@ public class EBICRMOrderView {
             tabModReceiver = new ModelReceiver();
             tabModProduct = new ModelCRMProduct();
             tabModOrder = new ModelOrder();
-            EBISystem.gui().table("tableorderDocument", "Order").setModel(tabModDoc);
-            EBISystem.gui().table("tableorderProduct", "Order").setModel(tabModProduct);
-            EBISystem.gui().table("tableOrderReceiver", "Order").setModel(tabModReceiver);
-            EBISystem.gui().table("companyorderTable", "Order").setModel(tabModOrder);
+            EBISystem.builder().table("tableorderDocument", "Order").setModel(tabModDoc);
+            EBISystem.builder().table("tableorderProduct", "Order").setModel(tabModProduct);
+            EBISystem.builder().table("tableOrderReceiver", "Order").setModel(tabModReceiver);
+            EBISystem.builder().table("companyorderTable", "Order").setModel(tabModOrder);
         }
 
-        EBISystem.gui().combo("orderStatusText", "Order").setModel(new javax.swing.DefaultComboBoxModel(orderStatus));
+        EBISystem.builder().combo("orderStatusText", "Order").setModel(new javax.swing.DefaultComboBoxModel(orderStatus));
 
-        EBISystem.gui().vpanel("Order").setCreatedDate(EBISystem.getInstance().getDateToString(new java.util.Date()));
-        EBISystem.gui().vpanel("Order").setCreatedFrom(EBISystem.ebiUser);
-        EBISystem.gui().vpanel("Order").setChangedDate("");
-        EBISystem.gui().vpanel("Order").setChangedFrom("");
+        EBISystem.builder().vpanel("Order").setCreatedDate(EBISystem.getInstance().getDateToString(new java.util.Date()));
+        EBISystem.builder().vpanel("Order").setCreatedFrom(EBISystem.ebiUser);
+        EBISystem.builder().vpanel("Order").setChangedDate("");
+        EBISystem.builder().vpanel("Order").setChangedFrom("");
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                final TableColumn col7 = EBISystem.gui().table("tableorderProduct", "Order").getColumnModel().getColumn(5);
+                final TableColumn col7 = EBISystem.builder().table("tableorderProduct", "Order").getColumnModel().getColumn(5);
                 col7.setCellRenderer(new DefaultTableCellRenderer() {
                     @Override
                     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
@@ -266,18 +266,18 @@ public class EBICRMOrderView {
             }
         });
 
-        EBISystem.gui().combo("orderStatusText", "Order").setSelectedIndex(0);
+        EBISystem.builder().combo("orderStatusText", "Order").setSelectedIndex(0);
 
-        EBISystem.gui().textField("orderNrText", "Order").setText("");
-        EBISystem.gui().textField("orderNameText", "Order").setText("");
-        EBISystem.gui().textField("orderOfferText", "Order").setText("");
-        EBISystem.gui().textArea("orderDescription", "Order").setText("");
+        EBISystem.builder().textField("orderNrText", "Order").setText("");
+        EBISystem.builder().textField("orderNameText", "Order").setText("");
+        EBISystem.builder().textField("orderOfferText", "Order").setText("");
+        EBISystem.builder().textArea("orderDescription", "Order").setText("");
 
-        EBISystem.gui().timePicker("orderCreatedText", "Order").setDate(null);
-        EBISystem.gui().timePicker("orderCreatedText", "Order").setFormats(EBISystem.DateFormat);
+        EBISystem.builder().timePicker("orderCreatedText", "Order").setDate(null);
+        EBISystem.builder().timePicker("orderCreatedText", "Order").setFormats(EBISystem.DateFormat);
 
-        EBISystem.gui().timePicker("orderReceiveText", "Order").setDate(null);
-        EBISystem.gui().timePicker("orderReceiveText", "Order").setFormats(EBISystem.DateFormat);
+        EBISystem.builder().timePicker("orderReceiveText", "Order").setDate(null);
+        EBISystem.builder().timePicker("orderReceiveText", "Order").setFormats(EBISystem.DateFormat);
     }
 
     public void newDocs() {
@@ -308,13 +308,13 @@ public class EBICRMOrderView {
             return false;
         }
         EBISystem.showInActionStatus("Order");
-        int row = EBISystem.gui().table("companyorderTable", "Order").getSelectedRow();
+        int row = EBISystem.builder().table("companyorderTable", "Order").getSelectedRow();
         Integer id = dataControlOrder.dataStore();
         dataControlOrder.dataShow(id);
         dataControlOrder.dataShowProduct();
         dataControlOrder.dataShowDoc();
         dataControlOrder.dataShowReceiver();
-        EBISystem.gui().table("companyorderTable", "Order").changeSelection(row, 0, false, false);
+        EBISystem.builder().table("companyorderTable", "Order").changeSelection(row, 0, false, false);
         return true;
     }
 
@@ -373,15 +373,15 @@ public class EBICRMOrderView {
 
     private boolean validateInput() {
         boolean ret = true;
-        if ("".equals(EBISystem.gui().textField("orderNrText", "Order").getText())) {
+        if ("".equals(EBISystem.builder().textField("orderNrText", "Order").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_NAME")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if (EBISystem.gui().combo("orderStatusText", "Order").getSelectedIndex() == 0) {
+        } else if (EBISystem.builder().combo("orderStatusText", "Order").getSelectedIndex() == 0) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_SELECT_STATUS")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
         } else if (dataControlOrder.isEdit == false) {
             for (int i = 0; i < this.tabModOrder.data.length; i++) {
-                if (this.tabModOrder.data[i][0].equals(EBISystem.gui().textField("orderNrText", "Order").getText())) {
+                if (this.tabModOrder.data[i][0].equals(EBISystem.builder().textField("orderNrText", "Order").getText())) {
                     EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_ORDER_EXIST_WITH_SAME_NAME")).Show(EBIMessage.ERROR_MESSAGE);
                     ret = false;
                 }
@@ -500,29 +500,29 @@ public class EBICRMOrderView {
                 equals(tabModOrder.data[selectedOrderRow][0].toString())) {
             return;
         }
-        EBISystem.gui().loadGUI("CRMDialog/sendMailDialogGUI.xml");
-        EBISystem.gui().dialog("sendEMailMessage").setTitle(EBISystem.i18n("EBI_LANG_DIALOG_SEND_EMAIL_MESSAGE"));
-        EBISystem.gui().getCheckBox("ShowReportBS", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SHOW_REPORT_BEFORE_SEND"));
-        EBISystem.gui().label("SubjectEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SUBJECT"));
-        EBISystem.gui().label("template", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_TEMPLATE"));
-        EBISystem.gui().combo("templateText", "sendEMailMessage").setModel(new DefaultComboBoxModel(EBISystem.getModule().dynMethod.getEMailTemplateNames()));
-        EBISystem.gui().combo("templateText", "sendEMailMessage").addActionListener(new ActionListener() {
+        EBISystem.builder().loadGUI("CRMDialog/sendMailDialogGUI.xml");
+        EBISystem.builder().dialog("sendEMailMessage").setTitle(EBISystem.i18n("EBI_LANG_DIALOG_SEND_EMAIL_MESSAGE"));
+        EBISystem.builder().getCheckBox("ShowReportBS", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SHOW_REPORT_BEFORE_SEND"));
+        EBISystem.builder().label("SubjectEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SUBJECT"));
+        EBISystem.builder().label("template", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_TEMPLATE"));
+        EBISystem.builder().combo("templateText", "sendEMailMessage").setModel(new DefaultComboBoxModel(EBISystem.getModule().dynMethod.getEMailTemplateNames()));
+        EBISystem.builder().combo("templateText", "sendEMailMessage").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(
-                        EBISystem.gui().combo("templateText", "sendEMailMessage").getSelectedItem().toString())) {
+                        EBISystem.builder().combo("templateText", "sendEMailMessage").getSelectedItem().toString())) {
 
-                    EBISystem.gui().getEditor("MessageAreaText", "sendEMailMessage").setText(
+                    EBISystem.builder().getEditor("MessageAreaText", "sendEMailMessage").setText(
                             EBISystem.getModule().dynMethod.getEMailTemplate(
-                                    EBISystem.gui().combo("templateText", "sendEMailMessage")
+                                    EBISystem.builder().combo("templateText", "sendEMailMessage")
                                             .getSelectedItem().toString()));
                 }
             }
         });
-        EBISystem.gui().button("sendEmail", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SEND"));
-        EBISystem.gui().button("closeEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_CLOSE"));
+        EBISystem.builder().button("sendEmail", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SEND"));
+        EBISystem.builder().button("closeEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_CLOSE"));
         mailOrder(Integer.parseInt(tabModOrder.data[selectedOrderRow][7].toString()));
-        EBISystem.gui().showGUI();
+        EBISystem.builder().showGUI();
     }
 
     public void searchOffer() {
@@ -531,13 +531,13 @@ public class EBICRMOrderView {
                         .getOfferPane().getDataControlOffer().getOfferList());
         dialog.setVisible();
         if (dialog.shouldSave) {
-            EBISystem.gui().textField("orderOfferText", "Order").setText(dialog.name);
+            EBISystem.builder().textField("orderOfferText", "Order").setText(dialog.name);
             dataControlOrder.setOfferID(dialog.id);
         }
     }
 
     public void showOffer() {
-        if (!"".equals(EBISystem.gui().textField("orderOfferText", "Order").getText())) {
+        if (!"".equals(EBISystem.builder().textField("orderOfferText", "Order").getText())) {
             EBISystem.getModule().ebiContainer.setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_OFFER")));
             EBISystem.getModule().getOfferPane().editOfferRemote(Integer.parseInt(tabModOrder.data[selectedOrderRow][3].toString()));
         } else {
@@ -551,7 +551,7 @@ public class EBICRMOrderView {
     }
 
     public synchronized void mailOrder(final int id) {
-        EBISystem.gui().button("sendEmail", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("sendEmail", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
                 boolean pass;
@@ -566,26 +566,26 @@ public class EBICRMOrderView {
                         return;
                     }
                     EBISystem.showInActionStatus("Order");
-                    final String fileName = dataControlOrder.dataShowAndMailReport(id, EBISystem.gui().getCheckBox("ShowReportBS", "sendEMailMessage").isSelected());
+                    final String fileName = dataControlOrder.dataShowAndMailReport(id, EBISystem.builder().getCheckBox("ShowReportBS", "sendEMailMessage").isSelected());
                     //todo send report using filename as attachment
-                    EBISystem.gui().dialog("sendEMailMessage").setVisible(false);
+                    EBISystem.builder().dialog("sendEMailMessage").setVisible(false);
                 }
             }
         });
-        EBISystem.gui().button("closeEMailDialog", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("closeEMailDialog", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                EBISystem.gui().dialog("sendEMailMessage").setVisible(false);
+                EBISystem.builder().dialog("sendEMailMessage").setVisible(false);
             }
         });
     }
 
     private boolean validateEMailInput() {
         boolean ret = true;
-        if ("".equals(EBISystem.gui().textField("SubjectText", "sendEMailMessage").getText())) {
+        if ("".equals(EBISystem.builder().textField("SubjectText", "sendEMailMessage").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_INSERT_SUBJECT")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if ("".equals(EBISystem.gui().getEditor("MessageAreaText", "sendEMailMessage").getText())) {
+        } else if ("".equals(EBISystem.builder().getEditor("MessageAreaText", "sendEMailMessage").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_INSERT_BODY_TEXT")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
         }

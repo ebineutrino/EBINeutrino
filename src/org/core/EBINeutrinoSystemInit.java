@@ -122,11 +122,12 @@ public class EBINeutrinoSystemInit extends EBISystem {
                     cfg.setProperty("hibernate.connection.url", "jdbc:mysql://" + EBISystem.host.trim() + ":3306/" + data + "?serverTimezone=UTC");
                 } else if ("oracle".equals(dbType.toLowerCase())) {
                     cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
+                }else if ("h2".equals(dbType.toLowerCase())) {
+                    cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
                 }
 
                 cfg.setProperty("hibernate.connection.username", user);
                 cfg.setProperty("hibernate.connection.password", password);
-
                 cfg.addPackage("org.sdk.model.hibernate");
 
                 Reflections reflections = new Reflections("org.sdk.model.hibernate");

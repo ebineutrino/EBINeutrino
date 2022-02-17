@@ -38,7 +38,7 @@ public class ControlOrder {
             EBISystem.hibernate().transaction("EBICRM_SESSION").begin();
             if (isEdit == false) {
                 compOrder.setCreateddate(new Date());
-                compOrder.setCreatedfrom(EBISystem.gui().vpanel("Order").getCreatedFrom());
+                compOrder.setCreatedfrom(EBISystem.builder().vpanel("Order").getCreatedFrom());
                 compOrder.setCompany(EBISystem.getInstance().getCompany());
             } else {
                 createHistory(EBISystem.getInstance().getCompany());
@@ -46,25 +46,25 @@ public class ControlOrder {
                 compOrder.setChangedfrom(EBISystem.ebiUser);
             }
 
-            if (EBISystem.gui().timePicker("orderCreatedText", "Order").getDate() != null) {
-                compOrder.setOfferdate(EBISystem.gui().timePicker("orderCreatedText", "Order").getDate());
+            if (EBISystem.builder().timePicker("orderCreatedText", "Order").getDate() != null) {
+                compOrder.setOfferdate(EBISystem.builder().timePicker("orderCreatedText", "Order").getDate());
             }
 
-            if (EBISystem.gui().timePicker("orderReceiveText", "Order").getDate() != null) {
-                compOrder.setValidto(EBISystem.gui().timePicker("orderReceiveText", "Order").getDate());
+            if (EBISystem.builder().timePicker("orderReceiveText", "Order").getDate() != null) {
+                compOrder.setValidto(EBISystem.builder().timePicker("orderReceiveText", "Order").getDate());
             }
 
-            compOrder.setDescription(EBISystem.gui().textArea("orderDescription", "Order").getText());
-            compOrder.setOrdernr(EBISystem.gui().textField("orderNrText", "Order").getText());
-            compOrder.setName(EBISystem.gui().textField("orderNameText", "Order").getText());
-            compOrder.setIsrecieved(EBISystem.gui().getCheckBox("ordPurchase", "Order").isSelected());
+            compOrder.setDescription(EBISystem.builder().textArea("orderDescription", "Order").getText());
+            compOrder.setOrdernr(EBISystem.builder().textField("orderNrText", "Order").getText());
+            compOrder.setName(EBISystem.builder().textField("orderNameText", "Order").getText());
+            compOrder.setIsrecieved(EBISystem.builder().getCheckBox("ordPurchase", "Order").isSelected());
 
-            if (!"".equals(EBISystem.gui().textField("orderOfferText", "Order").getText())) {
+            if (!"".equals(EBISystem.builder().textField("orderOfferText", "Order").getText())) {
                 compOrder.setOfferid(offerID);
             }
 
-            if (EBISystem.gui().combo("orderStatusText", "Order").getEditor().getItem() != null) {
-                compOrder.setStatus(EBISystem.gui().combo("orderStatusText", "Order").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("orderStatusText", "Order").getEditor().getItem() != null) {
+                compOrder.setStatus(EBISystem.builder().combo("orderStatusText", "Order").getEditor().getItem().toString());
             }
 
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(compOrder);
@@ -113,7 +113,7 @@ public class ControlOrder {
             EBISystem.getInstance().getCompany().getCompanyorders().add(compOrder);
 
             if (!isEdit) {
-                EBISystem.gui().vpanel("Order").setID(compOrder.getOrderid());
+                EBISystem.builder().vpanel("Order").setID(compOrder.getOrderid());
             }
             orderID = compOrder.getOrderid();
             isEdit = true;
@@ -249,44 +249,44 @@ public class ControlOrder {
                 }
             }
 
-            EBISystem.gui().vpanel("Order").setID(compOrder.getOrderid());
-            EBISystem.gui().vpanel("Order").setCreatedDate(EBISystem.getInstance().getDateToString(compOrder.getCreateddate() == null ? new Date() : compOrder.getCreateddate()));
-            EBISystem.gui().vpanel("Order").setCreatedFrom(compOrder.getCreatedfrom() == null ? EBISystem.ebiUser : compOrder.getCreatedfrom());
+            EBISystem.builder().vpanel("Order").setID(compOrder.getOrderid());
+            EBISystem.builder().vpanel("Order").setCreatedDate(EBISystem.getInstance().getDateToString(compOrder.getCreateddate() == null ? new Date() : compOrder.getCreateddate()));
+            EBISystem.builder().vpanel("Order").setCreatedFrom(compOrder.getCreatedfrom() == null ? EBISystem.ebiUser : compOrder.getCreatedfrom());
 
             if (compOrder.getOfferdate() != null) {
-                EBISystem.gui().timePicker("orderCreatedText", "Order").setDate(compOrder.getOfferdate());
-                EBISystem.gui().timePicker("orderCreatedText", "Order").
+                EBISystem.builder().timePicker("orderCreatedText", "Order").setDate(compOrder.getOfferdate());
+                EBISystem.builder().timePicker("orderCreatedText", "Order").
                         getEditor().setText(EBISystem.getInstance().getDateToString(compOrder.getOfferdate()));
             }
 
             if (compOrder.getValidto() != null) {
-                EBISystem.gui().timePicker("orderReceiveText", "Order").setDate(compOrder.getValidto());
-                EBISystem.gui().timePicker("orderReceiveText", "Order").
+                EBISystem.builder().timePicker("orderReceiveText", "Order").setDate(compOrder.getValidto());
+                EBISystem.builder().timePicker("orderReceiveText", "Order").
                         getEditor().setText(EBISystem.getInstance().getDateToString(compOrder.getValidto()));
             }
 
             if (compOrder.getChangeddate() != null) {
-                EBISystem.gui().vpanel("Order").setChangedDate(EBISystem.getInstance().getDateToString(compOrder.getChangeddate()));
-                EBISystem.gui().vpanel("Order").setChangedFrom(compOrder.getChangedfrom());
+                EBISystem.builder().vpanel("Order").setChangedDate(EBISystem.getInstance().getDateToString(compOrder.getChangeddate()));
+                EBISystem.builder().vpanel("Order").setChangedFrom(compOrder.getChangedfrom());
             } else {
-                EBISystem.gui().vpanel("Order").setChangedDate("");
-                EBISystem.gui().vpanel("Order").setChangedFrom("");
+                EBISystem.builder().vpanel("Order").setChangedDate("");
+                EBISystem.builder().vpanel("Order").setChangedFrom("");
             }
 
-            EBISystem.gui().textField("orderNameText", "Order").setText(compOrder.getName());
-            EBISystem.gui().textField("orderNrText", "Order").setText(compOrder.getOrdernr() == null ? "" : compOrder.getOrdernr());
+            EBISystem.builder().textField("orderNameText", "Order").setText(compOrder.getName());
+            EBISystem.builder().textField("orderNrText", "Order").setText(compOrder.getOrdernr() == null ? "" : compOrder.getOrdernr());
 
-            EBISystem.gui().getCheckBox("ordPurchase", "Order").setSelected(compOrder.getIsrecieved() != null ? compOrder.getIsrecieved() : false);
+            EBISystem.builder().getCheckBox("ordPurchase", "Order").setSelected(compOrder.getIsrecieved() != null ? compOrder.getIsrecieved() : false);
 
             if (compOrder.getStatus() != null) {
-                EBISystem.gui().combo("orderStatusText", "Order").setSelectedItem(compOrder.getStatus());
+                EBISystem.builder().combo("orderStatusText", "Order").setSelectedItem(compOrder.getStatus());
             }
 
             if (compOrder.getOfferid() != null) {
-                EBISystem.gui().textField("orderOfferText", "Order").setText(getOfferName(compOrder.getOfferid()));
+                EBISystem.builder().textField("orderOfferText", "Order").setText(getOfferName(compOrder.getOfferid()));
             }
 
-            EBISystem.gui().textArea("orderDescription", "Order").setText(compOrder.getDescription());
+            EBISystem.builder().textArea("orderDescription", "Order").setText(compOrder.getDescription());
             EBISystem.getInstance().getDataStore("Order", "ebiEdit");
 
         } else {
@@ -318,8 +318,8 @@ public class ControlOrder {
             }
 
             //Invoice field
-            EBISystem.gui().textField("invoiceNameText", "Invoice").setText(ord.getName());
-            EBISystem.gui().textField("orderText", "Invoice").setText(EBISystem.i18n("EBI_LANG_C_ORDER") + ": " + ord.getOrderid());
+            EBISystem.builder().textField("invoiceNameText", "Invoice").setText(ord.getName());
+            EBISystem.builder().textField("orderText", "Invoice").setText(EBISystem.i18n("EBI_LANG_C_ORDER") + ": " + ord.getOrderid());
 
             if (!ord.getCompanyorderpositionses().isEmpty()) {
                 final Iterator ip = ord.getCompanyorderpositionses().iterator();
@@ -353,36 +353,36 @@ public class ControlOrder {
                     final Companyorderreceiver re = (Companyorderreceiver) ir.next();
                     if (re.getCnum() != null && re.getCnum() == 1) {
                         //Invoice contact field
-                        EBISystem.gui().combo("genderText", "Invoice").setSelectedItem(re.getGender());
-                        EBISystem.gui().textField("titleText", "Invoice").setText(re.getPosition());
-                        EBISystem.gui().textField("companyNameText", "Invoice").setText(ord.getCompany().getName());
-                        EBISystem.gui().textField("nameText", "Invoice").setText(re.getName());
-                        EBISystem.gui().textField("surnameText", "Invoice").setText(re.getSurname());
-                        EBISystem.gui().textField("streetNrText", "Invoice").setText(re.getStreet());
-                        EBISystem.gui().textField("zipText", "Invoice").setText(re.getZip());
-                        EBISystem.gui().textField("locationText", "Invoice").setText(re.getLocation());
-                        EBISystem.gui().textField("postCodeText", "Invoice").setText(re.getPbox());
-                        EBISystem.gui().textField("countryText", "Invoice").setText(re.getCountry());
-                        EBISystem.gui().textField("telefonText", "Invoice").setText(re.getPhone());
-                        EBISystem.gui().textField("faxText", "Invoice").setText(re.getFax());
-                        EBISystem.gui().textField("emailText", "Invoice").setText(re.getEmail());
-                        EBISystem.gui().textField("internetText", "Invoice").setText(ord.getCompany().getWeb());
+                        EBISystem.builder().combo("genderText", "Invoice").setSelectedItem(re.getGender());
+                        EBISystem.builder().textField("titleText", "Invoice").setText(re.getPosition());
+                        EBISystem.builder().textField("companyNameText", "Invoice").setText(ord.getCompany().getName());
+                        EBISystem.builder().textField("nameText", "Invoice").setText(re.getName());
+                        EBISystem.builder().textField("surnameText", "Invoice").setText(re.getSurname());
+                        EBISystem.builder().textField("streetNrText", "Invoice").setText(re.getStreet());
+                        EBISystem.builder().textField("zipText", "Invoice").setText(re.getZip());
+                        EBISystem.builder().textField("locationText", "Invoice").setText(re.getLocation());
+                        EBISystem.builder().textField("postCodeText", "Invoice").setText(re.getPbox());
+                        EBISystem.builder().textField("countryText", "Invoice").setText(re.getCountry());
+                        EBISystem.builder().textField("telefonText", "Invoice").setText(re.getPhone());
+                        EBISystem.builder().textField("faxText", "Invoice").setText(re.getFax());
+                        EBISystem.builder().textField("emailText", "Invoice").setText(re.getEmail());
+                        EBISystem.builder().textField("internetText", "Invoice").setText(ord.getCompany().getWeb());
                         break;
                     } else if (size == 1) {
-                        EBISystem.gui().combo("genderText", "Invoice").setSelectedItem(re.getGender());
-                        EBISystem.gui().textField("titleText", "Invoice").setText(re.getPosition());
-                        EBISystem.gui().textField("companyNameText", "Invoice").setText(ord.getCompany().getName());
-                        EBISystem.gui().textField("nameText", "Invoice").setText(re.getName());
-                        EBISystem.gui().textField("surnameText", "Invoice").setText(re.getSurname());
-                        EBISystem.gui().textField("streetNrText", "Invoice").setText(re.getStreet());
-                        EBISystem.gui().textField("zipText", "Invoice").setText(re.getZip());
-                        EBISystem.gui().textField("locationText", "Invoice").setText(re.getLocation());
-                        EBISystem.gui().textField("postCodeText", "Invoice").setText(re.getPbox());
-                        EBISystem.gui().textField("countryText", "Invoice").setText(re.getCountry());
-                        EBISystem.gui().textField("telefonText", "Invoice").setText(re.getPhone());
-                        EBISystem.gui().textField("faxText", "Invoice").setText(re.getFax());
-                        EBISystem.gui().textField("emailText", "Invoice").setText(re.getEmail());
-                        EBISystem.gui().textField("internetText", "Invoice").setText(ord.getCompany().getWeb());
+                        EBISystem.builder().combo("genderText", "Invoice").setSelectedItem(re.getGender());
+                        EBISystem.builder().textField("titleText", "Invoice").setText(re.getPosition());
+                        EBISystem.builder().textField("companyNameText", "Invoice").setText(ord.getCompany().getName());
+                        EBISystem.builder().textField("nameText", "Invoice").setText(re.getName());
+                        EBISystem.builder().textField("surnameText", "Invoice").setText(re.getSurname());
+                        EBISystem.builder().textField("streetNrText", "Invoice").setText(re.getStreet());
+                        EBISystem.builder().textField("zipText", "Invoice").setText(re.getZip());
+                        EBISystem.builder().textField("locationText", "Invoice").setText(re.getLocation());
+                        EBISystem.builder().textField("postCodeText", "Invoice").setText(re.getPbox());
+                        EBISystem.builder().textField("countryText", "Invoice").setText(re.getCountry());
+                        EBISystem.builder().textField("telefonText", "Invoice").setText(re.getPhone());
+                        EBISystem.builder().textField("faxText", "Invoice").setText(re.getFax());
+                        EBISystem.builder().textField("emailText", "Invoice").setText(re.getEmail());
+                        EBISystem.builder().textField("internetText", "Invoice").setText(ord.getCompany().getWeb());
 
                     }
                 }
@@ -406,10 +406,10 @@ public class ControlOrder {
                 }
             }
 
-            EBISystem.gui().textField("serviceNrText", "Service").setText(ord.getOrdernr() == null ? "" : ord.getOrdernr());
-            EBISystem.gui().textField("serviceNameText", "Service").setText(ord.getName());
+            EBISystem.builder().textField("serviceNrText", "Service").setText(ord.getOrdernr() == null ? "" : ord.getOrdernr());
+            EBISystem.builder().textField("serviceNameText", "Service").setText(ord.getName());
 
-            EBISystem.gui().textArea("serviceDescriptionText", "Service").setText(ord.getDescription());
+            EBISystem.builder().textArea("serviceDescriptionText", "Service").setText(ord.getDescription());
             EBISystem.getModule().ebiContainer.setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_SERVICE")));
 
             if (ord.getCompanyorderpositionses().size() > 0) {
@@ -480,7 +480,7 @@ public class ControlOrder {
 
     public void dataShow(Integer id) {
 
-        int selRow = EBISystem.gui().table("companyorderTable", "Order").getSelectedRow() + id;
+        int selRow = EBISystem.builder().table("companyorderTable", "Order").getSelectedRow() + id;
         final int size = EBISystem.getInstance().getCompany().getCompanyorders().size();
 
         if (size > 0) {
@@ -509,8 +509,8 @@ public class ControlOrder {
 
         EBISystem.getModule().getOrderPane().getTabModOrder().fireTableDataChanged();
         if (selRow > -1) {
-            selRow = EBISystem.gui().table("companyorderTable", "Order").convertRowIndexToView(selRow);
-            EBISystem.gui().table("companyorderTable", "Order").changeSelection(selRow, 0, false, false);
+            selRow = EBISystem.builder().table("companyorderTable", "Order").convertRowIndexToView(selRow);
+            EBISystem.builder().table("companyorderTable", "Order").changeSelection(selRow, 0, false, false);
         }
     }
 
@@ -651,7 +651,7 @@ public class ControlOrder {
     public void dataNew() {
         compOrder = new Companyorder();
         EBISystem.getModule().getOrderPane().initialize(false);
-        EBISystem.gui().vpanel("Order").setID(-1);
+        EBISystem.builder().vpanel("Order").setID(-1);
         EBISystem.getInstance().getDataStore("Order", "ebiNew");
     }
 
@@ -682,14 +682,14 @@ public class ControlOrder {
             list.add(EBISystem.i18n("EBI_LANG_CHANGED_FROM") + ": " + compOrder.getChangedfrom());
         }
 
-        list.add(EBISystem.i18n("EBI_LANG_ORDER_NUMBER") + ": " + (compOrder.getOrdernr().equals(EBISystem.gui().textField("orderNrText", "Order").getText()) == true ? compOrder.getOrdernr() : compOrder.getOrdernr() + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_NAME") + ": " + (compOrder.getName().equals(EBISystem.gui().textField("orderNameText", "Order").getText()) == true ? compOrder.getName() : compOrder.getName() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_ORDER_NUMBER") + ": " + (compOrder.getOrdernr().equals(EBISystem.builder().textField("orderNrText", "Order").getText()) == true ? compOrder.getOrdernr() : compOrder.getOrdernr() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_NAME") + ": " + (compOrder.getName().equals(EBISystem.builder().textField("orderNameText", "Order").getText()) == true ? compOrder.getName() : compOrder.getName() + "$"));
 
-        list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": " + (compOrder.getStatus().equals(EBISystem.gui().combo("orderStatusText", "Order").getEditor().getItem().toString()) == true ? compOrder.getStatus() : compOrder.getStatus() + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": " + (compOrder.getDescription().equals(EBISystem.gui().textArea("orderDescription", "Order").getText()) == true ? compOrder.getDescription() : compOrder.getDescription() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": " + (compOrder.getStatus().equals(EBISystem.builder().combo("orderStatusText", "Order").getEditor().getItem().toString()) == true ? compOrder.getStatus() : compOrder.getStatus() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": " + (compOrder.getDescription().equals(EBISystem.builder().textArea("orderDescription", "Order").getText()) == true ? compOrder.getDescription() : compOrder.getDescription() + "$"));
 
-        list.add(EBISystem.i18n("EBI_LANG_CREATED_DATE") + ": " + (EBISystem.getInstance().getDateToString(compOrder.getOfferdate()).equals(EBISystem.gui().timePicker("orderCreatedText", "Order").getEditor().getText()) == true ? EBISystem.getInstance().getDateToString(compOrder.getOfferdate()) : EBISystem.getInstance().getDateToString(compOrder.getOfferdate()) + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_RECEIVED_DATE") + ": " + (EBISystem.getInstance().getDateToString(compOrder.getValidto()).equals(EBISystem.gui().timePicker("orderReceiveText", "Order").getEditor().getText()) == true ? EBISystem.getInstance().getDateToString(compOrder.getValidto()) : EBISystem.getInstance().getDateToString(compOrder.getValidto()) + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_CREATED_DATE") + ": " + (EBISystem.getInstance().getDateToString(compOrder.getOfferdate()).equals(EBISystem.builder().timePicker("orderCreatedText", "Order").getEditor().getText()) == true ? EBISystem.getInstance().getDateToString(compOrder.getOfferdate()) : EBISystem.getInstance().getDateToString(compOrder.getOfferdate()) + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_RECEIVED_DATE") + ": " + (EBISystem.getInstance().getDateToString(compOrder.getValidto()).equals(EBISystem.builder().timePicker("orderReceiveText", "Order").getEditor().getText()) == true ? EBISystem.getInstance().getDateToString(compOrder.getValidto()) : EBISystem.getInstance().getDateToString(compOrder.getValidto()) + "$"));
         list.add("*EOR*"); // END OF RECORD
 
         if (!compOrder.getCompanyorderdocses().isEmpty()) {

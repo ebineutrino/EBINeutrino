@@ -53,13 +53,13 @@ public class EBICRMActionListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                if (((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).isSelected()) {
+                if (((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).isSelected()) {
                     EBISystem.getModule().ebiContainer.showClosableProductContainer();
                 } else {
                     if (EBISystem.getSecurity().checkCanReleaseModules() == true) {
                         EBISystem.getModule().ebiContainer.closeProductContainer();
                     } else {
-                        ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).setSelected(true);
+                        ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).setSelected(true);
                     }
                 }
             }
@@ -70,13 +70,13 @@ public class EBICRMActionListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                if (((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).isSelected()) {
+                if (((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).isSelected()) {
                     EBISystem.getModule().ebiContainer.showClosableProsolContainer();
                 } else {
                     if (EBISystem.getSecurity().checkCanReleaseModules() == true) {
                         EBISystem.getModule().ebiContainer.closeProsolContainer();
                     } else {
-                        ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).setSelected(true);
+                        ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).setSelected(true);
                     }
                 }
             }
@@ -88,13 +88,13 @@ public class EBICRMActionListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                if (((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar")).isSelected()) {
+                if (((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar")).isSelected()) {
                     EBISystem.getModule().ebiContainer.showClosableProjectContainer();
                 } else {
                     if (EBISystem.getSecurity().checkCanReleaseModules() == true) {
                         EBISystem.getModule().ebiContainer.closeProjectContainer();
                     } else {
-                        ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar")).setSelected(true);
+                        ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar")).setSelected(true);
                     }
                 }
             }
@@ -106,13 +106,13 @@ public class EBICRMActionListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                if (((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).isSelected()) {
+                if (((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).isSelected()) {
                     EBISystem.getModule().ebiContainer.showClosableInvoiceContainer();
                 } else {
                     if (EBISystem.getSecurity().checkCanReleaseModules() == true) {
                         EBISystem.getModule().ebiContainer.closeInvoiceContainer();
                     } else {
-                        ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).setSelected(true);
+                        ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).setSelected(true);
                     }
                 }
             }
@@ -125,13 +125,13 @@ public class EBICRMActionListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                if (((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).isSelected()) {
+                if (((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).isSelected()) {
                     EBISystem.getModule().ebiContainer.showClosableAccountContainer();
                 } else {
                     if (EBISystem.getSecurity().checkCanReleaseModules() == true) {
                         EBISystem.getModule().ebiContainer.closeAccountContainer();
                     } else {
-                        ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).setSelected(true);
+                        ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).setSelected(true);
                     }
                 }
             }
@@ -177,7 +177,7 @@ public class EBICRMActionListener {
                 if (EBISystem.getInstance().getCompany() != null) {
                     int index = EBISystem.getModule().ebiContainer.getTabInstance().getSelectedIndex();
                     String componentName = EBISystem.getInstance().getIEBIContainerInstance().getComponentName(index);
-                    if (EBISystem.getModule().storeAutomate.deleteFromSelectedTab(EBISystem.gui().vpanel(componentName).getID())) {
+                    if (EBISystem.getModule().storeAutomate.deleteFromSelectedTab(EBISystem.builder().vpanel(componentName).getID())) {
                         EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_RECORD_DELETED")).Show(EBIMessage.INFO_MESSAGE);
                     }
                 }

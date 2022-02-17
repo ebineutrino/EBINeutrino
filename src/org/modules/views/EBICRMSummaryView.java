@@ -43,7 +43,7 @@ public class EBICRMSummaryView {
     @SuppressWarnings("unchecked")
     public void initializeAction() {
         tabModel = new ModelSummaryTab();
-        EBISystem.gui().combo("summarytypeText", "Summary")
+        EBISystem.builder().combo("summarytypeText", "Summary")
                 .setModel(new DefaultComboBoxModel<String>(new String[]{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"),
             EBISystem.i18n("EBI_LANG_C_SEARCH_ALL"), EBISystem.i18n("EBI_LANG_C_OPPORTUNITY"),
             EBISystem.i18n("EBI_LANG_C_ACTIVITIES"), EBISystem.i18n("EBI_LANG_C_OFFER"),
@@ -51,29 +51,29 @@ public class EBICRMSummaryView {
             EBISystem.i18n("EBI_LANG_C_TAB_INVOICE"),
             EBISystem.i18n("EBI_LANG_C_TAB_PROSOL")}));
 
-        EBISystem.gui().textField("filterTableText", "Summary").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("filterTableText", "Summary").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("companySummaryTable", "Summary").setRowFilter(RowFilters.regexFilter(
-                        "(?i)" + EBISystem.gui().textField("filterTableText", "Summary").getText()));
+                EBISystem.builder().table("companySummaryTable", "Summary").setRowFilter(RowFilters.regexFilter(
+                        "(?i)" + EBISystem.builder().textField("filterTableText", "Summary").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("companySummaryTable", "Summary").setRowFilter(RowFilters.regexFilter(
-                        "(?i)" + EBISystem.gui().textField("filterTableText", "Summary").getText()));
+                EBISystem.builder().table("companySummaryTable", "Summary").setRowFilter(RowFilters.regexFilter(
+                        "(?i)" + EBISystem.builder().textField("filterTableText", "Summary").getText()));
             }
         });
 
         if (EBICRMCompanyView.categories != null) {
-            EBISystem.gui().combo("companyCategoryText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMCompanyView.categories));
+            EBISystem.builder().combo("companyCategoryText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMCompanyView.categories));
         }
 
-        EBISystem.gui().combo("summarytypeText", "Summary").addActionListener(new ActionListener() {
+        EBISystem.builder().combo("summarytypeText", "Summary").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
                 setStateForModule();
@@ -87,29 +87,29 @@ public class EBICRMSummaryView {
         /**
          * **********************************************************************************
          */
-        EBISystem.gui().table("companySummaryTable", "Summary").setModel(tabModel);
-        EBISystem.gui().table("companySummaryTable", "Summary").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("companySummaryTable", "Summary").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("companySummaryTable", "Summary").setModel(tabModel);
+        EBISystem.builder().table("companySummaryTable", "Summary").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("companySummaryTable", "Summary").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedSummaryRow = EBISystem.gui().table("companySummaryTable", "Summary")
-                            .convertRowIndexToModel(EBISystem.gui()
+                    selectedSummaryRow = EBISystem.builder().table("companySummaryTable", "Summary")
+                            .convertRowIndexToModel(EBISystem.builder()
                                     .table("companySummaryTable", "Summary").getSelectedRow());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("showSummary", "Summary").setEnabled(false);
+                    EBISystem.builder().button("showSummary", "Summary").setEnabled(false);
                 } else if (!tabModel.data[selectedSummaryRow][0].toString()
                         .equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("showSummary", "Summary").setEnabled(true);
+                    EBISystem.builder().button("showSummary", "Summary").setEnabled(true);
                 }
             }
         });
 
-        EBISystem.gui().table("companySummaryTable", "Summary").addKeyAction(new EBIUICallback() {
+        EBISystem.builder().table("companySummaryTable", "Summary").addKeyAction(new EBIUICallback() {
             @Override
             public void tableKeyUp(int selRow) {
                 super.tableKeyUp(selRow);
@@ -134,12 +134,12 @@ public class EBICRMSummaryView {
             }
         });
 
-        EBISystem.gui().table("companySummaryTable", "Summary").addMouseListener(new MouseAdapter() {
+        EBISystem.builder().table("companySummaryTable", "Summary").addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {
-                if (EBISystem.gui().table("companySummaryTable", "Summary").rowAtPoint(e.getPoint()) != -1) {
-                    selectedSummaryRow = EBISystem.gui().table("companySummaryTable", "Summary")
-                            .convertRowIndexToModel(EBISystem.gui().table("companySummaryTable", "Summary")
+                if (EBISystem.builder().table("companySummaryTable", "Summary").rowAtPoint(e.getPoint()) != -1) {
+                    selectedSummaryRow = EBISystem.builder().table("companySummaryTable", "Summary")
+                            .convertRowIndexToModel(EBISystem.builder().table("companySummaryTable", "Summary")
                                     .rowAtPoint(e.getPoint()));
                 }
                 if (selectedSummaryRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT")
@@ -158,48 +158,48 @@ public class EBICRMSummaryView {
         currency = NumberFormat.getCurrencyInstance();
         EBISystem.hibernate().openHibernateSession("SUMMARY_SESSION");
 
-        EBISystem.gui().textField("summaryNameText", "Summary").setText("");
+        EBISystem.builder().textField("summaryNameText", "Summary").setText("");
 
-        if (EBISystem.gui().combo("summaryStatusText", "Summary").getItemCount() > 0) {
-            EBISystem.gui().combo("summaryStatusText", "Summary").removeAllItems();
+        if (EBISystem.builder().combo("summaryStatusText", "Summary").getItemCount() > 0) {
+            EBISystem.builder().combo("summaryStatusText", "Summary").removeAllItems();
         }
 
-        EBISystem.gui().combo("summaryStatusText", "Summary").addItem(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"));
+        EBISystem.builder().combo("summaryStatusText", "Summary").addItem(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"));
 
-        EBISystem.gui().timePicker("summaryCreatedFromText", "Summary").setFormats(EBISystem.DateFormat);
-        EBISystem.gui().timePicker("summaryCreatedFromText", "Summary").getEditor().setText("");
-        EBISystem.gui().timePicker("summaryCreatedToText", "Summary").setFormats(EBISystem.DateFormat);
-        EBISystem.gui().timePicker("summaryCreatedToText", "Summary").getEditor().setText("");
+        EBISystem.builder().timePicker("summaryCreatedFromText", "Summary").setFormats(EBISystem.DateFormat);
+        EBISystem.builder().timePicker("summaryCreatedFromText", "Summary").getEditor().setText("");
+        EBISystem.builder().timePicker("summaryCreatedToText", "Summary").setFormats(EBISystem.DateFormat);
+        EBISystem.builder().timePicker("summaryCreatedToText", "Summary").getEditor().setText("");
     }
 
     public void restoreProperties() {
         final EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
-        EBISystem.gui().textField("companyText", "Summary").setText(properties.getValue("EBIDASHBOARD_COMPANY"));
+        EBISystem.builder().textField("companyText", "Summary").setText(properties.getValue("EBIDASHBOARD_COMPANY"));
 
-        EBISystem.gui().combo("companyCategoryText", "Summary").setSelectedItem(properties.getValue("EBIDASHBOARD_CATEGORY"));
-        EBISystem.gui().combo("companyCategoryText", "Summary").getEditor().setItem(properties.getValue("EBIDASHBOARD_CATEGORY"));
+        EBISystem.builder().combo("companyCategoryText", "Summary").setSelectedItem(properties.getValue("EBIDASHBOARD_CATEGORY"));
+        EBISystem.builder().combo("companyCategoryText", "Summary").getEditor().setItem(properties.getValue("EBIDASHBOARD_CATEGORY"));
 
-        EBISystem.gui().combo("summarytypeText", "Summary").setSelectedItem(properties.getValue("EBIDASHBOARD_TYPE"));
-        EBISystem.gui().combo("summarytypeText", "Summary").getEditor().setItem(properties.getValue("EBIDASHBOARD_TYPE"));
+        EBISystem.builder().combo("summarytypeText", "Summary").setSelectedItem(properties.getValue("EBIDASHBOARD_TYPE"));
+        EBISystem.builder().combo("summarytypeText", "Summary").getEditor().setItem(properties.getValue("EBIDASHBOARD_TYPE"));
 
-        EBISystem.gui().combo("summaryStatusText", "Summary").setSelectedItem(properties.getValue("EBIDASHBOARD_STATUS"));
-        EBISystem.gui().combo("summaryStatusText", "Summary").getEditor().setItem(properties.getValue("EBIDASHBOARD_STATUS"));
+        EBISystem.builder().combo("summaryStatusText", "Summary").setSelectedItem(properties.getValue("EBIDASHBOARD_STATUS"));
+        EBISystem.builder().combo("summaryStatusText", "Summary").getEditor().setItem(properties.getValue("EBIDASHBOARD_STATUS"));
 
-        EBISystem.gui().textField("summaryNameText", "Summary").setText(properties.getValue("EBIDASHBOARD_NAME"));
+        EBISystem.builder().textField("summaryNameText", "Summary").setText(properties.getValue("EBIDASHBOARD_NAME"));
 
         if (!"".equals(properties.getValue("EBIDASHBOARD_CREATEDFROM")) && !"null".equals(properties.getValue("EBIDASHBOARD_CREATEDFROM"))) {
-            EBISystem.gui().timePicker("summaryCreatedFromText", "Summary").setDate(EBISystem.getInstance().getStringToDate(properties.getValue("EBIDASHBOARD_CREATEDFROM")));
-            EBISystem.gui().timePicker("summaryCreatedFromText", "Summary").getEditor().setText(properties.getValue("EBIDASHBOARD_CREATEDFROM"));
+            EBISystem.builder().timePicker("summaryCreatedFromText", "Summary").setDate(EBISystem.getInstance().getStringToDate(properties.getValue("EBIDASHBOARD_CREATEDFROM")));
+            EBISystem.builder().timePicker("summaryCreatedFromText", "Summary").getEditor().setText(properties.getValue("EBIDASHBOARD_CREATEDFROM"));
         }
 
         if (!"".equals(properties.getValue("EBIDASHBOARD_CREATEDTO")) && !"null".equals(properties.getValue("EBIDASHBOARD_CREATEDTO"))) {
-            EBISystem.gui().timePicker("summaryCreatedToText", "Summary").setDate(EBISystem.getInstance().getStringToDate(properties.getValue("EBIDASHBOARD_CREATEDTO")));
-            EBISystem.gui().timePicker("summaryCreatedToText", "Summary").getEditor().setText(properties.getValue("EBIDASHBOARD_CREATEDTO"));
+            EBISystem.builder().timePicker("summaryCreatedToText", "Summary").setDate(EBISystem.getInstance().getStringToDate(properties.getValue("EBIDASHBOARD_CREATEDTO")));
+            EBISystem.builder().timePicker("summaryCreatedToText", "Summary").getEditor().setText(properties.getValue("EBIDASHBOARD_CREATEDTO"));
         }
     }
 
     public void setCompanyText(final String text) {
-        EBISystem.gui().textField("companyText", "Summary").setText(text);
+        EBISystem.builder().textField("companyText", "Summary").setText(text);
     }
 
     /**
@@ -212,25 +212,25 @@ public class EBICRMSummaryView {
         try {
 
             EBISystem.hibernate().transaction("SUMMARY_SESSION").begin();
-            EBISystem.gui().combo("summaryStatusText", "Summary").removeAllItems();
-            EBISystem.gui().combo("summaryStatusText", "Summary").addItem(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"));
+            EBISystem.builder().combo("summaryStatusText", "Summary").removeAllItems();
+            EBISystem.builder().combo("summaryStatusText", "Summary").addItem(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"));
 
-            String summaryText = EBISystem.gui().combo("summarytypeText", "Summary").getSelectedItem().toString();
+            String summaryText = EBISystem.builder().combo("summarytypeText", "Summary").getSelectedItem().toString();
             // Companyservice
             if (EBISystem.i18n("EBI_LANG_C_OPPORTUNITY").equals(summaryText)) {
-                EBISystem.gui().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMOpportunityView.oppStatus));
+                EBISystem.builder().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMOpportunityView.oppStatus));
             } else if (EBISystem.i18n("EBI_LANG_C_ACTIVITIES").equals(summaryText)) {
-                EBISystem.gui().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMCompanyActivityView.actType));
+                EBISystem.builder().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMCompanyActivityView.actType));
             } else if (EBISystem.i18n("EBI_LANG_C_SERVICE").equals(summaryText)) {
-                EBISystem.gui().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMServiceView.serviceStatus));
+                EBISystem.builder().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMServiceView.serviceStatus));
             } else if (EBISystem.i18n("EBI_LANG_C_OFFER").equals(summaryText)) {
-                EBISystem.gui().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMOfferView.offerStatus));
+                EBISystem.builder().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMOfferView.offerStatus));
             } else if (EBISystem.i18n("EBI_LANG_C_ORDER").equals(summaryText)) {
-                EBISystem.gui().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMOrderView.orderStatus));
+                EBISystem.builder().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMOrderView.orderStatus));
             } else if (EBISystem.i18n("EBI_LANG_C_TAB_PROSOL").equals(summaryText)) {
-                EBISystem.gui().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMProblemSolutionView.prosolStatus));
+                EBISystem.builder().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMProblemSolutionView.prosolStatus));
             } else if (EBISystem.i18n("EBI_LANG_C_TAB_INVOICE").equals(summaryText)) {
-                EBISystem.gui().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMInvoiceView.invoiceStatus));
+                EBISystem.builder().combo("summaryStatusText", "Summary").setModel(new DefaultComboBoxModel<String>(EBICRMInvoiceView.invoiceStatus));
             }
         } catch (final Exception e) {
             e.printStackTrace();
@@ -249,7 +249,7 @@ public class EBICRMSummaryView {
                 return;
             }
             EBISystem.showInActionStatus("Summary");
-            EBISystem.gui().vpanel("Summary").setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            EBISystem.builder().vpanel("Summary").setCursor(new Cursor(Cursor.WAIT_CURSOR));
             String selType = tabModel.data[selectedSummaryRow][0].toString();
 
             if (!EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN").equals(selType)
@@ -308,12 +308,12 @@ public class EBICRMSummaryView {
         } catch (final Exception e) {
             e.printStackTrace();
         } finally {
-            EBISystem.gui().vpanel("Summary").setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            EBISystem.builder().vpanel("Summary").setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
     }
 
     private boolean validateInput() {
-        if (EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui().combo("summarytypeText", "Summary").getSelectedItem())) {
+        if (EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.builder().combo("summarytypeText", "Summary").getSelectedItem())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_SELECT_TYPE")).Show(EBIMessage.INFO_MESSAGE);
             return false;
         }
@@ -326,21 +326,21 @@ public class EBICRMSummaryView {
         }
 
         final EBIPropertiesRW properties = EBIPropertiesRW.getEBIProperties();
-        properties.setValue("EBIDASHBOARD_COMPANY", EBISystem.gui().textField("companyText", "Summary").getText());
-        properties.setValue("EBIDASHBOARD_CATEGORY", EBISystem.gui().combo("companyCategoryText", "Summary").getSelectedItem().toString());
-        properties.setValue("EBIDASHBOARD_TYPE", EBISystem.gui().combo("summarytypeText", "Summary").getSelectedItem().toString());
-        properties.setValue("EBIDASHBOARD_STATUS", EBISystem.gui().combo("summaryStatusText", "Summary").getSelectedItem().toString());
-        properties.setValue("EBIDASHBOARD_NAME", EBISystem.gui().textField("summaryNameText", "Summary").getText());
-        properties.setValue("EBIDASHBOARD_CREATEDFROM", EBISystem.gui().timePicker("summaryCreatedFromText", "Summary").getEditor().getText());
-        properties.setValue("EBIDASHBOARD_CREATEDTO", EBISystem.gui().timePicker("summaryCreatedToText", "Summary").getEditor().getText());
+        properties.setValue("EBIDASHBOARD_COMPANY", EBISystem.builder().textField("companyText", "Summary").getText());
+        properties.setValue("EBIDASHBOARD_CATEGORY", EBISystem.builder().combo("companyCategoryText", "Summary").getSelectedItem().toString());
+        properties.setValue("EBIDASHBOARD_TYPE", EBISystem.builder().combo("summarytypeText", "Summary").getSelectedItem().toString());
+        properties.setValue("EBIDASHBOARD_STATUS", EBISystem.builder().combo("summaryStatusText", "Summary").getSelectedItem().toString());
+        properties.setValue("EBIDASHBOARD_NAME", EBISystem.builder().textField("summaryNameText", "Summary").getText());
+        properties.setValue("EBIDASHBOARD_CREATEDFROM", EBISystem.builder().timePicker("summaryCreatedFromText", "Summary").getEditor().getText());
+        properties.setValue("EBIDASHBOARD_CREATEDTO", EBISystem.builder().timePicker("summaryCreatedToText", "Summary").getEditor().getText());
 
         properties.saveEBINeutrinoProperties();
         try {
             EBISystem.showInActionStatus("Summary");
             EBISystem.hibernate().transaction("SUMMARY_SESSION").begin();
-            EBISystem.gui().vpanel("Summary").setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            EBISystem.builder().vpanel("Summary").setCursor(new Cursor(Cursor.WAIT_CURSOR));
 
-            String summaryType = EBISystem.gui().combo("summarytypeText", "Summary").getSelectedItem().toString();
+            String summaryType = EBISystem.builder().combo("summarytypeText", "Summary").getSelectedItem().toString();
 
             int i = 0;
             if (EBISystem.i18n("EBI_LANG_C_OPPORTUNITY").equals(summaryType)) {
@@ -646,7 +646,7 @@ public class EBICRMSummaryView {
             ex.printStackTrace();
         } finally {
             tabModel.fireTableDataChanged();
-            EBISystem.gui().vpanel("Summary").setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            EBISystem.builder().vpanel("Summary").setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
     }
 
@@ -656,7 +656,7 @@ public class EBICRMSummaryView {
         String toRet = "";
         final String[] SQL = new String[7];
 
-        if (!"".equals(EBISystem.gui().timePicker("summaryCreatedFromText", "Summary").getEditor().getText())) {
+        if (!"".equals(EBISystem.builder().timePicker("summaryCreatedFromText", "Summary").getEditor().getText())) {
             haveCreated = true;
         }
 
@@ -677,7 +677,7 @@ public class EBICRMSummaryView {
         }
 
         if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(
-                EBISystem.gui().combo("summaryStatusText", "Summary").getSelectedItem().toString())) {
+                EBISystem.builder().combo("summaryStatusText", "Summary").getSelectedItem().toString())) {
 
             if ("Companyopportunity".equals(object)) {
                 SQL[4] = "AND o.opportunitystatus LIKE (?1) ";
@@ -690,7 +690,7 @@ public class EBICRMSummaryView {
             SQL[4] = "";
         }
 
-        if (!"".equals(EBISystem.gui().textField("companyText", "Summary").getText())
+        if (!"".equals(EBISystem.builder().textField("companyText", "Summary").getText())
                 && !"Crmcampaign".equals(object) && !"Crmproblemsolutions".equals(object)
                 && !"Crminvoice".equals(object)) {
             SQL[5] = " AND o.company.customernr LIKE (?1)";
@@ -698,7 +698,7 @@ public class EBICRMSummaryView {
             SQL[5] = "";
         }
 
-        if (!"".equals(EBISystem.gui().combo("companyCategoryText", "Summary").getSelectedItem().toString())
+        if (!"".equals(EBISystem.builder().combo("companyCategoryText", "Summary").getSelectedItem().toString())
                 && !"Crmcampaign".equals(object) && !"Crmproblemsolutions".equals(object)
                 && !"Crminvoice".equals(object)) {
             SQL[6] = " AND o.company.category LIKE (?1)";
@@ -717,30 +717,30 @@ public class EBICRMSummaryView {
     private Query setParamToHQuery(final Query qr) {
 
         boolean haveCreated = false;
-        final String cmpCatTxt = EBISystem.gui().combo("companyCategoryText", "Summary").getSelectedItem().toString();
-        final String srmTypText = EBISystem.gui().combo("summarytypeText", "Summary").getSelectedItem().toString();
+        final String cmpCatTxt = EBISystem.builder().combo("companyCategoryText", "Summary").getSelectedItem().toString();
+        final String srmTypText = EBISystem.builder().combo("summarytypeText", "Summary").getSelectedItem().toString();
 
-        if (!"".equals(EBISystem.gui().timePicker("summaryCreatedFromText", "Summary").getEditor().getText())) {
+        if (!"".equals(EBISystem.builder().timePicker("summaryCreatedFromText", "Summary").getEditor().getText())) {
             haveCreated = true;
         }
 
         int c = 1;
-        qr.setParameter(c, EBISystem.gui().textField("summaryNameText", "Summary").getText() + "%");
+        qr.setParameter(c, EBISystem.builder().textField("summaryNameText", "Summary").getText() + "%");
 
         if (haveCreated == true) {
-            qr.setParameter(c, EBISystem.gui().timePicker("summaryCreatedFromText", "Summary").getDate());
-            qr.setParameter(c, EBISystem.gui().timePicker("summaryCreatedToText", "Summary").getDate());
+            qr.setParameter(c, EBISystem.builder().timePicker("summaryCreatedFromText", "Summary").getDate());
+            qr.setParameter(c, EBISystem.builder().timePicker("summaryCreatedToText", "Summary").getDate());
         }
 
-        if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.gui().combo("summaryStatusText", "Summary").getSelectedItem().toString())) {
-            qr.setParameter(c, EBISystem.gui().combo("summaryStatusText", "Summary").getSelectedItem() + "%");
+        if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.builder().combo("summaryStatusText", "Summary").getSelectedItem().toString())) {
+            qr.setParameter(c, EBISystem.builder().combo("summaryStatusText", "Summary").getSelectedItem() + "%");
         }
 
-        if (!"".equals(EBISystem.gui().textField("companyText", "Summary").getText())
+        if (!"".equals(EBISystem.builder().textField("companyText", "Summary").getText())
                 && !EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN").equals(srmTypText)
                 && !EBISystem.i18n("EBI_LANG_C_TAB_PROSOL").equals(srmTypText)
                 && !EBISystem.i18n("EBI_LANG_C_TAB_INVOICE").equals(srmTypText)) {
-            qr.setParameter(c, EBISystem.gui().textField("companyText", "Summary").getText() + "%");
+            qr.setParameter(c, EBISystem.builder().textField("companyText", "Summary").getText() + "%");
         }
 
         if (!"".equals(cmpCatTxt) && !EBISystem.i18n("EBI_LANG_C_TAB_CAMPAIGN").equals(srmTypText)

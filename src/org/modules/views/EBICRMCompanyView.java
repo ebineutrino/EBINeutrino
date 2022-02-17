@@ -38,51 +38,51 @@ public class EBICRMCompanyView {
         tabModel = new ModelCRMAddress();
         ctabModel = new ModelCRMContact(ModelCRMContact.CRM_CONTACT);
 
-        EBISystem.gui().textField("telephoneText", "Company").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
-        EBISystem.gui().textField("faxText", "Company").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
-        EBISystem.gui().textField("emailText", "Company").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.EMAIL));
+        EBISystem.builder().textField("telephoneText", "Company").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
+        EBISystem.builder().textField("faxText", "Company").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
+        EBISystem.builder().textField("emailText", "Company").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.EMAIL));
 
         //Configure contact table
-        EBISystem.gui().table("companyTableContactViewX", "Company").setModel(ctabModel);
-        EBISystem.gui().table("companyTableContactViewX", "Company").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("companyTableContactViewX", "Company").setModel(ctabModel);
+        EBISystem.builder().table("companyTableContactViewX", "Company").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //Configure address table
-        EBISystem.gui().table("companyTableAddressView", "Company").setModel(tabModel);
-        EBISystem.gui().table("companyTableAddressView", "Company").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("companyTableAddressView", "Company").setModel(tabModel);
+        EBISystem.builder().table("companyTableAddressView", "Company").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        EBISystem.gui().vpanel("Company").addComponentListener(new ComponentAdapter() {
+        EBISystem.builder().vpanel("Company").addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(final ComponentEvent e) {
-                EBISystem.gui().textField("rootText", "Company").grabFocus();
+                EBISystem.builder().textField("rootText", "Company").grabFocus();
             }
         });
 
-        EBISystem.gui().combo("categoryText", "Company").addActionListener(new ActionListener() {
+        EBISystem.builder().combo("categoryText", "Company").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                if (!EBISystem.gui().combo("categoryText", "Company")
+                if (!EBISystem.builder().combo("categoryText", "Company")
                         .getSelectedItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
                     if (!EBIModule.isExistCompany) {
-                        final Object[] obj = EBISystem.getModule().dynMethod.getInternNumber(EBISystem.gui().combo("categoryText", "Company").getSelectedItem().toString(), false);
+                        final Object[] obj = EBISystem.getModule().dynMethod.getInternNumber(EBISystem.builder().combo("categoryText", "Company").getSelectedItem().toString(), false);
                         EBISystem.getModule().beginChar = obj[1].toString();
-                        EBISystem.gui().textField("internalNrText", "Company").setText(obj[1].toString() + obj[0].toString());
-                    } else if (EBIModule.isExistCompany && !EBISystem.gui().combo("categoryText", "Company").getSelectedItem().equals(EBISystem.getInstance().getCompany().getCategory())) {
-                        final Object[] obj = EBISystem.getModule().dynMethod.getInternNumber(EBISystem.gui().combo("categoryText", "Company").getSelectedItem().toString(), false);
+                        EBISystem.builder().textField("internalNrText", "Company").setText(obj[1].toString() + obj[0].toString());
+                    } else if (EBIModule.isExistCompany && !EBISystem.builder().combo("categoryText", "Company").getSelectedItem().equals(EBISystem.getInstance().getCompany().getCategory())) {
+                        final Object[] obj = EBISystem.getModule().dynMethod.getInternNumber(EBISystem.builder().combo("categoryText", "Company").getSelectedItem().toString(), false);
                         EBISystem.getModule().beginChar = obj[1].toString();
-                        EBISystem.gui().textField("internalNrText", "Company").setText(obj[1] + obj[0].toString());
-                    } else if (EBIModule.isExistCompany && EBISystem.gui().combo("categoryText", "Company").getSelectedItem().equals(EBISystem.getInstance().getCompany().getCategory())) {
-                        final Object[] obj = EBISystem.getModule().dynMethod.getInternNumber(EBISystem.gui().combo("categoryText", "Company").getSelectedItem().toString(), false);
+                        EBISystem.builder().textField("internalNrText", "Company").setText(obj[1] + obj[0].toString());
+                    } else if (EBIModule.isExistCompany && EBISystem.builder().combo("categoryText", "Company").getSelectedItem().equals(EBISystem.getInstance().getCompany().getCategory())) {
+                        final Object[] obj = EBISystem.getModule().dynMethod.getInternNumber(EBISystem.builder().combo("categoryText", "Company").getSelectedItem().toString(), false);
                         if (EBISystem.getInstance().getCompany().getBeginchar() == null || "".equals(EBISystem.getInstance().getCompany().getBeginchar())) {
                             EBISystem.getModule().beginChar = obj[1].toString();
                         } else {
                             EBISystem.getModule().beginChar = EBISystem.getInstance().getCompany().getBeginchar();
                         }
-                        EBISystem.gui().textField("internalNrText", "Company").setText(EBISystem.getInstance().getCompany().getCompanynumber() == null
+                        EBISystem.builder().textField("internalNrText", "Company").setText(EBISystem.getInstance().getCompany().getCompanynumber() == null
                                 ? "-1" : EBISystem.getModule().beginChar + String.valueOf(EBISystem.getInstance().getCompany().getCompanynumber() == -1
                                 ? obj[0] : EBISystem.getInstance().getCompany().getCompanynumber()));
                     }
                 } else {
-                    EBISystem.gui().textField("internalNrText", "Company").setText("-1");
+                    EBISystem.builder().textField("internalNrText", "Company").setText("-1");
                 }
             }
         });
@@ -93,43 +93,43 @@ public class EBICRMCompanyView {
         listH = new HashSet();
         hComp = new Companyhirarchie();
 
-        EBISystem.gui().combo("categoryText", "Company").setModel(new DefaultComboBoxModel(categories));
-        EBISystem.gui().combo("cooperationText", "Company").setModel(new DefaultComboBoxModel(cooperations));
-        EBISystem.gui().combo("classificationText", "Company").setModel(new DefaultComboBoxModel(classification));
+        EBISystem.builder().combo("categoryText", "Company").setModel(new DefaultComboBoxModel(categories));
+        EBISystem.builder().combo("cooperationText", "Company").setModel(new DefaultComboBoxModel(cooperations));
+        EBISystem.builder().combo("classificationText", "Company").setModel(new DefaultComboBoxModel(classification));
 
-        EBISystem.gui().vpanel("Company").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
-        EBISystem.gui().vpanel("Company").setCreatedFrom(EBISystem.ebiUser);
-        EBISystem.gui().vpanel("Company").setChangedDate("");
-        EBISystem.gui().vpanel("Company").setChangedFrom("");
+        EBISystem.builder().vpanel("Company").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
+        EBISystem.builder().vpanel("Company").setCreatedFrom(EBISystem.ebiUser);
+        EBISystem.builder().vpanel("Company").setChangedDate("");
+        EBISystem.builder().vpanel("Company").setChangedFrom("");
 
-        EBISystem.gui().combo("categoryText", "Company").setSelectedIndex(0);
-        EBISystem.gui().combo("classificationText", "Company").setSelectedIndex(0);
-        EBISystem.gui().combo("cooperationText", "Company").setSelectedIndex(0);
-        EBISystem.gui().textField("internalNrText", "Company").setText("");
-        EBISystem.gui().textField("rootText", "Company").setText("");
-        EBISystem.gui().textField("rootText", "Company").requestFocus();
-        EBISystem.gui().textField("custNrText", "Company").setText("");
-        EBISystem.gui().textField("nameText", "Company").setText("");
-        EBISystem.gui().textField("name1Text", "Company").setText("");
-        EBISystem.gui().textField("taxIDText", "Company").setText("");
-        EBISystem.gui().textField("employeeText", "Company").setText("");
-        EBISystem.gui().textField("telephoneText", "Company").setText("");
-        EBISystem.gui().textField("faxText", "Company").setText("");
-        EBISystem.gui().textField("internetText", "Company").setText("");
-        EBISystem.gui().textField("emailText", "Company").setText("");
-        EBISystem.gui().getCheckBox("lockCompany", "Company").setSelected(false);
-        EBISystem.gui().textArea("companyDescription", "Company").setText("");
+        EBISystem.builder().combo("categoryText", "Company").setSelectedIndex(0);
+        EBISystem.builder().combo("classificationText", "Company").setSelectedIndex(0);
+        EBISystem.builder().combo("cooperationText", "Company").setSelectedIndex(0);
+        EBISystem.builder().textField("internalNrText", "Company").setText("");
+        EBISystem.builder().textField("rootText", "Company").setText("");
+        EBISystem.builder().textField("rootText", "Company").requestFocus();
+        EBISystem.builder().textField("custNrText", "Company").setText("");
+        EBISystem.builder().textField("nameText", "Company").setText("");
+        EBISystem.builder().textField("name1Text", "Company").setText("");
+        EBISystem.builder().textField("taxIDText", "Company").setText("");
+        EBISystem.builder().textField("employeeText", "Company").setText("");
+        EBISystem.builder().textField("telephoneText", "Company").setText("");
+        EBISystem.builder().textField("faxText", "Company").setText("");
+        EBISystem.builder().textField("internetText", "Company").setText("");
+        EBISystem.builder().textField("emailText", "Company").setText("");
+        EBISystem.builder().getCheckBox("lockCompany", "Company").setSelected(false);
+        EBISystem.builder().textArea("companyDescription", "Company").setText("");
         tabModel = new ModelCRMAddress();
         tabModel.fireTableDataChanged();
         //Configure address table
-        EBISystem.gui().table("companyTableAddressView", "Company").setModel(tabModel);
-        EBISystem.gui().table("companyTableAddressView", "Company").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("companyTableAddressView", "Company").setModel(tabModel);
+        EBISystem.builder().table("companyTableAddressView", "Company").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         ctabModel = new ModelCRMContact(ModelCRMContact.CRM_CONTACT);
         ctabModel.fireTableDataChanged();
 
-        EBISystem.gui().table("companyTableContactViewX", "Company").setModel(ctabModel);
-        EBISystem.gui().table("companyTableContactViewX", "Company").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("companyTableContactViewX", "Company").setModel(ctabModel);
+        EBISystem.builder().table("companyTableContactViewX", "Company").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         if (EBISystem.getModule().ebiContainer.companyPOSID != -1) {
             EBISystem.getModule().ebiContainer.getTabInstance().setTitleAt(EBISystem.getModule().ebiContainer.companyPOSID, EBISystem.i18n("EBI_LANG_C_COMPANY"));
         }
@@ -143,7 +143,7 @@ public class EBICRMCompanyView {
         this.hComp.setCompany(EBISystem.getInstance().getCompany());
         this.hComp.setParent(parent);
         this.hComp.setName(name);
-        EBISystem.gui().textField("rootText", "Company").setText(this.hComp.getName());
+        EBISystem.builder().textField("rootText", "Company").setText(this.hComp.getName());
         this.hComp.setCreateddate(new Date());
         this.hComp.setCreatedfrom(EBISystem.ebiUser);
         listH.add(this.hComp);
@@ -154,7 +154,7 @@ public class EBICRMCompanyView {
         final Iterator itr = this.listH.iterator();
         while (itr.hasNext()) {
             this.hComp = (Companyhirarchie) itr.next();
-            EBISystem.gui().textField("rootText", "Company").setText(this.hComp.getName());
+            EBISystem.builder().textField("rootText", "Company").setText(this.hComp.getName());
         }
     }
 }

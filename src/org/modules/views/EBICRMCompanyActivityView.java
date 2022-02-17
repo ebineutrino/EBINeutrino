@@ -44,41 +44,41 @@ public class EBICRMCompanyActivityView implements ChangeListener {
 
     @Override
     public void stateChanged(final ChangeEvent e) {
-        EBISystem.gui().getPanel("colorPanel", "Activity").setBackground(jch.getColor());
+        EBISystem.builder().getPanel("colorPanel", "Activity").setBackground(jch.getColor());
     }
 
     public void initializeAction() {
 
-        EBISystem.gui().textField("dueH", "Activity").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.HOUR));
-        EBISystem.gui().textField("dueMin", "Activity").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.MINUTE));
+        EBISystem.builder().textField("dueH", "Activity").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.HOUR));
+        EBISystem.builder().textField("dueMin", "Activity").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.MINUTE));
         
         
-        EBISystem.gui().getPanel("colorPanel", "Activity").setOpaque(true);
-        EBISystem.gui().combo("timerStartText", "Activity").
+        EBISystem.builder().getPanel("colorPanel", "Activity").setOpaque(true);
+        EBISystem.builder().combo("timerStartText", "Activity").
                 setModel(new DefaultComboBoxModel(new String[]{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"),
             "5 min", "10 min", "15 min", "20 min", "25 min", "30 min", "35 min", "40 min", "50 min", "60 min"}));
 
         
-        EBISystem.gui().textField("filterTableText", "Activity").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("filterTableText", "Activity").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("tableActivity", "Activity").
+                EBISystem.builder().table("tableActivity", "Activity").
                         setRowFilter(RowFilters.regexFilter("(?i)"
-                                + EBISystem.gui().textField("filterTableText", "Activity").getText()));
+                                + EBISystem.builder().textField("filterTableText", "Activity").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("tableActivity", "Activity").
-                        setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Activity").getText()));
+                EBISystem.builder().table("tableActivity", "Activity").
+                        setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Activity").getText()));
             }
         });
 
-        EBISystem.gui().combo("activityTypeText", "Activity").setEditable(true);
+        EBISystem.builder().combo("activityTypeText", "Activity").setEditable(true);
 
         /**
          * ***************************************************************************
@@ -87,23 +87,23 @@ public class EBICRMCompanyActivityView implements ChangeListener {
         /**
          * ***************************************************************************
          */
-        EBISystem.gui().table("tableActivityDoc", "Activity").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("tableActivityDoc", "Activity").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("tableActivityDoc", "Activity").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("tableActivityDoc", "Activity").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.gui().table("tableActivityDoc", "Activity").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedDocRow = EBISystem.builder().table("tableActivityDoc", "Activity").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("showActivityDoc", "Activity").setEnabled(false);
-                    EBISystem.gui().button("deleteActivityDoc", "Activity").setEnabled(false);
+                    EBISystem.builder().button("showActivityDoc", "Activity").setEnabled(false);
+                    EBISystem.builder().button("deleteActivityDoc", "Activity").setEnabled(false);
                 } else if (!tabActDoc.data[selectedDocRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("showActivityDoc", "Activity").setEnabled(true);
-                    EBISystem.gui().button("deleteActivityDoc", "Activity").setEnabled(true);
+                    EBISystem.builder().button("showActivityDoc", "Activity").setEnabled(true);
+                    EBISystem.builder().button("deleteActivityDoc", "Activity").setEnabled(true);
                 }
             }
         });
@@ -115,9 +115,9 @@ public class EBICRMCompanyActivityView implements ChangeListener {
         /**
          * **************************************************************************
          */
-        EBISystem.gui().table("tableActivity", "Activity").setDefaultRenderer(Object.class, new OwnCellRederer(false, true));
-        EBISystem.gui().table("tableActivity", "Activity").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("tableActivity", "Activity").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("tableActivity", "Activity").setDefaultRenderer(Object.class, new OwnCellRederer(false, true));
+        EBISystem.builder().table("tableActivity", "Activity").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("tableActivity", "Activity").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
@@ -125,19 +125,19 @@ public class EBICRMCompanyActivityView implements ChangeListener {
                 try {
                     selectedActivityRow = 0;
                     if (lsm.getMinSelectionIndex() != -1) {
-                        selectedActivityRow = EBISystem.gui().table("tableActivity", "Activity").convertRowIndexToModel(EBISystem.gui().table("tableActivity", "Activity").getSelectedRow());
+                        selectedActivityRow = EBISystem.builder().table("tableActivity", "Activity").convertRowIndexToModel(EBISystem.builder().table("tableActivity", "Activity").getSelectedRow());
                     }
 
                     if (lsm.isSelectionEmpty()) {
-                        EBISystem.gui().button("editActivity", "Activity").setEnabled(false);
-                        EBISystem.gui().button("deleteActivity", "Activity").setEnabled(false);
-                        EBISystem.gui().button("historyActivity", "Activity").setEnabled(false);
-                        EBISystem.gui().button("copyActivity", "Activity").setEnabled(false);
+                        EBISystem.builder().button("editActivity", "Activity").setEnabled(false);
+                        EBISystem.builder().button("deleteActivity", "Activity").setEnabled(false);
+                        EBISystem.builder().button("historyActivity", "Activity").setEnabled(false);
+                        EBISystem.builder().button("copyActivity", "Activity").setEnabled(false);
                     } else if (!tabModel.data[selectedActivityRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                        EBISystem.gui().button("editActivity", "Activity").setEnabled(true);
-                        EBISystem.gui().button("deleteActivity", "Activity").setEnabled(true);
-                        EBISystem.gui().button("historyActivity", "Activity").setEnabled(true);
-                        EBISystem.gui().button("copyActivity", "Activity").setEnabled(true);
+                        EBISystem.builder().button("editActivity", "Activity").setEnabled(true);
+                        EBISystem.builder().button("deleteActivity", "Activity").setEnabled(true);
+                        EBISystem.builder().button("historyActivity", "Activity").setEnabled(true);
+                        EBISystem.builder().button("copyActivity", "Activity").setEnabled(true);
 
                     }
                 } catch (final IndexOutOfBoundsException ex) {
@@ -146,7 +146,7 @@ public class EBICRMCompanyActivityView implements ChangeListener {
             }
         });
 
-        EBISystem.gui().table("tableActivity", "Activity").addKeyAction(new EBIUICallback() {
+        EBISystem.builder().table("tableActivity", "Activity").addKeyAction(new EBIUICallback() {
             @Override
             public void tableKeyUp(int selRow) {
                 super.tableKeyUp(selRow);
@@ -173,11 +173,11 @@ public class EBICRMCompanyActivityView implements ChangeListener {
             }
         });
 
-        EBISystem.gui().table("tableActivity", "Activity").setMouseCallback(new MouseAdapter() {
+        EBISystem.builder().table("tableActivity", "Activity").setMouseCallback(new MouseAdapter() {
             @Override
             public void mouseReleased(final java.awt.event.MouseEvent e) {
-                if (EBISystem.gui().table("tableActivity", "Activity").getSelectedRow() != -1) {
-                    selectedActivityRow = EBISystem.gui().table("tableActivity", "Activity").convertRowIndexToModel(EBISystem.gui().table("tableActivity", "Activity").getSelectedRow());
+                if (EBISystem.builder().table("tableActivity", "Activity").getSelectedRow() != -1) {
+                    selectedActivityRow = EBISystem.builder().table("tableActivity", "Activity").convertRowIndexToModel(EBISystem.builder().table("tableActivity", "Activity").getSelectedRow());
 
                     if (selectedActivityRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                             equals(tabModel.data[selectedActivityRow][0].toString())) {
@@ -188,7 +188,7 @@ public class EBICRMCompanyActivityView implements ChangeListener {
             }
         });
 
-        EBISystem.gui().timePicker("activityTODOText", "Activity").getEditor().setText("");
+        EBISystem.builder().timePicker("activityTODOText", "Activity").getEditor().setText("");
     }
 
     public void initialize(boolean reload) {
@@ -196,32 +196,32 @@ public class EBICRMCompanyActivityView implements ChangeListener {
         if (reload) {
             tabActDoc = new ModelDoc();
             tabModel = new ModelActivities();
-            EBISystem.gui().table("tableActivity", "Activity").setModel(tabModel);
-            EBISystem.gui().table("tableActivityDoc", "Activity").setModel(tabActDoc);
+            EBISystem.builder().table("tableActivity", "Activity").setModel(tabModel);
+            EBISystem.builder().table("tableActivityDoc", "Activity").setModel(tabActDoc);
         }
 
-        EBISystem.gui().combo("activityTypeText", "Activity").setModel(new javax.swing.DefaultComboBoxModel(actType));
-        EBISystem.gui().combo("activityStatusText", "Activity").setModel(new javax.swing.DefaultComboBoxModel(actStatus));
+        EBISystem.builder().combo("activityTypeText", "Activity").setModel(new javax.swing.DefaultComboBoxModel(actType));
+        EBISystem.builder().combo("activityStatusText", "Activity").setModel(new javax.swing.DefaultComboBoxModel(actStatus));
 
-        EBISystem.gui().vpanel("Activity").setCreatedDate(EBISystem.getInstance().getDateToString(new java.util.Date()));
-        EBISystem.gui().vpanel("Activity").setCreatedFrom(EBISystem.ebiUser);
-        EBISystem.gui().vpanel("Activity").setChangedDate("");
-        EBISystem.gui().vpanel("Activity").setChangedFrom("");
+        EBISystem.builder().vpanel("Activity").setCreatedDate(EBISystem.getInstance().getDateToString(new java.util.Date()));
+        EBISystem.builder().vpanel("Activity").setCreatedFrom(EBISystem.ebiUser);
+        EBISystem.builder().vpanel("Activity").setChangedDate("");
+        EBISystem.builder().vpanel("Activity").setChangedFrom("");
 
-        EBISystem.gui().combo("activityStatusText", "Activity").setSelectedIndex(0);
-        EBISystem.gui().combo("activityTypeText", "Activity").setSelectedIndex(0);
+        EBISystem.builder().combo("activityStatusText", "Activity").setSelectedIndex(0);
+        EBISystem.builder().combo("activityTypeText", "Activity").setSelectedIndex(0);
 
-        EBISystem.gui().textField("dueH", "Activity").setText("");
-        EBISystem.gui().textField("dueMin", "Activity").setText("");
-        EBISystem.gui().textField("durationText", "Activity").setText("");
+        EBISystem.builder().textField("dueH", "Activity").setText("");
+        EBISystem.builder().textField("dueMin", "Activity").setText("");
+        EBISystem.builder().textField("durationText", "Activity").setText("");
 
-        EBISystem.gui().getPanel("colorPanel", "Activity").setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-        EBISystem.gui().getPanel("colorPanel", "Activity").setBackground(new Color(5, 125, 255));
+        EBISystem.builder().getPanel("colorPanel", "Activity").setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        EBISystem.builder().getPanel("colorPanel", "Activity").setBackground(new Color(5, 125, 255));
 
-        EBISystem.gui().textField("activityNameText", "Activity").setText("");
-        EBISystem.gui().textArea("activityDescription", "Activity").setText("");
-        EBISystem.gui().timePicker("activityTODOText", "Activity").setDate(null);
-        EBISystem.gui().timePicker("activityTODOText", "Activity").setFormats(EBISystem.DateFormat);
+        EBISystem.builder().textField("activityNameText", "Activity").setText("");
+        EBISystem.builder().textArea("activityDescription", "Activity").setText("");
+        EBISystem.builder().timePicker("activityTODOText", "Activity").setDate(null);
+        EBISystem.builder().timePicker("activityTODOText", "Activity").setFormats(EBISystem.DateFormat);
     }
 
     public void newDocs() {
@@ -274,11 +274,11 @@ public class EBICRMCompanyActivityView implements ChangeListener {
             return false;
         }
         EBISystem.showInActionStatus("Activity");
-        int row = EBISystem.gui().table("tableActivity", "Activity").getSelectedRow();
+        int row = EBISystem.builder().table("tableActivity", "Activity").getSelectedRow();
         Integer id = dataControlActivity.dataStore();
         dataControlActivity.dataShow(id);
         dataControlActivity.dataShowDoc();
-        EBISystem.gui().table("tableActivity", "Activity").changeSelection(row, 0, false, false);
+        EBISystem.builder().table("tableActivity", "Activity").changeSelection(row, 0, false, false);
         return true;
     }
 
@@ -324,13 +324,13 @@ public class EBICRMCompanyActivityView implements ChangeListener {
     private boolean validateInput() {
         boolean ret = true;
         try {
-            if (Integer.parseInt(EBISystem.gui().textField("durationText", "Activity").getText()) <= 0) {
+            if (Integer.parseInt(EBISystem.builder().textField("durationText", "Activity").getText()) <= 0) {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_VALID_NUMBER")).Show(EBIMessage.ERROR_MESSAGE);
                 ret = false;
-            } else if ("".equals(EBISystem.gui().textField("activityNameText", "Activity").getText())) {
+            } else if ("".equals(EBISystem.builder().textField("activityNameText", "Activity").getText())) {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_NAME")).Show(EBIMessage.ERROR_MESSAGE);
                 ret = false;
-            } else if (EBISystem.gui().combo("activityTypeText", "Activity").getSelectedItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
+            } else if (EBISystem.builder().combo("activityTypeText", "Activity").getSelectedItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_SELECT_TYPE")).Show(EBIMessage.ERROR_MESSAGE);
                 ret = false;
             }

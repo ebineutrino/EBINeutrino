@@ -1,7 +1,6 @@
 package org.modules.utils;
 
 import org.sdk.EBISystem;
-import org.sdk.interfaces.IEBIGUIRenderer;
 import org.sdk.utils.EBIAbstractTableModel;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.JXTableHeader;
@@ -11,17 +10,18 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import org.sdk.interfaces.IEBIBuilder;
 
 public class HeaderSelector extends MouseAdapter {
 
     private final JXTable table;
     public HeaderEditor editor;
-    private IEBIGUIRenderer guiRenderer = null;
+    private IEBIBuilder guiRenderer = null;
 
     public HeaderSelector(final JXTable t) {
         table = t;
         editor = new HeaderEditor(this);
-        guiRenderer = EBISystem.gui();
+        guiRenderer = EBISystem.builder();
     }
 
     @Override

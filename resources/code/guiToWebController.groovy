@@ -1,0 +1,2 @@
+
+Summary.summarytypeText.selectedItem = "Bestellung";

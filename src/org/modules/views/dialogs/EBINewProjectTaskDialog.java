@@ -38,7 +38,7 @@ public class EBINewProjectTaskDialog implements ChangeListener {
 
     @Override
     public void stateChanged(final ChangeEvent changeEvent) {
-        EBISystem.gui().getPanel("taskColor", "projectTaskDialog").setBackground(jch.getColor());
+        EBISystem.builder().getPanel("taskColor", "projectTaskDialog").setBackground(jch.getColor());
     }
 
     public boolean setVisible(final TaskEvent te, final Crmprojecttask task) {
@@ -46,29 +46,29 @@ public class EBINewProjectTaskDialog implements ChangeListener {
         tabModCost = new ModelProperties();
         projectTask = task;
 
-        EBISystem.gui().loadGUI("CRMDialog/newProjectTaskDialog.xml");
-        EBISystem.gui().combo("taskStatusText", "projectTaskDialog").setModel(new DefaultComboBoxModel(taskStatus));
-        EBISystem.gui().combo("taskTypeText", "projectTaskDialog").setModel(new DefaultComboBoxModel(taskType));
-        EBISystem.gui().combo("taskDoneText", "projectTaskDialog").addItem(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"));
+        EBISystem.builder().loadGUI("CRMDialog/newProjectTaskDialog.xml");
+        EBISystem.builder().combo("taskStatusText", "projectTaskDialog").setModel(new DefaultComboBoxModel(taskStatus));
+        EBISystem.builder().combo("taskTypeText", "projectTaskDialog").setModel(new DefaultComboBoxModel(taskType));
+        EBISystem.builder().combo("taskDoneText", "projectTaskDialog").addItem(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"));
 
         for (int i = 10; i <= 100; i += 10) {
-            EBISystem.gui().combo("taskDoneText", "projectTaskDialog").addItem(i + "%");
+            EBISystem.builder().combo("taskDoneText", "projectTaskDialog").addItem(i + "%");
         }
 
-        EBISystem.gui().getPanel("taskColor", "projectTaskDialog").setOpaque(true);
+        EBISystem.builder().getPanel("taskColor", "projectTaskDialog").setOpaque(true);
 
-        EBISystem.gui().combo("taskDoneText", "projectTaskDialog").setSelectedIndex(te.getReached() / 10);
-        EBISystem.gui().textField("taskNameText", "projectTaskDialog").setText(te.getName());
-        EBISystem.gui().getEditor("taskDescription", "projectTaskDialog").setText(te.getDescription());
+        EBISystem.builder().combo("taskDoneText", "projectTaskDialog").setSelectedIndex(te.getReached() / 10);
+        EBISystem.builder().textField("taskNameText", "projectTaskDialog").setText(te.getName());
+        EBISystem.builder().getEditor("taskDescription", "projectTaskDialog").setText(te.getDescription());
 
-        EBISystem.gui().textField("durationText", "projectTaskDialog").setText(String.valueOf(te.getDuration()));
-        EBISystem.gui().combo("taskStatusText", "projectTaskDialog").setSelectedItem(te.getStatus());
-        EBISystem.gui().combo("taskTypeText", "projectTaskDialog").setSelectedItem(te.getType());
+        EBISystem.builder().textField("durationText", "projectTaskDialog").setText(String.valueOf(te.getDuration()));
+        EBISystem.builder().combo("taskStatusText", "projectTaskDialog").setSelectedItem(te.getStatus());
+        EBISystem.builder().combo("taskTypeText", "projectTaskDialog").setSelectedItem(te.getType());
 
-        EBISystem.gui().getPanel("taskColor", "projectTaskDialog").setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-        EBISystem.gui().getPanel("taskColor", "projectTaskDialog").setBackground(te.getBackgroundColor());
+        EBISystem.builder().getPanel("taskColor", "projectTaskDialog").setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        EBISystem.builder().getPanel("taskColor", "projectTaskDialog").setBackground(te.getBackgroundColor());
 
-        EBISystem.gui().button("chooseTaskColor", "projectTaskDialog").addActionListener(new ActionListener() {
+        EBISystem.builder().button("chooseTaskColor", "projectTaskDialog").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent event) {
                 final EBIDialog diaColor = new EBIDialog(null);
@@ -84,47 +84,47 @@ public class EBINewProjectTaskDialog implements ChangeListener {
             }
         });
 
-        EBISystem.gui().button("cancelTask", "projectTaskDialog").addActionListener(new ActionListener() {
+        EBISystem.builder().button("cancelTask", "projectTaskDialog").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent event) {
                 saveTask = false;
-                EBISystem.gui().dialog("projectTaskDialog").setVisible(false);
+                EBISystem.builder().dialog("projectTaskDialog").setVisible(false);
             }
         });
 
-        EBISystem.gui().button("taskSave", "projectTaskDialog").addActionListener(new ActionListener() {
+        EBISystem.builder().button("taskSave", "projectTaskDialog").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent event) {
                 if (!validateInput()) {
                     return;
                 }
-                te.setName(EBISystem.gui().textField("taskNameText", "projectTaskDialog").getText());
-                te.setDescription("<html>" + EBISystem.gui().getEditor("taskDescription", "projectTaskDialog").getText() + "<html>");
-                te.setBackgroundColor(EBISystem.gui().getPanel("taskColor", "projectTaskDialog").getBackground());
+                te.setName(EBISystem.builder().textField("taskNameText", "projectTaskDialog").getText());
+                te.setDescription("<html>" + EBISystem.builder().getEditor("taskDescription", "projectTaskDialog").getText() + "<html>");
+                te.setBackgroundColor(EBISystem.builder().getPanel("taskColor", "projectTaskDialog").getBackground());
 
-                te.setReached(EBISystem.gui().combo("taskDoneText", "projectTaskDialog").getSelectedIndex() * 10);
+                te.setReached(EBISystem.builder().combo("taskDoneText", "projectTaskDialog").getSelectedIndex() * 10);
 
-                if (EBISystem.gui().combo("taskStatusText", "projectTaskDialog").getEditor().getItem() != null) {
-                    te.setStatus(EBISystem.gui().combo("taskStatusText", "projectTaskDialog").getEditor().getItem().toString());
+                if (EBISystem.builder().combo("taskStatusText", "projectTaskDialog").getEditor().getItem() != null) {
+                    te.setStatus(EBISystem.builder().combo("taskStatusText", "projectTaskDialog").getEditor().getItem().toString());
                 }
 
-                if (EBISystem.gui().combo("taskTypeText", "projectTaskDialog").getEditor().getItem() != null) {
-                    te.setType(EBISystem.gui().combo("taskTypeText", "projectTaskDialog").getEditor().getItem().toString());
+                if (EBISystem.builder().combo("taskTypeText", "projectTaskDialog").getEditor().getItem() != null) {
+                    te.setType(EBISystem.builder().combo("taskTypeText", "projectTaskDialog").getEditor().getItem().toString());
                 }
 
                 try {
-                    te.setDuration(Integer.parseInt(EBISystem.gui().textField("durationText", "projectTaskDialog").getText()) * 20);
+                    te.setDuration(Integer.parseInt(EBISystem.builder().textField("durationText", "projectTaskDialog").getText()) * 20);
                 } catch (final NumberFormatException ex) {
                     EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_VALID_NUMBER")).Show(EBIMessage.ERROR_MESSAGE);
                 }
 
                 saveTask = true;
-                EBISystem.gui().dialog("projectTaskDialog").setVisible(false);
+                EBISystem.builder().dialog("projectTaskDialog").setVisible(false);
             }
         });
 
-        EBISystem.gui().button("newCost", "projectTaskDialog").setIcon(EBISystem.getInstance().getIconResource("new.png"));
-        EBISystem.gui().button("newCost", "projectTaskDialog").addActionListener(new ActionListener() {
+        EBISystem.builder().button("newCost", "projectTaskDialog").setIcon(EBISystem.getInstance().getIconResource("new.png"));
+        EBISystem.builder().button("newCost", "projectTaskDialog").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent event) {
                 final EBIDialogProperties properties = new EBIDialogProperties(projectTask, null, true);
@@ -132,9 +132,9 @@ public class EBINewProjectTaskDialog implements ChangeListener {
             }
         });
 
-        EBISystem.gui().button("editCost", "projectTaskDialog").setIcon(EBISystem.getInstance().getIconResource("down.png"));
-        EBISystem.gui().button("editCost", "projectTaskDialog").setEnabled(false);
-        EBISystem.gui().button("editCost", "projectTaskDialog").addActionListener(new ActionListener() {
+        EBISystem.builder().button("editCost", "projectTaskDialog").setIcon(EBISystem.getInstance().getIconResource("down.png"));
+        EBISystem.builder().button("editCost", "projectTaskDialog").setEnabled(false);
+        EBISystem.builder().button("editCost", "projectTaskDialog").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent event) {
 
@@ -151,9 +151,9 @@ public class EBINewProjectTaskDialog implements ChangeListener {
             }
         });
 
-        EBISystem.gui().button("deleteCost", "projectTaskDialog").setIcon(EBISystem.getInstance().getIconResource("delete.png"));
-        EBISystem.gui().button("deleteCost", "projectTaskDialog").setEnabled(false);
-        EBISystem.gui().button("deleteCost", "projectTaskDialog").addActionListener(new ActionListener() {
+        EBISystem.builder().button("deleteCost", "projectTaskDialog").setIcon(EBISystem.getInstance().getIconResource("delete.png"));
+        EBISystem.builder().button("deleteCost", "projectTaskDialog").setEnabled(false);
+        EBISystem.builder().button("deleteCost", "projectTaskDialog").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent event) {
                 final Iterator iter = projectTask.getCrmprojectcosts().iterator();
@@ -168,8 +168,8 @@ public class EBINewProjectTaskDialog implements ChangeListener {
             }
         });
 
-        EBISystem.gui().button("newProperties", "projectTaskDialog").setIcon(EBISystem.getInstance().getIconResource("new.png"));
-        EBISystem.gui().button("newProperties", "projectTaskDialog").addActionListener(new ActionListener() {
+        EBISystem.builder().button("newProperties", "projectTaskDialog").setIcon(EBISystem.getInstance().getIconResource("new.png"));
+        EBISystem.builder().button("newProperties", "projectTaskDialog").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent event) {
                 final EBIDialogProperties properties = new EBIDialogProperties(projectTask, null, false);
@@ -178,9 +178,9 @@ public class EBINewProjectTaskDialog implements ChangeListener {
             }
         });
 
-        EBISystem.gui().button("editProperties", "projectTaskDialog").setIcon(EBISystem.getInstance().getIconResource("down.png"));
-        EBISystem.gui().button("editProperties", "projectTaskDialog").setEnabled(false);
-        EBISystem.gui().button("editProperties", "projectTaskDialog").addActionListener(new ActionListener() {
+        EBISystem.builder().button("editProperties", "projectTaskDialog").setIcon(EBISystem.getInstance().getIconResource("down.png"));
+        EBISystem.builder().button("editProperties", "projectTaskDialog").setEnabled(false);
+        EBISystem.builder().button("editProperties", "projectTaskDialog").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent event) {
 
@@ -197,9 +197,9 @@ public class EBINewProjectTaskDialog implements ChangeListener {
             }
         });
 
-        EBISystem.gui().button("deleteProperties", "projectTaskDialog").setIcon(EBISystem.getInstance().getIconResource("delete.png"));
-        EBISystem.gui().button("deleteProperties", "projectTaskDialog").setEnabled(false);
-        EBISystem.gui().button("deleteProperties", "projectTaskDialog").addActionListener(new ActionListener() {
+        EBISystem.builder().button("deleteProperties", "projectTaskDialog").setIcon(EBISystem.getInstance().getIconResource("delete.png"));
+        EBISystem.builder().button("deleteProperties", "projectTaskDialog").setEnabled(false);
+        EBISystem.builder().button("deleteProperties", "projectTaskDialog").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent event) {
                 final Iterator iter = projectTask.getCrmprojectprops().iterator();
@@ -215,8 +215,8 @@ public class EBINewProjectTaskDialog implements ChangeListener {
         });
 
         //Table cost
-        EBISystem.gui().table("tableCost", "projectTaskDialog").setModel(tabModCost);
-        final TableColumn col7 = EBISystem.gui().table("tableCost", "projectTaskDialog").getColumnModel().getColumn(1);
+        EBISystem.builder().table("tableCost", "projectTaskDialog").setModel(tabModCost);
+        final TableColumn col7 = EBISystem.builder().table("tableCost", "projectTaskDialog").getColumnModel().getColumn(1);
         col7.setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
@@ -227,7 +227,7 @@ public class EBINewProjectTaskDialog implements ChangeListener {
             }
         });
 
-        EBISystem.gui().table("tableCost", "projectTaskDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        EBISystem.builder().table("tableCost", "projectTaskDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(final ListSelectionEvent e) {
                 if (e.getValueIsAdjusting()) {
@@ -236,21 +236,21 @@ public class EBINewProjectTaskDialog implements ChangeListener {
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedCost = EBISystem.gui().table("tableCost", "projectTaskDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedCost = EBISystem.builder().table("tableCost", "projectTaskDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("editCost", "projectTaskDialog").setEnabled(false);
-                    EBISystem.gui().button("deleteCost", "projectTaskDialog").setEnabled(false);
+                    EBISystem.builder().button("editCost", "projectTaskDialog").setEnabled(false);
+                    EBISystem.builder().button("deleteCost", "projectTaskDialog").setEnabled(false);
                 } else if (!tabModCost.data[selectedCost][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("editCost", "projectTaskDialog").setEnabled(true);
-                    EBISystem.gui().button("deleteCost", "projectTaskDialog").setEnabled(true);
+                    EBISystem.builder().button("editCost", "projectTaskDialog").setEnabled(true);
+                    EBISystem.builder().button("deleteCost", "projectTaskDialog").setEnabled(true);
                 }
             }
         });
 
-        EBISystem.gui().table("taskPropertiesTable", "projectTaskDialog").setModel(tabModProperties);
-        EBISystem.gui().table("taskPropertiesTable", "projectTaskDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        EBISystem.builder().table("taskPropertiesTable", "projectTaskDialog").setModel(tabModProperties);
+        EBISystem.builder().table("taskPropertiesTable", "projectTaskDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             @Override
             public void valueChanged(final ListSelectionEvent e) {
@@ -260,22 +260,22 @@ public class EBINewProjectTaskDialog implements ChangeListener {
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedProperties = EBISystem.gui().table("taskPropertiesTable", "projectTaskDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedProperties = EBISystem.builder().table("taskPropertiesTable", "projectTaskDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("editProperties", "projectTaskDialog").setEnabled(false);
-                    EBISystem.gui().button("deleteProperties", "projectTaskDialog").setEnabled(false);
+                    EBISystem.builder().button("editProperties", "projectTaskDialog").setEnabled(false);
+                    EBISystem.builder().button("deleteProperties", "projectTaskDialog").setEnabled(false);
                 } else if (!tabModProperties.data[selectedProperties][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("editProperties", "projectTaskDialog").setEnabled(true);
-                    EBISystem.gui().button("deleteProperties", "projectTaskDialog").setEnabled(true);
+                    EBISystem.builder().button("editProperties", "projectTaskDialog").setEnabled(true);
+                    EBISystem.builder().button("deleteProperties", "projectTaskDialog").setEnabled(true);
                 }
             }
         });
 
         showProperties();
         showCost();
-        EBISystem.gui().showGUI();
+        EBISystem.builder().showGUI();
 
         return saveTask;
     }
@@ -323,7 +323,7 @@ public class EBINewProjectTaskDialog implements ChangeListener {
 
     private boolean validateInput() {
 
-        if ("".equals(EBISystem.gui().textField("taskNameText", "projectTaskDialog").getText())) {
+        if ("".equals(EBISystem.builder().textField("taskNameText", "projectTaskDialog").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_INSERT_TASK_NAME")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }

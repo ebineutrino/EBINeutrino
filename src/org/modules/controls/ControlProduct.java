@@ -54,26 +54,26 @@ public class ControlProduct {
                 product.setChangedfrom(EBISystem.ebiUser);
             }
 
-            product.setProductnr(EBISystem.gui().textField("ProductNrTex", "Product").getText());
-            product.setProductname(EBISystem.gui().textField("ProductNameText", "Product").getText());
+            product.setProductnr(EBISystem.builder().textField("ProductNrTex", "Product").getText());
+            product.setProductname(EBISystem.builder().textField("ProductNameText", "Product").getText());
 
-            if (EBISystem.gui().combo("ProductCategoryText", "Product").getEditor().getItem() != null) {
-                product.setCategory(EBISystem.gui().combo("ProductCategoryText", "Product").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("ProductCategoryText", "Product").getEditor().getItem() != null) {
+                product.setCategory(EBISystem.builder().combo("ProductCategoryText", "Product").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().combo("ProductTypeText", "Product").getEditor().getItem() != null) {
-                product.setType(EBISystem.gui().combo("ProductTypeText", "Product").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("ProductTypeText", "Product").getEditor().getItem() != null) {
+                product.setType(EBISystem.builder().combo("ProductTypeText", "Product").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().combo("productTaxTypeTex", "Product").getEditor().getItem() != null) {
-                product.setTaxtype(EBISystem.gui().combo("productTaxTypeTex", "Product").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("productTaxTypeTex", "Product").getEditor().getItem() != null) {
+                product.setTaxtype(EBISystem.builder().combo("productTaxTypeTex", "Product").getEditor().getItem().toString());
             }
 
-            product.setPretax(Double.parseDouble(EBISystem.gui().FormattedField("productGrossText", "Product").getValue() == null ? "0.0" : EBISystem.gui().FormattedField("productGrossText", "Product").getValue().toString()));
-            product.setNetamount(Double.parseDouble(EBISystem.gui().FormattedField("productNetamoutText", "Product").getValue() == null ? "0.0" : EBISystem.gui().FormattedField("productNetamoutText", "Product").getValue().toString()));
-            product.setSaleprice(Double.parseDouble(EBISystem.gui().FormattedField("salePriceText", "Product").getValue() == null ? "0.0" : EBISystem.gui().FormattedField("salePriceText", "Product").getValue().toString()));
+            product.setPretax(Double.parseDouble(EBISystem.builder().FormattedField("productGrossText", "Product").getValue() == null ? "0.0" : EBISystem.builder().FormattedField("productGrossText", "Product").getValue().toString()));
+            product.setNetamount(Double.parseDouble(EBISystem.builder().FormattedField("productNetamoutText", "Product").getValue() == null ? "0.0" : EBISystem.builder().FormattedField("productNetamoutText", "Product").getValue().toString()));
+            product.setSaleprice(Double.parseDouble(EBISystem.builder().FormattedField("salePriceText", "Product").getValue() == null ? "0.0" : EBISystem.builder().FormattedField("salePriceText", "Product").getValue().toString()));
 
-            product.setDescription(EBISystem.gui().textArea("productDescription", "Product").getText());
+            product.setDescription(EBISystem.builder().textArea("productDescription", "Product").getText());
 
             EBISystem.hibernate().session("EBIPRODUCT_SESSION").saveOrUpdate(product);
 
@@ -116,7 +116,7 @@ public class ControlProduct {
             EBISystem.getInstance().getDataStore("Product", "ebiSave");
             EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").commit();
             if (!isEdit) {
-                EBISystem.gui().vpanel("Product").setID(product.getProductid());
+                EBISystem.builder().vpanel("Product").setID(product.getProductid());
             }
             productID = product.getProductid();
             isEdit = true;
@@ -235,37 +235,37 @@ public class ControlProduct {
 
             if (iter.hasNext()) {
                 this.product = (Crmproduct) iter.next();
-                EBISystem.gui().vpanel("Product").setID(product.getProductid());
-                EBISystem.gui().vpanel("Product").setCreatedDate(EBISystem.getInstance().getDateToString(product.getCreateddate() == null ? new Date() : product.getCreateddate()));
-                EBISystem.gui().vpanel("Product").setCreatedFrom(product.getCreatedfrom() == null ? EBISystem.ebiUser : product.getCreatedfrom());
+                EBISystem.builder().vpanel("Product").setID(product.getProductid());
+                EBISystem.builder().vpanel("Product").setCreatedDate(EBISystem.getInstance().getDateToString(product.getCreateddate() == null ? new Date() : product.getCreateddate()));
+                EBISystem.builder().vpanel("Product").setCreatedFrom(product.getCreatedfrom() == null ? EBISystem.ebiUser : product.getCreatedfrom());
 
                 if (product.getChangeddate() != null) {
-                    EBISystem.gui().vpanel("Product").setChangedDate(EBISystem.getInstance().getDateToString(product.getChangeddate()));
-                    EBISystem.gui().vpanel("Product").setChangedFrom(product.getChangedfrom());
+                    EBISystem.builder().vpanel("Product").setChangedDate(EBISystem.getInstance().getDateToString(product.getChangeddate()));
+                    EBISystem.builder().vpanel("Product").setChangedFrom(product.getChangedfrom());
                 }
-                EBISystem.gui().textField("ProductNrTex", "Product").setText(product.getProductnr());
-                EBISystem.gui().textField("ProductNameText", "Product").setText(product.getProductname());
+                EBISystem.builder().textField("ProductNrTex", "Product").setText(product.getProductnr());
+                EBISystem.builder().textField("ProductNameText", "Product").setText(product.getProductname());
 
                 if (product.getCategory() != null) {
-                    EBISystem.gui().combo("ProductCategoryText", "Product").setSelectedItem(product.getCategory());
+                    EBISystem.builder().combo("ProductCategoryText", "Product").setSelectedItem(product.getCategory());
                 }
 
                 if (product.getCategory() != null) {
-                    EBISystem.gui().combo("ProductCategoryText", "Product").setSelectedItem(product.getCategory());
+                    EBISystem.builder().combo("ProductCategoryText", "Product").setSelectedItem(product.getCategory());
                 }
 
                 if (product.getType() != null) {
-                    EBISystem.gui().combo("ProductTypeText", "Product").setSelectedItem(product.getType());
+                    EBISystem.builder().combo("ProductTypeText", "Product").setSelectedItem(product.getType());
                 }
 
                 if (product.getTaxtype() != null) {
-                    EBISystem.gui().combo("productTaxTypeTex", "Product").setSelectedItem(product.getTaxtype());
+                    EBISystem.builder().combo("productTaxTypeTex", "Product").setSelectedItem(product.getTaxtype());
                 }
 
-                EBISystem.gui().FormattedField("productGrossText", "Product").setValue(product.getPretax() == null ? 0 : product.getPretax());
-                EBISystem.gui().FormattedField("productNetamoutText", "Product").setValue(product.getNetamount() == null ? 0 : product.getNetamount());
-                EBISystem.gui().FormattedField("salePriceText", "Product").setValue(product.getSaleprice() == null ? 0 : product.getSaleprice());
-                EBISystem.gui().textArea("productDescription", "Product").setText(product.getDescription() == null ? "" : product.getDescription());
+                EBISystem.builder().FormattedField("productGrossText", "Product").setValue(product.getPretax() == null ? 0 : product.getPretax());
+                EBISystem.builder().FormattedField("productNetamoutText", "Product").setValue(product.getNetamount() == null ? 0 : product.getNetamount());
+                EBISystem.builder().FormattedField("salePriceText", "Product").setValue(product.getSaleprice() == null ? 0 : product.getSaleprice());
+                EBISystem.builder().textArea("productDescription", "Product").setText(product.getDescription() == null ? "" : product.getDescription());
 
                 EBISystem.getInstance().getDataStore("Product", "ebiEdit");
                 EBISystem.hibernate().transaction("EBIPRODUCT_SESSION").commit();
@@ -305,7 +305,7 @@ public class ControlProduct {
 
     public void dataShow(Integer id) {
         ResultSet set = null;
-        int selRow = EBISystem.gui().table("companyProductTable", "Product").getSelectedRow();
+        int selRow = EBISystem.builder().table("companyProductTable", "Product").getSelectedRow();
         PreparedStatement ps = null;
 
         try {
@@ -355,8 +355,8 @@ public class ControlProduct {
         }
 
         if (selRow > -1) {
-            selRow = EBISystem.gui().table("companyProductTable", "Product").convertRowIndexToView(selRow);
-            EBISystem.gui().table("companyProductTable", "Product").changeSelection(selRow, 0, false, false);
+            selRow = EBISystem.builder().table("companyProductTable", "Product").convertRowIndexToView(selRow);
+            EBISystem.builder().table("companyProductTable", "Product").changeSelection(selRow, 0, false, false);
         }
     }
 
@@ -388,28 +388,28 @@ public class ControlProduct {
             list.add(pr.getChangedfrom());
         }
         if (pr.getProductnr() != null) {
-            list.add(EBISystem.i18n("EBI_LANG_PRODUCT_NUMBER") + ": " + (pr.getProductnr().equals(EBISystem.gui().textField("ProductNrTex", "Product").getText()) == true ? pr.getProductnr() : pr.getProductnr() + "$"));
+            list.add(EBISystem.i18n("EBI_LANG_PRODUCT_NUMBER") + ": " + (pr.getProductnr().equals(EBISystem.builder().textField("ProductNrTex", "Product").getText()) == true ? pr.getProductnr() : pr.getProductnr() + "$"));
         }
         if (pr.getProductname() != null) {
-            list.add(EBISystem.i18n("EBI_LANG_NAME") + ": " + (pr.getProductname().equals(EBISystem.gui().textField("ProductNameText", "Product").getText()) == true ? pr.getProductname() : pr.getProductname() + "$"));
+            list.add(EBISystem.i18n("EBI_LANG_NAME") + ": " + (pr.getProductname().equals(EBISystem.builder().textField("ProductNameText", "Product").getText()) == true ? pr.getProductname() : pr.getProductname() + "$"));
         }
         if (pr.getCategory() != null) {
-            list.add(EBISystem.i18n("EBI_LANG_CATEGORY") + ": " + (pr.getCategory().equals(EBISystem.gui().combo("ProductCategoryText", "Product").getEditor().getItem().toString()) == true ? pr.getCategory() : pr.getCategory() + "$"));
+            list.add(EBISystem.i18n("EBI_LANG_CATEGORY") + ": " + (pr.getCategory().equals(EBISystem.builder().combo("ProductCategoryText", "Product").getEditor().getItem().toString()) == true ? pr.getCategory() : pr.getCategory() + "$"));
         }
         if (pr.getType() != null) {
-            list.add(EBISystem.i18n("EBI_LANG_TYPE") + ": " + (pr.getType().equals(EBISystem.gui().combo("ProductTypeText", "Product").getEditor().getItem().toString()) == true ? pr.getType() : pr.getType() + "$"));
+            list.add(EBISystem.i18n("EBI_LANG_TYPE") + ": " + (pr.getType().equals(EBISystem.builder().combo("ProductTypeText", "Product").getEditor().getItem().toString()) == true ? pr.getType() : pr.getType() + "$"));
         }
         if (pr.getTaxtype() != null) {
-            list.add(EBISystem.i18n("EBI_LANG_TAX_TYPE") + ": " + (pr.getTaxtype().equals(EBISystem.gui().combo("productTaxTypeTex", "Product").getEditor().getItem().toString()) == true ? pr.getTaxtype() : pr.getTaxtype() + "$"));
+            list.add(EBISystem.i18n("EBI_LANG_TAX_TYPE") + ": " + (pr.getTaxtype().equals(EBISystem.builder().combo("productTaxTypeTex", "Product").getEditor().getItem().toString()) == true ? pr.getTaxtype() : pr.getTaxtype() + "$"));
         }
         if (pr.getPretax() != null) {
-            list.add(EBISystem.i18n("EBI_LANG_PRE_TAX_PRICE") + ": " + (String.valueOf(pr.getPretax()).equals(EBISystem.gui().FormattedField("productGrossText", "Product").getValue().toString()) == true ? String.valueOf(pr.getPretax()) : String.valueOf(pr.getPretax()) + "$"));
+            list.add(EBISystem.i18n("EBI_LANG_PRE_TAX_PRICE") + ": " + (String.valueOf(pr.getPretax()).equals(EBISystem.builder().FormattedField("productGrossText", "Product").getValue().toString()) == true ? String.valueOf(pr.getPretax()) : String.valueOf(pr.getPretax()) + "$"));
         }
         if (pr.getNetamount() != null) {
-            list.add(EBISystem.i18n("EBI_LANG_CLEAR_PRICE") + ": " + (String.valueOf(pr.getNetamount()).equals(EBISystem.gui().FormattedField("productNetamoutText", "Product").getValue().toString()) == true ? String.valueOf(pr.getNetamount()) : String.valueOf(pr.getNetamount()) + "$"));
+            list.add(EBISystem.i18n("EBI_LANG_CLEAR_PRICE") + ": " + (String.valueOf(pr.getNetamount()).equals(EBISystem.builder().FormattedField("productNetamoutText", "Product").getValue().toString()) == true ? String.valueOf(pr.getNetamount()) : String.valueOf(pr.getNetamount()) + "$"));
         }
         if (pr.getDescription() != null) {
-            list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": " + (pr.getDescription().equals(EBISystem.gui().textArea("productDescription", "Product").getText()) == true ? pr.getDescription() : pr.getDescription() + "$"));
+            list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": " + (pr.getDescription().equals(EBISystem.builder().textArea("productDescription", "Product").getText()) == true ? pr.getDescription() : pr.getDescription() + "$"));
         }
         list.add("*EOR*"); // END OF RECORD
 
@@ -498,19 +498,19 @@ public class ControlProduct {
                 fos.write(buffer, 0, buffer.length);
                 fos.close();
 
-                EBISystem.gui().label("productPictureLabel", "Product").setText("");
+                EBISystem.builder().label("productPictureLabel", "Product").setText("");
 
                 ImageIcon icon = new ImageIcon(FileName);
                 Image image = icon.getImage(); // transform it
-                Image newimg = image.getScaledInstance(EBISystem.gui().getPanel("picturePanel", "Product").getWidth(),
-                        EBISystem.gui().getPanel("picturePanel", "Product").getHeight(), java.awt.Image.SCALE_SMOOTH);
+                Image newimg = image.getScaledInstance(EBISystem.builder().getPanel("picturePanel", "Product").getWidth(),
+                        EBISystem.builder().getPanel("picturePanel", "Product").getHeight(), java.awt.Image.SCALE_SMOOTH);
 
                 final JLabel lbx = new JLabel(new ImageIcon(newimg));
-                EBISystem.gui().getPanel("picturePanel", "Product").setLayout(new BorderLayout());
-                EBISystem.gui().getPanel("picturePanel", "Product").removeAll();
-                EBISystem.gui().getPanel("picturePanel", "Product").add(lbx, BorderLayout.CENTER);
-                EBISystem.gui().getPanel("picturePanel", "Product").updateUI();
-                EBISystem.gui().button("productShowImage", "Product").setEnabled(true);
+                EBISystem.builder().getPanel("picturePanel", "Product").setLayout(new BorderLayout());
+                EBISystem.builder().getPanel("picturePanel", "Product").removeAll();
+                EBISystem.builder().getPanel("picturePanel", "Product").add(lbx, BorderLayout.CENTER);
+                EBISystem.builder().getPanel("picturePanel", "Product").updateUI();
+                EBISystem.builder().button("productShowImage", "Product").setEnabled(true);
                 ret = true;
             }
         } catch (final FileNotFoundException exx) {
@@ -692,18 +692,18 @@ public class ControlProduct {
         try {
             query = EBISystem.hibernate().session("EBIPRODUCT_SESSION").
                     createQuery("from Companyproducttax where name=?1 ").setParameter(1,
-                    EBISystem.gui().combo("productTaxTypeTex", "Product").getEditor().getItem().toString());
+                    EBISystem.builder().combo("productTaxTypeTex", "Product").getEditor().getItem().toString());
 
             final Iterator it = query.iterate();
             if (it.hasNext()) {
                 final Companyproducttax tax = (Companyproducttax) it.next();
                 EBISystem.hibernate().session("EBIPRODUCT_SESSION").refresh(tax);
-                final double pre = Double.valueOf(EBISystem.gui().FormattedField("productGrossText", "Product").getValue().toString());
+                final double pre = Double.valueOf(EBISystem.builder().FormattedField("productGrossText", "Product").getValue().toString());
                 final double mwst = (tax.getTaxvalue() / 100) + 1.0;
                 final double clear = (pre / mwst);
                 final BigDecimal bd = new BigDecimal(clear);
                 final BigDecimal bd_round = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
-                EBISystem.gui().FormattedField("productNetamoutText", "Product").setValue(new Double(bd_round.doubleValue()));
+                EBISystem.builder().FormattedField("productNetamoutText", "Product").setValue(new Double(bd_round.doubleValue()));
             }
 
         } catch (final HibernateException e) {
@@ -720,18 +720,18 @@ public class ControlProduct {
         try {
             query = EBISystem.hibernate().session("EBIPRODUCT_SESSION").
                     createQuery("from Companyproducttax where name=?1 ").setParameter(1,
-                    EBISystem.gui().combo("productTaxTypeTex", "Product").getEditor().getItem().toString());
+                    EBISystem.builder().combo("productTaxTypeTex", "Product").getEditor().getItem().toString());
             final Iterator it = query.iterate();
             if (it.hasNext()) {
                 final Companyproducttax tax = (Companyproducttax) it.next();
                 EBISystem.hibernate().session("EBIPRODUCT_SESSION").refresh(tax);
-                final double clear = Double.valueOf(EBISystem.gui().FormattedField("productNetamoutText", "Product").getValue().toString());
+                final double clear = Double.valueOf(EBISystem.builder().FormattedField("productNetamoutText", "Product").getValue().toString());
 
                 final double pre = (clear + ((clear * tax.getTaxvalue()) / 100));
 
                 final BigDecimal bd = new BigDecimal(pre);
                 final BigDecimal bd_round = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
-                EBISystem.gui().FormattedField("productGrossText", "Product").setValue(new Double(bd_round.doubleValue()));
+                EBISystem.builder().FormattedField("productGrossText", "Product").setValue(new Double(bd_round.doubleValue()));
             }
 
         } catch (final HibernateException e) {

@@ -43,52 +43,52 @@ public class EBICRMContactView {
 
     public void initializeAction() {
 
-        EBISystem.gui().textField("telefonText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
-        EBISystem.gui().textField("faxText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
-        EBISystem.gui().textField("mobileText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
-        EBISystem.gui().textField("emailText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.EMAIL));
+        EBISystem.builder().textField("telefonText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
+        EBISystem.builder().textField("faxText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
+        EBISystem.builder().textField("mobileText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.PHONE));
+        EBISystem.builder().textField("emailText", "Contact").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.EMAIL));
 
-        EBISystem.gui().textField("filterTableText", "Contact").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("filterTableText", "Contact").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("companyContacts", "Contact").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Contact").getText()));
+                EBISystem.builder().table("companyContacts", "Contact").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Contact").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("companyContacts", "Contact").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Contact").getText()));
+                EBISystem.builder().table("companyContacts", "Contact").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Contact").getText()));
             }
         });
 
-        EBISystem.gui().table("companyContacts", "Contact").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("companyContacts", "Contact").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("companyContacts", "Contact").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("companyContacts", "Contact").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() > -1) {
-                    selectedContactRow = EBISystem.gui().
+                    selectedContactRow = EBISystem.builder().
                             table("companyContacts", "Contact").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("editContact", "Contact").setEnabled(false);
-                    EBISystem.gui().button("deleteContact", "Contact").setEnabled(false);
-                    EBISystem.gui().button("historyContact", "Contact").setEnabled(false);
-                    EBISystem.gui().button("copyContact", "Contact").setEnabled(false);
+                    EBISystem.builder().button("editContact", "Contact").setEnabled(false);
+                    EBISystem.builder().button("deleteContact", "Contact").setEnabled(false);
+                    EBISystem.builder().button("historyContact", "Contact").setEnabled(false);
+                    EBISystem.builder().button("copyContact", "Contact").setEnabled(false);
                 } else if (!"".equals(tableModel.getValueAt(selectedContactRow, 0).toString())) {
-                    EBISystem.gui().button("editContact", "Contact").setEnabled(true);
-                    EBISystem.gui().button("deleteContact", "Contact").setEnabled(true);
-                    EBISystem.gui().button("historyContact", "Contact").setEnabled(true);
-                    EBISystem.gui().button("copyContact", "Contact").setEnabled(true);
+                    EBISystem.builder().button("editContact", "Contact").setEnabled(true);
+                    EBISystem.builder().button("deleteContact", "Contact").setEnabled(true);
+                    EBISystem.builder().button("historyContact", "Contact").setEnabled(true);
+                    EBISystem.builder().button("copyContact", "Contact").setEnabled(true);
                 }
             }
         });
 
-        EBISystem.gui().table("companyContacts", "Contact").addKeyAction(new EBIUICallback() {
+        EBISystem.builder().table("companyContacts", "Contact").addKeyAction(new EBIUICallback() {
             @Override
             public void tableKeyUp(int selRow) {
                 super.tableKeyUp(selRow);
@@ -115,12 +115,12 @@ public class EBICRMContactView {
             }
         });
 
-        EBISystem.gui().table("companyContacts", "Contact").setMouseCallback(new MouseAdapter() {
+        EBISystem.builder().table("companyContacts", "Contact").setMouseCallback(new MouseAdapter() {
             @Override
             public void mouseReleased(final java.awt.event.MouseEvent e) {
-                if (EBISystem.gui().table("companyContacts", "Contact").rowAtPoint(e.getPoint()) != -1) {
-                    selectedContactRow = EBISystem.gui().table("companyContacts", "Contact")
-                            .convertRowIndexToModel(EBISystem.gui().table("companyContacts", "Contact").rowAtPoint(e.getPoint()));
+                if (EBISystem.builder().table("companyContacts", "Contact").rowAtPoint(e.getPoint()) != -1) {
+                    selectedContactRow = EBISystem.builder().table("companyContacts", "Contact")
+                            .convertRowIndexToModel(EBISystem.builder().table("companyContacts", "Contact").rowAtPoint(e.getPoint()));
                 }
                 if (selectedContactRow < 0 || "".
                         equals(tableModel.getValueAt(selectedContactRow, 0))) {
@@ -130,19 +130,19 @@ public class EBICRMContactView {
             }
         });
 
-        EBISystem.gui().table("contactTableAddress", "Contact").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("contactTableAddress", "Contact").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedAddressRow = EBISystem.gui().table("contactTableAddress", "Contact")
+                    selectedAddressRow = EBISystem.builder().table("contactTableAddress", "Contact")
                             .convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("deleteContactAddress", "Contact").setEnabled(false);
+                    EBISystem.builder().button("deleteContactAddress", "Contact").setEnabled(false);
                 } else if (!addressModel.data[selectedAddressRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("deleteContactAddress", "Contact").setEnabled(true);
+                    EBISystem.builder().button("deleteContactAddress", "Contact").setEnabled(true);
                 }
             }
         });
@@ -152,31 +152,31 @@ public class EBICRMContactView {
         if (reload) {
             addressModel = new ModelCRMAddress();
             tableModel = new ModelCRMContact(ModelCRMContact.CRM_CONTACT);
-            EBISystem.gui().table("contactTableAddress", "Contact").setModel(addressModel);
-            EBISystem.gui().table("companyContacts", "Contact").setModel(tableModel);
+            EBISystem.builder().table("contactTableAddress", "Contact").setModel(addressModel);
+            EBISystem.builder().table("companyContacts", "Contact").setModel(tableModel);
         }
 
-        EBISystem.gui().vpanel("Contact").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
-        EBISystem.gui().vpanel("Contact").setCreatedFrom(EBISystem.ebiUser);
-        EBISystem.gui().vpanel("Contact").setChangedDate("");
-        EBISystem.gui().vpanel("Contact").setChangedFrom("");
-        EBISystem.gui().combo("genderTex", "Contact").setModel(new DefaultComboBoxModel(gendersList));
-        EBISystem.gui().combo("genderTex", "Contact").setEditable(true);
-        EBISystem.gui().textField("positionText", "Contact").setText("");
-        EBISystem.gui().textField("nameText", "Contact").setText("");
-        EBISystem.gui().textField("titleText", "Contact").setText("");
+        EBISystem.builder().vpanel("Contact").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
+        EBISystem.builder().vpanel("Contact").setCreatedFrom(EBISystem.ebiUser);
+        EBISystem.builder().vpanel("Contact").setChangedDate("");
+        EBISystem.builder().vpanel("Contact").setChangedFrom("");
+        EBISystem.builder().combo("genderTex", "Contact").setModel(new DefaultComboBoxModel(gendersList));
+        EBISystem.builder().combo("genderTex", "Contact").setEditable(true);
+        EBISystem.builder().textField("positionText", "Contact").setText("");
+        EBISystem.builder().textField("nameText", "Contact").setText("");
+        EBISystem.builder().textField("titleText", "Contact").setText("");
 
-        EBISystem.gui().textField("surnameText", "Contact").setText("");
-        EBISystem.gui().textField("middleNameText", "Contact").setText("");
-        EBISystem.gui().timePicker("birthdateText", "Contact").setFormats(EBISystem.DateFormat);
-        EBISystem.gui().timePicker("birthdateText", "Contact").setDate(new Date());
-        EBISystem.gui().timePicker("birthdateText", "Contact").getEditor().setText("");
-        EBISystem.gui().textField("telefonText", "Contact").setText("");
-        EBISystem.gui().textField("faxText", "Contact").setText("");
-        EBISystem.gui().textField("mobileText", "Contact").setText("");
-        EBISystem.gui().textField("emailText", "Contact").setText("");
-        EBISystem.gui().textArea("contactDescription", "Contact").setText("");
-        EBISystem.gui().getCheckBox("mainContactText", "Contact").setSelected(false);
+        EBISystem.builder().textField("surnameText", "Contact").setText("");
+        EBISystem.builder().textField("middleNameText", "Contact").setText("");
+        EBISystem.builder().timePicker("birthdateText", "Contact").setFormats(EBISystem.DateFormat);
+        EBISystem.builder().timePicker("birthdateText", "Contact").setDate(new Date());
+        EBISystem.builder().timePicker("birthdateText", "Contact").getEditor().setText("");
+        EBISystem.builder().textField("telefonText", "Contact").setText("");
+        EBISystem.builder().textField("faxText", "Contact").setText("");
+        EBISystem.builder().textField("mobileText", "Contact").setText("");
+        EBISystem.builder().textField("emailText", "Contact").setText("");
+        EBISystem.builder().textArea("contactDescription", "Contact").setText("");
+        EBISystem.builder().getCheckBox("mainContactText", "Contact").setSelected(false);
     }
 
     public boolean saveContact() {
@@ -259,10 +259,10 @@ public class EBICRMContactView {
 
     private boolean validateInput() {
         boolean ret = true;
-        if (EBISystem.gui().combo("genderTex", "Contact").getSelectedIndex() == 0) {
+        if (EBISystem.builder().combo("genderTex", "Contact").getSelectedIndex() == 0) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_SELECT_GENDER")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if ("".equals(EBISystem.gui().textField("surnameText", "Contact").getText())) {
+        } else if ("".equals(EBISystem.builder().textField("surnameText", "Contact").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_SELECT_GENDER")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
         }

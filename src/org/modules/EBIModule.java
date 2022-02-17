@@ -150,40 +150,40 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
             isExistCompany = false;
             RELOAD = false;
 
-            EBISystem.getInstance().gui().loadProject("project.xml");
-            if (!EBISystem.getInstance().gui().isToolBarEmpty()) {
+            EBISystem.getInstance().builder().loadProject("project.xml");
+            if (!EBISystem.getInstance().builder().isToolBarEmpty()) {
                 crmToolBar.setCRMToolBar();
             }
 
-            if (EBISystem.gui().existView("Account")) {
+            if (EBISystem.builder().existView("Account")) {
                 this.getAccountPane();
             } else if ("AccountStack/accountGUI.xml".equals(EBISystem.registeredModule.get(0).toString())) {
                 ebiContainer.showClosableAccountContainer();
                 crmToolBar.enableToolButtonAccount();
             }
 
-            if (EBISystem.gui().existView("Prosol")) {
+            if (EBISystem.builder().existView("Prosol")) {
                 this.getProsolPane();
             } else if ("CRMProblemSolution/problemSolutionGUI.xml".equals(EBISystem.registeredModule.get(0).toString())) {
                 ebiContainer.showClosableProsolContainer();
                 crmToolBar.enableToolButtonProsol();
             }
 
-            if (EBISystem.getInstance().gui().existView("Invoice")) {
+            if (EBISystem.getInstance().builder().existView("Invoice")) {
                 this.getInvoicePane();
             } else if ("Invoice/invoiceGUI.xml".equals(EBISystem.registeredModule.get(0).toString())) {
                 ebiContainer.showClosableInvoiceContainer();
                 crmToolBar.enableToolButtonInvoice();
             }
 
-            if (EBISystem.getInstance().gui().existView("Product")) {
+            if (EBISystem.getInstance().builder().existView("Product")) {
                 this.getEBICRMProductPane();
             } else if ("Product/productGUI.xml".equals(EBISystem.registeredModule.get(0).toString())) {
                 ebiContainer.showClosableProductContainer();
                 crmToolBar.enableToolButtonProductModule();
             }
 
-            if (EBISystem.getInstance().gui().existView("Project")) {
+            if (EBISystem.getInstance().builder().existView("Project")) {
                 this.getProjectPane();
             } else if ("Project/projectGUI.xml".equals(EBISystem.registeredModule.get(0).toString())) {
                 ebiContainer.showClosableProductContainer();
@@ -246,40 +246,40 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
     }
 
     private void loadModule() {
-        if (EBISystem.gui().existView("Summary")) {
+        if (EBISystem.builder().existView("Summary")) {
             EBISystem.getModule().getSummaryPane();
         }
-        if (EBISystem.gui().existView("Leads")) {
+        if (EBISystem.builder().existView("Leads")) {
             EBISystem.getModule().getLeadPane();
         }
-        if (EBISystem.gui().existView("Company")) {
+        if (EBISystem.builder().existView("Company")) {
             EBISystem.getModule().getCompanyPane();
         }
-        if (EBISystem.gui().existView("Contact")) {
+        if (EBISystem.builder().existView("Contact")) {
             EBISystem.getModule().getContactPane();
         }
-        if (EBISystem.gui().existView("Address")) {
+        if (EBISystem.builder().existView("Address")) {
             EBISystem.getModule().getAddressPane();
         }
-        if (EBISystem.gui().existView("Bank")) {
+        if (EBISystem.builder().existView("Bank")) {
             EBISystem.getModule().getBankdataPane();
         }
-        if (EBISystem.gui().existView("MeetingCall")) {
+        if (EBISystem.builder().existView("MeetingCall")) {
             EBISystem.getModule().getMeetingProtocol();
         }
-        if (EBISystem.gui().existView("Activity")) {
+        if (EBISystem.builder().existView("Activity")) {
             EBISystem.getModule().getActivitiesPane();
         }
-        if (EBISystem.gui().existView("Opportunity")) {
+        if (EBISystem.builder().existView("Opportunity")) {
             EBISystem.getModule().getOpportunityPane();
         }
-        if (EBISystem.gui().existView("Offer")) {
+        if (EBISystem.builder().existView("Offer")) {
             EBISystem.getModule().getOfferPane();
         }
-        if (EBISystem.gui().existView("Order")) {
+        if (EBISystem.builder().existView("Order")) {
             EBISystem.getModule().getOrderPane();
         }
-        if (EBISystem.gui().existView("Service")) {
+        if (EBISystem.builder().existView("Service")) {
             EBISystem.getModule().getServicePane();
         }
     }
@@ -288,9 +288,9 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
      * restore closable tab / module after reload a CRM
      */
     private void showClosableTabs() {
-        final int size = EBISystem.gui().getHashTabtoFile().size();
+        final int size = EBISystem.builder().getHashTabtoFile().size();
         for (int i = ebiContainer.getTabInstance().getTabCount(); i < size; i++) {
-            final String file = EBISystem.gui().getHashTabtoFile().get(i);
+            final String file = EBISystem.builder().getHashTabtoFile().get(i);
             if (file == null) {
                 return;
             }
@@ -317,7 +317,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                 crmToolBar.enableToolButtonAccount();
                 ebiContainer.showClosableAccountContainer();
             } else {
-                ebiContainer.showCheckableTab(EBISystem.gui().getHashTabtoFile().get(i));
+                ebiContainer.showCheckableTab(EBISystem.builder().getHashTabtoFile().get(i));
             }
         }
     }
@@ -594,52 +594,52 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                     crmToolBar.enableToolbarButton(false);
 
                     final int selectedTab = ebiContainer.getSelectedTab();
-                    if (EBISystem.gui().existView("Company")) {
+                    if (EBISystem.builder().existView("Company")) {
                         getCompanyPane().initialize();
-                        EBISystem.getInstance().gui().vpanel("Company").setID(-1);
+                        EBISystem.getInstance().builder().vpanel("Company").setID(-1);
                     }
-                    if (EBISystem.gui().existView("Contact")) {
+                    if (EBISystem.builder().existView("Contact")) {
                         getContactPane().initialize(true);
                     }
-                    if (EBISystem.gui().existView("Address")) {
+                    if (EBISystem.builder().existView("Address")) {
                         getAddressPane().initialize(true);
                     }
-                    if (EBISystem.gui().existView("Bank")) {
+                    if (EBISystem.builder().existView("Bank")) {
                         getBankdataPane().initialize(true);
                     }
-                    if (EBISystem.gui().existView("MeetingCall")) {
+                    if (EBISystem.builder().existView("MeetingCall")) {
                         getMeetingProtocol().initialize(true);
                     }
-                    if (EBISystem.gui().existView("Activity")) {
+                    if (EBISystem.builder().existView("Activity")) {
                         getActivitiesPane().initialize(true);
                     }
-                    if (EBISystem.gui().existView("Opportunity")) {
+                    if (EBISystem.builder().existView("Opportunity")) {
                         getOpportunityPane().initialize(true);
                     }
-                    if (EBISystem.gui().existView("Offer")) {
+                    if (EBISystem.builder().existView("Offer")) {
                         getOfferPane().initialize(true);
                     }
-                    if (EBISystem.gui().existView("Order")) {
+                    if (EBISystem.builder().existView("Order")) {
                         getOrderPane().initialize(true);
                     }
 
-                    if (EBISystem.gui().existView("Service")) {
+                    if (EBISystem.builder().existView("Service")) {
                         getServicePane().initialize(true);
                     }
                     EBISystem.isSaveOrUpdate = false;
                     
                     if (reloading) {    
                         EBISystem.canRelease = true;
-                        if (EBISystem.gui().existView("Summary")) {
+                        if (EBISystem.builder().existView("Summary")) {
                             getSummaryPane().initialize();
                         }
-                        if (EBISystem.gui().existView("Leads")) {
+                        if (EBISystem.builder().existView("Leads")) {
                             getLeadPane().initialize(true);
                         }
                     }
 
                     if (ebiContainer.getTabInstance().getTabCount() > 3) {
-                        for (int i = EBISystem.gui().getProjectModuleEnabled(); i < EBISystem.gui().getProjectModuleCount(); i++) {
+                        for (int i = EBISystem.builder().getProjectModuleEnabled(); i < EBISystem.builder().getProjectModuleCount(); i++) {
                             ebiContainer.getTabInstance().setEnabledAt(i, enableTab);
                         }
 
@@ -686,22 +686,22 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
      * @return
      */
     private boolean checkCompany() {
-        if ("".equals(EBISystem.getInstance().gui().textField("nameText", "Company").getText())) {
+        if ("".equals(EBISystem.getInstance().builder().textField("nameText", "Company").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_NAME1")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
-        } else if (EBISystem.getInstance().gui().combo("categoryText", "Company").getSelectedIndex() == 0) {
+        } else if (EBISystem.getInstance().builder().combo("categoryText", "Company").getSelectedIndex() == 0) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_SELECT_CATEGORY")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
-        } else if ("00".equals(EBISystem.getInstance().gui().textField("internalNrText", "Company").getText())) {
+        } else if ("00".equals(EBISystem.getInstance().builder().textField("internalNrText", "Company").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_CRM_INTERNAL_NUMBER_EXHAUSTED")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
-        } else if ("-1".equals(EBISystem.getInstance().gui().textField("internalNrText", "Company").getText())
-                && "".equals(EBISystem.getInstance().gui().textField("custNrText", "Company").getText())) {
+        } else if ("-1".equals(EBISystem.getInstance().builder().textField("internalNrText", "Company").getText())
+                && "".equals(EBISystem.getInstance().builder().textField("custNrText", "Company").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_COMPANY_NUMBER")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }
         if (EBISystem.isSaveOrUpdate == false) {
-            if (dynMethod.findCustomerNumber(EBISystem.getInstance().gui().textField("custNrText", "Company").getText())) {
+            if (dynMethod.findCustomerNumber(EBISystem.getInstance().builder().textField("custNrText", "Company").getText())) {
                 EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_NUMBER_EXIST")).Show(EBIMessage.ERROR_MESSAGE);
                 return false;
             }
@@ -728,35 +728,35 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                 EBISystem.getInstance().getCompany().setChangedfrom(EBISystem.ebiUser);
             }
 
-            if (!"-1".equals(EBISystem.gui().textField("internalNrText", "Company").getText())) {
-                EBISystem.getInstance().getCompany().setCompanynumber(Integer.parseInt(EBISystem.gui()
+            if (!"-1".equals(EBISystem.builder().textField("internalNrText", "Company").getText())) {
+                EBISystem.getInstance().getCompany().setCompanynumber(Integer.parseInt(EBISystem.builder()
                         .textField("internalNrText", "Company").getText().replace(beginChar, "")));
             } else {
                 EBISystem.getInstance().getCompany().setCompanynumber(-1);
             }
 
             EBISystem.getInstance().getCompany().setBeginchar(beginChar);
-            EBISystem.getInstance().getCompany().setName(EBISystem.gui().textField("nameText", "Company").getText());
-            EBISystem.getInstance().getCompany().setName2(EBISystem.getInstance().gui().textField("name1Text", "Company").getText());
+            EBISystem.getInstance().getCompany().setName(EBISystem.builder().textField("nameText", "Company").getText());
+            EBISystem.getInstance().getCompany().setName2(EBISystem.getInstance().builder().textField("name1Text", "Company").getText());
 
-            if (EBISystem.getInstance().gui().combo("categoryText", "Company").getSelectedItem() != null) {
-                EBISystem.getInstance().getCompany().setCategory(EBISystem.getInstance().gui().combo("categoryText", "Company").getSelectedItem().toString());
-                EBISystem.getInstance().getCompany().setCooperation(EBISystem.getInstance().gui().combo("cooperationText", "Company").getSelectedItem().toString());
+            if (EBISystem.getInstance().builder().combo("categoryText", "Company").getSelectedItem() != null) {
+                EBISystem.getInstance().getCompany().setCategory(EBISystem.getInstance().builder().combo("categoryText", "Company").getSelectedItem().toString());
+                EBISystem.getInstance().getCompany().setCooperation(EBISystem.getInstance().builder().combo("cooperationText", "Company").getSelectedItem().toString());
             }
 
-            EBISystem.getInstance().getCompany().setPhone(EBISystem.getInstance().gui().textField("telephoneText", "Company").getText());
-            EBISystem.getInstance().getCompany().setFax(EBISystem.getInstance().gui().textField("faxText", "Company").getText());
-            EBISystem.getInstance().getCompany().setTaxnumber(EBISystem.getInstance().gui().textField("taxIDText", "Company").getText());
-            EBISystem.getInstance().getCompany().setEmployee(EBISystem.getInstance().gui().textField("employeeText", "Company").getText());
-            EBISystem.getInstance().getCompany().setWeb(EBISystem.getInstance().gui().textField("internetText", "Company").getText());
-            EBISystem.getInstance().getCompany().setEmail(EBISystem.getInstance().gui().textField("emailText", "Company").getText());
-            EBISystem.getInstance().getCompany().setCustomernr(EBISystem.getInstance().gui().textField("custNrText", "Company").getText());
+            EBISystem.getInstance().getCompany().setPhone(EBISystem.getInstance().builder().textField("telephoneText", "Company").getText());
+            EBISystem.getInstance().getCompany().setFax(EBISystem.getInstance().builder().textField("faxText", "Company").getText());
+            EBISystem.getInstance().getCompany().setTaxnumber(EBISystem.getInstance().builder().textField("taxIDText", "Company").getText());
+            EBISystem.getInstance().getCompany().setEmployee(EBISystem.getInstance().builder().textField("employeeText", "Company").getText());
+            EBISystem.getInstance().getCompany().setWeb(EBISystem.getInstance().builder().textField("internetText", "Company").getText());
+            EBISystem.getInstance().getCompany().setEmail(EBISystem.getInstance().builder().textField("emailText", "Company").getText());
+            EBISystem.getInstance().getCompany().setCustomernr(EBISystem.getInstance().builder().textField("custNrText", "Company").getText());
 
-            if (EBISystem.getInstance().gui().combo("classificationText", "Company").getSelectedItem() != null) {
-                EBISystem.getInstance().getCompany().setQualification(EBISystem.getInstance().gui().combo("classificationText", "Company").getSelectedItem().toString());
+            if (EBISystem.getInstance().builder().combo("classificationText", "Company").getSelectedItem() != null) {
+                EBISystem.getInstance().getCompany().setQualification(EBISystem.getInstance().builder().combo("classificationText", "Company").getSelectedItem().toString());
             }
 
-            EBISystem.getInstance().getCompany().setIslock(EBISystem.getInstance().gui().getCheckBox("lockCompany", "Company").isSelected());
+            EBISystem.getInstance().getCompany().setIslock(EBISystem.getInstance().builder().getCheckBox("lockCompany", "Company").isSelected());
             // Save company hierarchy
             if (this.companyPane.listH != null && this.companyPane.listH.size() > 0) {
                 final Iterator iterH = this.companyPane.listH.iterator();
@@ -767,7 +767,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
                 }
             }
 
-            EBISystem.getInstance().getCompany().setDescription(EBISystem.gui().textArea("companyDescription", "Company").getText());
+            EBISystem.getInstance().getCompany().setDescription(EBISystem.builder().textArea("companyDescription", "Company").getText());
             if (!EBISystem.isSaveOrUpdate) {
                 if (checkForMainCompany()) {
                     EBISystem.getInstance().getCompany().setIsactual(true);
@@ -871,7 +871,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
 
         String nh = "";
         if (!String.valueOf(EBISystem.getInstance().getCompany().getCompanynumber())
-                .equals(EBISystem.gui().textField("internalNrText", "Company").getText())) {
+                .equals(EBISystem.builder().textField("internalNrText", "Company").getText())) {
             nh = "$";
         }
 
@@ -883,35 +883,35 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         if (EBISystem.getInstance().getCompany().getName() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_COMPANY_NAME1") + ": "
                     + (EBISystem.getInstance().getCompany().getName()
-                            .equals(EBISystem.gui().textField("nameText", "Company").getText())
+                            .equals(EBISystem.builder().textField("nameText", "Company").getText())
                     ? EBISystem.getInstance().getCompany().getName()
                     : EBISystem.getInstance().getCompany().getName() + "$"));
         }
         if (EBISystem.getInstance().getCompany().getName2() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_COMPANY_NAME2") + ": "
                     + (EBISystem.getInstance().getCompany().getName2()
-                            .equals(EBISystem.gui().textField("name1Text", "Company").getText())
+                            .equals(EBISystem.builder().textField("name1Text", "Company").getText())
                     ? EBISystem.getInstance().getCompany().getName2()
                     : EBISystem.getInstance().getCompany().getName2() + "$"));
         }
         if (EBISystem.getInstance().getCompany().getCustomernr() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_COMPANY_CUSTOMER_NUMBER") + ": "
                     + (EBISystem.getInstance().getCompany().getCustomernr()
-                            .equals(EBISystem.gui().textField("custNrText", "Company").getText()) == true
+                            .equals(EBISystem.builder().textField("custNrText", "Company").getText()) == true
                     ? EBISystem.getInstance().getCompany().getCustomernr()
                     : EBISystem.getInstance().getCompany().getCustomernr() + "$"));
         }
         if (EBISystem.getInstance().getCompany().getCategory() != null) {
             list.add(EBISystem.i18n("EBI_LANG_CATEGORY") + ": "
                     + (EBISystem.getInstance().getCompany().getCategory()
-                            .equals(EBISystem.gui().combo("categoryText", "Company").getSelectedItem()
+                            .equals(EBISystem.builder().combo("categoryText", "Company").getSelectedItem()
                                     .toString()) == true ? EBISystem.getInstance().getCompany().getCategory()
                             : EBISystem.getInstance().getCompany().getCategory() + "$"));
         }
         if (EBISystem.getInstance().getCompany().getCooperation() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_COOPERATION") + ": "
                     + (EBISystem.getInstance().getCompany().getCooperation()
-                            .equals(EBISystem.gui().combo("cooperationText", "Company")
+                            .equals(EBISystem.builder().combo("cooperationText", "Company")
                                     .getSelectedItem().toString()) == true
                             ? EBISystem.getInstance().getCompany().getCooperation()
                             : EBISystem.getInstance().getCompany().getCooperation() + "$"));
@@ -919,58 +919,58 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         if (EBISystem.getInstance().getCompany().getPhone() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_TELEPHONE") + ": "
                     + (EBISystem.getInstance().getCompany().getPhone().equals(
-                            EBISystem.gui().textField("telephoneText", "Company").getText()) == true
+                            EBISystem.builder().textField("telephoneText", "Company").getText()) == true
                     ? EBISystem.getInstance().getCompany().getPhone()
                     : EBISystem.getInstance().getCompany().getPhone() + "$"));
         }
         if (EBISystem.getInstance().getCompany().getFax() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_FAX") + ": "
                     + (EBISystem.getInstance().getCompany().getFax()
-                            .equals(EBISystem.gui().textField("faxText", "Company").getText()) == true
+                            .equals(EBISystem.builder().textField("faxText", "Company").getText()) == true
                     ? EBISystem.getInstance().getCompany().getFax()
                     : EBISystem.getInstance().getCompany().getFax() + "$"));
         }
         if (EBISystem.getInstance().getCompany().getTaxnumber() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_VAT_NR") + ": "
                     + (EBISystem.getInstance().getCompany().getTaxnumber()
-                            .equals(EBISystem.gui().textField("taxIDText", "Company").getText()) == true
+                            .equals(EBISystem.builder().textField("taxIDText", "Company").getText()) == true
                     ? EBISystem.getInstance().getCompany().getTaxnumber()
                     : EBISystem.getInstance().getCompany().getTaxnumber() + "$"));
         }
         if (EBISystem.getInstance().getCompany().getEmployee() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_EMPLOYEE") + ": "
                     + (EBISystem.getInstance().getCompany().getEmployee().equals(
-                            EBISystem.gui().textField("employeeText", "Company").getText()) == true
+                            EBISystem.builder().textField("employeeText", "Company").getText()) == true
                     ? EBISystem.getInstance().getCompany().getEmployee()
                     : EBISystem.getInstance().getCompany().getEmployee() + "$"));
         }
         if (EBISystem.getInstance().getCompany().getWeb() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_HINTERNET") + ": "
                     + (EBISystem.getInstance().getCompany().getWeb().equals(
-                            EBISystem.gui().textField("internetText", "Company").getText()) == true
+                            EBISystem.builder().textField("internetText", "Company").getText()) == true
                     ? EBISystem.getInstance().getCompany().getWeb()
                     : EBISystem.getInstance().getCompany().getWeb() + "$"));
         }
         if (EBISystem.getInstance().getCompany().getEmail() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_HEMAIL") + ": "
                     + (EBISystem.getInstance().getCompany().getEmail()
-                            .equals(EBISystem.gui().textField("emailText", "Company").getText()) == true
+                            .equals(EBISystem.builder().textField("emailText", "Company").getText()) == true
                     ? EBISystem.getInstance().getCompany().getEmail()
                     : EBISystem.getInstance().getCompany().getEmail() + "$"));
         }
         if (EBISystem.getInstance().getCompany().getQualification() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_KLASSIFICATION") + ": "
                     + (EBISystem.getInstance().getCompany().getQualification()
-                            .equals(EBISystem.gui().combo("classificationText", "Company")
+                            .equals(EBISystem.builder().combo("classificationText", "Company")
                                     .getSelectedItem()) == true ? EBISystem.getInstance().getCompany().getQualification()
                             : EBISystem.getInstance().getCompany().getQualification() + "$"));
         }
         if (EBISystem.getInstance().getCompany().getIslock() != null) {
             String chd = "";
             if (EBISystem.getInstance().getCompany().getIslock() == true
-                    && !EBISystem.gui().getCheckBox("lockCompany", "Company").isSelected()
+                    && !EBISystem.builder().getCheckBox("lockCompany", "Company").isSelected()
                     || EBISystem.getInstance().getCompany().getIslock() == false
-                    && EBISystem.gui().getCheckBox("lockCompany", "Company").isSelected()) {
+                    && EBISystem.builder().getCheckBox("lockCompany", "Company").isSelected()) {
                 chd = "$";
             }
 
@@ -981,7 +981,7 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
         if (EBISystem.getInstance().getCompany().getDescription() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_DESCRIPTION") + ": "
                     + (EBISystem.getInstance().getCompany().getDescription().equals(
-                            EBISystem.gui().textArea("companyDescription", "Company").getText()) == true
+                            EBISystem.builder().textArea("companyDescription", "Company").getText()) == true
                     ? EBISystem.getInstance().getCompany().getDescription()
                     : EBISystem.getInstance().getCompany().getDescription() + "$"));
         }
@@ -1066,12 +1066,12 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
 
                             if (EBISystem.getInstance().getCompany() != null) {
                                 if (EBISystem.getInstance().getCompany().getIsactual() != null && EBISystem.getInstance().getCompany().getIsactual() == false) {
-                                    if (EBISystem.gui().getCheckBox("mainContactText", "Contact") != null) {
-                                        EBISystem.gui().getCheckBox("mainContactText", "Contact").setVisible(false);
+                                    if (EBISystem.builder().getCheckBox("mainContactText", "Contact") != null) {
+                                        EBISystem.builder().getCheckBox("mainContactText", "Contact").setVisible(false);
                                     }
                                 } else {
-                                    if (EBISystem.gui().getCheckBox("mainContactText", "Contact") != null) {
-                                        EBISystem.gui().getCheckBox("mainContactText", "Contact").setVisible(true);
+                                    if (EBISystem.builder().getCheckBox("mainContactText", "Contact") != null) {
+                                        EBISystem.builder().getCheckBox("mainContactText", "Contact").setVisible(true);
                                     }
                                 }
                             }
@@ -1108,48 +1108,48 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
      * Load a company
      */
     private void loadCompanyData() {
-        EBISystem.gui().vpanel("Company").setID(EBISystem.getInstance().getCompany().getCompanyid());
+        EBISystem.builder().vpanel("Company").setID(EBISystem.getInstance().getCompany().getCompanyid());
         if (EBISystem.getInstance().getCompany().getCreateddate() != null) {
-            EBISystem.gui().vpanel("Company").setCreatedDate(EBISystem.getInstance().getDateToString(EBISystem.getInstance().getCompany().getCreateddate()));
-            EBISystem.gui().vpanel("Company").setCreatedFrom(EBISystem.getInstance().getCompany().getCreatedfrom());
+            EBISystem.builder().vpanel("Company").setCreatedDate(EBISystem.getInstance().getDateToString(EBISystem.getInstance().getCompany().getCreateddate()));
+            EBISystem.builder().vpanel("Company").setCreatedFrom(EBISystem.getInstance().getCompany().getCreatedfrom());
         }
 
         if (EBISystem.getInstance().getCompany().getChangeddate() != null) {
-            EBISystem.gui().vpanel("Company").setChangedDate(EBISystem.getInstance().getDateToString(EBISystem.getInstance().getCompany().getChangeddate()));
-            EBISystem.gui().vpanel("Company").setChangedFrom(EBISystem.getInstance().getCompany().getChangedfrom());
+            EBISystem.builder().vpanel("Company").setChangedDate(EBISystem.getInstance().getDateToString(EBISystem.getInstance().getCompany().getChangeddate()));
+            EBISystem.builder().vpanel("Company").setChangedFrom(EBISystem.getInstance().getCompany().getChangedfrom());
         }
 
         beginChar = EBISystem.getInstance().getCompany().getBeginchar();
-        EBISystem.gui().textField("rootText", "Company").requestFocus();
-        EBISystem.gui().textField("internalNrText", "Company").setText(String.valueOf(EBISystem.getInstance().getCompany().getCompanynumber() == null ? -1 : EBISystem.getInstance().getCompany().getCompanynumber()));
-        EBISystem.gui().textField("nameText", "Company").setText(EBISystem.getInstance().getCompany().getName());
-        EBISystem.gui().textField("name1Text", "Company").setText(EBISystem.getInstance().getCompany().getName2());
+        EBISystem.builder().textField("rootText", "Company").requestFocus();
+        EBISystem.builder().textField("internalNrText", "Company").setText(String.valueOf(EBISystem.getInstance().getCompany().getCompanynumber() == null ? -1 : EBISystem.getInstance().getCompany().getCompanynumber()));
+        EBISystem.builder().textField("nameText", "Company").setText(EBISystem.getInstance().getCompany().getName());
+        EBISystem.builder().textField("name1Text", "Company").setText(EBISystem.getInstance().getCompany().getName2());
 
-        EBISystem.gui().textField("custNrText", "Company")
+        EBISystem.builder().textField("custNrText", "Company")
                 .setText(EBISystem.getInstance().getCompany().getCustomernr());
 
         if (EBISystem.getInstance().getCompany().getCategory() != null) {
-            EBISystem.gui().combo("categoryText", "Company").setSelectedItem(EBISystem.getInstance().getCompany().getCategory());
+            EBISystem.builder().combo("categoryText", "Company").setSelectedItem(EBISystem.getInstance().getCompany().getCategory());
         }
 
         if (EBISystem.getInstance().getCompany().getCooperation() != null) {
-            EBISystem.gui().combo("cooperationText", "Company").setSelectedItem(EBISystem.getInstance().getCompany().getCooperation());
+            EBISystem.builder().combo("cooperationText", "Company").setSelectedItem(EBISystem.getInstance().getCompany().getCooperation());
         }
 
-        EBISystem.gui().textField("telephoneText", "Company").setText(EBISystem.getInstance().getCompany().getPhone());
-        EBISystem.gui().textField("faxText", "Company").setText(EBISystem.getInstance().getCompany().getFax());
+        EBISystem.builder().textField("telephoneText", "Company").setText(EBISystem.getInstance().getCompany().getPhone());
+        EBISystem.builder().textField("faxText", "Company").setText(EBISystem.getInstance().getCompany().getFax());
 
-        EBISystem.gui().textField("taxIDText", "Company").setText(EBISystem.getInstance().getCompany().getTaxnumber());
-        EBISystem.gui().textField("employeeText", "Company").setText(EBISystem.getInstance().getCompany().getEmployee());
-        EBISystem.gui().textField("internetText", "Company").setText(EBISystem.getInstance().getCompany().getWeb());
+        EBISystem.builder().textField("taxIDText", "Company").setText(EBISystem.getInstance().getCompany().getTaxnumber());
+        EBISystem.builder().textField("employeeText", "Company").setText(EBISystem.getInstance().getCompany().getEmployee());
+        EBISystem.builder().textField("internetText", "Company").setText(EBISystem.getInstance().getCompany().getWeb());
 
-        EBISystem.gui().textField("emailText", "Company").setText(EBISystem.getInstance().getCompany().getEmail());
-        EBISystem.gui().combo("classificationText", "Company").setSelectedItem(EBISystem.getInstance().getCompany().getQualification());
+        EBISystem.builder().textField("emailText", "Company").setText(EBISystem.getInstance().getCompany().getEmail());
+        EBISystem.builder().combo("classificationText", "Company").setSelectedItem(EBISystem.getInstance().getCompany().getQualification());
 
         if (EBISystem.getInstance().getCompany().getIslock() != null) {
-            EBISystem.gui().getCheckBox("lockCompany", "Company").setSelected(EBISystem.getInstance().getCompany().getIslock());
+            EBISystem.builder().getCheckBox("lockCompany", "Company").setSelected(EBISystem.getInstance().getCompany().getIslock());
         }
-        EBISystem.gui().textArea("companyDescription", "Company").setText(EBISystem.getInstance().getCompany().getDescription());
+        EBISystem.builder().textArea("companyDescription", "Company").setText(EBISystem.getInstance().getCompany().getDescription());
         loadHierarchie();
     }
 
@@ -1159,75 +1159,75 @@ public class EBIModule implements IEBIModule, IEBIExtension, IEBIStoreInterface 
     }
 
     private void loadContactData() {
-        if (!EBISystem.gui().existView("Contact")) {
+        if (!EBISystem.builder().existView("Contact")) {
             return;
         }
         contactPane.getControlContact().dataShow(false);
-        EBISystem.gui().combo("genderTex", "Contact").grabFocus();
+        EBISystem.builder().combo("genderTex", "Contact").grabFocus();
     }
 
     private void loadCompanyAdressData() {
-        if (!EBISystem.gui().existView("Address")) {
+        if (!EBISystem.builder().existView("Address")) {
             return;
         }
         addressPane.getAddressDataControl().dataShow(-1);
-        EBISystem.gui().combo("addressTypeText", "Address").setRequestFocusEnabled(true);
-        EBISystem.gui().combo("addressTypeText", "Address").grabFocus();
+        EBISystem.builder().combo("addressTypeText", "Address").setRequestFocusEnabled(true);
+        EBISystem.builder().combo("addressTypeText", "Address").grabFocus();
     }
 
     private void loadCompanyMeetingProtocol() {
-        if (!EBISystem.gui().existView("MeetingCall")) {
+        if (!EBISystem.builder().existView("MeetingCall")) {
             return;
         }
         meetingReport.getDataMeetingControl().dataShow(-1);
-        EBISystem.gui().textField("subjectMeetingText", "MeetingCall").grabFocus();
+        EBISystem.builder().textField("subjectMeetingText", "MeetingCall").grabFocus();
     }
 
     private void loadOpportunity() {
-        if (!EBISystem.gui().existView("Opportunity")) {
+        if (!EBISystem.builder().existView("Opportunity")) {
             return;
         }
         opportunityPane.getDataOpportuniyControl().dataShow(-1);
-        EBISystem.gui().combo("opportunityNameText", "Opportunity").grabFocus();
+        EBISystem.builder().combo("opportunityNameText", "Opportunity").grabFocus();
     }
 
     private void loadActivities() {
-        if (!EBISystem.gui().existView("Activity")) {
+        if (!EBISystem.builder().existView("Activity")) {
             return;
         }
         activitiesPane.getDataControlActivity().dataShow(-1);
-        EBISystem.gui().textField("activityNameText", "Activity").grabFocus();
+        EBISystem.builder().textField("activityNameText", "Activity").grabFocus();
     }
 
     private void loadBankData() {
-        if (!EBISystem.gui().existView("Bank")) {
+        if (!EBISystem.builder().existView("Bank")) {
             return;
         }
         bankPane.getBankDataControl().dataShow(-1);
-        EBISystem.gui().textField("bankNameText", "Bank").grabFocus();
+        EBISystem.builder().textField("bankNameText", "Bank").grabFocus();
     }
 
     private void loadOfferData() {
-        if (!EBISystem.gui().existView("Offer")) {
+        if (!EBISystem.builder().existView("Offer")) {
             return;
         }
         offerPane.getDataControlOffer().dataShow(-1);
-        EBISystem.gui().textField("offerNrText", "Offer").requestFocus();
+        EBISystem.builder().textField("offerNrText", "Offer").requestFocus();
     }
 
     private void loadOrderData() {
-        if (!EBISystem.gui().existView("Order")) {
+        if (!EBISystem.builder().existView("Order")) {
             return;
         }
         orderPane.getDataControlOrder().dataShow(-1);
-        EBISystem.gui().textField("orderNrText", "Order").requestFocus();
+        EBISystem.builder().textField("orderNrText", "Order").requestFocus();
     }
 
     private void loadServiceData() {
-        if (!EBISystem.gui().existView("Service")) {
+        if (!EBISystem.builder().existView("Service")) {
             return;
         }
         servicePane.showService();
-        EBISystem.gui().textField("serviceNrText", "Service").requestFocus();
+        EBISystem.builder().textField("serviceNrText", "Service").requestFocus();
     }
 }

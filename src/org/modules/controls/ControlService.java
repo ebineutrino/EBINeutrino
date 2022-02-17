@@ -33,7 +33,7 @@ public class ControlService {
 
             if (isEdit == false) {
                 compService.setCreateddate(new Date());
-                compService.setCreatedfrom(EBISystem.gui().vpanel("Service").getCreatedFrom());
+                compService.setCreatedfrom(EBISystem.builder().vpanel("Service").getCreatedFrom());
                 compService.setCompany(EBISystem.getInstance().getCompany());
             } else {
                 createHistory(EBISystem.getInstance().getCompany());
@@ -41,20 +41,20 @@ public class ControlService {
                 compService.setChangedfrom(EBISystem.ebiUser);
             }
 
-            compService.setDescription(EBISystem.gui().textArea("serviceDescriptionText", "Service").getText());
-            compService.setServicenr(EBISystem.gui().textField("serviceNrText", "Service").getText());
-            compService.setName(EBISystem.gui().textField("serviceNameText", "Service").getText());
+            compService.setDescription(EBISystem.builder().textArea("serviceDescriptionText", "Service").getText());
+            compService.setServicenr(EBISystem.builder().textField("serviceNrText", "Service").getText());
+            compService.setName(EBISystem.builder().textField("serviceNameText", "Service").getText());
 
-            if (EBISystem.gui().combo("serviceStatusText", "Service").getEditor().getItem() != null) {
-                compService.setStatus(EBISystem.gui().combo("serviceStatusText", "Service").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("serviceStatusText", "Service").getEditor().getItem() != null) {
+                compService.setStatus(EBISystem.builder().combo("serviceStatusText", "Service").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().combo("serviceCategoryText", "Service").getEditor().getItem() != null) {
-                compService.setCategory(EBISystem.gui().combo("serviceCategoryText", "Service").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("serviceCategoryText", "Service").getEditor().getItem() != null) {
+                compService.setCategory(EBISystem.builder().combo("serviceCategoryText", "Service").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().combo("serviceTypeText", "Service").getEditor().getItem() != null) {
-                compService.setType(EBISystem.gui().combo("serviceTypeText", "Service").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("serviceTypeText", "Service").getEditor().getItem() != null) {
+                compService.setType(EBISystem.builder().combo("serviceTypeText", "Service").getEditor().getItem().toString());
             }
 
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(compService);
@@ -103,7 +103,7 @@ public class ControlService {
             EBISystem.getInstance().getCompany().getCompanyservices().add(compService);
 
             if (!isEdit) {
-                EBISystem.gui().vpanel("Service").setID(compService.getServiceid());
+                EBISystem.builder().vpanel("Service").setID(compService.getServiceid());
             }
             serviceID = compService.getServiceid();
             isEdit = true;
@@ -225,33 +225,33 @@ public class ControlService {
                 }
             }
 
-            EBISystem.gui().vpanel("Service").setID(compService.getServiceid());
-            EBISystem.gui().vpanel("Service").setCreatedDate(EBISystem.getInstance().getDateToString(compService.getCreateddate() == null ? new Date() : compService.getCreateddate()));
-            EBISystem.gui().vpanel("Service").setCreatedFrom(compService.getCreatedfrom() == null ? EBISystem.ebiUser : compService.getCreatedfrom());
+            EBISystem.builder().vpanel("Service").setID(compService.getServiceid());
+            EBISystem.builder().vpanel("Service").setCreatedDate(EBISystem.getInstance().getDateToString(compService.getCreateddate() == null ? new Date() : compService.getCreateddate()));
+            EBISystem.builder().vpanel("Service").setCreatedFrom(compService.getCreatedfrom() == null ? EBISystem.ebiUser : compService.getCreatedfrom());
 
             if (compService.getChangeddate() != null) {
-                EBISystem.gui().vpanel("Service").setChangedDate(EBISystem.getInstance().getDateToString(compService.getChangeddate()));
-                EBISystem.gui().vpanel("Service").setChangedFrom(compService.getChangedfrom());
+                EBISystem.builder().vpanel("Service").setChangedDate(EBISystem.getInstance().getDateToString(compService.getChangeddate()));
+                EBISystem.builder().vpanel("Service").setChangedFrom(compService.getChangedfrom());
             } else {
-                EBISystem.gui().vpanel("Service").setChangedDate("");
-                EBISystem.gui().vpanel("Service").setChangedFrom("");
+                EBISystem.builder().vpanel("Service").setChangedDate("");
+                EBISystem.builder().vpanel("Service").setChangedFrom("");
             }
 
-            EBISystem.gui().textField("serviceNameText", "Service").setText(compService.getName());
-            EBISystem.gui().textField("serviceNrText", "Service").setText(compService.getServicenr() == null ? "" : compService.getServicenr());
+            EBISystem.builder().textField("serviceNameText", "Service").setText(compService.getName());
+            EBISystem.builder().textField("serviceNrText", "Service").setText(compService.getServicenr() == null ? "" : compService.getServicenr());
 
             if (compService.getStatus() != null) {
-                EBISystem.gui().combo("serviceStatusText", "Service").setSelectedItem(compService.getStatus());
+                EBISystem.builder().combo("serviceStatusText", "Service").setSelectedItem(compService.getStatus());
             }
 
             if (compService.getCategory() != null) {
-                EBISystem.gui().combo("serviceCategoryText", "Service").setSelectedItem(compService.getCategory());
+                EBISystem.builder().combo("serviceCategoryText", "Service").setSelectedItem(compService.getCategory());
             }
 
             if (compService.getType() != null) {
-                EBISystem.gui().combo("serviceTypeText", "Service").setSelectedItem(compService.getType());
+                EBISystem.builder().combo("serviceTypeText", "Service").setSelectedItem(compService.getType());
             }
-            EBISystem.gui().textArea("serviceDescriptionText", "Service").setText(compService.getDescription());
+            EBISystem.builder().textArea("serviceDescriptionText", "Service").setText(compService.getDescription());
             EBISystem.getInstance().getDataStore("Service", "ebiEdit");
 
         } else {
@@ -278,7 +278,7 @@ public class ControlService {
 
     public void dataShow(Integer id) {
 
-        int selRow = EBISystem.gui().table("companyServiceTable", "Service").getSelectedRow() + id;
+        int selRow = EBISystem.builder().table("companyServiceTable", "Service").getSelectedRow() + id;
         final int size = EBISystem.getInstance().getCompany().getCompanyservices().size();
 
         if (size > 0) {
@@ -306,8 +306,8 @@ public class ControlService {
 
         EBISystem.getModule().getServicePane().getTabModService().fireTableDataChanged();
         if (selRow > -1) {
-            selRow = EBISystem.gui().table("companyServiceTable", "Service").convertRowIndexToView(selRow);
-            EBISystem.gui().table("companyServiceTable", "Service").changeSelection(selRow, 0, false, false);
+            selRow = EBISystem.builder().table("companyServiceTable", "Service").convertRowIndexToView(selRow);
+            EBISystem.builder().table("companyServiceTable", "Service").changeSelection(selRow, 0, false, false);
         }
     }
 
@@ -322,7 +322,7 @@ public class ControlService {
         compService = new Companyservice();
         EBISystem.getModule().getServicePane().initialize(false);
         EBISystem.getInstance().getDataStore("Service", "ebiNew");
-        EBISystem.gui().vpanel("Service").setID(-1);
+        EBISystem.builder().vpanel("Service").setID(-1);
     }
 
     public void createInvoiceFromService(final int id) {
@@ -346,9 +346,9 @@ public class ControlService {
 
                 EBISystem.getModule().getInvoicePane().newInvoice();
                 // Invoice field
-                EBISystem.gui().textField("invoiceNameText", "Invoice").setText(serv.getName());
+                EBISystem.builder().textField("invoiceNameText", "Invoice").setText(serv.getName());
 
-                EBISystem.gui().textField("orderText", "Invoice")
+                EBISystem.builder().textField("orderText", "Invoice")
                         .setText(EBISystem.i18n("EBI_LANG_C_SERVICE") + ": " + serv.getServiceid());
 
                 if (!serv.getCompanyservicepositionses().isEmpty()) {
@@ -393,32 +393,32 @@ public class ControlService {
 
         list.add(EBISystem.i18n("EBI_LANG_SERVICE_NUMBER") + ": "
                 + (compService.getServicenr()
-                        .equals(EBISystem.gui().textField("serviceNrText", "Service").getText()) == true
+                        .equals(EBISystem.builder().textField("serviceNrText", "Service").getText()) == true
                 ? compService.getServicenr()
                 : compService.getServicenr() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_NAME") + ": "
                 + (compService.getName()
-                        .equals(EBISystem.gui().textField("serviceNameText", "Service").getText()) == true
+                        .equals(EBISystem.builder().textField("serviceNameText", "Service").getText()) == true
                 ? compService.getName()
                 : compService.getName() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_C_STATUS") + ": "
-                + (compService.getStatus().equals(EBISystem.gui().combo("serviceStatusText", "Service")
+                + (compService.getStatus().equals(EBISystem.builder().combo("serviceStatusText", "Service")
                         .getEditor().getItem().toString()) == true ? compService.getStatus() : compService.getStatus() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_CATEGORY") + ": "
                 + (compService.getCategory()
-                        .equals(EBISystem.gui().combo("serviceCategoryText", "Service")
+                        .equals(EBISystem.builder().combo("serviceCategoryText", "Service")
                                 .getEditor().getItem().toString()) == true ? compService.getCategory() : compService.getCategory() + "$"));
         list.add(
                 EBISystem.i18n("EBI_LANG_TYPE") + ": "
                 + (compService.getType()
-                        .equals(EBISystem.gui().combo("serviceTypeText", "Service")
+                        .equals(EBISystem.builder().combo("serviceTypeText", "Service")
                                 .getEditor().getItem().toString()) == true ? compService.getType() : compService.getType() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": "
                 + (compService.getDescription().equals(
-                        EBISystem.gui().textArea("serviceDescriptionText", "Service").getText()) == true
+                        EBISystem.builder().textArea("serviceDescriptionText", "Service").getText()) == true
                 ? compService.getDescription() : compService.getDescription() + "$"));
         list.add("*EOR*"); // END OF RECORD
 

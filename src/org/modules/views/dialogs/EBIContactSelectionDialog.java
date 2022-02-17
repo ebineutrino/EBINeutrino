@@ -31,7 +31,7 @@ public class EBIContactSelectionDialog {
     public EBIContactSelectionDialog(final EBIModule module, final List<Companycontacts> list, final Companymeetingprotocol meetpro) {
         super();
         ebiModule = module;
-        EBISystem.gui().loadGUI("CRMDialog/crmSelectionDialog.xml");
+        EBISystem.builder().loadGUI("CRMDialog/crmSelectionDialog.xml");
 
         tabModel = new ModelCRMContact(ModelCRMContact.MEETING_CONTACT);
         contactList = list;
@@ -44,7 +44,7 @@ public class EBIContactSelectionDialog {
         super();
         ebiModule = module;
 
-        EBISystem.gui().loadGUI("CRMDialog/crmSelectionDialog.xml");
+        EBISystem.builder().loadGUI("CRMDialog/crmSelectionDialog.xml");
 
         tabModel = new ModelCRMContact(ModelCRMContact.OPPORTUNITY_CONTACT);
         contactList = list;
@@ -54,30 +54,30 @@ public class EBIContactSelectionDialog {
     }
 
     public void setVisible() {
-        EBISystem.gui().dialog("abstractSelectionDialog").setTitle(EBISystem.i18n("EBI_LANG_C_CONTACT_LIST"));
-        EBISystem.gui().vpanel("abstractSelectionDialog").setModuleTitle(EBISystem.i18n("EBI_LANG_C_CONTACT_LIST"));
+        EBISystem.builder().dialog("abstractSelectionDialog").setTitle(EBISystem.i18n("EBI_LANG_C_CONTACT_LIST"));
+        EBISystem.builder().vpanel("abstractSelectionDialog").setModuleTitle(EBISystem.i18n("EBI_LANG_C_CONTACT_LIST"));
 
-        EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("filterTableText", "abstractSelectionDialog").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.
-                        regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));
+                EBISystem.builder().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.
+                        regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "abstractSelectionDialog").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.
-                        regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "abstractSelectionDialog").getText()));
+                EBISystem.builder().table("abstractTable", "abstractSelectionDialog").setRowFilter(RowFilters.
+                        regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "abstractSelectionDialog").getText()));
             }
         });
 
-        EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setModel(tabModel);
-        EBISystem.gui().table("abstractTable", "abstractSelectionDialog").setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        EBISystem.gui().table("abstractTable", "abstractSelectionDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        EBISystem.builder().table("abstractTable", "abstractSelectionDialog").setModel(tabModel);
+        EBISystem.builder().table("abstractTable", "abstractSelectionDialog").setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        EBISystem.builder().table("abstractTable", "abstractSelectionDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             @Override
             public void valueChanged(final ListSelectionEvent e) {
@@ -87,23 +87,23 @@ public class EBIContactSelectionDialog {
 
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selRow = EBISystem.gui().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selRow = EBISystem.builder().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("applyButton", "abstractSelectionDialog").setEnabled(false);
+                    EBISystem.builder().button("applyButton", "abstractSelectionDialog").setEnabled(false);
                     selRow = -1;
                 } else if (!"".equals(tabModel.getValueAt(0,0).toString())) {
                     selRow = lsm.getMinSelectionIndex();
-                    EBISystem.gui().button("applyButton", "abstractSelectionDialog").setEnabled(true);
+                    EBISystem.builder().button("applyButton", "abstractSelectionDialog").setEnabled(true);
                 }
             }
         });
-        EBISystem.gui().table("abstractTable", "abstractSelectionDialog").addMouseListener(new java.awt.event.MouseAdapter() {
+        EBISystem.builder().table("abstractTable", "abstractSelectionDialog").addMouseListener(new java.awt.event.MouseAdapter() {
 
             @Override
             public void mouseClicked(final java.awt.event.MouseEvent e) {
-                if (EBISystem.gui().table("abstractTable", "abstractSelectionDialog").rowAtPoint(e.getPoint()) != -1) {
-                    selRow = EBISystem.gui().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(EBISystem.gui().table("abstractTable", "abstractSelectionDialog").rowAtPoint(e.getPoint()));
+                if (EBISystem.builder().table("abstractTable", "abstractSelectionDialog").rowAtPoint(e.getPoint()) != -1) {
+                    selRow = EBISystem.builder().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(EBISystem.builder().table("abstractTable", "abstractSelectionDialog").rowAtPoint(e.getPoint()));
                 }
                 if (e.getClickCount() == 2) {
 
@@ -111,16 +111,16 @@ public class EBIContactSelectionDialog {
                         equals(tabModel.getValueAt(selRow, 0))) {
                         return;
                     }
-                    EBISystem.gui().dialog("abstractSelectionDialog").setVisible(false);
+                    EBISystem.builder().dialog("abstractSelectionDialog").setVisible(false);
                     fillCollection();
 
                 }
             }
         });
 
-        EBISystem.gui().button("applyButton", "abstractSelectionDialog").setText(EBISystem.i18n("EBI_LANG_APPLY"));
-        EBISystem.gui().button("applyButton", "abstractSelectionDialog").setEnabled(false);
-        EBISystem.gui().button("applyButton", "abstractSelectionDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("applyButton", "abstractSelectionDialog").setText(EBISystem.i18n("EBI_LANG_APPLY"));
+        EBISystem.builder().button("applyButton", "abstractSelectionDialog").setEnabled(false);
+        EBISystem.builder().button("applyButton", "abstractSelectionDialog").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
@@ -129,24 +129,24 @@ public class EBIContactSelectionDialog {
                     return;
                 }
                 fillCollection();
-                EBISystem.gui().dialog("abstractSelectionDialog").setVisible(false);
+                EBISystem.builder().dialog("abstractSelectionDialog").setVisible(false);
             }
         });
 
-        EBISystem.gui().button("closeButton", "abstractSelectionDialog").setText(EBISystem.i18n("EBI_LANG_CANCEL"));
-        EBISystem.gui().button("closeButton", "abstractSelectionDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("closeButton", "abstractSelectionDialog").setText(EBISystem.i18n("EBI_LANG_CANCEL"));
+        EBISystem.builder().button("closeButton", "abstractSelectionDialog").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                EBISystem.gui().dialog("abstractSelectionDialog").setVisible(false);
+                EBISystem.builder().dialog("abstractSelectionDialog").setVisible(false);
             }
         });
-        EBISystem.gui().showGUI();
+        EBISystem.builder().showGUI();
     }
 
     private void fillCollection() {
-        final int[] rows = EBISystem.gui().table("abstractTable", "abstractSelectionDialog").getSelectedRows();
+        final int[] rows = EBISystem.builder().table("abstractTable", "abstractSelectionDialog").getSelectedRows();
         for (int i = 0; i < rows.length; i++) {
-            copyCollection(tabModel.getId(EBISystem.gui().table("abstractTable", 
+            copyCollection(tabModel.getId(EBISystem.builder().table("abstractTable", 
                     "abstractSelectionDialog").convertRowIndexToModel(rows[i])));
         }
     }

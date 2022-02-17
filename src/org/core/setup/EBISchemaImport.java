@@ -95,7 +95,7 @@ public class EBISchemaImport extends JDialog {
             importButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(final ActionEvent e) {
-                    if (!importSQLSchema("mysql.sql")) {
+                    if (!importSQLSchema("h2.sql")) {
                         EBIExceptionDialog.getInstance(EBISchemaImport.this,
                                 "Import SQL schema was not successfully, the file format is damage!").Show(EBIMessage.ERROR_MESSAGE);
                     }
@@ -121,20 +121,26 @@ public class EBISchemaImport extends JDialog {
                     } else {
                         catalog = catalog.toLowerCase();
                     }
-
-                    EBISystem.db().execExt("CREATE DATABASE IF NOT EXISTS " + catalog);
-                    EBISystem.db().getActiveConnection().setCatalog(catalog);
+                    
+                    //SET SCHEMA EBINEUTRINODB;
+                    if("h2".equals(dbType)){
+                       EBISystem.db().setAutoCommit(true);
+                       EBISystem.db().execExt("CREATE SCHEMA "+catalog+" AUTHORIZATION sa;");
+                       EBISystem.db().execExt("SET SCHEMA " + catalog);
+                       EBISystem.db().getActiveConnection().setSchema(catalog);
+                    }else{
+                        EBISystem.db().execExt("CREATE DATABASE IF NOT EXISTS " + catalog);
+                        EBISystem.db().getActiveConnection().setCatalog(catalog);
+                    }
                     errorReport.append("\n");
 
                     Reader reader = new FileReader(resourceSQLPath + fileName);
-
                     br = new BufferedReader(reader);
 
                     List<String> lines = br.lines().collect(Collectors.toList());
                     availableLine = lines.size();
 
                     boolean isFirstLine = true;
-
                     Iterator<String> iter = lines.iterator();
                     String line = "";
 

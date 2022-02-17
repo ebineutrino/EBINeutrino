@@ -125,7 +125,7 @@ public class EBIDialog extends JDialog {
             dialogOut();
             dispose();
             if (ebiMain != null && isHaveSerial()) {
-                EBISystem.gui().removeGUIObject(getName());
+                EBISystem.builder().removeGUIObject(getName());
             }
         } else {
             dialogIn();

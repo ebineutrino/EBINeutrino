@@ -11,7 +11,6 @@ import org.sdk.gui.dialogs.EBIDialog;
 import org.sdk.gui.dialogs.EBIDialogExt;
 import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
-import org.sdk.interfaces.IEBIGUIRenderer;
 import org.sdk.utils.EBIAbstractTableModel;
 import org.sdk.utils.EBIPropertiesDialogRW;
 import groovy.lang.Binding;
@@ -56,8 +55,9 @@ import org.modules.utils.EBICRMDynamicFunctionalityMethods;
 import org.modules.views.dialogs.EBIDialogInternalNumberAdministration;
 import org.modules.views.dialogs.EBIDialogTaxAdministration;
 import org.sdk.gui.dialogs.EBIDialogValueSetter;
+import org.sdk.interfaces.IEBIBuilder;
 
-public final class EBIGUIRenderer implements IEBIGUIRenderer {
+public final class EBIBuilder implements IEBIBuilder {
 
     private EBIMain ebiMain = null;
     public TreeMap<String, Object> toToolbar = null;
@@ -84,7 +84,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
             + File.separator + "resources"
             + File.separator;
 
-    public EBIGUIRenderer(final EBIMain main) {
+    public EBIBuilder(final EBIMain main) {
         ebiMain = main;
         toToolbar = new TreeMap();
         cacheToolBarComponent = new TreeMap();
@@ -93,9 +93,9 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
         binding = new Binding();
         binding.setVariable("system", EBISystem.getInstance());
         try {
-            gse = new GroovyScriptEngine(new String[]{resourcePath + "views/"});
+            gse = new GroovyScriptEngine(new String[]{resourcePath,resourcePath+"/Code", resourcePath + "views/",resourcePath + "views/Run"});
         } catch (IOException ex) {
-            Logger.getLogger(EBIGUIRenderer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EBIBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -394,7 +394,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
 
                 if (!"".equals(bean.getActionListener())) {
                     button.addActionListener((actionEvent) -> {
-                        String action = EBISystem.gui().getComponentWidgetBean(((EBIButton) actionEvent.getSource()).getName()).getActionListener();
+                        String action = getComponentWidgetBean(((EBIButton) actionEvent.getSource()).getName()).getActionListener();
                         EBIReflect.getInstance().reflectAction(action);
                     });
                 }
@@ -1459,6 +1459,16 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
         initToolbarComponentForScripts();
     }
     
+    public void bindVariable(String name, Object value){
+        if(!binding.hasVariable(name)){
+            binding.setVariable(name, value);
+        }
+    }
+    
+    public Object getVariable(String name){
+        return binding.getVariable(name);
+    }
+    
     @Override
     public final void initScripts() {
         final Iterator itr = scriptContainer.keySet().iterator();
@@ -1487,7 +1497,7 @@ public final class EBIGUIRenderer implements IEBIGUIRenderer {
     
     
     @Override
-    public final void excScript(final String cmpNamespace, final HashMap<String, String> PARAM) {
+    public synchronized final void excScript(final String cmpNamespace, final HashMap<String, String> PARAM) {
 
         if (scriptContainer.get(cmpNamespace) != null) {
             

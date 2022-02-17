@@ -58,19 +58,19 @@ public class EBICRMOpportunityView {
     private int selectedDocRow = -1;
 
     public void initializeAction() {
-        EBISystem.gui().textField("filterTableText", "Opportunity").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("filterTableText", "Opportunity").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("companyOpportunityTable", "Opportunity").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Opportunity").getText()));
+                EBISystem.builder().table("companyOpportunityTable", "Opportunity").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Opportunity").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("companyOpportunityTable", "Opportunity").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Opportunity").getText()));
+                EBISystem.builder().table("companyOpportunityTable", "Opportunity").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Opportunity").getText()));
             }
         });
 
@@ -78,54 +78,54 @@ public class EBICRMOpportunityView {
         valueFormat.setMinimumFractionDigits(2);
         valueFormat.setMaximumFractionDigits(3);
 
-        EBISystem.gui().combo("opportunityNameText", "Opportunity").setEditable(true);
-        EBISystem.gui().combo("oppSaleStateText", "Opportunity").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().combo("opportunityNameText", "Opportunity").setEditable(true);
+        EBISystem.builder().combo("oppSaleStateText", "Opportunity").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                if (EBISystem.gui().combo("oppSaleStateText", "Opportunity") != null) {
-                    dataOpportuniyControl.setPurchState(EBISystem.gui().combo("oppSaleStateText", "Opportunity").getSelectedItem().toString());
+                if (EBISystem.builder().combo("oppSaleStateText", "Opportunity") != null) {
+                    dataOpportuniyControl.setPurchState(EBISystem.builder().combo("oppSaleStateText", "Opportunity").getSelectedItem().toString());
                 }
             }
         });
 
-        EBISystem.gui().combo("oppSaleStateText", "Opportunity").setEditable(true);
-        EBISystem.gui().combo("oppEvalStatusText", "Opportunity").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().combo("oppSaleStateText", "Opportunity").setEditable(true);
+        EBISystem.builder().combo("oppEvalStatusText", "Opportunity").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                if (EBISystem.gui().combo("oppEvalStatusText", "Opportunity") != null) {
-                    dataOpportuniyControl.setEvalStatus(EBISystem.gui().combo("oppEvalStatusText", "Opportunity").getSelectedItem().toString());
+                if (EBISystem.builder().combo("oppEvalStatusText", "Opportunity") != null) {
+                    dataOpportuniyControl.setEvalStatus(EBISystem.builder().combo("oppEvalStatusText", "Opportunity").getSelectedItem().toString());
                 }
             }
         });
 
-        EBISystem.gui().combo("oppEvalStatusText", "Opportunity").setEditable(true);
-        EBISystem.gui().combo("statusOppText", "Opportunity").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().combo("oppEvalStatusText", "Opportunity").setEditable(true);
+        EBISystem.builder().combo("statusOppText", "Opportunity").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
 
-                if (EBISystem.gui().combo("statusOppText", "Opportunity") != null) {
-                    dataOpportuniyControl.setSStatus(EBISystem.gui().combo("statusOppText", "Opportunity").getSelectedItem().toString());
+                if (EBISystem.builder().combo("statusOppText", "Opportunity") != null) {
+                    dataOpportuniyControl.setSStatus(EBISystem.builder().combo("statusOppText", "Opportunity").getSelectedItem().toString());
                 }
 
             }
         });
 
-        EBISystem.gui().combo("statusOppText", "Opportunity").setEditable(true);
-        EBISystem.gui().combo("oppBdgStatusText", "Opportunity").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().combo("statusOppText", "Opportunity").setEditable(true);
+        EBISystem.builder().combo("oppBdgStatusText", "Opportunity").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
 
-                if (EBISystem.gui().combo("oppBdgStatusText", "Opportunity") != null) {
-                    dataOpportuniyControl.setBudgetStatus(EBISystem.gui().combo("oppBdgStatusText", "Opportunity").getSelectedItem().toString());
+                if (EBISystem.builder().combo("oppBdgStatusText", "Opportunity") != null) {
+                    dataOpportuniyControl.setBudgetStatus(EBISystem.builder().combo("oppBdgStatusText", "Opportunity").getSelectedItem().toString());
                 }
             }
         });
 
-        EBISystem.gui().combo("oppBdgStatusText", "Opportunity").setEditable(true);
-        EBISystem.gui().combo("oppProbabilityText", "Opportunity").setEditable(true);
-        EBISystem.gui().combo("oppBustypeText", "Opportunity").setEditable(true);
+        EBISystem.builder().combo("oppBdgStatusText", "Opportunity").setEditable(true);
+        EBISystem.builder().combo("oppProbabilityText", "Opportunity").setEditable(true);
+        EBISystem.builder().combo("oppBustypeText", "Opportunity").setEditable(true);
 
         /**
          * ********************************************************************************
@@ -134,22 +134,22 @@ public class EBICRMOpportunityView {
         /**
          * ********************************************************************************
          */
-        EBISystem.gui().table("contactTableOpportunity", "Opportunity").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("contactTableOpportunity", "Opportunity").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("contactTableOpportunity", "Opportunity").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("contactTableOpportunity", "Opportunity").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedContactRow = EBISystem.gui().table("contactTableOpportunity", "Opportunity").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedContactRow = EBISystem.builder().table("contactTableOpportunity", "Opportunity").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("editOppContact", "Opportunity").setEnabled(false);
-                    EBISystem.gui().button("deleteOppContact", "Opportunity").setEnabled(false);
+                    EBISystem.builder().button("editOppContact", "Opportunity").setEnabled(false);
+                    EBISystem.builder().button("deleteOppContact", "Opportunity").setEnabled(false);
                 } else if (!"".equals(tabModelContact.getValueAt(selectedContactRow, 0))) {
-                    EBISystem.gui().button("editOppContact", "Opportunity").setEnabled(true);
-                    EBISystem.gui().button("deleteOppContact", "Opportunity").setEnabled(true);
+                    EBISystem.builder().button("editOppContact", "Opportunity").setEnabled(true);
+                    EBISystem.builder().button("deleteOppContact", "Opportunity").setEnabled(true);
                 }
             }
         });
@@ -161,40 +161,40 @@ public class EBICRMOpportunityView {
         /**
          * ********************************************************************************
          */
-        EBISystem.gui().table("companyOpportunityTable", "Opportunity").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("companyOpportunityTable", "Opportunity").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("companyOpportunityTable", "Opportunity").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("companyOpportunityTable", "Opportunity").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() > -1) {
                     try {
-                        selectedOpportunityRow = EBISystem.gui().table("companyOpportunityTable", "Opportunity").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                        selectedOpportunityRow = EBISystem.builder().table("companyOpportunityTable", "Opportunity").convertRowIndexToModel(lsm.getMinSelectionIndex());
                     } catch (final IndexOutOfBoundsException ex) {
                     }
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("editOpportunity", "Opportunity").setEnabled(false);
-                    EBISystem.gui().button("deleteOpportunity", "Opportunity").setEnabled(false);
-                    EBISystem.gui().button("reportOpportunity", "Opportunity").setEnabled(false);
-                    EBISystem.gui().button("historyOpportunity", "Opportunity").setEnabled(false);
-                    EBISystem.gui().button("mailOpportunity", "Opportunity").setEnabled(false);
-                    EBISystem.gui().button("createOffer", "Opportunity").setEnabled(false);
-                    EBISystem.gui().button("copyOpportunity", "Opportunity").setEnabled(false);
+                    EBISystem.builder().button("editOpportunity", "Opportunity").setEnabled(false);
+                    EBISystem.builder().button("deleteOpportunity", "Opportunity").setEnabled(false);
+                    EBISystem.builder().button("reportOpportunity", "Opportunity").setEnabled(false);
+                    EBISystem.builder().button("historyOpportunity", "Opportunity").setEnabled(false);
+                    EBISystem.builder().button("mailOpportunity", "Opportunity").setEnabled(false);
+                    EBISystem.builder().button("createOffer", "Opportunity").setEnabled(false);
+                    EBISystem.builder().button("copyOpportunity", "Opportunity").setEnabled(false);
                 } else if (!tabModel.data[selectedOpportunityRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("editOpportunity", "Opportunity").setEnabled(true);
-                    EBISystem.gui().button("deleteOpportunity", "Opportunity").setEnabled(true);
-                    EBISystem.gui().button("reportOpportunity", "Opportunity").setEnabled(true);
-                    EBISystem.gui().button("historyOpportunity", "Opportunity").setEnabled(true);
-                    EBISystem.gui().button("mailOpportunity", "Opportunity").setEnabled(true);
-                    EBISystem.gui().button("createOffer", "Opportunity").setEnabled(true);
-                    EBISystem.gui().button("copyOpportunity", "Opportunity").setEnabled(true);
+                    EBISystem.builder().button("editOpportunity", "Opportunity").setEnabled(true);
+                    EBISystem.builder().button("deleteOpportunity", "Opportunity").setEnabled(true);
+                    EBISystem.builder().button("reportOpportunity", "Opportunity").setEnabled(true);
+                    EBISystem.builder().button("historyOpportunity", "Opportunity").setEnabled(true);
+                    EBISystem.builder().button("mailOpportunity", "Opportunity").setEnabled(true);
+                    EBISystem.builder().button("createOffer", "Opportunity").setEnabled(true);
+                    EBISystem.builder().button("copyOpportunity", "Opportunity").setEnabled(true);
                 }
             }
         });
 
-        EBISystem.gui().table("companyOpportunityTable", "Opportunity").addKeyAction(new EBIUICallback() {
+        EBISystem.builder().table("companyOpportunityTable", "Opportunity").addKeyAction(new EBIUICallback() {
             @Override
             public void tableKeyUp(int selRow) {
                 super.tableKeyUp(selRow);
@@ -222,11 +222,11 @@ public class EBICRMOpportunityView {
             }
         });
 
-        EBISystem.gui().table("companyOpportunityTable", "Opportunity").setMouseCallback(new MouseAdapter() {
+        EBISystem.builder().table("companyOpportunityTable", "Opportunity").setMouseCallback(new MouseAdapter() {
             @Override
             public void mouseReleased(final java.awt.event.MouseEvent e) {
-                if (EBISystem.gui().table("companyOpportunityTable", "Opportunity").rowAtPoint(e.getPoint()) > -1) {
-                    selectedOpportunityRow = EBISystem.gui().table("companyOpportunityTable", "Opportunity").convertRowIndexToModel(EBISystem.gui().table("companyOpportunityTable", "Opportunity").rowAtPoint(e.getPoint()));
+                if (EBISystem.builder().table("companyOpportunityTable", "Opportunity").rowAtPoint(e.getPoint()) > -1) {
+                    selectedOpportunityRow = EBISystem.builder().table("companyOpportunityTable", "Opportunity").convertRowIndexToModel(EBISystem.builder().table("companyOpportunityTable", "Opportunity").rowAtPoint(e.getPoint()));
                 }
                 if (selectedOpportunityRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                         equals(tabModel.data[selectedOpportunityRow][0].toString())) {
@@ -236,9 +236,9 @@ public class EBICRMOpportunityView {
             }
         });
 
-        EBISystem.gui().FormattedField("oppValueText", "Opportunity").setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(valueFormat)));
-        EBISystem.gui().FormattedField("oppValueText", "Opportunity").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.FLOAT));
-        EBISystem.gui().FormattedField("oppValueText", "Opportunity").setColumns(10);
+        EBISystem.builder().FormattedField("oppValueText", "Opportunity").setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(valueFormat)));
+        EBISystem.builder().FormattedField("oppValueText", "Opportunity").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.FLOAT));
+        EBISystem.builder().FormattedField("oppValueText", "Opportunity").setColumns(10);
 
         /**
          * ********************************************************************************
@@ -247,23 +247,23 @@ public class EBICRMOpportunityView {
         /**
          * ********************************************************************************
          */
-        EBISystem.gui().table("opportunityDoc", "Opportunity").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("opportunityDoc", "Opportunity").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("opportunityDoc", "Opportunity").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("opportunityDoc", "Opportunity").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.gui().table("opportunityDoc", "Opportunity").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedDocRow = EBISystem.builder().table("opportunityDoc", "Opportunity").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("showOppDoc", "Opportunity").setEnabled(false);
-                    EBISystem.gui().button("deleteOppDoc", "Opportunity").setEnabled(false);
+                    EBISystem.builder().button("showOppDoc", "Opportunity").setEnabled(false);
+                    EBISystem.builder().button("deleteOppDoc", "Opportunity").setEnabled(false);
                 } else if (!tabOpportunityDoc.data[selectedDocRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("showOppDoc", "Opportunity").setEnabled(true);
-                    EBISystem.gui().button("deleteOppDoc", "Opportunity").setEnabled(true);
+                    EBISystem.builder().button("showOppDoc", "Opportunity").setEnabled(true);
+                    EBISystem.builder().button("deleteOppDoc", "Opportunity").setEnabled(true);
                 }
             }
         });
@@ -276,22 +276,22 @@ public class EBICRMOpportunityView {
             tabModel = new ModelOpportunity();
             tabModelContact = new ModelCRMContact(ModelCRMContact.OPPORTUNITY_CONTACT);
             tabOpportunityDoc = new ModelDoc();
-            EBISystem.gui().table("contactTableOpportunity", "Opportunity").setModel(tabModelContact);
-            EBISystem.gui().table("companyOpportunityTable", "Opportunity").setModel(tabModel);
-            EBISystem.gui().table("opportunityDoc", "Opportunity").setModel(tabOpportunityDoc);
+            EBISystem.builder().table("contactTableOpportunity", "Opportunity").setModel(tabModelContact);
+            EBISystem.builder().table("companyOpportunityTable", "Opportunity").setModel(tabModel);
+            EBISystem.builder().table("opportunityDoc", "Opportunity").setModel(tabOpportunityDoc);
         }
 
-        EBISystem.gui().combo("oppBustypeText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(oppBussinesType));
-        EBISystem.gui().combo("statusOppText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(oppStatus));
-        EBISystem.gui().combo("oppBdgStatusText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(oppBudgetStatus));
-        EBISystem.gui().combo("oppEvalStatusText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(oppEvalStatus));
-        EBISystem.gui().combo("oppSaleStateText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(oppSalesStage));
-        EBISystem.gui().combo("oppProbabilityText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(new String[]{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"}));
+        EBISystem.builder().combo("oppBustypeText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(oppBussinesType));
+        EBISystem.builder().combo("statusOppText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(oppStatus));
+        EBISystem.builder().combo("oppBdgStatusText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(oppBudgetStatus));
+        EBISystem.builder().combo("oppEvalStatusText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(oppEvalStatus));
+        EBISystem.builder().combo("oppSaleStateText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(oppSalesStage));
+        EBISystem.builder().combo("oppProbabilityText", "Opportunity").setModel(new javax.swing.DefaultComboBoxModel(new String[]{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"}));
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                final TableColumn col7 = EBISystem.gui().table("companyOpportunityTable", "Opportunity").getColumnModel().getColumn(4);
+                final TableColumn col7 = EBISystem.builder().table("companyOpportunityTable", "Opportunity").getColumnModel().getColumn(4);
                 col7.setCellRenderer(new DefaultTableCellRenderer() {
                     @Override
                     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
@@ -304,21 +304,21 @@ public class EBICRMOpportunityView {
             }
         });
 
-        EBISystem.gui().vpanel("Opportunity").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
-        EBISystem.gui().vpanel("Opportunity").setCreatedFrom(EBISystem.ebiUser);
-        EBISystem.gui().vpanel("Opportunity").setChangedDate("");
-        EBISystem.gui().vpanel("Opportunity").setChangedFrom("");
+        EBISystem.builder().vpanel("Opportunity").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
+        EBISystem.builder().vpanel("Opportunity").setCreatedFrom(EBISystem.ebiUser);
+        EBISystem.builder().vpanel("Opportunity").setChangedDate("");
+        EBISystem.builder().vpanel("Opportunity").setChangedFrom("");
 
-        EBISystem.gui().FormattedField("oppValueText", "Opportunity").setText("");
-        EBISystem.gui().textArea("opportunityDescription", "Opportunity").setText("");
+        EBISystem.builder().FormattedField("oppValueText", "Opportunity").setText("");
+        EBISystem.builder().textArea("opportunityDescription", "Opportunity").setText("");
 
-        EBISystem.gui().combo("opportunityNameText", "Opportunity").getEditor().setItem("");
-        EBISystem.gui().combo("oppSaleStateText", "Opportunity").setSelectedIndex(0);
-        EBISystem.gui().combo("oppEvalStatusText", "Opportunity").setSelectedIndex(0);
-        EBISystem.gui().combo("statusOppText", "Opportunity").setSelectedIndex(0);
-        EBISystem.gui().combo("oppBdgStatusText", "Opportunity").setSelectedIndex(0);
-        EBISystem.gui().combo("oppBustypeText", "Opportunity").setSelectedIndex(0);
-        EBISystem.gui().combo("oppProbabilityText", "Opportunity").setSelectedIndex(0);
+        EBISystem.builder().combo("opportunityNameText", "Opportunity").getEditor().setItem("");
+        EBISystem.builder().combo("oppSaleStateText", "Opportunity").setSelectedIndex(0);
+        EBISystem.builder().combo("oppEvalStatusText", "Opportunity").setSelectedIndex(0);
+        EBISystem.builder().combo("statusOppText", "Opportunity").setSelectedIndex(0);
+        EBISystem.builder().combo("oppBdgStatusText", "Opportunity").setSelectedIndex(0);
+        EBISystem.builder().combo("oppBustypeText", "Opportunity").setSelectedIndex(0);
+        EBISystem.builder().combo("oppProbabilityText", "Opportunity").setSelectedIndex(0);
 
     }
 
@@ -389,12 +389,12 @@ public class EBICRMOpportunityView {
             return false;
         }
         EBISystem.showInActionStatus("Opportunity");
-        int row = EBISystem.gui().table("companyOpportunityTable", "Opportunity").getSelectedRow();
+        int row = EBISystem.builder().table("companyOpportunityTable", "Opportunity").getSelectedRow();
         Integer id = dataOpportuniyControl.dataStore();
         dataOpportuniyControl.dataShow(id);
         dataOpportuniyControl.dataShowDoc();
         dataOpportuniyControl.showOpportunityContacts();
-        EBISystem.gui().table("companyOpportunityTable", "Opportunity").changeSelection(row, 0, false, false);
+        EBISystem.builder().table("companyOpportunityTable", "Opportunity").changeSelection(row, 0, false, false);
         return true;
     }
 
@@ -451,10 +451,10 @@ public class EBICRMOpportunityView {
 
     private boolean validateInput() {
         boolean ret = true;
-        if ("".equals(EBISystem.gui().combo("opportunityNameText", "Opportunity").getEditor().getItem())) {
+        if ("".equals(EBISystem.builder().combo("opportunityNameText", "Opportunity").getEditor().getItem())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_NAME")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if ("".equals(EBISystem.gui().combo("oppBustypeText", "Opportunity").getSelectedItem().toString()) || EBISystem.gui().combo("oppBustypeText", "Opportunity").getSelectedItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
+        } else if ("".equals(EBISystem.builder().combo("oppBustypeText", "Opportunity").getSelectedItem().toString()) || EBISystem.builder().combo("oppBustypeText", "Opportunity").getSelectedItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_BUSINESS_TYPE")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
         }
@@ -463,7 +463,7 @@ public class EBICRMOpportunityView {
 
     public void mailOpportunity(final int id) {
 
-        EBISystem.gui().button("sendEmail", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("sendEmail", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
@@ -479,26 +479,26 @@ public class EBICRMOpportunityView {
                         return;
                     }
 
-                    dataOpportuniyControl.dataShowAndMailReport(id, EBISystem.gui().getCheckBox("ShowReportBS", "sendEMailMessage").isSelected());
-                    EBISystem.gui().dialog("sendEMailMessage").setVisible(false);
+                    dataOpportuniyControl.dataShowAndMailReport(id, EBISystem.builder().getCheckBox("ShowReportBS", "sendEMailMessage").isSelected());
+                    EBISystem.builder().dialog("sendEMailMessage").setVisible(false);
                 }
             }
         });
 
-        EBISystem.gui().button("closeEMailDialog", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("closeEMailDialog", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                EBISystem.gui().dialog("sendEMailMessage").setVisible(false);
+                EBISystem.builder().dialog("sendEMailMessage").setVisible(false);
             }
         });
     }
 
     private boolean validateEMailInput() {
 
-        if ("".equals(EBISystem.gui().textField("SubjectText", "sendEMailMessage").getText())) {
+        if ("".equals(EBISystem.builder().textField("SubjectText", "sendEMailMessage").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_INSERT_SUBJECT")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
-        } else if ("".equals(EBISystem.gui().getEditor("MessageAreaText", "sendEMailMessage").getText())) {
+        } else if ("".equals(EBISystem.builder().getEditor("MessageAreaText", "sendEMailMessage").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_INSERT_BODY_TEXT")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }
@@ -529,33 +529,33 @@ public class EBICRMOpportunityView {
             return;
         }
 
-        EBISystem.gui().loadGUI("CRMDialog/sendMailDialogGUI.xml");
-        EBISystem.gui().dialog("sendEMailMessage").setTitle(EBISystem.i18n("EBI_LANG_DIALOG_SEND_EMAIL_MESSAGE"));
-        EBISystem.gui().getCheckBox("ShowReportBS", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SHOW_REPORT_BEFORE_SEND"));
-        EBISystem.gui().label("SubjectEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SUBJECT"));
-        EBISystem.gui().label("template", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_TEMPLATE"));
-        EBISystem.gui().combo("templateText", "sendEMailMessage").setModel(new DefaultComboBoxModel(EBISystem.getModule().dynMethod.getEMailTemplateNames()));
+        EBISystem.builder().loadGUI("CRMDialog/sendMailDialogGUI.xml");
+        EBISystem.builder().dialog("sendEMailMessage").setTitle(EBISystem.i18n("EBI_LANG_DIALOG_SEND_EMAIL_MESSAGE"));
+        EBISystem.builder().getCheckBox("ShowReportBS", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SHOW_REPORT_BEFORE_SEND"));
+        EBISystem.builder().label("SubjectEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SUBJECT"));
+        EBISystem.builder().label("template", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_TEMPLATE"));
+        EBISystem.builder().combo("templateText", "sendEMailMessage").setModel(new DefaultComboBoxModel(EBISystem.getModule().dynMethod.getEMailTemplateNames()));
 
-        EBISystem.gui().combo("templateText", "sendEMailMessage").addActionListener(new ActionListener() {
+        EBISystem.builder().combo("templateText", "sendEMailMessage").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
 
                 if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(
-                        EBISystem.gui().combo("templateText", "sendEMailMessage").getSelectedItem().toString())) {
+                        EBISystem.builder().combo("templateText", "sendEMailMessage").getSelectedItem().toString())) {
 
-                    EBISystem.gui().getEditor("MessageAreaText", "sendEMailMessage").setText(
+                    EBISystem.builder().getEditor("MessageAreaText", "sendEMailMessage").setText(
                             EBISystem.getModule().dynMethod.getEMailTemplate(
-                                    EBISystem.gui().combo("templateText", "sendEMailMessage")
+                                    EBISystem.builder().combo("templateText", "sendEMailMessage")
                                             .getSelectedItem().toString()));
                 }
             }
         });
 
-        EBISystem.gui().button("sendEmail", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SEND"));
-        EBISystem.gui().button("closeEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_CLOSE"));
+        EBISystem.builder().button("sendEmail", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SEND"));
+        EBISystem.builder().button("closeEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_CLOSE"));
 
         mailOpportunity(Integer.parseInt(tabModel.data[selectedOpportunityRow][7].toString()));
-        EBISystem.gui().showGUI();
+        EBISystem.builder().showGUI();
     }
 
     public void createOffer() {

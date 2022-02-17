@@ -37,34 +37,34 @@ public class ControlAccountStack {
             EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").begin();
             if (isEdit == false) {
                 actStack.setCreateddate(new Date());
-                actStack.setCreatedfrom(EBISystem.gui().vpanel("Account").getCreatedFrom());
+                actStack.setCreatedfrom(EBISystem.builder().vpanel("Account").getCreatedFrom());
             } else {
                 createHistory(actStack.getAcstackid());
                 actStack.setChangeddate(new Date());
                 actStack.setChangedfrom(EBISystem.ebiUser);
             }
 
-            actStack.setAccountdate(EBISystem.gui().timePicker("dateText", "Account").getDate());
-            actStack.setAccountnr(EBISystem.gui().textField("numberText", "Account").getText());
+            actStack.setAccountdate(EBISystem.builder().timePicker("dateText", "Account").getDate());
+            actStack.setAccountnr(EBISystem.builder().textField("numberText", "Account").getText());
 
-            actStack.setAccount(EBISystem.gui().combo("accountTypeText", "Account").getEditor().getItem().toString());
-            actStack.setAccountname(EBISystem.gui().textField("nameText", "Account").getText());
-            actStack.setAccountvalue(Double.parseDouble(EBISystem.gui().FormattedField("amountText", "Account").getValue().toString()));
-            actStack.setAccountTaxValue(Double.parseDouble(EBISystem.gui().FormattedField("taxText", "Account").getValue().toString()));
-            actStack.setAccountDebit(EBISystem.gui().textField("debitText", "Account").getText());
-            actStack.setAccountDName(EBISystem.gui().textField("descriptionDebit", "Account").getText());
-            actStack.setAccountDValue(Double.valueOf(EBISystem.gui().FormattedField("debitCal", "Account").getValue().toString()));
+            actStack.setAccount(EBISystem.builder().combo("accountTypeText", "Account").getEditor().getItem().toString());
+            actStack.setAccountname(EBISystem.builder().textField("nameText", "Account").getText());
+            actStack.setAccountvalue(Double.parseDouble(EBISystem.builder().FormattedField("amountText", "Account").getValue().toString()));
+            actStack.setAccountTaxValue(Double.parseDouble(EBISystem.builder().FormattedField("taxText", "Account").getValue().toString()));
+            actStack.setAccountDebit(EBISystem.builder().textField("debitText", "Account").getText());
+            actStack.setAccountDName(EBISystem.builder().textField("descriptionDebit", "Account").getText());
+            actStack.setAccountDValue(Double.valueOf(EBISystem.builder().FormattedField("debitCal", "Account").getValue().toString()));
 
-            actStack.setAccountCredit(EBISystem.gui().textField("creditText", "Account").getText());
-            actStack.setAccountCName(EBISystem.gui().textField("descriptionCredit", "Account").getText());
-            actStack.setAccountCValue(Double.valueOf(EBISystem.gui().FormattedField("creditCal", "Account").getValue().toString()));
+            actStack.setAccountCredit(EBISystem.builder().textField("creditText", "Account").getText());
+            actStack.setAccountCName(EBISystem.builder().textField("descriptionCredit", "Account").getText());
+            actStack.setAccountCValue(Double.valueOf(EBISystem.builder().FormattedField("creditCal", "Account").getValue().toString()));
 
             actStack.setAccountType(EBISystem.getModule().getAccountPane().getAccountDebitCreditType());
             
             actStack.setAccountDebitTaxType(EBISystem.getModule().getAccountPane().getAccountDebitTaxName());
             actStack.setAccountCreditTaxType(EBISystem.getModule().getAccountPane().getAccountCreditTaxName());
 
-            actStack.setDescription(EBISystem.gui().textArea("descriptionText", "Account").getText());
+            actStack.setDescription(EBISystem.builder().textArea("descriptionText", "Account").getText());
 
             if (!actStack.getAccountstackdocses().isEmpty()) {
                 final Iterator iter = actStack.getAccountstackdocses().iterator();
@@ -102,35 +102,35 @@ public class ControlAccountStack {
             if (iter.hasNext()) {
 
                 actStack = (Accountstack) iter.next();
-                EBISystem.gui().vpanel("Account").setID(id);
+                EBISystem.builder().vpanel("Account").setID(id);
                 EBISystem.hibernate().session("EBIACCOUNT_SESSION").refresh(actStack);
 
-                EBISystem.gui().vpanel("Account").setCreatedDate(EBISystem.getInstance().getDateToString(actStack.getCreateddate() == null ? new Date() : actStack.getCreateddate()));
-                EBISystem.gui().vpanel("Account").setCreatedFrom(actStack.getCreatedfrom() == null ? EBISystem.ebiUser : actStack.getCreatedfrom());
+                EBISystem.builder().vpanel("Account").setCreatedDate(EBISystem.getInstance().getDateToString(actStack.getCreateddate() == null ? new Date() : actStack.getCreateddate()));
+                EBISystem.builder().vpanel("Account").setCreatedFrom(actStack.getCreatedfrom() == null ? EBISystem.ebiUser : actStack.getCreatedfrom());
 
                 if (actStack.getChangeddate() != null) {
-                    EBISystem.gui().vpanel("Account").setChangedDate(EBISystem.getInstance().getDateToString(actStack.getChangeddate()));
-                    EBISystem.gui().vpanel("Account").setChangedFrom(actStack.getChangedfrom());
+                    EBISystem.builder().vpanel("Account").setChangedDate(EBISystem.getInstance().getDateToString(actStack.getChangeddate()));
+                    EBISystem.builder().vpanel("Account").setChangedFrom(actStack.getChangedfrom());
                 } else {
-                    EBISystem.gui().vpanel("Account").setChangedDate("");
-                    EBISystem.gui().vpanel("Account").setChangedFrom("");
+                    EBISystem.builder().vpanel("Account").setChangedDate("");
+                    EBISystem.builder().vpanel("Account").setChangedFrom("");
                 }
 
-                EBISystem.gui().combo("accountTypeText", "Account").getEditor().setItem(actStack.getAccount());
-                EBISystem.gui().timePicker("dateText", "Account").setDate(actStack.getAccountdate() == null ? new Date() : actStack.getAccountdate());
-                EBISystem.gui().timePicker("dateText", "Account").getEditor().setText(EBISystem.getInstance().getDateToString(actStack.getAccountdate()));
-                EBISystem.gui().textField("numberText", "Account").setText(actStack.getAccountnr());
-                EBISystem.gui().textField("nameText", "Account").setText(actStack.getAccountname());
-                EBISystem.gui().FormattedField("amountText", "Account").setValue(actStack.getAccountvalue() == null ? 0.0 : actStack.getAccountvalue());
-                EBISystem.gui().FormattedField("taxText", "Account").setValue(actStack.getAccountTaxValue() == null ? 0.0 : actStack.getAccountTaxValue());
-                EBISystem.gui().textField("debitText", "Account").setText(actStack.getAccountDebit());
-                EBISystem.gui().textField("descriptionDebit", "Account").setText(actStack.getAccountDName());
-                EBISystem.gui().FormattedField("debitCal", "Account").setValue(actStack.getAccountDValue() == null ? 0.0 : actStack.getAccountDValue());
+                EBISystem.builder().combo("accountTypeText", "Account").getEditor().setItem(actStack.getAccount());
+                EBISystem.builder().timePicker("dateText", "Account").setDate(actStack.getAccountdate() == null ? new Date() : actStack.getAccountdate());
+                EBISystem.builder().timePicker("dateText", "Account").getEditor().setText(EBISystem.getInstance().getDateToString(actStack.getAccountdate()));
+                EBISystem.builder().textField("numberText", "Account").setText(actStack.getAccountnr());
+                EBISystem.builder().textField("nameText", "Account").setText(actStack.getAccountname());
+                EBISystem.builder().FormattedField("amountText", "Account").setValue(actStack.getAccountvalue() == null ? 0.0 : actStack.getAccountvalue());
+                EBISystem.builder().FormattedField("taxText", "Account").setValue(actStack.getAccountTaxValue() == null ? 0.0 : actStack.getAccountTaxValue());
+                EBISystem.builder().textField("debitText", "Account").setText(actStack.getAccountDebit());
+                EBISystem.builder().textField("descriptionDebit", "Account").setText(actStack.getAccountDName());
+                EBISystem.builder().FormattedField("debitCal", "Account").setValue(actStack.getAccountDValue() == null ? 0.0 : actStack.getAccountDValue());
 
-                EBISystem.gui().textField("creditText", "Account").setText(actStack.getAccountCredit());
-                EBISystem.gui().textField("descriptionCredit", "Account").setText(actStack.getAccountCName());
-                EBISystem.gui().FormattedField("creditCal", "Account").setValue(actStack.getAccountCValue() == null ? 0.0 : actStack.getAccountCValue());
-                EBISystem.gui().textArea("descriptionText", "Account").setText(actStack.getDescription());
+                EBISystem.builder().textField("creditText", "Account").setText(actStack.getAccountCredit());
+                EBISystem.builder().textField("descriptionCredit", "Account").setText(actStack.getAccountCName());
+                EBISystem.builder().FormattedField("creditCal", "Account").setValue(actStack.getAccountCValue() == null ? 0.0 : actStack.getAccountCValue());
+                EBISystem.builder().textArea("descriptionText", "Account").setText(actStack.getDescription());
                 EBISystem.getModule().getAccountPane().setAccountDebitCreditType(actStack.getAccountType());
                 EBISystem.getModule().getAccountPane().setAccountDebitTaxName(actStack.getAccountDebitTaxType());
                 EBISystem.getModule().getAccountPane().setAccountCreditTaxName(actStack.getAccountCreditTaxType());
@@ -181,7 +181,7 @@ public class ControlAccountStack {
         EBISystem.getModule().getAccountPane().setAccountDebitTaxName("");
         EBISystem.getModule().getAccountPane().setShowCreditID(-1);
         EBISystem.getModule().getAccountPane().setShowDebitID(-1);
-        EBISystem.gui().vpanel("Account").setID(-1);
+        EBISystem.builder().vpanel("Account").setID(-1);
         actStack = new Accountstack();
         EBISystem.getInstance().getDataStore("Account", "ebiNew");
         EBISystem.getModule().getAccountPane().initialize(false);
@@ -189,7 +189,7 @@ public class ControlAccountStack {
 
     public void dataShow(final String invoiceYear, Integer id) {
 
-        int selRow = EBISystem.gui().table("accountTable", "Account").getSelectedRow() + id;
+        int selRow = EBISystem.builder().table("accountTable", "Account").getSelectedRow() + id;
         Query query;
 
         try {
@@ -250,8 +250,8 @@ public class ControlAccountStack {
         }
 
         if (selRow > -1) {
-            selRow = EBISystem.gui().table("accountTable", "Account").convertRowIndexToView(selRow);
-            EBISystem.gui().table("accountTable", "Account").changeSelection(selRow, 0, false, false);
+            selRow = EBISystem.builder().table("accountTable", "Account").convertRowIndexToView(selRow);
+            EBISystem.builder().table("accountTable", "Account").changeSelection(selRow, 0, false, false);
         }
     }
 
@@ -278,67 +278,67 @@ public class ControlAccountStack {
         }
 
         list.add(EBISystem.i18n("EBI_LANG_NUMBER") + ": "
-                + (actStack.getAccountnr().equals(EBISystem.gui()
+                + (actStack.getAccountnr().equals(EBISystem.builder()
                         .combo("accountTypeText", "Account").getEditor().getItem().toString()) == true
                 ? actStack.getAccount()
                 : actStack.getAccount() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_NUMBER") + ": "
                 + (actStack.getAccountnr().equals(
-                        EBISystem.gui().textField("numberText", "Account").getText()) == true
+                        EBISystem.builder().textField("numberText", "Account").getText()) == true
                 ? actStack.getAccountnr()
                 : actStack.getAccountnr() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_NAME") + ": "
                 + (actStack.getAccountname().equals(
-                        EBISystem.gui().textField("nameText", "Account").getText()) == true
+                        EBISystem.builder().textField("nameText", "Account").getText()) == true
                 ? actStack.getAccountname()
                 : actStack.getAccountname() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_TOTAL_AMOUNT") + ": "
-                + (actStack.getAccountvalue() == Double.parseDouble(EBISystem.gui()
+                + (actStack.getAccountvalue() == Double.parseDouble(EBISystem.builder()
                 .FormattedField("amountText", "Account").getValue().toString())
                 ? actStack.getAccountvalue()
                 : actStack.getAccountvalue() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_DEBIT") + "1: "
                 + (actStack.getAccountDebit()
-                        .equals(EBISystem.gui().textField("debitText", "Account").getText())
+                        .equals(EBISystem.builder().textField("debitText", "Account").getText())
                 ? actStack.getAccountDebit()
                 : actStack.getAccountDebit() + "$"));
         list.add(
                 EBISystem.i18n("EBI_LANG_DEBIT") + "2: "
-                + (actStack.getAccountDName().equals(EBISystem.gui()
+                + (actStack.getAccountDName().equals(EBISystem.builder()
                         .textField("descriptionDebit", "Account").getText()) ? actStack.getAccountDName()
                 : actStack.getAccountDName() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_DEBIT") + "3: "
-                + (actStack.getAccountDValue() == Double.parseDouble(EBISystem.gui()
+                + (actStack.getAccountDValue() == Double.parseDouble(EBISystem.builder()
                 .FormattedField("debitCal", "Account").getValue().toString())
                 ? actStack.getAccountDValue()
                 : actStack.getAccountDValue() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_CREDIT") + "1: "
                 + (actStack.getAccountCredit()
-                        .equals(EBISystem.gui().textField("creditText", "Account").getText())
+                        .equals(EBISystem.builder().textField("creditText", "Account").getText())
                 ? actStack.getAccountCredit()
                 : actStack.getAccountCredit() + "$"));
         list.add(
                 EBISystem.i18n("EBI_LANG_CREDIT") + "2: "
-                + (actStack.getAccountCName().equals(EBISystem.gui()
+                + (actStack.getAccountCName().equals(EBISystem.builder()
                         .textField("descriptionCredit", "Account").getText()) ? actStack.getAccountCName()
                 : actStack.getAccountCName() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_CREDIT") + "3: "
-                + (actStack.getAccountCValue() == Double.parseDouble(EBISystem.gui()
+                + (actStack.getAccountCValue() == Double.parseDouble(EBISystem.builder()
                 .FormattedField("creditCal", "Account").getValue().toString())
                 ? actStack.getAccountCValue()
                 : actStack.getAccountCValue() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": "
                 + (actStack.getDescription()
-                        .equals(EBISystem.gui().textArea("descriptionText", "Account").getText())
+                        .equals(EBISystem.builder().textArea("descriptionText", "Account").getText())
                 ? actStack.getDescription()
                 : actStack.getDescription() + "$"));
 
         list.add(EBISystem.i18n("EBI_LANG_CREATED_DATE") + ": "
                 + (EBISystem.getInstance().getDateToString(actStack.getAccountdate())
-                        .equals(EBISystem.gui().timePicker("dateText", "Account").getEditor()
+                        .equals(EBISystem.builder().timePicker("dateText", "Account").getEditor()
                                 .getText()) == true
                         ? EBISystem.getInstance().getDateToString(actStack.getAccountdate())
                         : EBISystem.getInstance().getDateToString(actStack.getAccountdate())
@@ -440,27 +440,27 @@ public class ControlAccountStack {
                 }
             } else {
                 if (checkifRecordExist(
-                        EBISystem.gui().textField("numberText", "creditDebitDialog").getText(),
-                        EBISystem.gui().textField("nameText", "creditDebitDialog").getText())) {
+                        EBISystem.builder().textField("numberText", "creditDebitDialog").getText(),
+                        EBISystem.builder().textField("nameText", "creditDebitDialog").getText())) {
                     return;
                 }
                 actcd = new Accountstackcd();
             }
             actcd.setCreateddate(new Date());
             actcd.setCreatedfrom(EBISystem.ebiUser);
-            actcd.setCreditdebitnumber(EBISystem.gui().textField("numberText", "creditDebitDialog").getText());
-            actcd.setCreditdebitname(EBISystem.gui().textField("nameText", "creditDebitDialog").getText());
-            actcd.setCreditdebittaxtname(EBISystem.gui().combo("taxTypeText", "creditDebitDialog").getEditor().getItem().toString());
+            actcd.setCreditdebitnumber(EBISystem.builder().textField("numberText", "creditDebitDialog").getText());
+            actcd.setCreditdebitname(EBISystem.builder().textField("nameText", "creditDebitDialog").getText());
+            actcd.setCreditdebittaxtname(EBISystem.builder().combo("taxTypeText", "creditDebitDialog").getEditor().getItem().toString());
 
-            if (EBISystem.gui().combo("creditDebitTypeText", "creditDebitDialog").getSelectedIndex() == 3) {
-                actcd.setCreditdebitvalue(Double.parseDouble(EBISystem.gui().FormattedField("valueText", "creditDebitDialog").getValue() == null ? "0.0"
-                        : EBISystem.gui().FormattedField("valueText", "creditDebitDialog").getValue().toString()));
+            if (EBISystem.builder().combo("creditDebitTypeText", "creditDebitDialog").getSelectedIndex() == 3) {
+                actcd.setCreditdebitvalue(Double.parseDouble(EBISystem.builder().FormattedField("valueText", "creditDebitDialog").getValue() == null ? "0.0"
+                        : EBISystem.builder().FormattedField("valueText", "creditDebitDialog").getValue().toString()));
             } else {
-                actcd.setCreditdebitvalue(Double.parseDouble(EBISystem.gui()
+                actcd.setCreditdebitvalue(Double.parseDouble(EBISystem.builder()
                         .label("taxValue", "creditDebitDialog").getText().replace("%", "")));
             }
 
-            actcd.setCreditdebittype(EBISystem.gui().combo("creditDebitTypeText", "creditDebitDialog").getSelectedIndex());
+            actcd.setCreditdebittype(EBISystem.builder().combo("creditDebitTypeText", "creditDebitDialog").getSelectedIndex());
             EBISystem.hibernate().session("EBIACCOUNT_SESSION").saveOrUpdate(actcd);
             EBISystem.hibernate().transaction("EBIACCOUNT_SESSION").commit();
             dataShowCreditDebit();
@@ -479,14 +479,14 @@ public class ControlAccountStack {
             final Iterator it = query.iterate();
             if (it.hasNext()) {
                 final Accountstackcd actcd = (Accountstackcd) it.next();
-                EBISystem.gui().textField("numberText", "creditDebitDialog").setText(actcd.getCreditdebitnumber());
-                EBISystem.gui().textField("nameText", "creditDebitDialog").setText(actcd.getCreditdebitname());
+                EBISystem.builder().textField("numberText", "creditDebitDialog").setText(actcd.getCreditdebitnumber());
+                EBISystem.builder().textField("nameText", "creditDebitDialog").setText(actcd.getCreditdebitname());
                 if (actcd.getCreditdebittype() == 3) {
-                    EBISystem.gui().FormattedField("valueText", "creditDebitDialog").setValue(actcd.getCreditdebitvalue());
+                    EBISystem.builder().FormattedField("valueText", "creditDebitDialog").setValue(actcd.getCreditdebitvalue());
                 } else {
-                    EBISystem.gui().combo("taxTypeText", "creditDebitDialog").setSelectedItem(actcd.getCreditdebittaxtname());
+                    EBISystem.builder().combo("taxTypeText", "creditDebitDialog").setSelectedItem(actcd.getCreditdebittaxtname());
                 }
-                EBISystem.gui().combo("creditDebitTypeText", "creditDebitDialog").setSelectedIndex(actcd.getCreditdebittype());
+                EBISystem.builder().combo("creditDebitTypeText", "creditDebitDialog").setSelectedIndex(actcd.getCreditdebittype());
 
             }
         } catch (final Exception e) {
@@ -512,11 +512,11 @@ public class ControlAccountStack {
     }
 
     public void dataNewCreditDebit() {
-        EBISystem.gui().textField("numberText", "creditDebitDialog").setText("");
-        EBISystem.gui().textField("nameText", "creditDebitDialog").setText("");
-        EBISystem.gui().combo("taxTypeText", "creditDebitDialog").setSelectedIndex(0);
-        EBISystem.gui().label("taxValue", "creditDebitDialog").setText("0.0%");
-        EBISystem.gui().combo("creditDebitTypeText", "creditDebitDialog").setSelectedIndex(0);
+        EBISystem.builder().textField("numberText", "creditDebitDialog").setText("");
+        EBISystem.builder().textField("nameText", "creditDebitDialog").setText("");
+        EBISystem.builder().combo("taxTypeText", "creditDebitDialog").setSelectedIndex(0);
+        EBISystem.builder().label("taxValue", "creditDebitDialog").setText("0.0%");
+        EBISystem.builder().combo("creditDebitTypeText", "creditDebitDialog").setSelectedIndex(0);
     }
 
     private String getAccountNamefromId(final int id) {
@@ -616,9 +616,9 @@ public class ControlAccountStack {
             if (it.hasNext()) {
                 final Accountstackcd actcd = (Accountstackcd) it.next();
                 double val = 0.0;
-                if (EBISystem.gui().FormattedField("amountText", "Account").getText() != null) {
+                if (EBISystem.builder().FormattedField("amountText", "Account").getText() != null) {
                     try {
-                        val = Double.parseDouble(EBISystem.gui()
+                        val = Double.parseDouble(EBISystem.builder()
                                 .FormattedField("amountText", "Account").getText().toString());
                     } catch (final NumberFormatException ex) {
                         val = 0.0;
@@ -632,7 +632,7 @@ public class ControlAccountStack {
                 double dVal = 0.0;
                 if (actcd.getCreditdebittype() != EBICRMAccountStackView.DEBIT) {
                     try {
-                        dVal = Double.parseDouble(EBISystem.gui()
+                        dVal = Double.parseDouble(EBISystem.builder()
                                 .FormattedField("debitCal", "Account").getText());
                     } catch (final NumberFormatException ex) {
                         dVal = 0.0;
@@ -641,17 +641,17 @@ public class ControlAccountStack {
                     tax = (actcd.getCreditdebitvalue() * val) / 100;
                 }
                
-                if (EBISystem.gui().combo("accountTypeText", "Account").getEditor().getItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_ACTIVE"))) {
+                if (EBISystem.builder().combo("accountTypeText", "Account").getEditor().getItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_ACTIVE"))) {
                     debitValue = (val + tax);
                     creditValue = (dVal * -1);
-                } else if (EBISystem.gui().combo("accountTypeText", "Account").getEditor().getItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_PASSIVE"))) {
+                } else if (EBISystem.builder().combo("accountTypeText", "Account").getEditor().getItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_PASSIVE"))) {
                     debitValue = ((val + tax) * -1);
                     creditValue = dVal;
-                } else if (EBISystem.gui().combo("accountTypeText", "Account").getEditor().getItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_EARNING"))) {
+                } else if (EBISystem.builder().combo("accountTypeText", "Account").getEditor().getItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_ACCOUNT_EARNING"))) {
 
                     debitValue = (val + tax);
                     creditValue = (dVal * -1);
-                } else if (EBISystem.gui().combo("accountTypeText", "Account").getEditor().getItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_LIST_EXPEDITURE"))) {
+                } else if (EBISystem.builder().combo("accountTypeText", "Account").getEditor().getItem().toString().equals(EBISystem.i18n("EBI_LANG_DEBIT_CREDIT_LIST_EXPEDITURE"))) {
                     debitValue = ((val + tax) * -1);
                     creditValue = dVal;
                 }
@@ -660,17 +660,17 @@ public class ControlAccountStack {
                 
                 if (actcd.getCreditdebittype() == EBICRMAccountStackView.DEBIT) {
                     EBISystem.getModule().getAccountPane().setShowDebitID(actcd.getAccountstackcdid());
-                    EBISystem.gui().textField("debitText", "Account").setText(actcd.getCreditdebitnumber());
-                    EBISystem.gui().textField("descriptionDebit", "Account").setText(actcd.getCreditdebitname());
+                    EBISystem.builder().textField("debitText", "Account").setText(actcd.getCreditdebitnumber());
+                    EBISystem.builder().textField("descriptionDebit", "Account").setText(actcd.getCreditdebitname());
                     EBISystem.getModule().getAccountPane().setAccountDebitTaxName(actcd.getCreditdebittaxtname());
-                    EBISystem.gui().FormattedField("debitCal", "Account").setValue(debitValue);
-                    EBISystem.gui().FormattedField("taxText", "Account").setValue(tax);
+                    EBISystem.builder().FormattedField("debitCal", "Account").setValue(debitValue);
+                    EBISystem.builder().FormattedField("taxText", "Account").setValue(tax);
                 } else {
                     EBISystem.getModule().getAccountPane().setShowCreditID(actcd.getAccountstackcdid());
-                    EBISystem.gui().textField("creditText", "Account").setText(actcd.getCreditdebitnumber());
-                    EBISystem.gui().textField("descriptionCredit", "Account").setText(actcd.getCreditdebitname());
+                    EBISystem.builder().textField("creditText", "Account").setText(actcd.getCreditdebitnumber());
+                    EBISystem.builder().textField("descriptionCredit", "Account").setText(actcd.getCreditdebitname());
                     EBISystem.getModule().getAccountPane().setAccountCreditTaxName(actcd.getCreditdebittaxtname());
-                    EBISystem.gui().FormattedField("creditCal", "Account").setValue(creditValue);
+                    EBISystem.builder().FormattedField("creditCal", "Account").setValue(creditValue);
                 }
             }
         } catch (final Exception e) {

@@ -1,7 +1,7 @@
 package org.core;
 
 import org.modules.EBIModule;
-import org.core.guiRenderer.EBIGUIRenderer;
+import org.core.guiRenderer.EBIBuilder;
 import org.core.gui.dialogs.EBISplashScreen;
 import org.core.gui.component.EBIExtensionContainer;
 import org.core.gui.component.EBIStatusBar;
@@ -69,12 +69,10 @@ public class EBIMain extends JFrame {
         try {
 
             final EBIMain application = new EBIMain();
-
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
                     ToolTipManager.sharedInstance().setInitialDelay(0);
-
                     try {
                         application.pack();
                     } catch (final Exception e) {
@@ -145,7 +143,7 @@ public class EBIMain extends JFrame {
          * ******************
          */
         // Initialize xml gui renderer
-        EBISystem.getInstance().setIEBIGUIRendererInstance(new EBIGUIRenderer(EBIMain.this));
+        EBISystem.getInstance().setIEBIGUIRendererInstance(new EBIBuilder(EBIMain.this));
 
         /**
          * *****************

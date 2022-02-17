@@ -28,22 +28,22 @@ public class EBICRMSettingEMailTemplate {
 
     public EBICRMSettingEMailTemplate() {
         tabModel = new ModelTemplate();
-        EBISystem.gui().loadGUI("CRMDialog/emailTemplateDialog.xml");
+        EBISystem.builder().loadGUI("CRMDialog/emailTemplateDialog.xml");
         initHTMLView();
-        EBISystem.gui().getPanel("emailTemplate", "emailTemplateDialog").setLayout(new BorderLayout());
-        EBISystem.gui().getPanel("emailTemplate", "emailTemplateDialog").add(jEditorMessageView, BorderLayout.CENTER);
+        EBISystem.builder().getPanel("emailTemplate", "emailTemplateDialog").setLayout(new BorderLayout());
+        EBISystem.builder().getPanel("emailTemplate", "emailTemplateDialog").add(jEditorMessageView, BorderLayout.CENTER);
         availableEmailTemplate();
     }
 
     public void setVisible() {
-        EBISystem.gui().dialog("emailTemplateDialog").setTitle(EBISystem.i18n("EBI_LANG_C_CRM_EMAIL_TEMPLATE_SETTING"));
-        EBISystem.gui().vpanel("emailTemplateDialog").setModuleTitle(EBISystem.i18n("EBI_LANG_C_CRM_EMAIL_TEMPLATE_SETTING"));
+        EBISystem.builder().dialog("emailTemplateDialog").setTitle(EBISystem.i18n("EBI_LANG_C_CRM_EMAIL_TEMPLATE_SETTING"));
+        EBISystem.builder().vpanel("emailTemplateDialog").setModuleTitle(EBISystem.i18n("EBI_LANG_C_CRM_EMAIL_TEMPLATE_SETTING"));
 
-        EBISystem.gui().label("name", "emailTemplateDialog").setText(EBISystem.i18n("EBI_LANG_NAME"));
-        EBISystem.gui().getCheckBox("activeTemplate", "emailTemplateDialog").setText(EBISystem.i18n("EBI_LANG_ACTIVE"));
+        EBISystem.builder().label("name", "emailTemplateDialog").setText(EBISystem.i18n("EBI_LANG_NAME"));
+        EBISystem.builder().getCheckBox("activeTemplate", "emailTemplateDialog").setText(EBISystem.i18n("EBI_LANG_ACTIVE"));
 
-        EBISystem.gui().button("saveValue", "emailTemplateDialog").setText(EBISystem.i18n("EBI_LANG_SAVE"));
-        EBISystem.gui().button("saveValue", "emailTemplateDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("saveValue", "emailTemplateDialog").setText(EBISystem.i18n("EBI_LANG_SAVE"));
+        EBISystem.builder().button("saveValue", "emailTemplateDialog").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
                 if (isSaveOrUpdate == false) {
@@ -55,7 +55,7 @@ public class EBICRMSettingEMailTemplate {
             }
         });
 
-        EBISystem.gui().button("loadHTMLTemplate", "emailTemplateDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("loadHTMLTemplate", "emailTemplateDialog").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
                 final StringBuffer htmlFile = new StringBuffer();
@@ -81,17 +81,17 @@ public class EBICRMSettingEMailTemplate {
             }
         });
 
-        EBISystem.gui().button("newBnt", "emailTemplateDialog").setIcon(EBISystem.getInstance().getIconResource("new.png"));
-        EBISystem.gui().button("newBnt", "emailTemplateDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("newBnt", "emailTemplateDialog").setIcon(EBISystem.getInstance().getIconResource("new.png"));
+        EBISystem.builder().button("newBnt", "emailTemplateDialog").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
                 newTemplate();
             }
         });
 
-        EBISystem.gui().button("editBnt", "emailTemplateDialog").setIcon(EBISystem.getInstance().getIconResource("down.png"));
-        EBISystem.gui().button("editBnt", "emailTemplateDialog").setEnabled(false);
-        EBISystem.gui().button("editBnt", "emailTemplateDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("editBnt", "emailTemplateDialog").setIcon(EBISystem.getInstance().getIconResource("down.png"));
+        EBISystem.builder().button("editBnt", "emailTemplateDialog").setEnabled(false);
+        EBISystem.builder().button("editBnt", "emailTemplateDialog").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
                 if (!tabModel.data[selRow][0].toString().equals(EBISystem.i18n("EBI_LANG_C_NO_TEMPLATE"))) {
@@ -100,17 +100,17 @@ public class EBICRMSettingEMailTemplate {
             }
         });
 
-        EBISystem.gui().button("deleteBnt", "emailTemplateDialog").setIcon(EBISystem.getInstance().getIconResource("delete.png"));
-        EBISystem.gui().button("deleteBnt", "emailTemplateDialog").setEnabled(false);
-        EBISystem.gui().button("deleteBnt", "emailTemplateDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("deleteBnt", "emailTemplateDialog").setIcon(EBISystem.getInstance().getIconResource("delete.png"));
+        EBISystem.builder().button("deleteBnt", "emailTemplateDialog").setEnabled(false);
+        EBISystem.builder().button("deleteBnt", "emailTemplateDialog").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
                 deleteTemplate();
             }
         });
 
-        EBISystem.gui().table("taxValueTable", "emailTemplateDialog").setModel(tabModel);
-        EBISystem.gui().table("taxValueTable", "emailTemplateDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        EBISystem.builder().table("taxValueTable", "emailTemplateDialog").setModel(tabModel);
+        EBISystem.builder().table("taxValueTable", "emailTemplateDialog").getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(final ListSelectionEvent e) {
                 if (e.getValueIsAdjusting()) {
@@ -120,20 +120,20 @@ public class EBICRMSettingEMailTemplate {
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selRow = EBISystem.gui().table("taxValueTable", "emailTemplateDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selRow = EBISystem.builder().table("taxValueTable", "emailTemplateDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("editBnt", "emailTemplateDialog").setEnabled(false);
-                    EBISystem.gui().button("deleteBnt", "emailTemplateDialog").setEnabled(false);
-                } else if (!tabModel.getRow(EBISystem.gui().table("taxValueTable", "emailTemplateDialog").getSelectedRow())[0].toString().equals(EBISystem.i18n("EBI_LANG_C_NO_TEMPLATE"))) {
-                    EBISystem.gui().button("editBnt", "emailTemplateDialog").setEnabled(true);
-                    EBISystem.gui().button("deleteBnt", "emailTemplateDialog").setEnabled(true);
+                    EBISystem.builder().button("editBnt", "emailTemplateDialog").setEnabled(false);
+                    EBISystem.builder().button("deleteBnt", "emailTemplateDialog").setEnabled(false);
+                } else if (!tabModel.getRow(EBISystem.builder().table("taxValueTable", "emailTemplateDialog").getSelectedRow())[0].toString().equals(EBISystem.i18n("EBI_LANG_C_NO_TEMPLATE"))) {
+                    EBISystem.builder().button("editBnt", "emailTemplateDialog").setEnabled(true);
+                    EBISystem.builder().button("deleteBnt", "emailTemplateDialog").setEnabled(true);
                 }
             }
         });
 
-        EBISystem.gui().table("taxValueTable", "emailTemplateDialog").addMouseListener(new java.awt.event.MouseAdapter() {
+        EBISystem.builder().table("taxValueTable", "emailTemplateDialog").addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(final java.awt.event.MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -145,7 +145,7 @@ public class EBICRMSettingEMailTemplate {
             }
         });
 
-        EBISystem.gui().showGUI();
+        EBISystem.builder().showGUI();
     }
 
     private void saveTemplate() {
@@ -154,7 +154,7 @@ public class EBICRMSettingEMailTemplate {
             return;
         }
 
-        if (EBISystem.gui().getCheckBox("activeTemplate", "emailTemplateDialog").isSelected()) {
+        if (EBISystem.builder().getCheckBox("activeTemplate", "emailTemplateDialog").isSelected()) {
             removeIsActiveYetEnabled();
         }
 
@@ -168,9 +168,9 @@ public class EBICRMSettingEMailTemplate {
             final PreparedStatement ps = EBISystem.getInstance().iDB().initPreparedStatement(query);
             ps.setString(1, EBISystem.ebiUser);
             ps.setDate(2, new java.sql.Date(new java.util.Date().getTime()));
-            ps.setString(3, EBISystem.gui().textField("emailTitle", "emailTemplateDialog").getText());
+            ps.setString(3, EBISystem.builder().textField("emailTitle", "emailTemplateDialog").getText());
             ps.setString(4, jEditorMessageView.getText());
-            ps.setInt(5, EBISystem.gui().getCheckBox("activeTemplate", "emailTemplateDialog").isSelected() == true ? 1 : 0);
+            ps.setInt(5, EBISystem.builder().getCheckBox("activeTemplate", "emailTemplateDialog").isSelected() == true ? 1 : 0);
             EBISystem.getInstance().iDB().executePreparedStmt(ps);
 
         } catch (final SQLException ex) {
@@ -216,9 +216,9 @@ public class EBICRMSettingEMailTemplate {
             final PreparedStatement ps = EBISystem.getInstance().iDB().initPreparedStatement(query);
             ps.setString(1, EBISystem.ebiUser);
             ps.setDate(2, new java.sql.Date(new java.util.Date().getTime()));
-            ps.setString(3, EBISystem.gui().textField("emailTitle", "emailTemplateDialog").getText());
+            ps.setString(3, EBISystem.builder().textField("emailTitle", "emailTemplateDialog").getText());
             ps.setString(4, jEditorMessageView.getText());
-            ps.setInt(5, EBISystem.gui().getCheckBox("activeTemplate", "emailTemplateDialog").isSelected() == true ? 1 : 0);
+            ps.setInt(5, EBISystem.builder().getCheckBox("activeTemplate", "emailTemplateDialog").isSelected() == true ? 1 : 0);
             ps.setInt(6, this.templateID);
             EBISystem.getInstance().iDB().executePreparedStmt(ps);
 
@@ -256,9 +256,9 @@ public class EBICRMSettingEMailTemplate {
             set = EBISystem.getInstance().iDB().executePreparedQuery(prs2);
 
             set.next();
-            EBISystem.gui().textField("emailTitle", "emailTemplateDialog").setText(set.getString("NAME"));
+            EBISystem.builder().textField("emailTitle", "emailTemplateDialog").setText(set.getString("NAME"));
             jEditorMessageView.setText(set.getString("TEMPLATE"));
-            EBISystem.gui().getCheckBox("activeTemplate", "emailTemplateDialog").setSelected(set.getInt("ISACTIVE") == 1 ? true : false);
+            EBISystem.builder().getCheckBox("activeTemplate", "emailTemplateDialog").setSelected(set.getInt("ISACTIVE") == 1 ? true : false);
             this.isSaveOrUpdate = true;
         } catch (final SQLException ex) {
             ex.printStackTrace();
@@ -311,9 +311,9 @@ public class EBICRMSettingEMailTemplate {
     }
 
     private void newTemplate() {
-        EBISystem.gui().textField("emailTitle", "emailTemplateDialog").setText("");
+        EBISystem.builder().textField("emailTitle", "emailTemplateDialog").setText("");
         jEditorMessageView.setText("");
-        EBISystem.gui().getCheckBox("activeTemplate", "emailTemplateDialog").setSelected(false);
+        EBISystem.builder().getCheckBox("activeTemplate", "emailTemplateDialog").setSelected(false);
         this.isSaveOrUpdate = false;
         this.templateID = 0;
     }
@@ -321,7 +321,7 @@ public class EBICRMSettingEMailTemplate {
     private boolean validateInput() {
         final boolean ret = true;
 
-        if ("".equals(EBISystem.gui().textField("emailTitle", "emailTemplateDialog").getText())) {
+        if ("".equals(EBISystem.builder().textField("emailTitle", "emailTemplateDialog").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_TEMPLATE_NAME_EMPTY")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }

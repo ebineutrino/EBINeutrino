@@ -36,16 +36,16 @@ public class EBIDialogSearchContact {
         loadCompleteCompany = load;
         jSetterFieldName = new ArrayList();
         jSetterComponent = new ArrayList();
-        EBISystem.gui().loadGUI("CRMDialog/crmContactSearch.xml");
+        EBISystem.builder().loadGUI("CRMDialog/crmContactSearch.xml");
         tabModel = new ModelContactSearch();
-        EBISystem.gui().table("searchContactTable","searchCRMContact").setModel(tabModel);
-        EBISystem.gui().table("searchContactTable","searchCRMContact").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("searchContactTable","searchCRMContact").setModel(tabModel);
+        EBISystem.builder().table("searchContactTable","searchCRMContact").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
     public void setVisible(){
 
-       EBISystem.gui().dialog("searchCRMContact").setTitle(EBISystem.i18n("EBI_LANG_C_SEARCH_CONTACT"));
-       EBISystem.gui().vpanel("searchCRMContact").setModuleTitle(EBISystem.i18n("EBI_LANG_C_SEARCH_CONTACT"));
+       EBISystem.builder().dialog("searchCRMContact").setTitle(EBISystem.i18n("EBI_LANG_C_SEARCH_CONTACT"));
+       EBISystem.builder().vpanel("searchCRMContact").setModuleTitle(EBISystem.i18n("EBI_LANG_C_SEARCH_CONTACT"));
 
        final KeyAdapter adapt = new java.awt.event.KeyAdapter() {
 				@Override
@@ -55,10 +55,10 @@ public class EBIDialogSearchContact {
 				   }
 				}
 	  };
-	  EBISystem.gui().textField("filterTableText", "searchCRMContact").requestFocus();
-      EBISystem.gui().textField("filterTableText", "searchCRMContact").addKeyListener(adapt);
+	  EBISystem.builder().textField("filterTableText", "searchCRMContact").requestFocus();
+      EBISystem.builder().textField("filterTableText", "searchCRMContact").addKeyListener(adapt);
 
-      final ListSelectionModel rowSM = EBISystem.gui().table("searchContactTable","searchCRMContact").getSelectionModel();
+      final ListSelectionModel rowSM = EBISystem.builder().table("searchContactTable","searchCRMContact").getSelectionModel();
       rowSM.addListSelectionListener(new ListSelectionListener() {
 
             @Override
@@ -70,23 +70,23 @@ public class EBIDialogSearchContact {
 
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("applyButton","searchCRMContact").setEnabled(false);
+                    EBISystem.builder().button("applyButton","searchCRMContact").setEnabled(false);
                 } else {
                     if(lsm.getMinSelectionIndex() >= 0){
                     	if(lsm.getMinSelectionIndex() > 0){
-                    		selRowContact = EBISystem.gui().table("searchContactTable","searchCRMContact").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    		selRowContact = EBISystem.builder().table("searchContactTable","searchCRMContact").convertRowIndexToModel(lsm.getMinSelectionIndex());
                     	}else{
                     		selRowContact = 0;
                     	}
                         if (tabModel.data[selRowContact][0] != null && !tabModel.data[selRowContact][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                            EBISystem.gui().button("applyButton","searchCRMContact").setEnabled(true);
+                            EBISystem.builder().button("applyButton","searchCRMContact").setEnabled(true);
                         }
                     }
                 }
             }
         });
 
-        new JTableActionMaps(EBISystem.gui().table("searchContactTable","searchCRMContact")).setTableAction(new AbstractTableKeyAction() {
+        new JTableActionMaps(EBISystem.builder().table("searchContactTable","searchCRMContact")).setTableAction(new AbstractTableKeyAction() {
 
                 @Override
 				public void setArrowDownKeyAction(final int selRow) {
@@ -110,13 +110,13 @@ public class EBIDialogSearchContact {
                 }
          });
 
-        EBISystem.gui().table("searchContactTable","searchCRMContact").addMouseListener(new java.awt.event.MouseAdapter() {
+        EBISystem.builder().table("searchContactTable","searchCRMContact").addMouseListener(new java.awt.event.MouseAdapter() {
 
                 @Override
 				public void mouseClicked(final java.awt.event.MouseEvent e) {
 
-                    if(EBISystem.gui().table("searchContactTable","searchCRMContact").rowAtPoint(e.getPoint()) > -1){
-                        selRowContact = EBISystem.gui().table("searchContactTable","searchCRMContact").convertRowIndexToModel(EBISystem.gui().table("searchContactTable","searchCRMContact").rowAtPoint(e.getPoint()));
+                    if(EBISystem.builder().table("searchContactTable","searchCRMContact").rowAtPoint(e.getPoint()) > -1){
+                        selRowContact = EBISystem.builder().table("searchContactTable","searchCRMContact").convertRowIndexToModel(EBISystem.builder().table("searchContactTable","searchCRMContact").rowAtPoint(e.getPoint()));
                     }
 
                     if (e.getClickCount() == 2) {
@@ -125,29 +125,29 @@ public class EBIDialogSearchContact {
                 }
         });
 
-        EBISystem.gui().button("searchButton","searchCRMContact").setText(EBISystem.i18n("EBI_LANG_SEARCH"));
-        EBISystem.gui().button("searchButton","searchCRMContact").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("searchButton","searchCRMContact").setText(EBISystem.i18n("EBI_LANG_SEARCH"));
+        EBISystem.builder().button("searchButton","searchCRMContact").addActionListener(new java.awt.event.ActionListener() {
 
                 @Override
 				public void actionPerformed(final java.awt.event.ActionEvent e) {
                     createContactBySearchView();
-                    EBISystem.gui().table("searchContactTable","searchCRMContact").changeSelection(0, 0, false, false);
-                    EBISystem.gui().table("searchContactTable","searchCRMContact").requestFocus();
+                    EBISystem.builder().table("searchContactTable","searchCRMContact").changeSelection(0, 0, false, false);
+                    EBISystem.builder().table("searchContactTable","searchCRMContact").requestFocus();
                 }
         });
 
-        EBISystem.gui().button("cancelButton","searchCRMContact").setText(EBISystem.i18n("EBI_LANG_CANCEL"));
-        EBISystem.gui().button("cancelButton","searchCRMContact").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("cancelButton","searchCRMContact").setText(EBISystem.i18n("EBI_LANG_CANCEL"));
+        EBISystem.builder().button("cancelButton","searchCRMContact").addActionListener(new java.awt.event.ActionListener() {
 
                 @Override
 				public void actionPerformed(final java.awt.event.ActionEvent e) {
-                    EBISystem.gui().dialog("searchCRMContact").setVisible(false);
+                    EBISystem.builder().dialog("searchCRMContact").setVisible(false);
                 }
        });
 
-        EBISystem.gui().button("applyButton","searchCRMContact").setText(EBISystem.i18n("EBI_LANG_APPLY"));
-        EBISystem.gui().button("applyButton","searchCRMContact").setEnabled(false);
-        EBISystem.gui().button("applyButton","searchCRMContact").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("applyButton","searchCRMContact").setText(EBISystem.i18n("EBI_LANG_APPLY"));
+        EBISystem.builder().button("applyButton","searchCRMContact").setEnabled(false);
+        EBISystem.builder().button("applyButton","searchCRMContact").addActionListener(new java.awt.event.ActionListener() {
 
                 @Override
 				public void actionPerformed(final java.awt.event.ActionEvent e) {
@@ -155,14 +155,14 @@ public class EBIDialogSearchContact {
                 }
         });
         
-        EBISystem.gui().showGUI();
+        EBISystem.builder().showGUI();
 
     }
 
     public void createContactBySearchView() {
 
         try {
-            EBISystem.gui().table("searchContactTable","searchCRMContact").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "searchCRMContact").getText()));
+            EBISystem.builder().table("searchContactTable","searchCRMContact").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "searchCRMContact").getText()));
 
             final String query = " SELECT * FROM COMPANYCONTACTS LEFT JOIN COMPANY ON " +
                     " COMPANYCONTACTS.COMPANYID=COMPANY.COMPANYID " +
@@ -200,8 +200,8 @@ public class EBIDialogSearchContact {
             }
            
             tabModel.fireTableDataChanged();
-            EBISystem.gui().table("searchContactTable","searchCRMContact").requestFocus();
-            EBISystem.gui().table("searchContactTable","searchCRMContact").changeSelection(0, 0, false, false);
+            EBISystem.builder().table("searchContactTable","searchCRMContact").requestFocus();
+            EBISystem.builder().table("searchContactTable","searchCRMContact").changeSelection(0, 0, false, false);
             rs.close();
         } catch (final SQLException ex) {
             EBIExceptionDialog.getInstance(EBISystem.printStackTrace(ex)).Show(EBIMessage.ERROR_MESSAGE);
@@ -221,7 +221,7 @@ public class EBIDialogSearchContact {
             return;
         }
 
-        EBISystem.gui().dialog("searchCRMContact").setVisible(false);
+        EBISystem.builder().dialog("searchCRMContact").setVisible(false);
         wait.setVisible(true);
 
     	final boolean loadCMP = loadCompleteCompany;
@@ -235,7 +235,7 @@ public class EBIDialogSearchContact {
                             if (loadCMP) {
                                 if(EBISystem.getInstance().getIEBISecurityInstance().checkCanReleaseModules()) {
                                     EBISystem.getModule().createUI(Integer.parseInt(tabModel.data[selRowContact][8].toString()), false);
-                                    if (EBISystem.gui().existView("Contact")) {
+                                    if (EBISystem.builder().existView("Contact")) {
                                         EBISystem.getModule().ebiContainer.setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_CONTACT")));
                                         EBISystem.getModule().getContactPane().editRemoteContact(Integer.parseInt(tabModel.data[selRowContact][9].toString()));
                                     }

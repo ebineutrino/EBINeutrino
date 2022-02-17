@@ -33,7 +33,7 @@ public class ControlPlanning {
             EBISystem.hibernate().transaction("EBIPROJECT_SESSION").begin();
 
             if (!isEdit) {
-                project.setCreatedfrom(EBISystem.gui().vpanel("Project").getCreatedFrom());
+                project.setCreatedfrom(EBISystem.builder().vpanel("Project").getCreatedFrom());
                 project.setCreateddate(new Date());
             } else {
                 createHistory(project.getProjectid());
@@ -41,31 +41,31 @@ public class ControlPlanning {
                 project.setChangeddate(new Date());
             }
 
-            project.setProjectnr(EBISystem.gui().textField("prjNrText", "Project").getText());
-            project.setName(EBISystem.gui().textField("prjNameText", "Project").getText());
-            project.setManager(EBISystem.gui().textField("prjManagerText", "Project").getText());
+            project.setProjectnr(EBISystem.builder().textField("prjNrText", "Project").getText());
+            project.setName(EBISystem.builder().textField("prjNameText", "Project").getText());
+            project.setManager(EBISystem.builder().textField("prjManagerText", "Project").getText());
 
-            if (EBISystem.gui().combo("prjStatusText", "Project").getEditor().getItem() != null) {
-                project.setStatus(EBISystem.gui().combo("prjStatusText", "Project").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("prjStatusText", "Project").getEditor().getItem() != null) {
+                project.setStatus(EBISystem.builder().combo("prjStatusText", "Project").getEditor().getItem().toString());
             }
 
-            if (EBISystem.gui().timePicker("prjstartDateText", "Project").getDate() != null) {
-                project.setValidfrom(EBISystem.gui().timePicker("prjstartDateText", "Project").getDate());
+            if (EBISystem.builder().timePicker("prjstartDateText", "Project").getDate() != null) {
+                project.setValidfrom(EBISystem.builder().timePicker("prjstartDateText", "Project").getDate());
             }
 
-            if (EBISystem.gui().timePicker("prjendDateText", "Project").getDate() != null) {
-                project.setValidto(EBISystem.gui().timePicker("prjendDateText", "Project").getDate());
+            if (EBISystem.builder().timePicker("prjendDateText", "Project").getDate() != null) {
+                project.setValidto(EBISystem.builder().timePicker("prjendDateText", "Project").getDate());
             }
 
-            if (EBISystem.gui().FormattedField("budgetText", "Project").getValue() != null) {
-                if (!"".equals(EBISystem.gui().FormattedField("budgetText", "Project").getText())) {
-                    project.setBudget(Double.parseDouble(EBISystem.gui().FormattedField("budgetText", "Project").getValue().toString()));
+            if (EBISystem.builder().FormattedField("budgetText", "Project").getValue() != null) {
+                if (!"".equals(EBISystem.builder().FormattedField("budgetText", "Project").getText())) {
+                    project.setBudget(Double.parseDouble(EBISystem.builder().FormattedField("budgetText", "Project").getValue().toString()));
                 }
             }
 
-            if (EBISystem.gui().FormattedField("actualCostText", "Project").getValue() != null) {
-                if (!"".equals(EBISystem.gui().FormattedField("actualCostText", "Project").getText())) {
-                    project.setActualcost(Double.parseDouble(EBISystem.gui().FormattedField("actualCostText", "Project").getValue().toString()));
+            if (EBISystem.builder().FormattedField("actualCostText", "Project").getValue() != null) {
+                if (!"".equals(EBISystem.builder().FormattedField("actualCostText", "Project").getText())) {
+                    project.setActualcost(Double.parseDouble(EBISystem.builder().FormattedField("actualCostText", "Project").getValue().toString()));
                 }
             }
 
@@ -117,7 +117,7 @@ public class ControlPlanning {
             EBISystem.hibernate().transaction("EBIPROJECT_SESSION").commit();
 
             if (!isEdit) {
-                EBISystem.gui().vpanel("Project").setID(project.getProjectid());
+                EBISystem.builder().vpanel("Project").setID(project.getProjectid());
             }
 
             plannID = project.getProjectid();
@@ -234,49 +234,49 @@ public class ControlPlanning {
             final Iterator iter = query.list().iterator();
             if (iter.hasNext()) {
                 project = (Crmproject) iter.next();
-                EBISystem.gui().vpanel("Project").setID(project.getProjectid());
+                EBISystem.builder().vpanel("Project").setID(project.getProjectid());
                 EBISystem.hibernate().session("EBIPROJECT_SESSION").refresh(project);
 
-                EBISystem.gui().vpanel("Project").setCreatedDate(EBISystem.getInstance().getDateToString(project.getCreateddate() == null ? new Date() : project.getCreateddate()));
-                EBISystem.gui().vpanel("Project").setCreatedFrom(project.getCreatedfrom() == null ? EBISystem.ebiUser : project.getCreatedfrom());
+                EBISystem.builder().vpanel("Project").setCreatedDate(EBISystem.getInstance().getDateToString(project.getCreateddate() == null ? new Date() : project.getCreateddate()));
+                EBISystem.builder().vpanel("Project").setCreatedFrom(project.getCreatedfrom() == null ? EBISystem.ebiUser : project.getCreatedfrom());
 
                 if (project.getChangeddate() != null) {
-                    EBISystem.gui().vpanel("Project").setChangedDate(EBISystem.getInstance().getDateToString(project.getChangeddate()));
-                    EBISystem.gui().vpanel("Project").setChangedFrom(project.getChangedfrom());
+                    EBISystem.builder().vpanel("Project").setChangedDate(EBISystem.getInstance().getDateToString(project.getChangeddate()));
+                    EBISystem.builder().vpanel("Project").setChangedFrom(project.getChangedfrom());
                 }
 
-                EBISystem.gui().textField("prjNrText", "Project").setText(project.getProjectnr());
-                EBISystem.gui().textField("prjNameText", "Project").setText(project.getName());
-                EBISystem.gui().textField("prjManagerText", "Project").setText(project.getManager());
+                EBISystem.builder().textField("prjNrText", "Project").setText(project.getProjectnr());
+                EBISystem.builder().textField("prjNameText", "Project").setText(project.getName());
+                EBISystem.builder().textField("prjManagerText", "Project").setText(project.getManager());
 
                 if (project.getStatus() != null) {
-                    EBISystem.gui().combo("prjStatusText", "Project").setSelectedItem(project.getStatus());
+                    EBISystem.builder().combo("prjStatusText", "Project").setSelectedItem(project.getStatus());
                 }
 
                 if (project.getValidfrom() != null) {
-                    EBISystem.gui().timePicker("prjstartDateText", "Project").getEditor().setText(EBISystem.getInstance().getDateToString(project.getValidfrom()));
+                    EBISystem.builder().timePicker("prjstartDateText", "Project").getEditor().setText(EBISystem.getInstance().getDateToString(project.getValidfrom()));
                 }
 
                 if (project.getValidto() != null) {
-                    EBISystem.gui().timePicker("prjendDateText", "Project").getEditor().setText(EBISystem.getInstance().getDateToString(project.getValidto()));
+                    EBISystem.builder().timePicker("prjendDateText", "Project").getEditor().setText(EBISystem.getInstance().getDateToString(project.getValidto()));
                 }
 
                 if (project.getValidfrom() != null) {
-                    EBISystem.gui().timePicker("prjstartDateText", "Project").setDate(project.getValidfrom());
+                    EBISystem.builder().timePicker("prjstartDateText", "Project").setDate(project.getValidfrom());
                 }
                 if (project.getValidto() != null) {
-                    EBISystem.gui().timePicker("prjendDateText", "Project").setDate(project.getValidto());
+                    EBISystem.builder().timePicker("prjendDateText", "Project").setDate(project.getValidto());
                 }
 
                 if (project.getValidfrom() != null && project.getValidto() != null) {
                     EBISystem.getModule().getProjectPane().getGrcManagement().setStartEnd(project.getValidfrom(), project.getValidto());
                 }
                 if (project.getBudget() != null) {
-                    EBISystem.gui().FormattedField("budgetText", "Project")
+                    EBISystem.builder().FormattedField("budgetText", "Project")
                             .setValue(project.getBudget());
                 }
                 if (project.getActualcost() != null) {
-                    EBISystem.gui().FormattedField("actualCostText", "Project")
+                    EBISystem.builder().FormattedField("actualCostText", "Project")
                             .setValue(project.getActualcost());
                 }
                 /*
@@ -352,14 +352,14 @@ public class ControlPlanning {
     public void dataShow(Integer id) {
 
         Query query;
-        int selRow = EBISystem.gui().table("projectTable", "Project").getSelectedRow() + id;
+        int selRow = EBISystem.builder().table("projectTable", "Project").getSelectedRow() + id;
 
         try {
             EBISystem.hibernate().transaction("EBIPROJECT_SESSION").begin();
             query = EBISystem.hibernate().session("EBIPROJECT_SESSION").createQuery("from Crmproject order by createddate desc ");
             final Iterator iter = query.iterate();
 
-            final EBIAbstractTableModel tabMod = (EBIAbstractTableModel) EBISystem.gui().table("projectTable", "Project").getModel();
+            final EBIAbstractTableModel tabMod = (EBIAbstractTableModel) EBISystem.builder().table("projectTable", "Project").getModel();
 
             if (query.list().size() > 0) {
                 tabMod.data = new Object[query.list().size()][10];
@@ -397,8 +397,8 @@ public class ControlPlanning {
             e.printStackTrace();
         }
         if (selRow > -1) {
-            selRow = EBISystem.gui().table("projectTable", "Project").convertRowIndexToView(selRow);
-            EBISystem.gui().table("projectTable", "Project").changeSelection(selRow, 0, false, false);
+            selRow = EBISystem.builder().table("projectTable", "Project").convertRowIndexToView(selRow);
+            EBISystem.builder().table("projectTable", "Project").changeSelection(selRow, 0, false, false);
         }
     }
 
@@ -413,26 +413,26 @@ public class ControlPlanning {
         project = new Crmproject();
 
         //todo use initialie()
-        EBISystem.gui().vpanel("Project").setCreatedFrom(EBISystem.ebiUser);
-        EBISystem.gui().vpanel("Project").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
-        EBISystem.gui().vpanel("Project").setChangedFrom("");
-        EBISystem.gui().vpanel("Project").setChangedDate("");
+        EBISystem.builder().vpanel("Project").setCreatedFrom(EBISystem.ebiUser);
+        EBISystem.builder().vpanel("Project").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
+        EBISystem.builder().vpanel("Project").setChangedFrom("");
+        EBISystem.builder().vpanel("Project").setChangedDate("");
 
-        EBISystem.gui().textField("prjNrText", "Project").setText("");
-        EBISystem.gui().textField("prjNameText", "Project").setText("");
-        EBISystem.gui().textField("prjManagerText", "Project").setText("");
+        EBISystem.builder().textField("prjNrText", "Project").setText("");
+        EBISystem.builder().textField("prjNameText", "Project").setText("");
+        EBISystem.builder().textField("prjManagerText", "Project").setText("");
 
-        EBISystem.gui().combo("prjStatusText", "Project").setSelectedIndex(0);
-        EBISystem.gui().timePicker("prjstartDateText", "Project").getEditor().setText("");
-        EBISystem.gui().timePicker("prjendDateText", "Project").getEditor().setText("");
-        EBISystem.gui().FormattedField("budgetText", "Project").setText("");
-        EBISystem.gui().FormattedField("actualCostText", "Project").setText("");
+        EBISystem.builder().combo("prjStatusText", "Project").setSelectedIndex(0);
+        EBISystem.builder().timePicker("prjstartDateText", "Project").getEditor().setText("");
+        EBISystem.builder().timePicker("prjendDateText", "Project").getEditor().setText("");
+        EBISystem.builder().FormattedField("budgetText", "Project").setText("");
+        EBISystem.builder().FormattedField("actualCostText", "Project").setText("");
         // EBISystem.getGUIRenderer().getFormattedTextfield("remainingCost","Project").setText("");
-        EBISystem.gui().FormattedField("budgetText", "Project").setValue(null);
-        EBISystem.gui().FormattedField("actualCostText", "Project").setValue(null);
+        EBISystem.builder().FormattedField("budgetText", "Project").setValue(null);
+        EBISystem.builder().FormattedField("actualCostText", "Project").setValue(null);
         // EBISystem.getGUIRenderer().getFormattedTextfield("remainingCost","Project").setValue(null);
         EBISystem.getModule().getProjectPane().getGrcManagement().resetComponent();
-        EBISystem.gui().vpanel("Project").setID(-1);
+        EBISystem.builder().vpanel("Project").setID(-1);
         EBISystem.getInstance().getDataStore("Project", "ebiNew");
     }
 
@@ -459,32 +459,32 @@ public class ControlPlanning {
 
                 list.add(
                         EBISystem.i18n("EBI_LANG_PROJECT_NR") + ": "
-                        + (proj.getProjectnr().equals(EBISystem.gui()
+                        + (proj.getProjectnr().equals(EBISystem.builder()
                                 .textField("prjNrText", "Project").getText()) ? proj.getProjectnr()
                         : proj.getProjectnr() + "$"));
                 list.add(
                         EBISystem.i18n("EBI_LANG_NAME") + ": "
-                        + (proj.getName().equals(EBISystem.gui()
+                        + (proj.getName().equals(EBISystem.builder()
                                 .textField("prjNameText", "Project").getText()) ? proj.getName()
                         : proj.getName() + "$"));
 
                 if (proj.getActualcost() != null) {
                     list.add(EBISystem.i18n("EBI_LANG_ACTUAL_COST") + ": "
-                            + (proj.getActualcost() == Double.parseDouble(EBISystem.gui()
+                            + (proj.getActualcost() == Double.parseDouble(EBISystem.builder()
                             .FormattedField("actualCostText", "Project").getValue().toString())
                             ? proj.getActualcost()
                             : proj.getActualcost() + "$"));
                 }
                 if (proj.getManager() != null) {
                     list.add(EBISystem.i18n("EBI_LANG_PROJECT_MANAGER") + ": "
-                            + (proj.getManager().equals(EBISystem.gui()
+                            + (proj.getManager().equals(EBISystem.builder()
                                     .textField("prjManagerText", "Project").getText()) ? proj.getManager()
                             : proj.getManager() + "$"));
                 }
                 if (proj.getValidfrom() != null) {
                     list.add(EBISystem.i18n("EBI_LANG_START_DATE") + ": " + (EBISystem.getInstance()
                             .getDateToString(proj.getValidfrom())
-                            .equals(EBISystem.gui().timePicker("prjstartDateText", "Project")
+                            .equals(EBISystem.builder().timePicker("prjstartDateText", "Project")
                                     .getEditor().getText())
                                     ? EBISystem.getInstance().getDateToString(proj.getValidfrom())
                                     : EBISystem.getInstance().getDateToString(proj.getValidfrom())
@@ -493,7 +493,7 @@ public class ControlPlanning {
                 if (proj.getValidto() != null) {
                     list.add(EBISystem.i18n("EBI_LANG_END_DATE") + ": " + (EBISystem.getInstance()
                             .getDateToString(proj.getValidto())
-                            .equals(EBISystem.gui().timePicker("prjendDateText", "Project")
+                            .equals(EBISystem.builder().timePicker("prjendDateText", "Project")
                                     .getEditor().getText())
                                     ? EBISystem.getInstance().getDateToString(proj.getValidto())
                                     : EBISystem.getInstance().getDateToString(proj.getValidto())
@@ -501,13 +501,13 @@ public class ControlPlanning {
                 }
 
                 list.add(EBISystem.i18n("EBI_LANG_STATUS") + ": "
-                        + (proj.getStatus().equals(EBISystem.gui()
+                        + (proj.getStatus().equals(EBISystem.builder()
                                 .combo("prjStatusText", "Project").getEditor().getItem()) ? proj.getStatus()
                         : proj.getStatus() + "$"));
 
                 if (proj.getBudget() != null) {
                     list.add(EBISystem.i18n("EBI_LANG_PROJECT_BUDGET") + ": "
-                            + (proj.getBudget() == Double.parseDouble(EBISystem.gui()
+                            + (proj.getBudget() == Double.parseDouble(EBISystem.builder()
                             .FormattedField("budgetText", "Project").getValue().toString())
                             ? proj.getBudget()
                             : proj.getBudget() + "$"));
@@ -587,9 +587,9 @@ public class ControlPlanning {
                                     .getIndexByTitle(EBISystem.i18n("EBI_LANG_C_TAB_PRODUCT")));
                 }
 
-                EBISystem.gui().textField("ProductNrTex", "Product").setText(proj.getProjectnr());
-                EBISystem.gui().textField("ProductNameText", "Product").setText(proj.getName());
-                EBISystem.gui().FormattedField("productGrossText", "Product")
+                EBISystem.builder().textField("ProductNrTex", "Product").setText(proj.getProjectnr());
+                EBISystem.builder().textField("ProductNameText", "Product").setText(proj.getName());
+                EBISystem.builder().FormattedField("productGrossText", "Product")
                         .setValue(proj.getActualcost());
 
             }

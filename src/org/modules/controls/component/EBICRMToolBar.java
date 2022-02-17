@@ -13,136 +13,136 @@ public class EBICRMToolBar extends EBICRMActionListener {
      */
     public void setCRMToolBar() {
 
-        if (EBISystem.gui().getToolBarButton("toolbarItemNew", "ebiToolBar") != null) {
-            EBISystem.gui().getToolBarButton("toolbarItemNew", "ebiToolBar").addActionListener(newListenerAction());
+        if (EBISystem.builder().getToolBarButton("toolbarItemNew", "ebiToolBar") != null) {
+            EBISystem.builder().getToolBarButton("toolbarItemNew", "ebiToolBar").addActionListener(newListenerAction());
         }
         
-        if (EBISystem.gui().getToolBarButton("toolbarItemSave", "ebiToolBar") != null) {
-            EBISystem.gui().getToolBarButton("toolbarItemSave", "ebiToolBar").addActionListener(saveListenerAction());
+        if (EBISystem.builder().getToolBarButton("toolbarItemSave", "ebiToolBar") != null) {
+            EBISystem.builder().getToolBarButton("toolbarItemSave", "ebiToolBar").addActionListener(saveListenerAction());
         }
         
-        if (EBISystem.gui().getToolBarButton("toolbarItemSearchCompany", "ebiToolBar") != null) {
-            EBISystem.gui().getToolBarButton("toolbarItemSearchCompany", "ebiToolBar").addActionListener(searchCompanyAction());
+        if (EBISystem.builder().getToolBarButton("toolbarItemSearchCompany", "ebiToolBar") != null) {
+            EBISystem.builder().getToolBarButton("toolbarItemSearchCompany", "ebiToolBar").addActionListener(searchCompanyAction());
         }
         
-        if (EBISystem.gui().getToolBarButton("toolbarItemHistory", "ebiToolBar") != null) {
-            EBISystem.gui().getToolBarButton("toolbarItemHistory", "ebiToolBar").setEnabled(false);
-            EBISystem.gui().getToolBarButton("toolbarItemHistory", "ebiToolBar").addActionListener(searchCompanyHistoryAction());
+        if (EBISystem.builder().getToolBarButton("toolbarItemHistory", "ebiToolBar") != null) {
+            EBISystem.builder().getToolBarButton("toolbarItemHistory", "ebiToolBar").setEnabled(false);
+            EBISystem.builder().getToolBarButton("toolbarItemHistory", "ebiToolBar").addActionListener(searchCompanyHistoryAction());
         }
         
-        if (EBISystem.gui().getToolBarButton("toolbarItemSearchContact", "ebiToolBar") != null) {
-            EBISystem.gui().getToolBarButton("toolbarItemSearchContact", "ebiToolBar").addActionListener(searchContactAction());
+        if (EBISystem.builder().getToolBarButton("toolbarItemSearchContact", "ebiToolBar") != null) {
+            EBISystem.builder().getToolBarButton("toolbarItemSearchContact", "ebiToolBar").addActionListener(searchContactAction());
         }
         
-        if (EBISystem.gui().getToolBarButton("toolbarItemCompanyReport", "ebiToolBar") != null) {
-            EBISystem.gui().getToolBarButton("toolbarItemCompanyReport", "ebiToolBar").addActionListener(printReportAction());
+        if (EBISystem.builder().getToolBarButton("toolbarItemCompanyReport", "ebiToolBar") != null) {
+            EBISystem.builder().getToolBarButton("toolbarItemCompanyReport", "ebiToolBar").addActionListener(printReportAction());
         }
         
-        if (EBISystem.gui().getToolBarButton("toolbarItemDelete", "ebiToolBar") != null) {
-            EBISystem.gui().getToolBarButton("toolbarItemDelete", "ebiToolBar").setEnabled(false);
-            EBISystem.gui().getToolBarButton("toolbarItemDelete", "ebiToolBar").addActionListener(deleteListenerAction());
+        if (EBISystem.builder().getToolBarButton("toolbarItemDelete", "ebiToolBar") != null) {
+            EBISystem.builder().getToolBarButton("toolbarItemDelete", "ebiToolBar").setEnabled(false);
+            EBISystem.builder().getToolBarButton("toolbarItemDelete", "ebiToolBar").addActionListener(deleteListenerAction());
         }
         
-        if (EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar") != null) {
+        if (EBISystem.builder().getToolBarComponent("toolbarItemProductModule", "ebiToolBar") != null) {
             if (EBISystem.registeredModule.contains("Product/productGUI.xml") || EBISystem.getInstance().getUserRight().isAdministrator()) {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).addActionListener(windowShowProductTab());
+                ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).addActionListener(windowShowProductTab());
             } else {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).setVisible(false);
+                ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).setVisible(false);
             }
         }
       
-        if (EBISystem.gui().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar") != null) {
+        if (EBISystem.builder().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar") != null) {
             if (EBISystem.registeredModule.contains("CRMProblemSolution/problemSolutionGUI.xml") || EBISystem.getUserRight().isAdministrator()) {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).addActionListener(windowShowProsolTab());
+                ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).addActionListener(windowShowProsolTab());
             } else {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).setVisible(false);
+                ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).setVisible(false);
             }
         }
         
-        if (EBISystem.gui().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar") != null) {
+        if (EBISystem.builder().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar") != null) {
             if (EBISystem.registeredModule.contains("Project/projectGUI.xml") || EBISystem.getUserRight().isAdministrator()) {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar")).addActionListener(windowShowProjectTab());
+                ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar")).addActionListener(windowShowProjectTab());
             } else {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar")).setVisible(false);
+                ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar")).setVisible(false);
             }
         }
         
-        if (EBISystem.gui().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar") != null) {
+        if (EBISystem.builder().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar") != null) {
             if (EBISystem.registeredModule.contains("Invoice/invoiceGUI.xml") || EBISystem.getUserRight().isAdministrator()) {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).addActionListener(windowShowInvoiceTab());
+                ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).addActionListener(windowShowInvoiceTab());
             } else {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).setVisible(false);
+                ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).setVisible(false);
             }
         }
-        if (EBISystem.gui().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar") != null) {
+        if (EBISystem.builder().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar") != null) {
             if (EBISystem.registeredModule.contains("AccountStack/accountGUI.xml") || EBISystem.getUserRight().isAdministrator()) {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).addActionListener(windowsShowAccountTab());
+                ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).addActionListener(windowsShowAccountTab());
             } else {
-                ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).setVisible(false);
+                ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).setVisible(false);
             }
         }
     }
 
     public void enableToolButtonProductModule() {
-        if (EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar") != null) {
-            ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).setSelected(true);
+        if (EBISystem.builder().getToolBarComponent("toolbarItemProductModule", "ebiToolBar") != null) {
+            ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).setSelected(true);
         }
     }
 
     public boolean isProductEnabled() {
-        return EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar") == null ? false : ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).isSelected();
+        return EBISystem.builder().getToolBarComponent("toolbarItemProductModule", "ebiToolBar") == null ? false : ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProductModule", "ebiToolBar")).isSelected();
     }
 
     public void enableToolButtonCampaignModule() {
-        if (EBISystem.gui().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar") != null) {
-            ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar")).setSelected(true);
+        if (EBISystem.builder().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar") != null) {
+            ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar")).setSelected(true);
         }
     }
 
     public boolean isCampaignSelected() {
-        return EBISystem.gui().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar") == null ? false : ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar")).isSelected();
+        return EBISystem.builder().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar") == null ? false : ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemCampaignModule", "ebiToolBar")).isSelected();
     }
 
     public void enableToolButtonProsol() {
-        if (EBISystem.gui().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar") != null) {
-            ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).setSelected(true);
+        if (EBISystem.builder().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar") != null) {
+            ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).setSelected(true);
         }
     }
 
     public void enableToolButtonCashRegister() {
-        if (EBISystem.gui().getToolBarComponent("toolbarItemCashRegisterModule", "ebiToolBar") != null) {
-            ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemCashRegisterModule", "ebiToolBar")).setSelected(true);
+        if (EBISystem.builder().getToolBarComponent("toolbarItemCashRegisterModule", "ebiToolBar") != null) {
+            ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemCashRegisterModule", "ebiToolBar")).setSelected(true);
         }
     }
 
     public void enableToolButtonProject() {
-        if (EBISystem.gui().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar") != null) {
-            ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar")).setSelected(true);
+        if (EBISystem.builder().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar") != null) {
+            ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProjectModule", "ebiToolBar")).setSelected(true);
         }
     }
 
     public void enableToolButtonInvoice() {
-        if (EBISystem.gui().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar") != null) {
-            ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).setSelected(true);
+        if (EBISystem.builder().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar") != null) {
+            ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).setSelected(true);
         }
     }
 
     public void enableToolButtonAccount() {
-        if (EBISystem.gui().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar") != null) {
-            ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).setSelected(true);
+        if (EBISystem.builder().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar") != null) {
+            ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).setSelected(true);
         }
     }
 
     public boolean isInvoiceSelected() {
-        return EBISystem.gui().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar") == null ? false : ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).isSelected();
+        return EBISystem.builder().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar") == null ? false : ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemInvoiceModule", "ebiToolBar")).isSelected();
     }
 
     public boolean isAccountSelected() {
-        return EBISystem.gui().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar") == null ? false : ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).isSelected();
+        return EBISystem.builder().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar") == null ? false : ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemAccountModule", "ebiToolBar")).isSelected();
     }
 
     public boolean isProsolSelected() {
-        return EBISystem.gui().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar") == null ? false : ((JToggleButton) EBISystem.gui().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).isSelected();
+        return EBISystem.builder().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar") == null ? false : ((JToggleButton) EBISystem.builder().getToolBarComponent("toolbarItemProSolModule", "ebiToolBar")).isSelected();
     }
 
     /**
@@ -151,11 +151,11 @@ public class EBICRMToolBar extends EBICRMActionListener {
      * @param enabled
      */
     public void enableToolbarButton(final boolean enabled) {
-        if (EBISystem.gui().getToolBarButton("toolbarItemDelete", "ebiToolBar") != null) {
-            EBISystem.gui().getToolBarButton("toolbarItemDelete", "ebiToolBar").setEnabled(enabled);
+        if (EBISystem.builder().getToolBarButton("toolbarItemDelete", "ebiToolBar") != null) {
+            EBISystem.builder().getToolBarButton("toolbarItemDelete", "ebiToolBar").setEnabled(enabled);
         }
-        if (EBISystem.gui().getToolBarButton("toolbarItemHistory", "ebiToolBar") != null) {
-            EBISystem.gui().getToolBarButton("toolbarItemHistory", "ebiToolBar").setEnabled(enabled);
+        if (EBISystem.builder().getToolBarButton("toolbarItemHistory", "ebiToolBar") != null) {
+            EBISystem.builder().getToolBarButton("toolbarItemHistory", "ebiToolBar").setEnabled(enabled);
         }
     }
 }

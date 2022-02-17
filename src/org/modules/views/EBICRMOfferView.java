@@ -57,19 +57,19 @@ public class EBICRMOfferView {
     private int selectedOfferRow = -1;
 
     public void initializeAction() {
-        EBISystem.gui().textField("filterTableText", "Offer").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("filterTableText", "Offer").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                EBISystem.gui().table("companyOfferTable", "Offer").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Offer").getText()));
+                EBISystem.builder().table("companyOfferTable", "Offer").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Offer").getText()));
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                EBISystem.gui().table("companyOfferTable", "Offer").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.gui().textField("filterTableText", "Offer").getText()));
+                EBISystem.builder().table("companyOfferTable", "Offer").setRowFilter(RowFilters.regexFilter("(?i)" + EBISystem.builder().textField("filterTableText", "Offer").getText()));
             }
         });
 
@@ -80,21 +80,21 @@ public class EBICRMOfferView {
         /**
          * **********************************************************************************
          */
-        EBISystem.gui().table("tableOfferDocument", "Offer").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("tableOfferDocument", "Offer").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("tableOfferDocument", "Offer").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("tableOfferDocument", "Offer").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.gui().table("tableOfferDocument", "Offer").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedDocRow = EBISystem.builder().table("tableOfferDocument", "Offer").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("showOfferDoc", "Offer").setEnabled(false);
-                    EBISystem.gui().button("deleteOfferDOc", "Offer").setEnabled(false);
+                    EBISystem.builder().button("showOfferDoc", "Offer").setEnabled(false);
+                    EBISystem.builder().button("deleteOfferDOc", "Offer").setEnabled(false);
                 } else if (!tabModDoc.data[selectedDocRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("showOfferDoc", "Offer").setEnabled(true);
-                    EBISystem.gui().button("deleteOfferDOc", "Offer").setEnabled(true);
+                    EBISystem.builder().button("showOfferDoc", "Offer").setEnabled(true);
+                    EBISystem.builder().button("deleteOfferDOc", "Offer").setEnabled(true);
                 }
             }
         });
@@ -106,21 +106,21 @@ public class EBICRMOfferView {
         /**
          * **********************************************************************************
          */
-        EBISystem.gui().table("tableOfferProduct", "Offer").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("tableOfferProduct", "Offer").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("tableOfferProduct", "Offer").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("tableOfferProduct", "Offer").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedProductRow = EBISystem.gui().table("tableOfferProduct", "Offer").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedProductRow = EBISystem.builder().table("tableOfferProduct", "Offer").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("deleteOfferProduct", "Offer").setEnabled(false);
+                    EBISystem.builder().button("deleteOfferProduct", "Offer").setEnabled(false);
                 } else if (!tabModProduct.data[selectedProductRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("deleteOfferProduct", "Offer").setEnabled(true);
+                    EBISystem.builder().button("deleteOfferProduct", "Offer").setEnabled(true);
                 }
             }
         });
@@ -132,23 +132,23 @@ public class EBICRMOfferView {
         /**
          * **********************************************************************************
          */
-        EBISystem.gui().table("tableOfferReceiver", "Offer").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        EBISystem.gui().table("tableOfferReceiver", "Offer").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("tableOfferReceiver", "Offer").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("tableOfferReceiver", "Offer").addSelectionListener(new EBIUICallback() {
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedReceiverRow = EBISystem.gui().table("tableOfferReceiver", "Offer").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedReceiverRow = EBISystem.builder().table("tableOfferReceiver", "Offer").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("deleteOfferReceiver", "Offer").setEnabled(false);
-                    EBISystem.gui().button("editOfferReceiver", "Offer").setEnabled(false);
+                    EBISystem.builder().button("deleteOfferReceiver", "Offer").setEnabled(false);
+                    EBISystem.builder().button("editOfferReceiver", "Offer").setEnabled(false);
                 } else if (!tabModReceiver.data[selectedReceiverRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("deleteOfferReceiver", "Offer").setEnabled(true);
-                    EBISystem.gui().button("editOfferReceiver", "Offer").setEnabled(true);
+                    EBISystem.builder().button("deleteOfferReceiver", "Offer").setEnabled(true);
+                    EBISystem.builder().button("editOfferReceiver", "Offer").setEnabled(true);
                 }
             }
         });
@@ -160,9 +160,9 @@ public class EBICRMOfferView {
         /**
          * **********************************************************************************
          */
-        EBISystem.gui().table("companyOfferTable", "Offer").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        EBISystem.builder().table("companyOfferTable", "Offer").setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         //jTableAvalOffer.setDefaultRenderer(Object.class, new MyOwnCellRederer(true));
-        EBISystem.gui().table("companyOfferTable", "Offer").addSelectionListener(new EBIUICallback() {
+        EBISystem.builder().table("companyOfferTable", "Offer").addSelectionListener(new EBIUICallback() {
 
             @Override
             public void selectionListenerEvent(ListSelectionEvent e) {
@@ -170,30 +170,30 @@ public class EBICRMOfferView {
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                 if (lsm.getMinSelectionIndex() != -1) {
-                    selectedOfferRow = EBISystem.gui().table("companyOfferTable", "Offer").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    selectedOfferRow = EBISystem.builder().table("companyOfferTable", "Offer").convertRowIndexToModel(lsm.getMinSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
-                    EBISystem.gui().button("editOffer", "Offer").setEnabled(false);
-                    EBISystem.gui().button("reportOffer", "Offer").setEnabled(false);
-                    EBISystem.gui().button("deleteOffer", "Offer").setEnabled(false);
-                    EBISystem.gui().button("historyOffer", "Offer").setEnabled(false);
-                    EBISystem.gui().button("mailOffer", "Offer").setEnabled(false);
-                    EBISystem.gui().button("createOrder", "Offer").setEnabled(false);
-                    EBISystem.gui().button("copyOffer", "Offer").setEnabled(false);
+                    EBISystem.builder().button("editOffer", "Offer").setEnabled(false);
+                    EBISystem.builder().button("reportOffer", "Offer").setEnabled(false);
+                    EBISystem.builder().button("deleteOffer", "Offer").setEnabled(false);
+                    EBISystem.builder().button("historyOffer", "Offer").setEnabled(false);
+                    EBISystem.builder().button("mailOffer", "Offer").setEnabled(false);
+                    EBISystem.builder().button("createOrder", "Offer").setEnabled(false);
+                    EBISystem.builder().button("copyOffer", "Offer").setEnabled(false);
                 } else if (!tabModoffer.data[selectedOfferRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    EBISystem.gui().button("editOffer", "Offer").setEnabled(true);
-                    EBISystem.gui().button("reportOffer", "Offer").setEnabled(true);
-                    EBISystem.gui().button("deleteOffer", "Offer").setEnabled(true);
-                    EBISystem.gui().button("historyOffer", "Offer").setEnabled(true);
-                    EBISystem.gui().button("mailOffer", "Offer").setEnabled(true);
-                    EBISystem.gui().button("createOrder", "Offer").setEnabled(true);
-                    EBISystem.gui().button("copyOffer", "Offer").setEnabled(true);
+                    EBISystem.builder().button("editOffer", "Offer").setEnabled(true);
+                    EBISystem.builder().button("reportOffer", "Offer").setEnabled(true);
+                    EBISystem.builder().button("deleteOffer", "Offer").setEnabled(true);
+                    EBISystem.builder().button("historyOffer", "Offer").setEnabled(true);
+                    EBISystem.builder().button("mailOffer", "Offer").setEnabled(true);
+                    EBISystem.builder().button("createOrder", "Offer").setEnabled(true);
+                    EBISystem.builder().button("copyOffer", "Offer").setEnabled(true);
                 }
             }
         });
 
-        EBISystem.gui().table("companyOfferTable", "Offer").addKeyAction(new EBIUICallback() {
+        EBISystem.builder().table("companyOfferTable", "Offer").addKeyAction(new EBIUICallback() {
             @Override
             public void tableKeyUp(int selRow) {
                 super.tableKeyUp(selRow);
@@ -220,11 +220,11 @@ public class EBICRMOfferView {
             }
         });
 
-        EBISystem.gui().table("companyOfferTable", "Offer").setMouseCallback(new MouseAdapter() {
+        EBISystem.builder().table("companyOfferTable", "Offer").setMouseCallback(new MouseAdapter() {
             @Override
             public void mouseReleased(final java.awt.event.MouseEvent e) {
-                if (EBISystem.gui().table("companyOfferTable", "Offer").rowAtPoint(e.getPoint()) != -1) {
-                    selectedOfferRow = EBISystem.gui().table("companyOfferTable", "Offer").convertRowIndexToModel(EBISystem.gui().table("companyOfferTable", "Offer").rowAtPoint(e.getPoint()));
+                if (EBISystem.builder().table("companyOfferTable", "Offer").rowAtPoint(e.getPoint()) != -1) {
+                    selectedOfferRow = EBISystem.builder().table("companyOfferTable", "Offer").convertRowIndexToModel(EBISystem.builder().table("companyOfferTable", "Offer").rowAtPoint(e.getPoint()));
                 }
                 if (selectedOfferRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
                         equals(tabModoffer.data[selectedOfferRow][0].toString())) {
@@ -242,23 +242,23 @@ public class EBICRMOfferView {
             tabModReceiver = new ModelReceiver();
             tabModProduct = new ModelCRMProduct();
             tabModoffer = new ModelOffer();
-            EBISystem.gui().table("tableOfferDocument", "Offer").setModel(tabModDoc);
-            EBISystem.gui().table("tableOfferProduct", "Offer").setModel(tabModProduct);
-            EBISystem.gui().table("tableOfferReceiver", "Offer").setModel(tabModReceiver);
-            EBISystem.gui().table("companyOfferTable", "Offer").setModel(tabModoffer);
+            EBISystem.builder().table("tableOfferDocument", "Offer").setModel(tabModDoc);
+            EBISystem.builder().table("tableOfferProduct", "Offer").setModel(tabModProduct);
+            EBISystem.builder().table("tableOfferReceiver", "Offer").setModel(tabModReceiver);
+            EBISystem.builder().table("companyOfferTable", "Offer").setModel(tabModoffer);
         }
 
-        EBISystem.gui().combo("offerStatusText", "Offer").setModel(new javax.swing.DefaultComboBoxModel(offerStatus));
+        EBISystem.builder().combo("offerStatusText", "Offer").setModel(new javax.swing.DefaultComboBoxModel(offerStatus));
 
-        EBISystem.gui().vpanel("Offer").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
-        EBISystem.gui().vpanel("Offer").setCreatedFrom(EBISystem.ebiUser);
-        EBISystem.gui().vpanel("Offer").setChangedDate("");
-        EBISystem.gui().vpanel("Offer").setChangedFrom("");
+        EBISystem.builder().vpanel("Offer").setCreatedDate(EBISystem.getInstance().getDateToString(new Date()));
+        EBISystem.builder().vpanel("Offer").setCreatedFrom(EBISystem.ebiUser);
+        EBISystem.builder().vpanel("Offer").setChangedDate("");
+        EBISystem.builder().vpanel("Offer").setChangedFrom("");
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                final TableColumn col7 = EBISystem.gui().table("tableOfferProduct", "Offer").getColumnModel().getColumn(5);
+                final TableColumn col7 = EBISystem.builder().table("tableOfferProduct", "Offer").getColumnModel().getColumn(5);
                 col7.setCellRenderer(new DefaultTableCellRenderer() {
                     @Override
                     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
@@ -271,17 +271,17 @@ public class EBICRMOfferView {
             }
         });
 
-        EBISystem.gui().combo("offerStatusText", "Offer").setSelectedIndex(0);
+        EBISystem.builder().combo("offerStatusText", "Offer").setSelectedIndex(0);
 
-        EBISystem.gui().textField("offerNrText", "Offer").setText("");
-        EBISystem.gui().textField("offerNameText", "Offer").setText("");
-        EBISystem.gui().textField("offerOpportunityText", "Offer").setText("");
-        EBISystem.gui().textArea("offerDescriptionText", "Offer").setText("");
+        EBISystem.builder().textField("offerNrText", "Offer").setText("");
+        EBISystem.builder().textField("offerNameText", "Offer").setText("");
+        EBISystem.builder().textField("offerOpportunityText", "Offer").setText("");
+        EBISystem.builder().textArea("offerDescriptionText", "Offer").setText("");
 
-        EBISystem.gui().timePicker("offerReceiverText", "Offer").setDate(null);
-        EBISystem.gui().timePicker("validToText", "Offer").setDate(null);
-        EBISystem.gui().timePicker("offerReceiverText", "Offer").setFormats(EBISystem.DateFormat);
-        EBISystem.gui().timePicker("validToText", "Offer").setFormats(EBISystem.DateFormat);
+        EBISystem.builder().timePicker("offerReceiverText", "Offer").setDate(null);
+        EBISystem.builder().timePicker("validToText", "Offer").setDate(null);
+        EBISystem.builder().timePicker("offerReceiverText", "Offer").setFormats(EBISystem.DateFormat);
+        EBISystem.builder().timePicker("validToText", "Offer").setFormats(EBISystem.DateFormat);
     }
 
     public void newDocs() {
@@ -330,13 +330,13 @@ public class EBICRMOfferView {
             return false;
         }
         EBISystem.showInActionStatus("Offer");
-        int row = EBISystem.gui().table("companyOfferTable", "Offer").getSelectedRow();
+        int row = EBISystem.builder().table("companyOfferTable", "Offer").getSelectedRow();
         Integer id = dataControlOffer.dataStore();
         dataControlOffer.dataShow(id);
         dataControlOffer.dataShowProduct();
         dataControlOffer.dataShowDoc();
         dataControlOffer.dataShowReceiver();
-        EBISystem.gui().table("companyOfferTable", "Offer").changeSelection(row, 0, false, false);
+        EBISystem.builder().table("companyOfferTable", "Offer").changeSelection(row, 0, false, false);
         return true;
     }
 
@@ -380,15 +380,15 @@ public class EBICRMOfferView {
 
     private boolean validateInput() {
         boolean ret = true;
-        if ("".equals(EBISystem.gui().textField("offerNameText", "Offer").getText())) {
+        if ("".equals(EBISystem.builder().textField("offerNameText", "Offer").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_INSERT_NAME")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
-        } else if (EBISystem.gui().combo("offerStatusText", "Offer").getSelectedIndex() == 0) {
+        } else if (EBISystem.builder().combo("offerStatusText", "Offer").getSelectedIndex() == 0) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_SELECT_STATUS")).Show(EBIMessage.ERROR_MESSAGE);
             ret = false;
         } else if (dataControlOffer.isEdit == false) {
             for (int i = 0; i < this.tabModoffer.data.length; i++) {
-                if (this.tabModoffer.data[i][0].equals(EBISystem.gui().textField("offerNameText", "Offer").getText())) {
+                if (this.tabModoffer.data[i][0].equals(EBISystem.builder().textField("offerNameText", "Offer").getText())) {
                     EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_C_ERROR_OFFER_EXIST_WITH_SAME_NAME")).Show(EBIMessage.ERROR_MESSAGE);
                     ret = false;
                 }
@@ -501,31 +501,31 @@ public class EBICRMOfferView {
             return;
         }
 
-        EBISystem.gui().loadGUI("CRMDialog/sendMailDialogGUI.xml");
-        EBISystem.gui().dialog("sendEMailMessage").setTitle(EBISystem.i18n("EBI_LANG_DIALOG_SEND_EMAIL_MESSAGE"));
-        EBISystem.gui().getCheckBox("ShowReportBS", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SHOW_REPORT_BEFORE_SEND"));
-        EBISystem.gui().label("SubjectEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SUBJECT"));
-        EBISystem.gui().label("template", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_TEMPLATE"));
-        EBISystem.gui().combo("templateText", "sendEMailMessage").setModel(new DefaultComboBoxModel(EBISystem.getModule().dynMethod.getEMailTemplateNames()));
+        EBISystem.builder().loadGUI("CRMDialog/sendMailDialogGUI.xml");
+        EBISystem.builder().dialog("sendEMailMessage").setTitle(EBISystem.i18n("EBI_LANG_DIALOG_SEND_EMAIL_MESSAGE"));
+        EBISystem.builder().getCheckBox("ShowReportBS", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SHOW_REPORT_BEFORE_SEND"));
+        EBISystem.builder().label("SubjectEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SUBJECT"));
+        EBISystem.builder().label("template", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_TEMPLATE"));
+        EBISystem.builder().combo("templateText", "sendEMailMessage").setModel(new DefaultComboBoxModel(EBISystem.getModule().dynMethod.getEMailTemplateNames()));
 
-        EBISystem.gui().combo("templateText", "sendEMailMessage").addActionListener(new ActionListener() {
+        EBISystem.builder().combo("templateText", "sendEMailMessage").addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(
-                        EBISystem.gui().combo("templateText", "sendEMailMessage").getSelectedItem().toString())) {
+                        EBISystem.builder().combo("templateText", "sendEMailMessage").getSelectedItem().toString())) {
 
-                    EBISystem.gui().getEditor("MessageAreaText", "sendEMailMessage").setText(
+                    EBISystem.builder().getEditor("MessageAreaText", "sendEMailMessage").setText(
                             EBISystem.getModule().dynMethod.getEMailTemplate(
-                                    EBISystem.gui().combo("templateText", "sendEMailMessage")
+                                    EBISystem.builder().combo("templateText", "sendEMailMessage")
                                             .getSelectedItem().toString()));
                 }
             }
         });
 
-        EBISystem.gui().button("sendEmail", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SEND"));
-        EBISystem.gui().button("closeEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_CLOSE"));
+        EBISystem.builder().button("sendEmail", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_SEND"));
+        EBISystem.builder().button("closeEMailDialog", "sendEMailMessage").setText(EBISystem.i18n("EBI_LANG_CLOSE"));
 
-        EBISystem.gui().button("sendEmail", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("sendEmail", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
 
@@ -546,20 +546,20 @@ public class EBICRMOfferView {
                     EBISystem.showInActionStatus("Offer");
                     dataControlOffer.dataShowAndMailReport(
                             Integer.parseInt(tabModoffer.data[selectedOfferRow][tabModoffer.columnNames.length].toString()),
-                            EBISystem.gui().getCheckBox("ShowReportBS", "sendEMailMessage").isSelected());
+                            EBISystem.builder().getCheckBox("ShowReportBS", "sendEMailMessage").isSelected());
                     
-                    EBISystem.gui().dialog("sendEMailMessage").setVisible(false);
+                    EBISystem.builder().dialog("sendEMailMessage").setVisible(false);
                 }
             }
         });
-        EBISystem.gui().button("closeEMailDialog", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("closeEMailDialog", "sendEMailMessage").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                EBISystem.gui().dialog("sendEMailMessage").setVisible(false);
+                EBISystem.builder().dialog("sendEMailMessage").setVisible(false);
             }
         });
         
-        EBISystem.gui().showGUI();
+        EBISystem.builder().showGUI();
     }
 
     public void historySearch() {
@@ -574,13 +574,13 @@ public class EBICRMOfferView {
         dialog.setVisible();
         if (dialog.shouldSave) {
 
-            EBISystem.gui().textField("offerOpportunityText", "Offer").setText(dialog.name);
+            EBISystem.builder().textField("offerOpportunityText", "Offer").setText(dialog.name);
             dataControlOffer.opportunityID = dialog.id;
         }
     }
 
     public void showOpportunity() {
-        if (!"".equals(EBISystem.gui().textField("offerOpportunityText", "Offer").getText())) {
+        if (!"".equals(EBISystem.builder().textField("offerOpportunityText", "Offer").getText())) {
             EBISystem.getModule().ebiContainer.setSelectedTab(EBISystem.getInstance()
                     .getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_OPPORTUNITY")));
             EBISystem.getModule().getOpportunityPane().editOpportunity();
@@ -591,10 +591,10 @@ public class EBICRMOfferView {
     }
 
     private boolean validateEMailInput() {
-        if ("".equals(EBISystem.gui().textField("SubjectText", "sendEMailMessage").getText())) {
+        if ("".equals(EBISystem.builder().textField("SubjectText", "sendEMailMessage").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_INSERT_SUBJECT")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
-        } else if ("".equals(EBISystem.gui().getEditor("MessageAreaText", "sendEMailMessage").getText())) {
+        } else if ("".equals(EBISystem.builder().getEditor("MessageAreaText", "sendEMailMessage").getText())) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_INSERT_BODY_TEXT")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
         }

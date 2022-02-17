@@ -49,35 +49,35 @@ public class EBICRMDialogAddProduct {
 
     public EBICRMDialogAddProduct(final Companyoffer offer) {
         offerPosition = new Companyofferpositions();
-        EBISystem.gui().loadGUI("CRMDialog/productInsertDialog.xml");
+        EBISystem.builder().loadGUI("CRMDialog/productInsertDialog.xml");
         this.offer = offer;
         isOffer = true;
     }
 
     public EBICRMDialogAddProduct(final Companyorder order) {
         orderPosition = new Companyorderpositions();
-        EBISystem.gui().loadGUI("CRMDialog/productInsertDialog.xml");
+        EBISystem.builder().loadGUI("CRMDialog/productInsertDialog.xml");
         this.order = order;
         isOrder = true;
     } 
 
     public EBICRMDialogAddProduct(final Crminvoice invoice) {
         invoicePosition = new Crminvoiceposition();
-        EBISystem.gui().loadGUI("CRMDialog/productInsertDialog.xml");
+        EBISystem.builder().loadGUI("CRMDialog/productInsertDialog.xml");
         this.invoice = invoice;
         isInvoice = true;
     }
 
     public EBICRMDialogAddProduct(final Companyservice service) {
         servicePosition = new Companyservicepositions();
-        EBISystem.gui().loadGUI("CRMDialog/productInsertDialog.xml");
+        EBISystem.builder().loadGUI("CRMDialog/productInsertDialog.xml");
         this.service = service;
         isService = true;
     }
 
     public EBICRMDialogAddProduct(final Crmproblemsolutions prosol) {
         prosolPosition = new Crmproblemsolposition();
-        EBISystem.gui().loadGUI("CRMDialog/productInsertDialog.xml");
+        EBISystem.builder().loadGUI("CRMDialog/productInsertDialog.xml");
         this.prosol = prosol;
         isProsol = true;
     }
@@ -85,32 +85,32 @@ public class EBICRMDialogAddProduct {
     public void setVisible() {
 
         currency = NumberFormat.getCurrencyInstance();
-        EBISystem.gui().dialog("productInsertDialog").setTitle(EBISystem.i18n("EBI_LANG_C_INSERT_PRODUCT"));
-        EBISystem.gui().vpanel("productInsertDialog").setModuleTitle(EBISystem.i18n("EBI_LANG_C_INSERT_PRODUCT"));
+        EBISystem.builder().dialog("productInsertDialog").setTitle(EBISystem.i18n("EBI_LANG_C_INSERT_PRODUCT"));
+        EBISystem.builder().vpanel("productInsertDialog").setModuleTitle(EBISystem.i18n("EBI_LANG_C_INSERT_PRODUCT"));
 
-        EBISystem.gui().label("deduction", "productInsertDialog").setText(EBISystem.i18n("EBI_LANG_DEDUCTION"));
-        EBISystem.gui().label("quantity", "productInsertDialog").setText(EBISystem.i18n("EBI_LANG_QUANTITY"));
+        EBISystem.builder().label("deduction", "productInsertDialog").setText(EBISystem.i18n("EBI_LANG_DEDUCTION"));
+        EBISystem.builder().label("quantity", "productInsertDialog").setText(EBISystem.i18n("EBI_LANG_QUANTITY"));
 
         if (isProsol) {
-            EBISystem.gui().label("deduction", "productInsertDialog").setVisible(false);
-            EBISystem.gui().label("quantity", "productInsertDialog").setVisible(false);
-            EBISystem.gui().textField("quantityText", "productInsertDialog").setVisible(false);
-            EBISystem.gui().textField("deductionText", "productInsertDialog").setVisible(false);
-            EBISystem.gui().label("%", "productInsertDialog").setVisible(false);
+            EBISystem.builder().label("deduction", "productInsertDialog").setVisible(false);
+            EBISystem.builder().label("quantity", "productInsertDialog").setVisible(false);
+            EBISystem.builder().textField("quantityText", "productInsertDialog").setVisible(false);
+            EBISystem.builder().textField("deductionText", "productInsertDialog").setVisible(false);
+            EBISystem.builder().label("%", "productInsertDialog").setVisible(false);
         }
 
-        EBISystem.gui().button("closeButton", "productInsertDialog").setText(EBISystem.i18n("EBI_LANG_CLOSE"));
-        EBISystem.gui().button("closeButton", "productInsertDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("closeButton", "productInsertDialog").setText(EBISystem.i18n("EBI_LANG_CLOSE"));
+        EBISystem.builder().button("closeButton", "productInsertDialog").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
-                EBISystem.gui().dialog("productInsertDialog").setVisible(false);
+                EBISystem.builder().dialog("productInsertDialog").setVisible(false);
             }
         });
         
-        EBISystem.gui().button("applyButton", "productInsertDialog").setEnabled(false);
-        EBISystem.gui().button("applyButton", "productInsertDialog").setText(EBISystem.i18n("EBI_LANG_SAVE"));
-        EBISystem.gui().button("applyButton", "productInsertDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("applyButton", "productInsertDialog").setEnabled(false);
+        EBISystem.builder().button("applyButton", "productInsertDialog").setText(EBISystem.i18n("EBI_LANG_SAVE"));
+        EBISystem.builder().button("applyButton", "productInsertDialog").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
@@ -118,8 +118,8 @@ public class EBICRMDialogAddProduct {
             }
         });
 
-        EBISystem.gui().button("searchProduct", "productInsertDialog").setIcon(EBISystem.getInstance().getIconResource("find.png"));
-        EBISystem.gui().button("searchProduct", "productInsertDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("searchProduct", "productInsertDialog").setIcon(EBISystem.getInstance().getIconResource("find.png"));
+        EBISystem.builder().button("searchProduct", "productInsertDialog").addActionListener(new java.awt.event.ActionListener() {
 
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
@@ -145,41 +145,41 @@ public class EBICRMDialogAddProduct {
 
                 if (prod != null) {
                     //macos hack
-                    EBISystem.gui().dialog("productInsertDialog").setVisible(false);
+                    EBISystem.builder().dialog("productInsertDialog").setVisible(false);
                     prod.setVisible();
-                    EBISystem.gui().dialog("productInsertDialog").setVisible(true);
+                    EBISystem.builder().dialog("productInsertDialog").setVisible(true);
                 }
-                EBISystem.gui().textField("quantityText", "productInsertDialog").requestFocus();
+                EBISystem.builder().textField("quantityText", "productInsertDialog").requestFocus();
                 
             }
         });
 
-        EBISystem.gui().textField("quantityText", "productInsertDialog").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.NUMERIC_MINUS));
-        EBISystem.gui().textField("quantityText", "productInsertDialog").requestFocus();
-        EBISystem.gui().textField("quantityText", "productInsertDialog").registerKeyboardAction(new ActionListener() {
+        EBISystem.builder().textField("quantityText", "productInsertDialog").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.NUMERIC_MINUS));
+        EBISystem.builder().textField("quantityText", "productInsertDialog").requestFocus();
+        EBISystem.builder().textField("quantityText", "productInsertDialog").registerKeyboardAction(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent ev) {
                 savePosistion();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_FOCUSED);
 
-        EBISystem.gui().textField("deductionText", "productInsertDialog").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.NUMERIC));
-        EBISystem.gui().textField("deductionText", "productInsertDialog").registerKeyboardAction(new ActionListener() {
+        EBISystem.builder().textField("deductionText", "productInsertDialog").setDocument(new EBIJTextFieldNumeric(EBIJTextFieldNumeric.NUMERIC));
+        EBISystem.builder().textField("deductionText", "productInsertDialog").registerKeyboardAction(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent ev) {
                 savePosistion();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_FOCUSED);
 
-        EBISystem.gui().button("newProduct", "productInsertDialog").setIcon(EBISystem.getInstance().getIconResource("new.png"));
-        EBISystem.gui().button("newProduct", "productInsertDialog").addActionListener(new java.awt.event.ActionListener() {
+        EBISystem.builder().button("newProduct", "productInsertDialog").setIcon(EBISystem.getInstance().getIconResource("new.png"));
+        EBISystem.builder().button("newProduct", "productInsertDialog").addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
                 resetFields();
             }
         });
 
-        EBISystem.gui().textField("deductionText", "productInsertDialog").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("deductionText", "productInsertDialog").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
@@ -196,7 +196,7 @@ public class EBICRMDialogAddProduct {
 
         });
 
-        EBISystem.gui().textField("quantityText", "productInsertDialog").addKeyListener(new KeyListener() {
+        EBISystem.builder().textField("quantityText", "productInsertDialog").addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
             }
@@ -219,8 +219,8 @@ public class EBICRMDialogAddProduct {
         buffer.append("<body bgcolor=#dddddd>");
         buffer.append("<table border=0 width=100%><tr><td bgcolor=#CCCCCC colspan=2><b>" + EBISystem.i18n("EBI_LANG_PRODUCT") + "</b></td></tr>");
         buffer.append("</table></body>");
-        EBISystem.gui().getEditor("productText", "productInsertDialog").setText(buffer.toString());
-        EBISystem.gui().showGUI();
+        EBISystem.builder().getEditor("productText", "productInsertDialog").setText(buffer.toString());
+        EBISystem.builder().showGUI();
     }
 
     /**
@@ -257,8 +257,8 @@ public class EBICRMDialogAddProduct {
         }
         offerPosition.setCompanyoffer(offer);
         offerPosition.setPositionid((offer.getCompanyofferpositionses().size() + 1) * -1);
-        offerPosition.setQuantity(BigInteger.valueOf(Long.parseLong(EBISystem.gui().textField("quantityText", "productInsertDialog").getText())));
-        offerPosition.setDeduction(EBISystem.gui().textField("deductionText", "productInsertDialog").getText());
+        offerPosition.setQuantity(BigInteger.valueOf(Long.parseLong(EBISystem.builder().textField("quantityText", "productInsertDialog").getText())));
+        offerPosition.setDeduction(EBISystem.builder().textField("deductionText", "productInsertDialog").getText());
         offerPosition.setNetamount(offerPosition.getNetamount());
         offer.getCompanyofferpositionses().add(offerPosition);
         EBISystem.getModule().getOfferPane().showProduct();
@@ -271,8 +271,8 @@ public class EBICRMDialogAddProduct {
         }
         invoicePosition.setCrminvoice(this.invoice);
         invoicePosition.setPositionid((invoice.getCrminvoicepositions().size() + 1) * -1);
-        invoicePosition.setQuantity(BigInteger.valueOf(Long.parseLong(EBISystem.gui().textField("quantityText", "productInsertDialog").getText())));
-        invoicePosition.setDeduction(EBISystem.gui().textField("deductionText", "productInsertDialog").getText());
+        invoicePosition.setQuantity(BigInteger.valueOf(Long.parseLong(EBISystem.builder().textField("quantityText", "productInsertDialog").getText())));
+        invoicePosition.setDeduction(EBISystem.builder().textField("deductionText", "productInsertDialog").getText());
         invoicePosition.setNetamount(invoicePosition.getNetamount());
         invoice.getCrminvoicepositions().add(invoicePosition);
         EBISystem.getModule().getInvoicePane().dataShowProduct();
@@ -285,8 +285,8 @@ public class EBICRMDialogAddProduct {
         }
         servicePosition.setCompanyservice(this.service);
         servicePosition.setPositionid((service.getCompanyservicepositionses().size() + 1) * -1);
-        servicePosition.setQuantity(BigInteger.valueOf(Long.parseLong(EBISystem.gui().textField("quantityText", "productInsertDialog").getText())));
-        servicePosition.setDeduction(EBISystem.gui().textField("deductionText", "productInsertDialog").getText());
+        servicePosition.setQuantity(BigInteger.valueOf(Long.parseLong(EBISystem.builder().textField("quantityText", "productInsertDialog").getText())));
+        servicePosition.setDeduction(EBISystem.builder().textField("deductionText", "productInsertDialog").getText());
         servicePosition.setNetamount(servicePosition.getNetamount());
         service.getCompanyservicepositionses().add(servicePosition);
         EBISystem.getModule().getServicePane().showProduct();
@@ -308,8 +308,8 @@ public class EBICRMDialogAddProduct {
         }
         orderPosition.setCompanyorder(order);
         orderPosition.setPositionid((order.getCompanyorderpositionses().size() + 1) * -1);
-        orderPosition.setQuantity(BigInteger.valueOf(Long.parseLong(EBISystem.gui().textField("quantityText", "productInsertDialog").getText())));
-        orderPosition.setDeduction(EBISystem.gui().textField("deductionText", "productInsertDialog").getText());
+        orderPosition.setQuantity(BigInteger.valueOf(Long.parseLong(EBISystem.builder().textField("quantityText", "productInsertDialog").getText())));
+        orderPosition.setDeduction(EBISystem.builder().textField("deductionText", "productInsertDialog").getText());
         orderPosition.setNetamount(orderPosition.getNetamount());
         order.getCompanyorderpositionses().add(orderPosition);
         EBISystem.getModule().getOrderPane().showProduct();
@@ -318,7 +318,7 @@ public class EBICRMDialogAddProduct {
 
     private boolean validateInput() {
         try {
-            Integer.parseInt(EBISystem.gui().textField("quantityText", "productInsertDialog").getText().replace(',', '.'));
+            Integer.parseInt(EBISystem.builder().textField("quantityText", "productInsertDialog").getText().replace(',', '.'));
         } catch (final NumberFormatException ex) {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_ERROR_INSERT_VALID_NUMBER")+" : "+EBISystem.i18n("EBI_LANG_QUANTITY")).Show(EBIMessage.ERROR_MESSAGE);
             return false;
@@ -327,8 +327,8 @@ public class EBICRMDialogAddProduct {
     }
 
     private void resetFields() {
-        EBISystem.gui().textField("quantityText", "productInsertDialog").setText("");
-        EBISystem.gui().textField("deductionText", "productInsertDialog").setText("");
+        EBISystem.builder().textField("quantityText", "productInsertDialog").setText("");
+        EBISystem.builder().textField("deductionText", "productInsertDialog").setText("");
 
         if (!isOrder) {
             offerPosition = new Companyofferpositions();
@@ -354,8 +354,8 @@ public class EBICRMDialogAddProduct {
         buffer.append("<body>");
         buffer.append("<table style=\"font-family: Verdana, serif;color:#000;font-size: 10px; border: solid 1px #a0f0ff;\" border=0 width=100%><tr><td bgcolor=#CCCCCC colspan=2><b>" + EBISystem.i18n("EBI_LANG_PRODUCT") + "</b></td></tr>");
         buffer.append("</table></body>");
-        EBISystem.gui().getEditor("productText", "productInsertDialog").setText(buffer.toString());
-        EBISystem.gui().button("applyButton", "productInsertDialog").setEnabled(false);
+        EBISystem.builder().getEditor("productText", "productInsertDialog").setText(buffer.toString());
+        EBISystem.builder().button("applyButton", "productInsertDialog").setEnabled(false);
         canSave = false;
     }
 
@@ -373,7 +373,7 @@ public class EBICRMDialogAddProduct {
             buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_TYPE") + "</td><td bgcolor='#eeeeee'>" + ("null".equals(orderPosition.getType()) ? "" : orderPosition.getType()) + "</td></tr>");
             buffer.append("<tr><td width=5% bgcolor=#ebebeb>" + EBISystem.i18n("EBI_LANG_TAX_TYPE") + "</td><td bgcolor='#ebebeb'>" + ("null".equals(orderPosition.getTaxtype()) ? "" : orderPosition.getTaxtype()) + "</td></tr>");
             buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_SALE_PRICE") + "</td><td bgcolor='#eeeeee'>"
-                    + currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(orderPosition.getNetamount(), EBISystem.gui().textField("quantityText", "productInsertDialog").getText(), EBISystem.gui().textField("deductionText", "productInsertDialog").getText())) + "</td></tr>");
+                    + currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(orderPosition.getNetamount(), EBISystem.builder().textField("quantityText", "productInsertDialog").getText(), EBISystem.builder().textField("deductionText", "productInsertDialog").getText())) + "</td></tr>");
             buffer.append("<tr><td  bgcolor=#a0f0ff colspan='2'><b>" + EBISystem.i18n("EBI_LANG_DESCRIPTION") + "</b></td></tr>");
             buffer.append("<tr><td  bgcolor=#eeeeee colspan='2'>" + orderPosition.getDescription() + "</td></tr>");
 
@@ -384,7 +384,7 @@ public class EBICRMDialogAddProduct {
             buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_TYPE") + "</td><td bgcolor='#eeeeee'>" + ("null".equals(offerPosition.getType()) ? "" : offerPosition.getType()) + "</td></tr>");
             buffer.append("<tr><td width=5% bgcolor=#ebebeb>" + EBISystem.i18n("EBI_LANG_TAX_TYPE") + "</td><td bgcolor='#ebebeb'>" + ("null".equals(offerPosition.getTaxtype()) ? "" : offerPosition.getTaxtype()) + "</td></tr>");
             buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_SALE_PRICE") + "</td><td bgcolor='#eeeeee'>"
-                    + currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(offerPosition.getNetamount(), EBISystem.gui().textField("quantityText", "productInsertDialog").getText(), EBISystem.gui().textField("deductionText", "productInsertDialog").getText())) + "</td></tr>");
+                    + currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(offerPosition.getNetamount(), EBISystem.builder().textField("quantityText", "productInsertDialog").getText(), EBISystem.builder().textField("deductionText", "productInsertDialog").getText())) + "</td></tr>");
             buffer.append("<tr><td  bgcolor=#a0f0ff colspan='2'><b>" + EBISystem.i18n("EBI_LANG_DESCRIPTION") + "</b></td></tr>");
             buffer.append("<tr><td  bgcolor=#eeeeee colspan='2'>" + offerPosition.getDescription() + "</td></tr>");
 
@@ -395,7 +395,7 @@ public class EBICRMDialogAddProduct {
             buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_TYPE") + "</td><td bgcolor='#eeeeee'>" + ("null".equals(servicePosition.getType()) ? "" : servicePosition.getType()) + "</td></tr>");
             buffer.append("<tr><td width=5% bgcolor=#ebebeb>" + EBISystem.i18n("EBI_LANG_TAX_TYPE") + "</td><td bgcolor='#ebebeb'>" + ("null".equals(servicePosition.getTaxtype()) ? "" : servicePosition.getTaxtype()) + "</td></tr>");
             buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_SALE_PRICE") + "</td><td bgcolor='#eeeeee'>"
-                    + currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(servicePosition.getNetamount(), EBISystem.gui().textField("quantityText", "productInsertDialog").getText(), EBISystem.gui().textField("deductionText", "productInsertDialog").getText())) + "</td></tr>");
+                    + currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(servicePosition.getNetamount(), EBISystem.builder().textField("quantityText", "productInsertDialog").getText(), EBISystem.builder().textField("deductionText", "productInsertDialog").getText())) + "</td></tr>");
             buffer.append("<tr><td  bgcolor=#a0f0ff colspan='2'><b>" + EBISystem.i18n("EBI_LANG_DESCRIPTION") + "</b></td></tr>");
             buffer.append("<tr><td  bgcolor=#eeeeee colspan='2'>" + servicePosition.getDescription() + "</td></tr>");
         } else if (isProsol && prosolPosition.getProductnr() != null) {
@@ -405,7 +405,7 @@ public class EBICRMDialogAddProduct {
             buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_TYPE") + "</td><td bgcolor='#eeeeee'>" + ("null".equals(prosolPosition.getType()) ? "" : prosolPosition.getType()) + "</td></tr>");
             buffer.append("<tr><td width=5% bgcolor=#ebebeb>" + EBISystem.i18n("EBI_LANG_TAX_TYPE") + "</td><td bgcolor='#ebebeb'>" + ("null".equals(prosolPosition.getTaxtype()) ? "" : prosolPosition.getTaxtype()) + "</td></tr>");
             buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_SALE_PRICE") + "</td><td bgcolor='#eeeeee'>"
-                    + currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(prosolPosition.getNetamount(), "1", EBISystem.gui().textField("deductionText", "productInsertDialog").getText())) + "</td></tr>");
+                    + currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(prosolPosition.getNetamount(), "1", EBISystem.builder().textField("deductionText", "productInsertDialog").getText())) + "</td></tr>");
             buffer.append("<tr><td  bgcolor=#a0f0ff colspan='2'><b>" + EBISystem.i18n("EBI_LANG_DESCRIPTION") + "</b></td></tr>");
             buffer.append("<tr><td  bgcolor=#eeeeee colspan='2'>" + prosolPosition.getDescription() + "</td></tr>");
         } else if (isInvoice && invoicePosition.getProductnr() != null) {
@@ -415,13 +415,13 @@ public class EBICRMDialogAddProduct {
             buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_TYPE") + "</td><td bgcolor='#eeeeee'>" + ("null".equals(invoicePosition.getType()) ? "" : invoicePosition.getType()) + "</td></tr>");
             buffer.append("<tr><td width=5% bgcolor=#ebebeb>" + EBISystem.i18n("EBI_LANG_TAX_TYPE") + "</td><td bgcolor='#ebebeb'>" + ("null".equals(invoicePosition.getTaxtype()) ? "" : invoicePosition.getTaxtype()) + "</td></tr>");
             buffer.append("<tr><td width=5% bgcolor=#eeeeee>" + EBISystem.i18n("EBI_LANG_SALE_PRICE") + "</td><td bgcolor='#eeeeee'>"
-                    + currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(invoicePosition.getNetamount(), EBISystem.gui().textField("quantityText", "productInsertDialog").getText(), EBISystem.gui().textField("deductionText", "productInsertDialog").getText())) + "</td></tr>");
+                    + currency.format(EBISystem.getModule().dynMethod.calculatePreTaxPrice(invoicePosition.getNetamount(), EBISystem.builder().textField("quantityText", "productInsertDialog").getText(), EBISystem.builder().textField("deductionText", "productInsertDialog").getText())) + "</td></tr>");
             buffer.append("<tr><td  bgcolor=#a0f0ff colspan='2'><b>" + EBISystem.i18n("EBI_LANG_DESCRIPTION") + "</b></td></tr>");
             buffer.append("<tr><td  bgcolor=#eeeeee colspan='2'>" + invoicePosition.getDescription() + "</td></tr>");
         }
 
         buffer.append("</table>");
-        EBISystem.gui().getEditor("productText", "productInsertDialog").setText(buffer.toString());
+        EBISystem.builder().getEditor("productText", "productInsertDialog").setText(buffer.toString());
     }
 
     public void setQuantityScale() {
@@ -435,7 +435,7 @@ public class EBICRMDialogAddProduct {
             pst.setInt(1, this.productID);
             pst.setString(2, EBISystem.i18n("EBI_LANG_DEDUCTION"));
             set = EBISystem.getInstance().iDB().executePreparedQuery(pst);
-            final int count = Integer.parseInt(EBISystem.gui().textField("quantityText", "productInsertDialog").getText());
+            final int count = Integer.parseInt(EBISystem.builder().textField("quantityText", "productInsertDialog").getText());
 
             set.last();
             if (set.getRow() > 0) {
@@ -453,9 +453,9 @@ public class EBICRMDialogAddProduct {
                         }
 
                         if (count >= Integer.parseInt(splt[0]) && count <= Integer.parseInt(splt[1])) {
-                            EBISystem.gui().textField("deductionText", "productInsertDialog").setText(splt[2].substring(0, splt[2].length() - 1));
+                            EBISystem.builder().textField("deductionText", "productInsertDialog").setText(splt[2].substring(0, splt[2].length() - 1));
                         } else if (count < Integer.parseInt(splt[0]) && count <= Integer.parseInt(splt[1])) {
-                            EBISystem.gui().textField("deductionText", "productInsertDialog").setText("");
+                            EBISystem.builder().textField("deductionText", "productInsertDialog").setText("");
                         }
                     }
                 }

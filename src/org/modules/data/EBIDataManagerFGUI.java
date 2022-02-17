@@ -8,7 +8,7 @@ import org.sdk.EBISystem;
 public class EBIDataManagerFGUI {
     
     public void packageData(final String packg) {
-        final EBIGUIWidgetsBean mainWidget = EBISystem.getInstance().getIEBIGUIRendererInstance().getGUIComponents(packg);
+        final EBIGUIWidgetsBean mainWidget = EBISystem.getInstance().getIEBIBuilderInstance().getGUIComponents(packg);
         iterateWidget(mainWidget.getSubWidgets().iterator());
     }
 

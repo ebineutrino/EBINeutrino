@@ -34,19 +34,19 @@ public class ControlMeetingProtocol {
                 meetingProtocol.setChangedfrom(EBISystem.ebiUser);
             } else {
                 meetingProtocol.setCreateddate(new Date());
-                meetingProtocol.setCreatedfrom(EBISystem.gui().vpanel("MeetingCall").getCreatedFrom());
+                meetingProtocol.setCreatedfrom(EBISystem.builder().vpanel("MeetingCall").getCreatedFrom());
                 meetingProtocol.setCompany(EBISystem.getInstance().getCompany());
             }
 
-            if (EBISystem.gui().combo("meetingTypeText", "MeetingCall").getEditor().getItem() != null) {
-                meetingProtocol.setMeetingtype(EBISystem.gui().combo("meetingTypeText", "MeetingCall").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("meetingTypeText", "MeetingCall").getEditor().getItem() != null) {
+                meetingProtocol.setMeetingtype(EBISystem.builder().combo("meetingTypeText", "MeetingCall").getEditor().getItem().toString());
             }
 
-            meetingProtocol.setMeetingsubject(EBISystem.gui().textField("subjectMeetingText", "MeetingCall").getText());
-            meetingProtocol.setProtocol(EBISystem.gui().textArea("meetingDescription", "MeetingCall").getText());
+            meetingProtocol.setMeetingsubject(EBISystem.builder().textField("subjectMeetingText", "MeetingCall").getText());
+            meetingProtocol.setProtocol(EBISystem.builder().textArea("meetingDescription", "MeetingCall").getText());
 
-            if (EBISystem.gui().timePicker("dateMeetingText", "MeetingCall").getDate() != null) {
-                meetingProtocol.setMetingdate(EBISystem.gui().timePicker("dateMeetingText", "MeetingCall").getDate());
+            if (EBISystem.builder().timePicker("dateMeetingText", "MeetingCall").getDate() != null) {
+                meetingProtocol.setMetingdate(EBISystem.builder().timePicker("dateMeetingText", "MeetingCall").getDate());
             }
 
             EBISystem.hibernate().session("EBICRM_SESSION").saveOrUpdate(meetingProtocol);
@@ -82,7 +82,7 @@ public class ControlMeetingProtocol {
             EBISystem.getInstance().getCompany().getCompanymeetingprotocols().add(meetingProtocol);
 
             if (!isEdit) {
-                EBISystem.gui().vpanel("MeetingCall").setID(meetingProtocol.getMeetingprotocolid());
+                EBISystem.builder().vpanel("MeetingCall").setID(meetingProtocol.getMeetingprotocolid());
             }
             meetingID = meetingProtocol.getMeetingprotocolid();
             isEdit = true;
@@ -196,27 +196,27 @@ public class ControlMeetingProtocol {
                 }
             }
 
-            EBISystem.gui().vpanel("MeetingCall").setID(meetingProtocol.getMeetingprotocolid());
+            EBISystem.builder().vpanel("MeetingCall").setID(meetingProtocol.getMeetingprotocolid());
             if (meetingProtocol.getMeetingtype() != null) {
-                EBISystem.gui().combo("meetingTypeText", "MeetingCall").setSelectedItem(meetingProtocol.getMeetingtype());
+                EBISystem.builder().combo("meetingTypeText", "MeetingCall").setSelectedItem(meetingProtocol.getMeetingtype());
             }
-            EBISystem.gui().textField("subjectMeetingText", "MeetingCall").setText(meetingProtocol.getMeetingsubject() == null ? "" : meetingProtocol.getMeetingsubject());
-            EBISystem.gui().textArea("meetingDescription", "MeetingCall").setText(meetingProtocol.getProtocol() == null ? "" : meetingProtocol.getProtocol());
+            EBISystem.builder().textField("subjectMeetingText", "MeetingCall").setText(meetingProtocol.getMeetingsubject() == null ? "" : meetingProtocol.getMeetingsubject());
+            EBISystem.builder().textArea("meetingDescription", "MeetingCall").setText(meetingProtocol.getProtocol() == null ? "" : meetingProtocol.getProtocol());
 
             if (meetingProtocol.getMetingdate() != null) {
-                EBISystem.gui().timePicker("dateMeetingText", "MeetingCall").setDate(meetingProtocol.getMetingdate());
-                EBISystem.gui().timePicker("dateMeetingText", "MeetingCall").getEditor().setText(EBISystem.getInstance().getDateToString(meetingProtocol.getMetingdate()));
+                EBISystem.builder().timePicker("dateMeetingText", "MeetingCall").setDate(meetingProtocol.getMetingdate());
+                EBISystem.builder().timePicker("dateMeetingText", "MeetingCall").getEditor().setText(EBISystem.getInstance().getDateToString(meetingProtocol.getMetingdate()));
             }
 
-            EBISystem.gui().vpanel("MeetingCall").setCreatedDate(EBISystem.getInstance().getDateToString(meetingProtocol.getCreateddate() == null ? new Date() : meetingProtocol.getCreateddate()));
-            EBISystem.gui().vpanel("MeetingCall").setCreatedFrom(meetingProtocol.getCreatedfrom() == null ? EBISystem.ebiUser : meetingProtocol.getCreatedfrom());
+            EBISystem.builder().vpanel("MeetingCall").setCreatedDate(EBISystem.getInstance().getDateToString(meetingProtocol.getCreateddate() == null ? new Date() : meetingProtocol.getCreateddate()));
+            EBISystem.builder().vpanel("MeetingCall").setCreatedFrom(meetingProtocol.getCreatedfrom() == null ? EBISystem.ebiUser : meetingProtocol.getCreatedfrom());
 
             if (meetingProtocol.getChangeddate() != null) {
-                EBISystem.gui().vpanel("MeetingCall").setChangedDate(EBISystem.getInstance().getDateToString(meetingProtocol.getChangeddate()));
-                EBISystem.gui().vpanel("MeetingCall").setChangedFrom(EBISystem.ebiUser);
+                EBISystem.builder().vpanel("MeetingCall").setChangedDate(EBISystem.getInstance().getDateToString(meetingProtocol.getChangeddate()));
+                EBISystem.builder().vpanel("MeetingCall").setChangedFrom(EBISystem.ebiUser);
             } else {
-                EBISystem.gui().vpanel("MeetingCall").setChangedDate("");
-                EBISystem.gui().vpanel("MeetingCall").setChangedFrom("");
+                EBISystem.builder().vpanel("MeetingCall").setChangedDate("");
+                EBISystem.builder().vpanel("MeetingCall").setChangedFrom("");
             }
             EBISystem.getInstance().getDataStore("MeetingCall", "ebiEdit");
         } else {
@@ -244,7 +244,7 @@ public class ControlMeetingProtocol {
 
     public void dataShow(Integer id) {
 
-        int srow = EBISystem.gui().table("companyMeetings", "MeetingCall").getSelectedRow() + id;
+        int srow = EBISystem.builder().table("companyMeetings", "MeetingCall").getSelectedRow() + id;
         final int size = EBISystem.getInstance().getCompany().getCompanymeetingprotocols().size();
 
         int selRow = 0;
@@ -272,8 +272,8 @@ public class ControlMeetingProtocol {
         }
         EBISystem.getModule().getMeetingProtocol().getTableModel().fireTableDataChanged();
         if (srow > -1) {
-            srow = EBISystem.gui().table("companyMeetings", "MeetingCall").convertRowIndexToView(selRow);
-            EBISystem.gui().table("companyMeetings", "MeetingCall").changeSelection(srow, 0, false, false);
+            srow = EBISystem.builder().table("companyMeetings", "MeetingCall").convertRowIndexToView(selRow);
+            EBISystem.builder().table("companyMeetings", "MeetingCall").changeSelection(srow, 0, false, false);
         }
     }
 
@@ -292,7 +292,7 @@ public class ControlMeetingProtocol {
         meetingProtocol = new Companymeetingprotocol();
         EBISystem.getModule().getMeetingProtocol().initialize(false);
         EBISystem.getInstance().getDataStore("MeetingCall", "ebiNew");
-        EBISystem.gui().vpanel("MeetingCall").setID(-1);
+        EBISystem.builder().vpanel("MeetingCall").setID(-1);
     }
 
     private void createHistory(final Company com) throws Exception {
@@ -309,13 +309,13 @@ public class ControlMeetingProtocol {
         }
 
         list.add(EBISystem.i18n("EBI_LANG_C_MEETING_TYPE") + ": " + (meetingProtocol.getMeetingtype().
-                equals(EBISystem.gui().combo("meetingTypeText", "MeetingCall").getSelectedItem().toString()) == true
+                equals(EBISystem.builder().combo("meetingTypeText", "MeetingCall").getSelectedItem().toString()) == true
                 ? meetingProtocol.getMeetingtype() : meetingProtocol.getMeetingtype() + "$"));
 
-        list.add(EBISystem.i18n("EBI_LANG_C_MEMO_SUBJECT") + ": " + (meetingProtocol.getMeetingsubject().equals(EBISystem.gui().textField("subjectMeetingText", "MeetingCall").getText()) == true ? meetingProtocol.getMeetingsubject() : meetingProtocol.getMeetingsubject() + "$"));
-        list.add(EBISystem.i18n("EBI_LANG_C_DESCRIPTION") + ": " + (meetingProtocol.getProtocol().equals(EBISystem.gui().textArea("meetingDescription", "MeetingCall").getText()) == true ? meetingProtocol.getProtocol() : meetingProtocol.getProtocol() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_C_MEMO_SUBJECT") + ": " + (meetingProtocol.getMeetingsubject().equals(EBISystem.builder().textField("subjectMeetingText", "MeetingCall").getText()) == true ? meetingProtocol.getMeetingsubject() : meetingProtocol.getMeetingsubject() + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_C_DESCRIPTION") + ": " + (meetingProtocol.getProtocol().equals(EBISystem.builder().textArea("meetingDescription", "MeetingCall").getText()) == true ? meetingProtocol.getProtocol() : meetingProtocol.getProtocol() + "$"));
 
-        list.add(EBISystem.i18n("EBI_LANG_DATE") + ": " + (EBISystem.getInstance().getDateToString(meetingProtocol.getMetingdate()).equals(EBISystem.gui().timePicker("dateMeetingText", "MeetingCall").getEditor().getText()) == true ? EBISystem.getInstance().getDateToString(meetingProtocol.getMetingdate()) : EBISystem.getInstance().getDateToString(meetingProtocol.getMetingdate()) + "$"));
+        list.add(EBISystem.i18n("EBI_LANG_DATE") + ": " + (EBISystem.getInstance().getDateToString(meetingProtocol.getMetingdate()).equals(EBISystem.builder().timePicker("dateMeetingText", "MeetingCall").getEditor().getText()) == true ? EBISystem.getInstance().getDateToString(meetingProtocol.getMetingdate()) : EBISystem.getInstance().getDateToString(meetingProtocol.getMetingdate()) + "$"));
 
         list.add("*EOR*"); // END OF RECORD
 

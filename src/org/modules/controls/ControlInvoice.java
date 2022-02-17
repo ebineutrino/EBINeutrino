@@ -31,7 +31,7 @@ public class ControlInvoice {
             EBISystem.hibernate().transaction("EBIINVOICE_SESSION").begin();
             EBISystem.hibernate().transaction("EBIINVOICE_SESSION").begin();
             if (isEdit == false) {
-                invoice.setCreatedfrom(EBISystem.gui().vpanel("Invoice").getCreatedFrom());
+                invoice.setCreatedfrom(EBISystem.builder().vpanel("Invoice").getCreatedFrom());
                 invoice.setCreateddate(new Date());
             } else {
                 createHistory(invoice.getInvoiceid());
@@ -42,47 +42,47 @@ public class ControlInvoice {
             // Invoice main data
             invoice.setInvoicenr(EBISystem.getModule().getInvoicePane().getInvoiceNr());
             invoice.setBeginchar(EBISystem.getModule().getInvoicePane().getBeginChar());
-            invoice.setName(EBISystem.gui().textField("invoiceNameText", "Invoice").getText());
+            invoice.setName(EBISystem.builder().textField("invoiceNameText", "Invoice").getText());
 
-            if (EBISystem.gui().combo("invoiceStatusText", "Invoice").getEditor().getItem()  != null) {
-                invoice.setStatus(EBISystem.gui().combo("invoiceStatusText", "Invoice").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("invoiceStatusText", "Invoice").getEditor().getItem()  != null) {
+                invoice.setStatus(EBISystem.builder().combo("invoiceStatusText", "Invoice").getEditor().getItem().toString());
             }
 
             if (!isEdit) {
-                if (EBISystem.gui().combo("categoryText", "Invoice").getEditor().getItem() != null) {
-                    invoice.setCategory(EBISystem.gui().combo("categoryText", "Invoice").getEditor().getItem().toString());
+                if (EBISystem.builder().combo("categoryText", "Invoice").getEditor().getItem() != null) {
+                    invoice.setCategory(EBISystem.builder().combo("categoryText", "Invoice").getEditor().getItem().toString());
                 }
             }
 
-            if (EBISystem.gui().timePicker("invoiceDateText", "Invoice").getDate() != null) {
-                invoice.setDate(EBISystem.gui().timePicker("invoiceDateText", "Invoice").getDate());
+            if (EBISystem.builder().timePicker("invoiceDateText", "Invoice").getDate() != null) {
+                invoice.setDate(EBISystem.builder().timePicker("invoiceDateText", "Invoice").getDate());
             } else {
                 invoice.setDate(new Date());
             }
 
-            if (!"".equals(EBISystem.gui().textField("orderText", "Invoice").getText())) {
-                invoice.setAssosiation(EBISystem.gui().textField("orderText", "Invoice").getText());
+            if (!"".equals(EBISystem.builder().textField("orderText", "Invoice").getText())) {
+                invoice.setAssosiation(EBISystem.builder().textField("orderText", "Invoice").getText());
             }
 
             // Invoice rec
-            if (EBISystem.gui().combo("genderText", "Invoice").getEditor().getItem() != null) {
-                invoice.setGender(EBISystem.gui().combo("genderText", "Invoice").getEditor().getItem().toString());
+            if (EBISystem.builder().combo("genderText", "Invoice").getEditor().getItem() != null) {
+                invoice.setGender(EBISystem.builder().combo("genderText", "Invoice").getEditor().getItem().toString());
             }
 
-            invoice.setPosition(EBISystem.gui().textField("titleText", "Invoice").getText());
-            invoice.setCompanyname(EBISystem.gui().textField("companyNameText", "Invoice").getText());
-            invoice.setContactname(EBISystem.gui().textField("nameText", "Invoice").getText());
-            invoice.setContactsurname(EBISystem.gui().textField("surnameText", "Invoice").getText());
-            invoice.setContactstreet(EBISystem.gui().textField("streetNrText", "Invoice").getText());
-            invoice.setContactzip(EBISystem.gui().textField("zipText", "Invoice").getText());
-            invoice.setContactlocation(EBISystem.gui().textField("locationText", "Invoice").getText());
-            invoice.setContactpostcode(EBISystem.gui().textField("postCodeText", "Invoice").getText());
-            invoice.setContactcountry(EBISystem.gui().textField("countryText", "Invoice").getText());
-            invoice.setContacttelephone(EBISystem.gui().textField("telefonText", "Invoice").getText());
-            invoice.setContactfax(EBISystem.gui().textField("faxText", "Invoice").getText());
-            invoice.setContactemail(EBISystem.gui().textField("emailText", "Invoice").getText());
-            invoice.setContactweb(EBISystem.gui().textField("internetText", "Invoice").getText());
-            invoice.setContactdescription(EBISystem.gui().textArea("recDescription", "Invoice").getText());
+            invoice.setPosition(EBISystem.builder().textField("titleText", "Invoice").getText());
+            invoice.setCompanyname(EBISystem.builder().textField("companyNameText", "Invoice").getText());
+            invoice.setContactname(EBISystem.builder().textField("nameText", "Invoice").getText());
+            invoice.setContactsurname(EBISystem.builder().textField("surnameText", "Invoice").getText());
+            invoice.setContactstreet(EBISystem.builder().textField("streetNrText", "Invoice").getText());
+            invoice.setContactzip(EBISystem.builder().textField("zipText", "Invoice").getText());
+            invoice.setContactlocation(EBISystem.builder().textField("locationText", "Invoice").getText());
+            invoice.setContactpostcode(EBISystem.builder().textField("postCodeText", "Invoice").getText());
+            invoice.setContactcountry(EBISystem.builder().textField("countryText", "Invoice").getText());
+            invoice.setContacttelephone(EBISystem.builder().textField("telefonText", "Invoice").getText());
+            invoice.setContactfax(EBISystem.builder().textField("faxText", "Invoice").getText());
+            invoice.setContactemail(EBISystem.builder().textField("emailText", "Invoice").getText());
+            invoice.setContactweb(EBISystem.builder().textField("internetText", "Invoice").getText());
+            invoice.setContactdescription(EBISystem.builder().textArea("recDescription", "Invoice").getText());
             EBISystem.hibernate().session("EBIINVOICE_SESSION").saveOrUpdate(invoice);
 
             // Position save
@@ -102,7 +102,7 @@ public class ControlInvoice {
             EBISystem.hibernate().transaction("EBIINVOICE_SESSION").commit();
 
             if (!isEdit) {
-                EBISystem.gui().vpanel("Invoice").setID(invoice.getInvoiceid());
+                EBISystem.builder().vpanel("Invoice").setID(invoice.getInvoiceid());
             }
             invoiceID = invoice.getInvoiceid();
             isEdit = true;
@@ -124,60 +124,60 @@ public class ControlInvoice {
 
             if (iter.hasNext()) {
                 invoice = (Crminvoice) iter.next();
-                EBISystem.gui().vpanel("Invoice").setID(invoice.getInvoiceid());
+                EBISystem.builder().vpanel("Invoice").setID(invoice.getInvoiceid());
                 EBISystem.hibernate().session("EBIINVOICE_SESSION").refresh(invoice);
 
-                EBISystem.gui().vpanel("Invoice").setCreatedDate(EBISystem.getInstance().getDateToString(invoice.getCreateddate() == null ? new Date() : invoice.getCreateddate()));
-                EBISystem.gui().vpanel("Invoice").setCreatedFrom(invoice.getCreatedfrom() == null ? EBISystem.ebiUser : invoice.getCreatedfrom());
+                EBISystem.builder().vpanel("Invoice").setCreatedDate(EBISystem.getInstance().getDateToString(invoice.getCreateddate() == null ? new Date() : invoice.getCreateddate()));
+                EBISystem.builder().vpanel("Invoice").setCreatedFrom(invoice.getCreatedfrom() == null ? EBISystem.ebiUser : invoice.getCreatedfrom());
 
                 if (invoice.getChangeddate() != null) {
-                    EBISystem.gui().vpanel("Invoice").setChangedDate(EBISystem.getInstance().getDateToString(invoice.getChangeddate()));
-                    EBISystem.gui().vpanel("Invoice").setChangedFrom(invoice.getChangedfrom());
+                    EBISystem.builder().vpanel("Invoice").setChangedDate(EBISystem.getInstance().getDateToString(invoice.getChangeddate()));
+                    EBISystem.builder().vpanel("Invoice").setChangedFrom(invoice.getChangedfrom());
                 } else {
-                    EBISystem.gui().vpanel("Invoice").setChangedDate("");
-                    EBISystem.gui().vpanel("Invoice").setChangedFrom("");
+                    EBISystem.builder().vpanel("Invoice").setChangedDate("");
+                    EBISystem.builder().vpanel("Invoice").setChangedFrom("");
                 }
 
                 EBISystem.getModule().getInvoicePane().setInvoiceNr(invoice.getInvoicenr() == null ? 0 : invoice.getInvoicenr());
                 EBISystem.getModule().getInvoicePane().setBeginChar(invoice.getBeginchar() == null ? "" : invoice.getBeginchar());
-                EBISystem.gui().textField("invoiceNrText", "Invoice").setText(invoice.getBeginchar() + invoice.getInvoicenr());
-                EBISystem.gui().textField("invoiceNameText", "Invoice").setText(invoice.getName());
+                EBISystem.builder().textField("invoiceNrText", "Invoice").setText(invoice.getBeginchar() + invoice.getInvoicenr());
+                EBISystem.builder().textField("invoiceNameText", "Invoice").setText(invoice.getName());
 
                 if (invoice.getStatus() != null) {
-                    EBISystem.gui().combo("invoiceStatusText", "Invoice").setSelectedItem(invoice.getStatus());
+                    EBISystem.builder().combo("invoiceStatusText", "Invoice").setSelectedItem(invoice.getStatus());
                 }
 
                 if (invoice.getCategory() != null) {
-                    EBISystem.gui().combo("categoryText", "Invoice").setSelectedItem(invoice.getCategory());
+                    EBISystem.builder().combo("categoryText", "Invoice").setSelectedItem(invoice.getCategory());
                 }
 
                 if (invoice.getDate() != null) {
-                    EBISystem.gui().timePicker("invoiceDateText", "Invoice").setDate(invoice.getDate());
+                    EBISystem.builder().timePicker("invoiceDateText", "Invoice").setDate(invoice.getDate());
                 }
                 if (invoice.getAssosiation() != null && !"".equals(invoice.getAssosiation())) {
-                    EBISystem.gui().textField("orderText", "Invoice").setText(invoice.getAssosiation());
-                    EBISystem.gui().button("selectOrder", "Invoice").setEnabled(true);
+                    EBISystem.builder().textField("orderText", "Invoice").setText(invoice.getAssosiation());
+                    EBISystem.builder().button("selectOrder", "Invoice").setEnabled(true);
                 }
                 // Invoice rec
 
                 if (invoice.getGender() != null) {
-                    EBISystem.gui().combo("genderText", "Invoice").setSelectedItem(invoice.getGender());
+                    EBISystem.builder().combo("genderText", "Invoice").setSelectedItem(invoice.getGender());
                 }
 
-                EBISystem.gui().textField("titleText", "Invoice").setText(invoice.getPosition());
-                EBISystem.gui().textField("companyNameText", "Invoice").setText(invoice.getCompanyname());
-                EBISystem.gui().textField("nameText", "Invoice").setText(invoice.getContactname());
-                EBISystem.gui().textField("surnameText", "Invoice").setText(invoice.getContactsurname());
-                EBISystem.gui().textField("streetNrText", "Invoice").setText(invoice.getContactstreet());
-                EBISystem.gui().textField("zipText", "Invoice").setText(invoice.getContactzip());
-                EBISystem.gui().textField("locationText", "Invoice").setText(invoice.getContactlocation());
-                EBISystem.gui().textField("postCodeText", "Invoice").setText(invoice.getContactpostcode());
-                EBISystem.gui().textField("countryText", "Invoice").setText(invoice.getContactcountry());
-                EBISystem.gui().textField("telefonText", "Invoice").setText(invoice.getContacttelephone());
-                EBISystem.gui().textField("faxText", "Invoice").setText(invoice.getContactfax());
-                EBISystem.gui().textField("emailText", "Invoice").setText(invoice.getContactemail());
-                EBISystem.gui().textField("internetText", "Invoice").setText(invoice.getContactweb());
-                EBISystem.gui().textArea("recDescription", "Invoice").setText(invoice.getContactdescription());
+                EBISystem.builder().textField("titleText", "Invoice").setText(invoice.getPosition());
+                EBISystem.builder().textField("companyNameText", "Invoice").setText(invoice.getCompanyname());
+                EBISystem.builder().textField("nameText", "Invoice").setText(invoice.getContactname());
+                EBISystem.builder().textField("surnameText", "Invoice").setText(invoice.getContactsurname());
+                EBISystem.builder().textField("streetNrText", "Invoice").setText(invoice.getContactstreet());
+                EBISystem.builder().textField("zipText", "Invoice").setText(invoice.getContactzip());
+                EBISystem.builder().textField("locationText", "Invoice").setText(invoice.getContactlocation());
+                EBISystem.builder().textField("postCodeText", "Invoice").setText(invoice.getContactpostcode());
+                EBISystem.builder().textField("countryText", "Invoice").setText(invoice.getContactcountry());
+                EBISystem.builder().textField("telefonText", "Invoice").setText(invoice.getContacttelephone());
+                EBISystem.builder().textField("faxText", "Invoice").setText(invoice.getContactfax());
+                EBISystem.builder().textField("emailText", "Invoice").setText(invoice.getContactemail());
+                EBISystem.builder().textField("internetText", "Invoice").setText(invoice.getContactweb());
+                EBISystem.builder().textArea("recDescription", "Invoice").setText(invoice.getContactdescription());
 
                 EBISystem.getInstance().getDataStore("Invoice", "ebiEdit");
                 calculateTotalAmount();
@@ -218,8 +218,8 @@ public class ControlInvoice {
 
     public void dataShow(final String invoiceYear, final int showID) {
 
-        int srow = EBISystem.gui().table("tableTotalInvoice", "Invoice").getSelectedRow() + showID;
-        final EBIAbstractTableModel model = (EBIAbstractTableModel) EBISystem.gui()
+        int srow = EBISystem.builder().table("tableTotalInvoice", "Invoice").getSelectedRow() + showID;
+        final EBIAbstractTableModel model = (EBIAbstractTableModel) EBISystem.builder()
                 .table("tableTotalInvoice", "Invoice").getModel();
 
         String sName = "";
@@ -253,9 +253,9 @@ public class ControlInvoice {
                 while (iter.hasNext()) {
                     final Crminvoice inv = (Crminvoice) iter.next();
                     if (("" + inv.getInvoicenr()).equals(sName) && !"".equals(sName)) {
-                        srow = EBISystem.gui().table("tableTotalInvoice", "Invoice").convertRowIndexToModel(i);
+                        srow = EBISystem.builder().table("tableTotalInvoice", "Invoice").convertRowIndexToModel(i);
                     } else if (inv.getInvoiceid() == showID) {
-                        srow = EBISystem.gui().table("tableTotalInvoice", "Invoice").convertRowIndexToView(i);
+                        srow = EBISystem.builder().table("tableTotalInvoice", "Invoice").convertRowIndexToView(i);
                     }
                     model.data[i][0] = inv.getBeginchar() + inv.getInvoicenr();
                     model.data[i][1] = inv.getName() == null ? "" : inv.getName();
@@ -282,8 +282,8 @@ public class ControlInvoice {
             ex.printStackTrace();
         }
         if (srow > -1) {
-            srow = EBISystem.gui().table("tableTotalInvoice", "Invoice").convertRowIndexToView(srow);
-            EBISystem.gui().table("tableTotalInvoice", "Invoice").changeSelection(srow, 0, false, false);
+            srow = EBISystem.builder().table("tableTotalInvoice", "Invoice").convertRowIndexToView(srow);
+            EBISystem.builder().table("tableTotalInvoice", "Invoice").changeSelection(srow, 0, false, false);
         }
     }
 
@@ -407,7 +407,7 @@ public class ControlInvoice {
 
     public void dataNew() {
         invoice = new Crminvoice();
-        EBISystem.gui().vpanel("Invoice").setID(-1);
+        EBISystem.builder().vpanel("Invoice").setID(-1);
         EBISystem.getModule().getInvoicePane().initialize(false);
         EBISystem.getInstance().getDataStore("Invoice", "ebiNew");
     }
@@ -433,126 +433,126 @@ public class ControlInvoice {
                 : invoice.getInvoicenr() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_NAME") + ": "
                 + (invoice.getName().equals(
-                        EBISystem.gui().textField("invoiceNameText", "Invoice").getText()) == true
+                        EBISystem.builder().textField("invoiceNameText", "Invoice").getText()) == true
                 ? invoice.getName()
                 : invoice.getName() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_STATUS") + ": "
                 + (invoice.getStatus()
-                        .equals(EBISystem.gui().combo("invoiceStatusText", "Invoice")
+                        .equals(EBISystem.builder().combo("invoiceStatusText", "Invoice")
                                 .getSelectedItem().toString()) == true ? invoice.getStatus()
                         : invoice.getStatus() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_CATEGORY") + ": "
                 + (invoice.getCategory()
-                        .equals(EBISystem.gui().combo("categoryText", "Invoice")
+                        .equals(EBISystem.builder().combo("categoryText", "Invoice")
                                 .getSelectedItem().toString()) == true ? invoice.getCategory()
                         : invoice.getCategory() + "$"));
         list.add(EBISystem.i18n("EBI_LANG_C_ORDER") + ": "
                 + (String.valueOf(invoice.getAssosiation() == null ? "" : invoice.getAssosiation()).equals(
-                        EBISystem.gui().textField("orderText", "Invoice").getText()) == true
+                        EBISystem.builder().textField("orderText", "Invoice").getText()) == true
                 ? invoice.getAssosiation()
                 : invoice.getAssosiation() + "$"));
 
         if (invoice.getPosition() != null) {
             list.add(EBISystem.i18n("EBI_LANG_POSITION") + ": "
                     + (invoice.getPosition().equals(
-                            EBISystem.gui().textField("titleText", "Invoice").getText()) == true
+                            EBISystem.builder().textField("titleText", "Invoice").getText()) == true
                     ? invoice.getPosition()
                     : invoice.getPosition() + "$"));
         }
         if (invoice.getCompanyname() != null) {
             list.add(EBISystem.i18n("EBI_LANG_COMPANY_NAME") + ": "
-                    + (invoice.getCompanyname().equals(EBISystem.gui()
+                    + (invoice.getCompanyname().equals(EBISystem.builder()
                             .textField("companyNameText", "Invoice").getText()) == true ? invoice.getCompanyname()
                     : invoice.getCompanyname() + "$"));
         }
         if (invoice.getContactname() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_CNAME") + ": "
                     + (invoice.getContactname().equals(
-                            EBISystem.gui().textField("nameText", "Invoice").getText()) == true
+                            EBISystem.builder().textField("nameText", "Invoice").getText()) == true
                     ? invoice.getContactname()
                     : invoice.getContactname() + "$"));
         }
         if (invoice.getContactsurname() != null) {
             list.add(EBISystem.i18n("EBI_LANG_SURNAME") + ": "
                     + (invoice.getContactsurname().equals(
-                            EBISystem.gui().textField("surnameText", "Invoice").getText()) == true
+                            EBISystem.builder().textField("surnameText", "Invoice").getText()) == true
                     ? invoice.getContactsurname()
                     : invoice.getContactsurname() + "$"));
         }
         if (invoice.getContactstreet() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_STREET_NR") + ": "
                     + (invoice.getContactstreet().equals(
-                            EBISystem.gui().textField("streetNrText", "Invoice").getText()) == true
+                            EBISystem.builder().textField("streetNrText", "Invoice").getText()) == true
                     ? invoice.getContactstreet()
                     : invoice.getContactstreet() + "$"));
         }
         if (invoice.getContactzip() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_ZIP_LOCATION") + ": "
                     + (invoice.getContactzip().equals(
-                            EBISystem.gui().textField("zipText", "Invoice").getText()) == true
+                            EBISystem.builder().textField("zipText", "Invoice").getText()) == true
                     ? invoice.getContactzip()
                     : invoice.getContactzip() + "$"));
         }
         if (invoice.getContactlocation() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_ZIP_LOCATION") + ": "
                     + (invoice.getContactlocation().equals(
-                            EBISystem.gui().textField("locationText", "Invoice").getText()) == true
+                            EBISystem.builder().textField("locationText", "Invoice").getText()) == true
                     ? invoice.getContactlocation()
                     : invoice.getContactlocation() + "$"));
         }
         if (invoice.getContactpostcode() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_POST_CODE") + ": "
                     + (invoice.getContactpostcode().equals(
-                            EBISystem.gui().textField("postCodeText", "Invoice").getText()) == true
+                            EBISystem.builder().textField("postCodeText", "Invoice").getText()) == true
                     ? invoice.getContactpostcode()
                     : invoice.getContactpostcode() + "$"));
         }
         if (invoice.getContactcountry() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_COUNTRY") + ": "
                     + (invoice.getContactcountry().equals(
-                            EBISystem.gui().textField("countryText", "Invoice").getText()) == true
+                            EBISystem.builder().textField("countryText", "Invoice").getText()) == true
                     ? invoice.getContactcountry()
                     : invoice.getContactcountry() + "$"));
         }
         if (invoice.getContacttelephone() != null) {
             list.add(EBISystem.i18n("EBI_LANG_TELEPHONE") + ": "
                     + (invoice.getContacttelephone().equals(
-                            EBISystem.gui().textField("telefonText", "Invoice").getText()) == true
+                            EBISystem.builder().textField("telefonText", "Invoice").getText()) == true
                     ? invoice.getContacttelephone()
                     : invoice.getContacttelephone() + "$"));
         }
         if (invoice.getContactfax() != null) {
             list.add(EBISystem.i18n("EBI_LANG_FAX") + ": "
                     + (invoice.getContactfax().equals(
-                            EBISystem.gui().textField("faxText", "Invoice").getText()) == true
+                            EBISystem.builder().textField("faxText", "Invoice").getText()) == true
                     ? invoice.getContactfax()
                     : invoice.getContactfax() + "$"));
         }
         if (invoice.getContactemail() != null) {
             list.add(EBISystem.i18n("EBI_LANG_C_EMAIL") + ": "
                     + (invoice.getContactemail().equals(
-                            EBISystem.gui().textField("emailText", "Invoice").getText()) == true
+                            EBISystem.builder().textField("emailText", "Invoice").getText()) == true
                     ? invoice.getContactemail()
                     : invoice.getContactemail() + "$"));
         }
         if (invoice.getContactweb() != null) {
             list.add(EBISystem.i18n("EBI_LANG_INTERNET") + ": "
                     + (invoice.getContactweb().equals(
-                            EBISystem.gui().textField("internetText", "Invoice").getText()) == true
+                            EBISystem.builder().textField("internetText", "Invoice").getText()) == true
                     ? invoice.getContactweb()
                     : invoice.getContactweb() + "$"));
         }
         if (invoice.getContactdescription() != null) {
             list.add(EBISystem.i18n("EBI_LANG_DESCRIPTION") + ": "
                     + (invoice.getContactdescription()
-                            .equals(EBISystem.gui().textArea("recDescription", "Invoice")
+                            .equals(EBISystem.builder().textArea("recDescription", "Invoice")
                                     .getText()) == true ? invoice.getContactdescription()
                             : invoice.getContactdescription() + "$"));
         }
 
         list.add(EBISystem.i18n("EBI_LANG_CREATED_DATE") + ": "
                 + (EBISystem.getInstance().getDateToString(invoice.getDate())
-                        .equals(EBISystem.gui().timePicker("invoiceDateText", "Invoice")
+                        .equals(EBISystem.builder().timePicker("invoiceDateText", "Invoice")
                                 .getEditor().getText()) == true
                         ? EBISystem.getInstance().getDateToString(invoice.getDate())
                         : EBISystem.getInstance().getDateToString(invoice.getDate()) + "$"));
@@ -749,10 +749,10 @@ public class ControlInvoice {
         amount = amount - deduction;
         deduction = deduction * (-1);
 
-        EBISystem.gui().FormattedField("deductionText", "Invoice").setValue(deduction);
-        EBISystem.gui().FormattedField("totalNetAmountText", "Invoice").setValue(amount);
-        EBISystem.gui().FormattedField("taxText", "Invoice").setValue(tax);
-        EBISystem.gui().FormattedField("totalGrossAmountText", "Invoice")
+        EBISystem.builder().FormattedField("deductionText", "Invoice").setValue(deduction);
+        EBISystem.builder().FormattedField("totalNetAmountText", "Invoice").setValue(amount);
+        EBISystem.builder().FormattedField("taxText", "Invoice").setValue(tax);
+        EBISystem.builder().FormattedField("totalGrossAmountText", "Invoice")
                 .setValue(amount + tax);
 
     }

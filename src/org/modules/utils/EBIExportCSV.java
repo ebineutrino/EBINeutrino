@@ -3,18 +3,18 @@ package org.modules.utils;
 import org.sdk.EBISystem;
 import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
-import org.sdk.interfaces.IEBIGUIRenderer;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.sdk.interfaces.IEBIBuilder;
 
 
 public class EBIExportCSV {
 
-    private IEBIGUIRenderer guiRenderer = null;
+    private IEBIBuilder guiRenderer = null;
     private boolean isQuoteOpen = false;
     public String[] columnNames = null;
     public Object[][] data = null;
@@ -24,7 +24,7 @@ public class EBIExportCSV {
 
 
     public EBIExportCSV() {
-        guiRenderer = EBISystem.gui();
+        guiRenderer = EBISystem.builder();
     }
 
     /**

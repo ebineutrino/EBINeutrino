@@ -111,9 +111,9 @@ public class EBINeutrinoSystemInit extends EBISystem {
             if (toReturn == false) {
                 return toReturn;
             }
-
+           
             EBISystem.db().setAutoCommit(true);
-            toReturn = EBISystem.getInstance().fillComboWithUser();
+            toReturn = EBISystem.getInstance().fillComboWithUser(data);
             if (toReturn) {
                 //configure hibernate
                 if ("mysql".equals(dbType.toLowerCase())) {
@@ -124,6 +124,8 @@ public class EBINeutrinoSystemInit extends EBISystem {
                     cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
                 }else if ("h2".equals(dbType.toLowerCase())) {
                     cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+                    cfg.setProperty("javax.persistence.jdbc.driver", "org.h2.Driver");
+                    cfg.setProperty("hibernate.connection.url", "jdbc:h2:./"+data.trim()+";DATABASE_TO_UPPER=TRUE;DB_CLOSE_DELAY=-1;CASE_INSENSITIVE_IDENTIFIERS=TRUE");
                 }
 
                 cfg.setProperty("hibernate.connection.username", user);

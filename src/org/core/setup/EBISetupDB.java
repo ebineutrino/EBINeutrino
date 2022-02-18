@@ -58,7 +58,9 @@ public class EBISetupDB extends JPanel {
         setup = setUp;
         initialize();
         databaseDriverCombo.addItem("com.mysql.cj.jdbc.Driver");
+        databaseDriverCombo.addItem("org.h2.Driver");
         databaseTypeText.setSelectedItem("mysql");
+        databaseTypeText.setSelectedItem("h2");
     }
 
     private void initialize() {
@@ -282,19 +284,19 @@ public class EBISetupDB extends JPanel {
                     if (!checkField()) {
                         return;
                     }
-
                     try {
-                        
                         Class.forName(databaseDriverCombo.getSelectedItem().toString());
                         String conn_url = null;
-                        final String dbType = databaseTypeText.getSelectedItem().toString().toLowerCase();
+                        databaseType = databaseTypeText.getSelectedItem().toString().toLowerCase();
                         final String host = ipText.getText();
 
-                        if ("mysql".equals(dbType)) {
-                            conn_url = "jdbc:" + dbType + "://" + host
-                                    + "/?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";    
-                        }  
-                        
+                        if ("mysql".equals(databaseType)) {
+                            conn_url = "jdbc:" + databaseType + "://" + host
+                                    + "/?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
+                        }  else if ("h2".equals(databaseType)) {
+                            conn_url = "jdbc:h2:./"+catalogText.getText().trim();
+                        }
+
                         conn = DriverManager.getConnection(conn_url, userNameText.getText(), passwordText.getText());
                         EBIExceptionDialog.getInstance(setup, "Connection is ok!").Show(EBIMessage.INFO_MESSAGE);
                         EBISystem.db().setActiveConnection(conn);
@@ -374,6 +376,7 @@ public class EBISetupDB extends JPanel {
             databaseTypeText = new JComboBox();
             databaseTypeText.setBounds(new Rectangle(145, 70, 150, 25));
             databaseTypeText.addItem("MySQL");
+            databaseTypeText.addItem("h2");
         }
         return databaseTypeText;
     }

@@ -47,26 +47,19 @@ public class EBIDatabase implements IEBIDatabase {
             Class.forName(this.driver);
             connectionUrl = null;
 
-            db = db.toLowerCase();
-            
-            if ("yes".equals(toUpper.toLowerCase())) {
-                toUpperCase = true;
-                db = db.toUpperCase();
-            }
-
             if ("mysql".equals(dbType)) {
                 connectionUrl = "jdbc:" + dbType + "://" + host + "/" + db.trim() + "?useUnicode=true&connectTimeout=0&socketTimeout=0"
                         + "&interactiveClient=true&reconnectAtTxEnd=true&autoReconnect=true&tcpKeepAlive=true"
                         + "&characterEncoding=utf8&jdbcCompliantTruncation=false&zeroDateTimeBehavior=round&serverTimezone=UTC";
-
             } else if ("oracle".equals(dbType)) {
                 connectionUrl = "jdbc:" + dbType + ":thin:@" + host + ":" + SID.trim();
+            } else if ("h2".equals(dbType)) {
+                connectionUrl = "jdbc:h2:./"+db.trim()+";DATABASE_TO_UPPER=TRUE;DB_CLOSE_DELAY=-1;CASE_INSENSITIVE_IDENTIFIERS=TRUE;MODE=LEGACY";
             } else {
                 return false;
             }
             
             conn = DriverManager.getConnection(connectionUrl, this.user, this.password);
-
         } catch (final SQLException ex) {
             ex.printStackTrace();
             return false;

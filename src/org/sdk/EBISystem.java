@@ -76,7 +76,7 @@ public class EBISystem {
     public static String DateFormat = "";
     public static String DATABASE_SYSTEM = "";
     public static String selectedLanguage = "";
-    private String webOut="";
+    private String webOut = "";
     @Getter
     @Setter
     private String webMimeType = "";
@@ -632,13 +632,17 @@ public class EBISystem {
         return ebiModule.getActiveModule();
     }
 
-    public boolean fillComboWithUser() {
+    public boolean fillComboWithUser(String data) {
         boolean ret = false;
-        final PreparedStatement ps1 = iDB().initPreparedStatement("SELECT EBIUSER FROM EBIUSER ");
-        final ResultSet resultSet = iDB().executePreparedQuery(ps1);
+        PreparedStatement ps1;
+        ResultSet resultSet= null;
+        try {
+            EBISystem.db().getActiveConnection().setSchema(data.trim());
+            EBISystem.db().getActiveConnection().setCatalog(data.trim());
+            ps1 = iDB().initPreparedStatement("SELECT EBIUSER FROM EBIUSER ");
+            resultSet = iDB().executePreparedQuery(ps1);
 
-        if (resultSet != null) {
-            try {
+            if (resultSet != null) {
                 resultSet.last();
                 final int size = resultSet.getRow();
                 if (size > 0) {
@@ -651,18 +655,20 @@ public class EBISystem {
                     }
                     ret = true;
                 }
+
+            }
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            ret = false;
+        } finally {
+            try {
+                if(resultSet != null){
+                    resultSet.close();
+                }
             } catch (final SQLException ex) {
                 ex.printStackTrace();
                 ret = false;
 
-            } finally {
-                try {
-                    resultSet.close();
-                } catch (final SQLException ex) {
-                    ex.printStackTrace();
-                    ret = false;
-
-                }
             }
         }
         return ret;
@@ -1074,18 +1080,18 @@ public class EBISystem {
     }
 
     public File[] listScriptFile() {
-        return new File(scriptRunPath + "/views/Run").listFiles();     
+        return new File(scriptRunPath + "/views/Run").listFiles();
     }
-    
+
     public File[] listCodeFile() {
-        return new File(scriptRunPath + "/code").listFiles();     
+        return new File(scriptRunPath + "/code").listFiles();
     }
 
     public void addScripts() {
         Stream.of(listScriptFile()).forEach(e -> {
             handleScriptFile(e);
         });
-        
+
         Stream.of(listCodeFile()).forEach(e -> {
             handleScriptFile(e);
         });
@@ -1137,24 +1143,24 @@ public class EBISystem {
         }
         return params;
     }
-    
-    public void clearWebOutput(){
+
+    public void clearWebOutput() {
         webOut = "";
     }
-    
-    public void webOut(String text){
+
+    public void webOut(String text) {
         webOut += text;
     }
-    
-    public String getWebOut(){
+
+    public String getWebOut() {
         return webOut;
     }
-    
-    public void bindVariable(String name, Object value){
+
+    public void bindVariable(String name, Object value) {
         builder.bindVariable(name, value);
     }
-    
-    public Object getVariable(String name){
+
+    public Object getVariable(String name) {
         return builder.getVariable(name);
     }
 

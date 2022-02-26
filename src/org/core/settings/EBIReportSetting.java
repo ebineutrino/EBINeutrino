@@ -26,6 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Optional;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -52,6 +53,7 @@ public class EBIReportSetting extends JPanel {
     private int reportID = 0;
     private JPanel jPanelReportParam = null;
     private JTextField jTextParamName = null;
+    private JTextField jTextParamAlias = null;
     private JComboBox jComboParamType = null;
     private JScrollPane jScrollPaneParam = null;
     private JXTable jTableParam = null;
@@ -61,6 +63,8 @@ public class EBIReportSetting extends JPanel {
     private SetReportformodule report = null;
     private File actualReportPath = null;
     private int paramPosition = 0;
+    private boolean isParamEdit = false;
+    private SetReportparameter selectedRepParam;
 
     /**
      * This is the default constructor
@@ -79,9 +83,9 @@ public class EBIReportSetting extends JPanel {
         tabModel = new MyTableModelReportSetting();
         initialize();
         showReports();
+        
         final ListSelectionModel rowSM = this.jTableAvailableReport.getSelectionModel();
         rowSM.addListSelectionListener(new ListSelectionListener() {
-
             @Override
             public void valueChanged(final ListSelectionEvent e) {
                 //Ignore extra messages.
@@ -96,7 +100,7 @@ public class EBIReportSetting extends JPanel {
                     }
                 }
             }
-        });
+        });  
         EBISystemSetting.selectedModule = 1;
     }
 
@@ -366,7 +370,6 @@ public class EBIReportSetting extends JPanel {
         }
 
         try {
-
             EBISystem.hibernate().transaction("REPORT_SESSION").begin();
             report.setIsactive(this.jCheckIsAktive.isSelected());
             report.setReportname(this.jTextReportName.getText());
@@ -409,7 +412,6 @@ public class EBIReportSetting extends JPanel {
             EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_PLEASE_SELECT_RECORD")).Show(EBIMessage.INFO_MESSAGE);
             return;
         }
-
         if (!EBIExceptionDialog.getInstance(EBISystem.i18n("EBI_LANG_MESSAGE_DELETE_RECORD")).Show(EBIMessage.INFO_MESSAGE_YESNO)) {
             return;
         }
@@ -436,20 +438,36 @@ public class EBIReportSetting extends JPanel {
             ex.printStackTrace();
         }
     }
+    
+    private void editParam(final int row){
+        try {
+            if (EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(tabModel.data[row][1].toString())) {
+                return;
+            }
+            int id = Integer.parseInt(tabMod.data[row][3].toString());
+            Optional<SetReportparameter> aval = report.getSetReportparameters().stream().filter(e -> e.getParamid().equals(id)).findAny();
+            if(Optional.ofNullable(aval.get()).isPresent()){
+                selectedRepParam = aval.get();
+                this.jTextParamAlias.setText(selectedRepParam.getParamalias());
+                this.jTextParamName.setText(selectedRepParam.getParamname());
+                this.jComboParamType.setSelectedItem(selectedRepParam.getParamtype());
+                isParamEdit = true;
+            }
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public void editReport(final int row) {
         try {
-
             try {
                 this.reportID = Integer.parseInt(tabModel.data[row][6].toString());
             } catch (final NumberFormatException ex) {
                 return;
             }
-
             if (EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(tabModel.data[row][1].toString())) {
                 return;
             }
-
             EBISystem.hibernate().transaction("REPORT_SESSION").begin();
             final Query query = EBISystem.hibernate().session("REPORT_SESSION").createQuery("from SetReportformodule where idReportForModule=?1 ").setParameter(1, this.reportID);
 
@@ -465,7 +483,7 @@ public class EBIReportSetting extends JPanel {
                 this.jTextReportPath.setText(report.getReportfilename());
                 this.jRadioShowAsPDF.setSelected(report.getShowaspdf());
                 this.jRadioShowAsNormal.setSelected(report.getShowaswindow());
-
+                this.newParam();
                 this.showParam();
                 EBISystem.hibernate().transaction("REPORT_SESSION").commit();
             }
@@ -516,7 +534,6 @@ public class EBIReportSetting extends JPanel {
                     tabModel.data[i][6] = set.getInt("IDREPORTFORMODULE");
                     ++i;
                 }
-
             } else {
                 tabModel.data = new Object[][]{{Boolean.valueOf(false), EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "", "", "", "", ""}};
             }
@@ -535,19 +552,30 @@ public class EBIReportSetting extends JPanel {
 
     private JPanel getJPanelReportParam() {
         if (jPanelReportParam == null) {
-            final JLabel jLabel6 = new JLabel();
-            jLabel6.setBounds(new Rectangle(11, 53, 117, 20));
-            jLabel6.setText(EBISystem.i18n("EBI_LANG_PARAM_TYPE"));
-            jLabel6.setFont(new Font("San Serif", Font.PLAIN, 11));
-            final JLabel jLabel5 = new JLabel();
-            jLabel5.setBounds(new Rectangle(11, 16, 116, 20));
-            jLabel5.setText(EBISystem.i18n("EBI_LANG_PARAM_NAME"));
-            jLabel5.setFont(new Font("San Serif", Font.PLAIN, 11));
+            
+            final JLabel paramAliasLabel = new JLabel();
+            paramAliasLabel.setBounds(new Rectangle(10, 10, 117, 20));
+            paramAliasLabel.setText(EBISystem.i18n("EBI_LANG_PARAM_ALIAS"));
+            paramAliasLabel.setFont(new Font("San Serif", Font.PLAIN, 11));
+            
+            final JLabel paramTypeLabel = new JLabel();
+            paramTypeLabel.setBounds(new Rectangle(10, 70, 117, 20));
+            paramTypeLabel.setText(EBISystem.i18n("EBI_LANG_PARAM_TYPE"));
+            paramTypeLabel.setFont(new Font("San Serif", Font.PLAIN, 11));
+            
+            final JLabel paramNameLabel = new JLabel();
+            paramNameLabel.setBounds(new Rectangle(10, 40, 116, 20));
+            paramNameLabel.setText(EBISystem.i18n("EBI_LANG_PARAM_NAME"));
+            paramNameLabel.setFont(new Font("San Serif", Font.PLAIN, 11));
+            
             jPanelReportParam = new JPanel();
             jPanelReportParam.setLayout(null);
             jPanelReportParam.setBounds(new Rectangle(14, 222, 823, 130));
-            jPanelReportParam.add(jLabel5, null);
-            jPanelReportParam.add(jLabel6, null);
+            jPanelReportParam.add(paramNameLabel, null);
+            jPanelReportParam.add(paramTypeLabel, null);
+            jPanelReportParam.add(paramAliasLabel, null);
+            
+            jPanelReportParam.add(getJTextParamAlias(), null);
             jPanelReportParam.add(getJTextParamName(), null);
             jPanelReportParam.add(getJComboParamType(), null);
             jPanelReportParam.add(getJScrollPaneParam(), null);
@@ -557,10 +585,18 @@ public class EBIReportSetting extends JPanel {
         return jPanelReportParam;
     }
 
+    private JTextField getJTextParamAlias() {
+        if (jTextParamAlias == null) {
+            jTextParamAlias = new JTextField();
+            jTextParamAlias.setBounds(new Rectangle(130, 10, 175, 25));
+        }
+        return jTextParamAlias;
+    }
+    
     private JTextField getJTextParamName() {
         if (jTextParamName == null) {
             jTextParamName = new JTextField();
-            jTextParamName.setBounds(new Rectangle(130, 14, 175, 25));
+            jTextParamName.setBounds(new Rectangle(130, 40, 175, 25));
         }
         return jTextParamName;
     }
@@ -568,7 +604,7 @@ public class EBIReportSetting extends JPanel {
     private JComboBox getJComboParamType() {
         if (jComboParamType == null) {
             jComboParamType = new JComboBox();
-            jComboParamType.setBounds(new Rectangle(130, 52, 175, 25));
+            jComboParamType.setBounds(new Rectangle(130, 70, 175, 25));
             jComboParamType.setModel(new javax.swing.DefaultComboBoxModel(new String[]{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "Integer", "String", "Text", "Double", "Date", "DateTime"}));
         }
         return jComboParamType;
@@ -594,16 +630,15 @@ public class EBIReportSetting extends JPanel {
                     if (e.getValueIsAdjusting()) {
                         return;
                     }
-
                     final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-
                     if (lsm.getMinSelectionIndex() != -1) {
                         selParamRow = jTableParam.convertRowIndexToModel(lsm.getMinSelectionIndex());
+                        editParam(selParamRow);
                     }
-
                     if (lsm.isSelectionEmpty()) {
                         jButtonParamDelete.setEnabled(false);
-                    } else if (!tabMod.data[selParamRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
+                    } else if (tabMod.data[selParamRow][0] == null 
+                                || !tabMod.data[selParamRow][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
                         jButtonParamDelete.setEnabled(true);
                     }
                 }
@@ -622,7 +657,7 @@ public class EBIReportSetting extends JPanel {
 
     public void showParam() {
         if (this.report.getSetReportparameters().size() > 0) {
-            tabMod.data = new Object[this.report.getSetReportparameters().size()][3];
+            tabMod.data = new Object[this.report.getSetReportparameters().size()][4];
 
             final Iterator itr = this.report.getSetReportparameters().iterator();
             int i = 0;
@@ -630,34 +665,51 @@ public class EBIReportSetting extends JPanel {
             while (itr.hasNext()) {
 
                 final SetReportparameter obj = (SetReportparameter) itr.next();
-                tabMod.data[i][0] = obj.getParamname();
-                tabMod.data[i][1] = obj.getParamtype();
+                tabMod.data[i][0] = obj.getParamalias();
+                tabMod.data[i][1] = obj.getParamname();
+                tabMod.data[i][2] = obj.getParamtype();
                 if (obj.getParamid() == null) {
                     obj.setParamid((i + 1) * (-1));
                 }
-                tabMod.data[i][2] = obj.getParamid();
+                tabMod.data[i][3] = obj.getParamid();
                 i++;
             }
         } else {
-            tabMod.data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), ""}};
+            tabMod.data = new Object[][]{{EBISystem.i18n("EBI_LANG_PLEASE_SELECT"), "",""}};
         }
         tabMod.fireTableDataChanged();
     }
 
     public void addParam() {
-        if (!validateInputParam()) {
+        if (!validateInputParam()){
             return;
         }
         try {
-
             final SetReportparameter repParam = new SetReportparameter();
             repParam.setCreateddate(new Date());
             repParam.setPosition(++paramPosition);
             repParam.setCreatedfrom(EBISystem.ebiUser);
+            repParam.setParamalias(this.jTextParamAlias.getText());
             repParam.setParamname(this.jTextParamName.getText());
             repParam.setParamtype(this.jComboParamType.getSelectedItem().toString());
             report.getSetReportparameters().add(repParam);
-
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+        }
+        this.showParam();
+        this.newParam();
+    }
+    
+    public void updateParam(){
+        if (!validateInputParam()){
+            return;
+        }
+        try {
+            if(selectedRepParam != null){
+                selectedRepParam.setParamalias(this.jTextParamAlias.getText());
+                selectedRepParam.setParamname(this.jTextParamName.getText());
+                selectedRepParam.setParamtype(this.jComboParamType.getSelectedItem().toString());
+            }
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
@@ -666,6 +718,9 @@ public class EBIReportSetting extends JPanel {
     }
 
     public void newParam() {
+        selectedRepParam = null;
+        this.isParamEdit = false;
+        this.jTextParamAlias.setText("");
         this.jTextParamName.setText("");
         this.jComboParamType.setSelectedIndex(0);
     }
@@ -681,11 +736,8 @@ public class EBIReportSetting extends JPanel {
 
         final Iterator iter = this.report.getSetReportparameters().iterator();
         while (iter.hasNext()) {
-
             final SetReportparameter param = (SetReportparameter) iter.next();
-
-            if (Integer.parseInt(data[2].toString()) == param.getParamid()) {
-
+            if (Integer.parseInt(data[3].toString()) == param.getParamid()) {
                 if (param.getParamid() > 0) {
                     try {
                         EBISystem.hibernate().transaction("REPORT_SESSION").begin();
@@ -696,10 +748,10 @@ public class EBIReportSetting extends JPanel {
                     }
                 }
                 this.report.getSetReportparameters().remove(param);
+                this.newParam();
                 this.showParam();
                 break;
             }
-
         }
     }
 
@@ -709,10 +761,13 @@ public class EBIReportSetting extends JPanel {
             jButtonAddParam.setBounds(new Rectangle(320, 13, 31, 28));
             jButtonAddParam.setIcon(EBISystem.getInstance().getIconResource("save.png"));
             jButtonAddParam.addActionListener(new java.awt.event.ActionListener() {
-
                 @Override
                 public void actionPerformed(final java.awt.event.ActionEvent e) {
-                    addParam();
+                    if(isParamEdit){
+                        updateParam();
+                    }else{
+                        addParam();
+                    }
                 }
             });
         }

@@ -34,8 +34,7 @@ final public class EBIArbitration {
     public final void waitJobDone(final String name){
         while(isJobDone(name) != true){
             try {
-                Thread.currentThread();
-				Thread.sleep(500);
+		Thread.sleep(200);
             } catch (final InterruptedException e) {
                 e.printStackTrace();
             }

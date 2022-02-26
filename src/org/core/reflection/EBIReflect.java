@@ -14,12 +14,9 @@ public class EBIReflect {
     public void mapBean(String cls){
         try {
             Class c = Class.forName(cls);
-            EBISystem.getInstance().mapBean(cls,c.newInstance());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
+            EBISystem.getInstance().mapBean(cls,c.getConstructor(null).newInstance(null));
+        } catch (ClassNotFoundException| InstantiationException | IllegalAccessException | 
+                        NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
@@ -34,7 +31,6 @@ public class EBIReflect {
                     String clsName = path.substring(0,idx);
                     Class c = Class.forName(clsName);
                     c.getMethod(method).invoke(EBISystem.getInstance().getMappedBean(c));
-
                 } catch (ClassNotFoundException | NoSuchMethodException e) {
                     e.printStackTrace();
                     EBIExceptionDialog.getInstance(e.getMessage()).Show(EBIMessage.ERROR_MESSAGE);

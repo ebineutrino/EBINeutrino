@@ -1049,6 +1049,7 @@
         `POSITION` integer,
         CREATEDDATE datetime,
         CREATEDFROM varchar(150),
+        PARAMALIAS varchar(200),
         PARAMNAME varchar(150),
         PARAMTYPE varchar(150),
         primary key (PARAMID)

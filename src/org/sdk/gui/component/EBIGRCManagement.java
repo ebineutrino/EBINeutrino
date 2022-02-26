@@ -93,7 +93,7 @@ public class EBIGRCManagement extends JPanel implements MouseListener, MouseMoti
             if (diff > -1) {
                 drawProjectStartEnd(diff);
             }
-            g2.setColor(new Color(34, 34, 34));
+            g2.setColor(new Color(41, 49, 59));
             for (int i = 0; i <= getWidth() / 20; i++) {
                 g2.drawLine(i * 20, 0, i * 20, getHeight());
             }

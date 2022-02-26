@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import org.sdk.EBISystem;
 
+
 public class EBISplashScreen extends JWindow {
 
     private JPanel jContentPane = null;
@@ -22,7 +23,9 @@ public class EBISplashScreen extends JWindow {
     @Override
     public void paint(final Graphics g) {
         super.paint(g);
+        jProgressBar.repaint();
         g.drawImage(splImg.getImage(), 0, 0, this);
+         
     }
 
     private void initialize() {

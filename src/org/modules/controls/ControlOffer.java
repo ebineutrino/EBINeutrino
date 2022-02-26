@@ -249,7 +249,6 @@ public class ControlOffer {
                     break;
                 }
             }
-
             EBISystem.builder().vpanel("Offer").setID(compOffer.getOfferid());
             EBISystem.builder().vpanel("Offer").setCreatedDate(EBISystem.getInstance().getDateToString(compOffer.getCreateddate() == null ? new Date() : compOffer.getCreateddate()));
             EBISystem.builder().vpanel("Offer").setCreatedFrom(compOffer.getCreatedfrom() == null ? EBISystem.ebiUser : compOffer.getCreatedfrom());

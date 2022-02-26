@@ -17,7 +17,7 @@ import java.sql.DriverManager;
 /**
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
- * Foundation; version 2 of the License.
+ * Foundation; version 3 of the License.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
@@ -60,7 +60,6 @@ public class EBISetupDB extends JPanel {
         databaseDriverCombo.addItem("com.mysql.cj.jdbc.Driver");
         databaseDriverCombo.addItem("org.h2.Driver");
         databaseTypeText.setSelectedItem("mysql");
-        databaseTypeText.setSelectedItem("h2");
     }
 
     private void initialize() {
@@ -377,6 +376,17 @@ public class EBISetupDB extends JPanel {
             databaseTypeText.setBounds(new Rectangle(145, 70, 150, 25));
             databaseTypeText.addItem("MySQL");
             databaseTypeText.addItem("h2");
+            databaseTypeText.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String selectedDBType = ((JComboBox)e.getSource()).getSelectedItem().toString().toLowerCase();
+                    if("mysql".equals(selectedDBType)){
+                        databaseDriverCombo.setSelectedItem("com.mysql.cj.jdbc.Driver");
+                    }else if("h2".equals(selectedDBType)){
+                        databaseDriverCombo.setSelectedItem("org.h2.Driver");
+                    }
+                }
+            });
         }
         return databaseTypeText;
     }

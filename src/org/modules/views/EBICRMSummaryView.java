@@ -25,6 +25,8 @@ import java.text.NumberFormat;
 import java.util.Iterator;
 import lombok.Getter;
 import lombok.Setter;
+import org.sdk.arbitration.EBIArbCallback;
+import org.sdk.arbitration.EBIArbitration;
 
 public class EBICRMSummaryView {
 
@@ -242,12 +244,12 @@ public class EBICRMSummaryView {
     }
 
     public void showSummaryObjectView() {
-
         try {
             if (selectedSummaryRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT")
                     .equals(tabModel.data[selectedSummaryRow][0].toString())) {
                 return;
             }
+
             EBISystem.showInActionStatus("Summary");
             EBISystem.builder().vpanel("Summary").setCursor(new Cursor(Cursor.WAIT_CURSOR));
             String selType = tabModel.data[selectedSummaryRow][0].toString();
@@ -258,58 +260,70 @@ public class EBICRMSummaryView {
                 EBISystem.getModule().createUI(Integer.parseInt(tabModel.data[selectedSummaryRow][6].toString()), false);
             }
 
-            if (EBISystem.i18n("EBI_LANG_C_OPPORTUNITY").equals(selType)) {
-                if (EBISystem.getModule().getOpportunityPane() != null) {
-                    EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_OPPORTUNITY")));
-                    EBISystem.getModule().getOpportunityPane().remoteEditOpportunity(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
-                }
-            } else if (EBISystem.i18n("EBI_LANG_C_ACTIVITIES").equals(selType)) {
-                if (EBISystem.getModule().getActivitiesPane() != null) {
-                    EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_ACTIVITIES")));
-                    EBISystem.getModule().getActivitiesPane().remoteEditActivity(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
-                }
-            } else if (EBISystem.i18n("EBI_LANG_C_SERVICE").equals(selType)) {
-                if (EBISystem.getModule().getServicePane() != null) {
-                    EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_SERVICE")));
-                    EBISystem.getModule().getServicePane().remoteEditService(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
-                }
-            } else if (EBISystem.i18n("EBI_LANG_C_OFFER").equals(selType)) {
-                if (EBISystem.getModule().getOfferPane() != null) {
-                    EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_OFFER")));
-                    EBISystem.getModule().getOfferPane().editOfferRemote(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
-                }
-            } else if (EBISystem.i18n("EBI_LANG_C_ORDER").equals(selType)) {
-                if (EBISystem.getModule().getOrderPane() != null) {
-                    EBISystem.getInstance().getIEBIContainerInstance().
-                            setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_ORDER")));
-                    EBISystem.getModule().getOrderPane().editOrderRemote(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
-                }
-            } else if (EBISystem.i18n("EBI_LANG_C_TAB_PROSOL").equals(selType)) {
-
-                if (!EBISystem.getModule().crmToolBar.isProsolSelected()) {
-                    EBISystem.getModule().crmToolBar.enableToolButtonProsol();
-                    EBISystem.getModule().ebiContainer.showClosableProsolContainer();
-                } else {
-                    EBISystem.getModule().ebiContainer.setSelectedTab(EBISystem.getInstance().
-                            getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_TAB_PROSOL")));
-                }
-                EBISystem.getModule().getProsolPane().dataControlProsol.dataEdit(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
-            } else if (EBISystem.i18n("EBI_LANG_C_TAB_INVOICE").equals(selType)) {
-
-                if (!EBISystem.getModule().crmToolBar.isInvoiceSelected()) {
-                    EBISystem.getModule().crmToolBar.enableToolButtonInvoice();
-                    EBISystem.getModule().ebiContainer.showClosableInvoiceContainer();
-                } else {
-                    EBISystem.getModule().ebiContainer.setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_TAB_INVOICE")));
-                }
-                EBISystem.getModule().getInvoicePane().getDataControlInvoice().dataEdit(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
-            }
-            searchSummary();
+            loadSummaryData();
+            
         } catch (final Exception e) {
             e.printStackTrace();
         } finally {
             EBISystem.builder().vpanel("Summary").setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
+    }
+
+    private void loadSummaryData() {
+        EBIArbitration.arbitrate().begin("LOAD_SUMMARY_DATA", new EBIArbCallback() {
+            @Override
+            public boolean callback(Thread currentThread) {
+                EBIArbitration.arbitrate().waitJobDone("LOAD_CRM_DATA");
+                String selType = tabModel.data[selectedSummaryRow][0].toString();
+                if (EBISystem.i18n("EBI_LANG_C_OPPORTUNITY").equals(selType)) {
+                    if (EBISystem.getModule().getOpportunityPane() != null) {
+                        EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_OPPORTUNITY")));
+                        EBISystem.getModule().getOpportunityPane().remoteEditOpportunity(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
+                    }
+                } else if (EBISystem.i18n("EBI_LANG_C_ACTIVITIES").equals(selType)) {
+                    if (EBISystem.getModule().getActivitiesPane() != null) {
+                        EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_ACTIVITIES")));
+                        EBISystem.getModule().getActivitiesPane().remoteEditActivity(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
+                    }
+                } else if (EBISystem.i18n("EBI_LANG_C_SERVICE").equals(selType)) {
+                    if (EBISystem.getModule().getServicePane() != null) {
+                        EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_SERVICE")));
+                        EBISystem.getModule().getServicePane().remoteEditService(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
+                    }
+                } else if (EBISystem.i18n("EBI_LANG_C_OFFER").equals(selType)) {
+                    if (EBISystem.getModule().getOfferPane() != null) {
+                        EBISystem.getInstance().getIEBIContainerInstance().setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_OFFER")));
+                        EBISystem.getModule().getOfferPane().editOfferRemote(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
+                    }
+                } else if (EBISystem.i18n("EBI_LANG_C_ORDER").equals(selType)) {
+                    if (EBISystem.getModule().getOrderPane() != null) {
+                        EBISystem.getInstance().getIEBIContainerInstance().
+                                setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_ORDER")));
+                        EBISystem.getModule().getOrderPane().editOrderRemote(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
+                    }
+                } else if (EBISystem.i18n("EBI_LANG_C_TAB_PROSOL").equals(selType)) {
+                    if (!EBISystem.getModule().crmToolBar.isProsolSelected()) {
+                        EBISystem.getModule().crmToolBar.enableToolButtonProsol();
+                        EBISystem.getModule().ebiContainer.showClosableProsolContainer();
+                    } else {
+                        EBISystem.getModule().ebiContainer.setSelectedTab(EBISystem.getInstance().
+                                getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_TAB_PROSOL")));
+                    }
+                    EBISystem.getModule().getProsolPane().dataControlProsol.dataEdit(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
+                } else if (EBISystem.i18n("EBI_LANG_C_TAB_INVOICE").equals(selType)) {
+                    if (!EBISystem.getModule().crmToolBar.isInvoiceSelected()) {
+                        EBISystem.getModule().crmToolBar.enableToolButtonInvoice();
+                        EBISystem.getModule().ebiContainer.showClosableInvoiceContainer();
+                    } else {
+                        EBISystem.getModule().ebiContainer.setSelectedTab(EBISystem.getInstance().getIEBIContainerInstance().getIndexByTitle(EBISystem.i18n("EBI_LANG_C_TAB_INVOICE")));
+                    }
+                    EBISystem.getModule().getInvoicePane().getDataControlInvoice().dataEdit(Integer.parseInt(tabModel.data[selectedSummaryRow][7].toString()));
+                }
+                searchSummary();
+
+                return true;
+            }
+        });
     }
 
     private boolean validateInput() {

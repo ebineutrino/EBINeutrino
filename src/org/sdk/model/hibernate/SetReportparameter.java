@@ -43,6 +43,8 @@ public class SetReportparameter implements Serializable {
     private Date createddate;
     @Column(name = "CREATEDFROM")
     private String createdfrom;
+    @Column(name = "PARAMALIAS")
+    private String paramalias;
     @Column(name = "PARAMNAME")
     private String paramname;
     @Column(name = "PARAMTYPE")
@@ -87,6 +89,14 @@ public class SetReportparameter implements Serializable {
 
     public void setCreatedfrom(String createdfrom) {
         this.createdfrom = createdfrom;
+    }
+    
+    public String getParamalias() {
+        return paramalias;
+    }
+
+    public void setParamalias(String paramalias) {
+        this.paramalias = paramalias;
     }
 
     public String getParamname() {

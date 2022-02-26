@@ -123,7 +123,7 @@ public class MoodyBlueTheme extends DefaultMetalTheme {
                 }
                 
                 if (kl.toLowerCase().indexOf("selectionforeground") != -1 ) {
-                    UIManager.put(key, new Color(50, 50, 50));
+                    UIManager.put(key, new Color(198, 57, 57));
                 }
                 
                 if (kl.toLowerCase().indexOf("selectionbackground") != -1) {

@@ -94,8 +94,8 @@ public class EBIReportSetting extends JPanel {
                 }
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (!lsm.isSelectionEmpty()) {
-                    if (lsm.getMinSelectionIndex() != -1) {
-                        selRow = jTableAvailableReport.convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    if (lsm.getLeadSelectionIndex() != -1) {
+                        selRow = jTableAvailableReport.convertRowIndexToModel(lsm.getLeadSelectionIndex());
                         editReport(selRow);
                     }
                 }
@@ -631,8 +631,8 @@ public class EBIReportSetting extends JPanel {
                         return;
                     }
                     final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                    if (lsm.getMinSelectionIndex() != -1) {
-                        selParamRow = jTableParam.convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    if (lsm.getLeadSelectionIndex() != -1) {
+                        selParamRow = jTableParam.convertRowIndexToModel(lsm.getLeadSelectionIndex());
                         editParam(selParamRow);
                     }
                     if (lsm.isSelectionEmpty()) {

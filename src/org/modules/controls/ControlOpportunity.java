@@ -546,7 +546,7 @@ public class ControlOpportunity {
         }
     }
 
-    public void addContact(final EBIMeetingAddContactDialog newContact, final Companyopportunitycontact contact) {
+    public void addContact(final EBIMeetingAddContactDialog newContact, final Companyopportunitycontact contact, boolean edit) {
         contact.setCompanyopportunity(opportunity);
         contact.setGender(newContact.getGenderText());
         contact.setSurname(newContact.getSurnameText());
@@ -566,7 +566,9 @@ public class ControlOpportunity {
         if (contact.getPos() == null) {
             contact.setPos(0);
         }
-
+        if(opportunity.getCompanyopportunitycontacts().contains(contact)){
+            opportunity.getCompanyopportunitycontacts().remove(opportunity.getCompanyopportunitycontacts().indexOf(contact));
+        }
         this.opportunity.getCompanyopportunitycontacts().add(contact);
     }
 
@@ -635,7 +637,7 @@ public class ControlOpportunity {
         final File fs = EBISystem.getInstance().getOpenDialog(JFileChooser.FILES_ONLY);
         if (fs != null) {
             final byte[] file = EBISystem.getInstance().readFileToByte(fs);
-            if (file != null) {
+            if (file != null && file.length < 10000000) {
                 final Companyopporunitydocs docs = new Companyopporunitydocs();
                 docs.setDocid((opportunity.getCompanyopporunitydocses().size() + 1) * -1);
                 docs.setCompanyopportunity(this.opportunity);

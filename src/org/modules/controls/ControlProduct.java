@@ -189,8 +189,8 @@ public class ControlProduct {
                         nd.setCrmproduct(pnew);
                         nd.setCreateddate(new Date());
                         nd.setCreatedfrom(EBISystem.ebiUser);
-                        nd.setName(dimx.getName());
-                        nd.setValue(dimx.getValue());
+                        nd.setDimensionName(dimx.getDimensionName());
+                        nd.setDimensionValue(dimx.getDimensionValue());
                         pnew.getCrmproductdimensions().add(nd);
                         EBISystem.hibernate().session("EBIPRODUCT_SESSION").saveOrUpdate(nd);
                     }
@@ -433,11 +433,11 @@ public class ControlProduct {
 
             while (iter.hasNext()) {
                 final Crmproductdimension dim = (Crmproductdimension) iter.next();
-                if (dim.getName() != null) {
-                    list.add(dim.getName());
+                if (dim.getDimensionName() != null) {
+                    list.add(dim.getDimensionName());
                 }
-                if (dim.getValue() != null) {
-                    list.add(dim.getValue());
+                if (dim.getDimensionValue() != null) {
+                    list.add(dim.getDimensionValue());
                 }
                 list.add("*EOR*"); // END OF RECORD
             }
@@ -455,7 +455,7 @@ public class ControlProduct {
         final File fs = EBISystem.getInstance().getOpenDialog(JFileChooser.FILES_ONLY);
         if (fs != null) {
             final byte[] file = EBISystem.getInstance().readFileToByte(fs);
-            if (file != null) {
+            if (file != null && file.length < 10000000) {
                 final Crmproductdocs docs = new Crmproductdocs();
                 docs.setProductdocid((product.getCrmproductdocses().size() + 1) * -1);
                 docs.setCrmproduct(product);
@@ -664,7 +664,7 @@ public class ControlProduct {
     }
 
     public void dataShowDimension() {
-        if (this.product.getCrmproductdimensions().size() > 0) {
+        if (this.product.getCrmproductdimensions() != null && this.product.getCrmproductdimensions().size() > 0) {
             EBISystem.getModule().getEBICRMProductPane().getProductModelDimension().data = new Object[this.product.getCrmproductdimensions().size()][3];
             final Iterator iter = this.product.getCrmproductdimensions().iterator();
             int i = 0;
@@ -675,8 +675,8 @@ public class ControlProduct {
                     dim.setDimensionid((i + 1) * -1);
                 }
                 
-                EBISystem.getModule().getEBICRMProductPane().getProductModelDimension().data[i][0] = dim.getName();
-                EBISystem.getModule().getEBICRMProductPane().getProductModelDimension().data[i][1] = dim.getValue();
+                EBISystem.getModule().getEBICRMProductPane().getProductModelDimension().data[i][0] = dim.getDimensionName();
+                EBISystem.getModule().getEBICRMProductPane().getProductModelDimension().data[i][1] = dim.getDimensionValue();
                 EBISystem.getModule().getEBICRMProductPane().getProductModelDimension().data[i][2] = dim.getDimensionid();
                 i++;
             }

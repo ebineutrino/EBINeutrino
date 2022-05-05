@@ -430,32 +430,29 @@ public class EBICRMDialogAddProduct {
         PreparedStatement pst = null;
 
         try {
-
-            pst = EBISystem.getInstance().iDB().initPreparedStatement("SELECT * FROM CRMPRODUCTDIMENSION WHERE PRODUCTID=? AND NAME LIKE ? ORDER BY VALUE DESC ");
+            pst = EBISystem.getInstance().iDB().initPreparedStatement("SELECT * FROM CRMPRODUCTDIMENSION WHERE PRODUCTID=? AND DIMENSIONNAME LIKE ? ORDER BY DIMENSIONVALUE DESC ");
             pst.setInt(1, this.productID);
             pst.setString(2, EBISystem.i18n("EBI_LANG_DEDUCTION"));
             set = EBISystem.getInstance().iDB().executePreparedQuery(pst);
             final int count = Integer.parseInt(EBISystem.builder().textField("quantityText", "productInsertDialog").getText());
-
-            set.last();
-            if (set.getRow() > 0) {
-                set.beforeFirst();
-                while (set.next()) {
-
-                    if (set.getString("VALUE") != null || !"".equals(set.getString("VALUE"))) {
-
-                        String[] splt = set.getString("VALUE").split("-");
-                        if (splt.length <= 1) {
-                            splt = set.getString("VALUE").split(" ");
-                            if (splt.length <= 0) {
-                                return;
+            if(set != null){
+                set.last();
+                if (set.getRow() > 0) {
+                    set.beforeFirst();
+                    while (set.next()) {
+                        if (set.getString("DIMENSIONVALUE") != null || !"".equals(set.getString("DIMENSIONVALUE"))) {
+                            String[] splt = set.getString("DIMENSIONVALUE").split("-");
+                            if (splt.length <= 1) {
+                                splt = set.getString("DIMENSIONVALUE").split(" ");
+                                if (splt.length <= 0) {
+                                    return;
+                                }
                             }
-                        }
-
-                        if (count >= Integer.parseInt(splt[0]) && count <= Integer.parseInt(splt[1])) {
-                            EBISystem.builder().textField("deductionText", "productInsertDialog").setText(splt[2].substring(0, splt[2].length() - 1));
-                        } else if (count < Integer.parseInt(splt[0]) && count <= Integer.parseInt(splt[1])) {
-                            EBISystem.builder().textField("deductionText", "productInsertDialog").setText("");
+                            if (count >= Integer.parseInt(splt[0]) && count <= Integer.parseInt(splt[1])) {
+                                EBISystem.builder().textField("deductionText", "productInsertDialog").setText(splt[2].substring(0, splt[2].length() - 1));
+                            } else if (count < Integer.parseInt(splt[0]) && count <= Integer.parseInt(splt[1])) {
+                                EBISystem.builder().textField("deductionText", "productInsertDialog").setText("");
+                            }
                         }
                     }
                 }

@@ -27,8 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Crmproductdimension.findByCreatedfrom", query = "SELECT c FROM Crmproductdimension c WHERE c.createdfrom = :createdfrom"),
     @NamedQuery(name = "Crmproductdimension.findByChangeddate", query = "SELECT c FROM Crmproductdimension c WHERE c.changeddate = :changeddate"),
     @NamedQuery(name = "Crmproductdimension.findByChangedfrom", query = "SELECT c FROM Crmproductdimension c WHERE c.changedfrom = :changedfrom"),
-    @NamedQuery(name = "Crmproductdimension.findByName", query = "SELECT c FROM Crmproductdimension c WHERE c.name = :name"),
-    @NamedQuery(name = "Crmproductdimension.findByValue", query = "SELECT c FROM Crmproductdimension c WHERE c.value = :value")})
+    @NamedQuery(name = "Crmproductdimension.findByName", query = "SELECT c FROM Crmproductdimension c WHERE c.dimensionName = :dimensionName"),
+    @NamedQuery(name = "Crmproductdimension.findByValue", query = "SELECT c FROM Crmproductdimension c WHERE c.dimensionValue = :dimensionValue")})
 public class Crmproductdimension implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,10 +47,10 @@ public class Crmproductdimension implements Serializable {
     private Date changeddate;
     @Column(name = "CHANGEDFROM")
     private String changedfrom;
-    @Column(name = "NAME")
-    private String name;
-    @Column(name = "VALUE")
-    private String value;
+    @Column(name = "DIMENSIONNAME")
+    private String dimensionName;
+    @Column(name = "DIMENSIONVALUE")
+    private String dimensionValue;
     @JoinColumn(name = "PRODUCTID", referencedColumnName = "PRODUCTID")
     @ManyToOne
     private Crmproduct crmproduct;
@@ -101,20 +101,20 @@ public class Crmproductdimension implements Serializable {
         this.changedfrom = changedfrom;
     }
 
-    public String getName() {
-        return name;
+    public String getDimensionName() {
+        return this.dimensionName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDimensionName(String name) {
+        this.dimensionName = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getDimensionValue() {
+        return dimensionValue;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setDimensionValue(String value) {
+        this.dimensionValue = value;
     }
 
     public Crmproduct getCrmproduct() {
@@ -147,7 +147,7 @@ public class Crmproductdimension implements Serializable {
 
     @Override
     public String toString() {
-        return "ebiNeutrinoSDK.model.hibernate.Crmproductdimension[ dimensionid=" + dimensionid + " ]";
+        return "org.sdk.model.hibernate.Crmproductdimension[ dimensionid=" + dimensionid + " ]";
     }
     
 }

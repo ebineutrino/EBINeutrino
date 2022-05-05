@@ -94,8 +94,8 @@ public class EBICRMCompanyActivityView implements ChangeListener {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.builder().table("tableActivityDoc", "Activity").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedDocRow = EBISystem.builder().table("tableActivityDoc", "Activity").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -124,7 +124,7 @@ public class EBICRMCompanyActivityView implements ChangeListener {
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 try {
                     selectedActivityRow = 0;
-                    if (lsm.getMinSelectionIndex() != -1) {
+                    if (lsm.getLeadSelectionIndex() != -1) {
                         selectedActivityRow = EBISystem.builder().table("tableActivity", "Activity").convertRowIndexToModel(EBISystem.builder().table("tableActivity", "Activity").getSelectedRow());
                     }
 

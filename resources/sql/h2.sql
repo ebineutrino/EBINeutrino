@@ -857,8 +857,8 @@
         CREATEDFROM varchar(150),
         CHANGEDDATE datetime,
         CHANGEDFROM varchar(150),
-        `NAME` varchar(255),
-        `VALUE` varchar(255),
+        `DIMENSIONNAME` varchar(255),
+        `DIMENSIONVALUE` varchar(255),
         primary key (DIMENSIONID)
     );
 /

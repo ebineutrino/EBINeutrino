@@ -9,7 +9,6 @@ import org.sdk.model.hibernate.Companyopportunitycontact;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
-import javax.swing.ImageIcon;
 
 public class EBIMeetingAddContactDialog {
 
@@ -53,11 +52,11 @@ public class EBIMeetingAddContactDialog {
             public void actionPerformed(final ActionEvent e) {
                 final EBIDialogSearchContact addCon = new EBIDialogSearchContact(false);
 
-                addCon.setValueToComponent(EBISystem.builder().combo("genderText", "addNewContactDialog"), "Gender");
-                addCon.setValueToComponent(EBISystem.builder().textField("positionText", "addNewContactDialog"), "Position");
+                addCon.setValueToComponent(EBISystem.builder().combo("genderText", "addNewContactDialog"), "CGender");
+                addCon.setValueToComponent(EBISystem.builder().textField("positionText", "addNewContactDialog"), "CPosition");
 
-                addCon.setValueToComponent(EBISystem.builder().textField("surnameText", "addNewContactDialog"), "Surname");
-                addCon.setValueToComponent(EBISystem.builder().textField("nameText", "addNewContactDialog"), "contact.Name");
+                addCon.setValueToComponent(EBISystem.builder().textField("surnameText", "addNewContactDialog"), "CSurname");
+                addCon.setValueToComponent(EBISystem.builder().textField("nameText", "addNewContactDialog"), "CName");
 
                 addCon.setValueToComponent(EBISystem.builder().textField("streetNrText", "addNewContactDialog"), "Street");
                 addCon.setValueToComponent(EBISystem.builder().textField("zipText", "addNewContactDialog"), "Zip");
@@ -66,14 +65,14 @@ public class EBIMeetingAddContactDialog {
                 addCon.setValueToComponent(EBISystem.builder().textField("countryText", "addNewContactDialog"), "Country");
                 addCon.setValueToComponent(EBISystem.builder().textField("pboxText", "addNewContactDialog"), "PBox");
 
-                addCon.setValueToComponent(EBISystem.builder().textField("emailText", "addNewContactDialog"), "contact.EMail");
-                addCon.setValueToComponent(EBISystem.builder().textField("faxText", "addNewContactDialog"), "contact.Fax");
+                addCon.setValueToComponent(EBISystem.builder().textField("emailText", "addNewContactDialog"), "CEMail");
+                addCon.setValueToComponent(EBISystem.builder().textField("faxText", "addNewContactDialog"), "CFax");
 
-                addCon.setValueToComponent(EBISystem.builder().textField("telephoneText", "addNewContactDialog"), "contact.PHONE");
-                addCon.setValueToComponent(EBISystem.builder().textField("mobileText", "addNewContactDialog"), "contact.MOBILE");
+                addCon.setValueToComponent(EBISystem.builder().textField("telephoneText", "addNewContactDialog"), "CPHONE");
+                addCon.setValueToComponent(EBISystem.builder().textField("mobileText", "addNewContactDialog"), "CMOBILE");
 
-                addCon.setValueToComponent(EBISystem.builder().timePicker("birddateText", "addNewContactDialog"), "contact.BIRDDATE");
-                addCon.setValueToComponent(EBISystem.builder().textArea("contactDescription", "addNewContactDialog"), "contact.DESCRIPTION");
+                addCon.setValueToComponent(EBISystem.builder().timePicker("birddateText", "addNewContactDialog"), "CBIRDDATE");
+                addCon.setValueToComponent(EBISystem.builder().textArea("contactDescription", "addNewContactDialog"), "CDESCRIPTION");
                 EBISystem.builder().dialog("addNewContactDialog").setVisible(false);
                 addCon.setVisible();
                 EBISystem.builder().dialog("addNewContactDialog").setVisible(true);
@@ -96,26 +95,26 @@ public class EBIMeetingAddContactDialog {
                 if (isMeeting) {
                     if (isEdit) {
                         contact.setPos(EBISystem.builder().getCheckBox("mainContact", "addNewContactDialog").isSelected() ? 1 : 0);
-                        EBISystem.getModule().getMeetingProtocol().getDataMeetingControl().addContact(EBIMeetingAddContactDialog.this, contact);
+                        EBISystem.getModule().getMeetingProtocol().getDataMeetingControl().addContact(EBIMeetingAddContactDialog.this, contact, true);
                     } else {
                         final Companymeetingcontacts contact = new Companymeetingcontacts();
                         contact.setMeetingcontactid((EBISystem.getModule().getMeetingProtocol().getDataMeetingControl().getMeetingContactlist().size() + 1) * -1);
                         contact.setCreateddate(new Date());
                         contact.setPos(EBISystem.builder().getCheckBox("mainContact", "addNewContactDialog").isSelected() ? 1 : 0);
                         contact.setCreatedfrom(EBISystem.ebiUser);
-                        EBISystem.getModule().getMeetingProtocol().getDataMeetingControl().addContact(EBIMeetingAddContactDialog.this, contact);
+                        EBISystem.getModule().getMeetingProtocol().getDataMeetingControl().addContact(EBIMeetingAddContactDialog.this, contact, false);
                     }
                 } else {
                     if (isEdit) {
                         ocontact.setPos(EBISystem.builder().getCheckBox("mainContact", "addNewContactDialog").isSelected() ? 1 : 0);
-                        EBISystem.getModule().getOpportunityPane().getDataOpportuniyControl().addContact(EBIMeetingAddContactDialog.this, ocontact);
+                        EBISystem.getModule().getOpportunityPane().getDataOpportuniyControl().addContact(EBIMeetingAddContactDialog.this, ocontact, true);
                     } else {
                         final Companyopportunitycontact contact = new Companyopportunitycontact();
                         contact.setOpportunitycontactid((EBISystem.getModule().getOpportunityPane().getDataOpportuniyControl().getOpportunity().getCompanyopportunitycontacts().size() + 1) * -1);
                         contact.setCreateddate(new Date());
                         contact.setPos(EBISystem.builder().getCheckBox("mainContact", "addNewContactDialog").isSelected() ? 1 : 0);
                         contact.setCreatedfrom(EBISystem.ebiUser);
-                        EBISystem.getModule().getOpportunityPane().getDataOpportuniyControl().addContact(EBIMeetingAddContactDialog.this, contact);
+                        EBISystem.getModule().getOpportunityPane().getDataOpportuniyControl().addContact(EBIMeetingAddContactDialog.this, contact, false);
                     }
                 }
                 EBISystem.builder().dialog("addNewContactDialog").setVisible(false);

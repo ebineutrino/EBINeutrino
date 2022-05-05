@@ -52,7 +52,7 @@ public class EBIDialogValueSetter {
                     EBISystem.builder().button("deleteBnt", "valueSetterDialog").setEnabled(false);
                     EBISystem.builder().button("editBnt", "valueSetterDialog").setEnabled(false);
                 } else {
-                    selRow = lsm.getMinSelectionIndex();
+                    selRow = lsm.getLeadSelectionIndex();
                     if (selRow <= tabMod.data.length && selRow != -1) {
                         if (!EBISystem.i18n("EBI_LANG_PLEASE_SELECT").equals(EBISystem.builder()
                                 .table("valueTable", "valueSetterDialog").getValueAt(selRow, 0).toString())) {

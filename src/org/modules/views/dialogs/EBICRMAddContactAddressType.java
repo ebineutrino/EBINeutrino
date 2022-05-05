@@ -107,18 +107,19 @@ public class EBICRMAddContactAddressType {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent e) {
                 final EBIDialogSearchContact addCon = new EBIDialogSearchContact(false);
-                addCon.setValueToComponent(EBISystem.builder().combo("genderText", "addNewReceiverDialog"), "Gender");
-                addCon.setValueToComponent(EBISystem.builder().textField("surnameText", "addNewReceiverDialog"), "Surname");
-                addCon.setValueToComponent(EBISystem.builder().textField("nameText", "addNewReceiverDialog"), "contact.Name");
+          
+                addCon.setValueToComponent(EBISystem.builder().combo("genderText", "addNewReceiverDialog"), "CGender");
+                addCon.setValueToComponent(EBISystem.builder().textField("surnameText", "addNewReceiverDialog"), "CSurname");
+                addCon.setValueToComponent(EBISystem.builder().textField("nameText", "addNewReceiverDialog"), "CName");
                 addCon.setValueToComponent(EBISystem.builder().textField("streetText", "addNewReceiverDialog"), "Street");
                 addCon.setValueToComponent(EBISystem.builder().textField("zipText", "addNewReceiverDialog"), "Zip");
                 addCon.setValueToComponent(EBISystem.builder().textField("locationText", "addNewReceiverDialog"), "Location");
                 addCon.setValueToComponent(EBISystem.builder().textField("countryText", "addNewReceiverDialog"), "Country");
                 addCon.setValueToComponent(EBISystem.builder().textField("postcodeText", "addNewReceiverDialog"), "PBox");
-                addCon.setValueToComponent(EBISystem.builder().textField("positionText", "addNewReceiverDialog"), "Position");
-                addCon.setValueToComponent(EBISystem.builder().textField("emailText", "addNewReceiverDialog"), "contact.EMail");
-                addCon.setValueToComponent(EBISystem.builder().textField("faxText", "addNewReceiverDialog"), "contact.Fax");
-                addCon.setValueToComponent(phoneForContact, "contact.Phone");
+                addCon.setValueToComponent(EBISystem.builder().textField("positionText", "addNewReceiverDialog"), "CPosition");
+                addCon.setValueToComponent(EBISystem.builder().textField("emailText", "addNewReceiverDialog"), "CEMail");
+                addCon.setValueToComponent(EBISystem.builder().textField("faxText", "addNewReceiverDialog"), "CFax");
+                addCon.setValueToComponent(phoneForContact, "CPhone");
                 EBISystem.builder().dialog("addNewReceiverDialog").setVisible(false);
                 addCon.setVisible();
                 EBISystem.builder().dialog("addNewReceiverDialog").setVisible(true);

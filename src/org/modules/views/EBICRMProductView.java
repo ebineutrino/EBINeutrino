@@ -104,8 +104,8 @@ public class EBICRMProductView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDimensionRow = EBISystem.builder().table("ProductPropertiesTable", "Product").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedDimensionRow = EBISystem.builder().table("ProductPropertiesTable", "Product").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -132,8 +132,8 @@ public class EBICRMProductView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDependencyRow = EBISystem.builder().table("ProductRelationTable", "Product").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedDependencyRow = EBISystem.builder().table("ProductRelationTable", "Product").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -159,8 +159,11 @@ public class EBICRMProductView {
 
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.builder().table("productTableDoc", "Product").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedDocRow = EBISystem.builder().table("productTableDoc", "Product").convertRowIndexToModel(lsm.getLeadSelectionIndex());
+                    if(tabModDoc.data.length <= selectedDocRow){
+                        selectedDocRow = tabModDoc.data.length-1;
+                    }
                 }
 
                 if (selectedDocRow < 0 || EBISystem.i18n("EBI_LANG_PLEASE_SELECT").
@@ -192,8 +195,8 @@ public class EBICRMProductView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedProductRow = EBISystem.builder().table("companyProductTable", "Product").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedProductRow = EBISystem.builder().table("companyProductTable", "Product").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {

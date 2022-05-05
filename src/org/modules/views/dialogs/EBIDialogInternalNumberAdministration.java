@@ -138,8 +138,8 @@ public class EBIDialogInternalNumberAdministration {
                 }
 
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selRow = EBISystem.builder().table("valueTable", "autoIncNrDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selRow = EBISystem.builder().table("valueTable", "autoIncNrDialog").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {

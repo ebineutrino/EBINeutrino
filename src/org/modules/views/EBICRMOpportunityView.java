@@ -141,8 +141,8 @@ public class EBICRMOpportunityView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedContactRow = EBISystem.builder().table("contactTableOpportunity", "Opportunity").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedContactRow = EBISystem.builder().table("contactTableOpportunity", "Opportunity").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.builder().button("editOppContact", "Opportunity").setEnabled(false);
@@ -167,9 +167,9 @@ public class EBICRMOpportunityView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() > -1) {
+                if (lsm.getLeadSelectionIndex() > -1) {
                     try {
-                        selectedOpportunityRow = EBISystem.builder().table("companyOpportunityTable", "Opportunity").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                        selectedOpportunityRow = EBISystem.builder().table("companyOpportunityTable", "Opportunity").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                     } catch (final IndexOutOfBoundsException ex) {
                     }
                 }
@@ -254,8 +254,8 @@ public class EBICRMOpportunityView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.builder().table("opportunityDoc", "Opportunity").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedDocRow = EBISystem.builder().table("opportunityDoc", "Opportunity").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {

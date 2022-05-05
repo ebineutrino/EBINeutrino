@@ -97,8 +97,8 @@ public class EBIMeetingProtocolView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedContactRow = EBISystem.builder().table("meetingContact", "MeetingCall").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedContactRow = EBISystem.builder().table("meetingContact", "MeetingCall").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {

@@ -360,7 +360,7 @@ public class ControlMeetingProtocol {
         newContact.setVisible();
     }
 
-    public void addContact(final EBIMeetingAddContactDialog newContact, final Companymeetingcontacts contact) {
+    public void addContact(final EBIMeetingAddContactDialog newContact, final Companymeetingcontacts contact, boolean edit) {
         try {
 
             contact.setCompanymeetingprotocol(this.meetingProtocol);
@@ -379,6 +379,9 @@ public class ControlMeetingProtocol {
             contact.setMobile(newContact.getMobileText());
             contact.setEmail(newContact.getEMailText());
             contact.setDescription(newContact.getDescriptionText());
+            if(meetingProtocol.getCompanymeetingcontactses().contains(contact)){
+                meetingProtocol.getCompanymeetingcontactses().remove(meetingProtocol.getCompanymeetingcontactses().indexOf(contact));
+            }
             meetingProtocol.getCompanymeetingcontactses().add(contact);
 
         } catch (final HibernateException e) {
@@ -450,7 +453,7 @@ public class ControlMeetingProtocol {
         final File fs = EBISystem.getInstance().getOpenDialog(JFileChooser.FILES_ONLY);
         if (fs != null) {
             final byte[] file = EBISystem.getInstance().readFileToByte(fs);
-            if (file != null) {
+            if (file != null && file.length < 10000000) {
                 try {
                     final Companymeetingdoc docs = new Companymeetingdoc();
                     docs.setMeetingdocid((meetingProtocol.getCompanymeetingdocs().size() + 1) * -1);

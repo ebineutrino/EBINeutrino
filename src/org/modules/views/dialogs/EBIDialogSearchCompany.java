@@ -106,8 +106,8 @@ public class EBIDialogSearchCompany {
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.builder().button("compSearchapplyButton", "searchCRMCompany").setEnabled(false);
                 } else {
-                    if (lsm.getMinSelectionIndex() > 0) {
-                        selRowSearch = EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                    if (lsm.getLeadSelectionIndex() > 0) {
+                        selRowSearch = EBISystem.builder().table("searchCompanyTable", "searchCRMCompany").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                     }
                     if (!tableModel.data[selRowSearch][0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
                         EBISystem.builder().button("compSearchapplyButton", "searchCRMCompany").setEnabled(true);

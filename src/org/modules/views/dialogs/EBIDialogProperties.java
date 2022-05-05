@@ -2,25 +2,17 @@ package org.modules.views.dialogs;
 
 import org.sdk.model.hibernate.Crmproduct;
 import org.sdk.model.hibernate.Crmprojecttask;
-import org.sdk.model.hibernate.Crmproductdimensions;
 import org.sdk.model.hibernate.Crmproductdimension;
 import org.sdk.model.hibernate.Crmprojectprop;
-import org.sdk.model.hibernate.Crmprojectprops;
 import org.sdk.model.hibernate.Crmprojectcost;
 import org.sdk.EBISystem;
 import org.sdk.gui.dialogs.EBIExceptionDialog;
 import org.sdk.gui.dialogs.EBIMessage;
-import org.hibernate.HibernateException;
-import org.hibernate.query.Query;
 
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.Date;
-import java.util.Iterator;
 
 public class EBIDialogProperties {
 
@@ -47,11 +39,11 @@ public class EBIDialogProperties {
         EBISystem.builder().combo("propertiesText", "propertiesDialog").setModel(new javax.swing.DefaultComboBoxModel(productDimension));
         if (dims != null) {
             dimension = dims;
-            EBISystem.builder().textArea("propertiesValueText", "propertiesDialog").setText(dims.getValue());
-            EBISystem.builder().combo("propertiesText", "propertiesDialog").setSelectedItem(dims.getName());
+            EBISystem.builder().textArea("propertiesValueText", "propertiesDialog").setText(dims.getDimensionValue());
+            EBISystem.builder().combo("propertiesText", "propertiesDialog").setSelectedItem(dims.getDimensionName());
 
             if (EBISystem.builder().combo("propertiesText", "propertiesDialog").getEditor().getItem().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                EBISystem.builder().combo("propertiesText", "propertiesDialog").insertItemAt(dims.getName(), 1);
+                EBISystem.builder().combo("propertiesText", "propertiesDialog").insertItemAt(dims.getDimensionName(), 1);
                 EBISystem.builder().combo("propertiesText", "propertiesDialog").setSelectedIndex(1);
             }
             isEdit = true;
@@ -178,9 +170,13 @@ public class EBIDialogProperties {
         dimension.setCrmproduct(EBISystem.getModule().getEBICRMProductPane().getDataControlProduct().getProduct());
         dimension.setCreateddate(new Date());
         dimension.setCreatedfrom(EBISystem.ebiUser);
-        dimension.setName(EBISystem.builder().combo("propertiesText", "propertiesDialog").getEditor().getItem().toString());
-        dimension.setValue(EBISystem.builder().textArea("propertiesValueText", "propertiesDialog").getText());
-        product.getCrmproductdimensions().add(dimension);
+        dimension.setDimensionName(EBISystem.builder().combo("propertiesText", "propertiesDialog").getEditor().getItem().toString());
+        dimension.setDimensionValue(EBISystem.builder().textArea("propertiesValueText", "propertiesDialog").getText());
+        
+        if(!isEdit){
+             product.getCrmproductdimensions().add(dimension);
+        }
+        
         EBISystem.getModule().getEBICRMProductPane().showDimension();
 
         EBISystem.builder().textArea("propertiesValueText", "propertiesDialog").setText("");

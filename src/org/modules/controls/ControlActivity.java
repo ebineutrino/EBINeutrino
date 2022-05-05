@@ -513,7 +513,7 @@ public class ControlActivity {
         final File fs = EBISystem.getInstance().getOpenDialog(JFileChooser.FILES_ONLY);
         if (fs != null) {
             final byte[] file = EBISystem.getInstance().readFileToByte(fs);
-            if (file != null) {
+            if (file != null && file.length < 10000000) {
                 final Companyactivitiesdocs docs = new Companyactivitiesdocs();
                 docs.setActivitydocid((companyActivity.getCompanyactivitiesdocses().size() + 1) * -1);
                 docs.setCompanyactivities(companyActivity);

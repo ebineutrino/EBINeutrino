@@ -86,8 +86,8 @@ public class EBICRMOfferView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.builder().table("tableOfferDocument", "Offer").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedDocRow = EBISystem.builder().table("tableOfferDocument", "Offer").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.builder().button("showOfferDoc", "Offer").setEnabled(false);
@@ -112,9 +112,9 @@ public class EBICRMOfferView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedProductRow = EBISystem.builder().table("tableOfferProduct", "Offer").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedProductRow = EBISystem.builder().table("tableOfferProduct", "Offer").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -139,8 +139,8 @@ public class EBICRMOfferView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedReceiverRow = EBISystem.builder().table("tableOfferReceiver", "Offer").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedReceiverRow = EBISystem.builder().table("tableOfferReceiver", "Offer").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -169,8 +169,8 @@ public class EBICRMOfferView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedOfferRow = EBISystem.builder().table("companyOfferTable", "Offer").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedOfferRow = EBISystem.builder().table("companyOfferTable", "Offer").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {

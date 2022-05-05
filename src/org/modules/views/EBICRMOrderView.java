@@ -76,8 +76,8 @@ public class EBICRMOrderView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.builder().table("tableorderDocument", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedDocRow = EBISystem.builder().table("tableorderDocument", "Order").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -104,8 +104,8 @@ public class EBICRMOrderView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedProductRow = EBISystem.builder().table("tableorderProduct", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedProductRow = EBISystem.builder().table("tableorderProduct", "Order").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (tabModProduct.data.length > 0) {
@@ -132,8 +132,8 @@ public class EBICRMOrderView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedReceiverRow = EBISystem.builder().table("tableOrderReceiver", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedReceiverRow = EBISystem.builder().table("tableOrderReceiver", "Order").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.builder().button("deleteorderReceiver", "Order").setEnabled(false);
@@ -160,8 +160,8 @@ public class EBICRMOrderView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedOrderRow = EBISystem.builder().table("companyorderTable", "Order").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedOrderRow = EBISystem.builder().table("companyorderTable", "Order").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {

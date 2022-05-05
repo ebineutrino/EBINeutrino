@@ -316,9 +316,9 @@ public class EBICRMPlanningView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
+                if (lsm.getLeadSelectionIndex() != -1) {
                     try {
-                        selectedProjectRow = EBISystem.builder().table("projectTable", "Project").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                        selectedProjectRow = EBISystem.builder().table("projectTable", "Project").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                         if (lsm.isSelectionEmpty()) {
                             EBISystem.builder().button("editProject", "Project").setEnabled(false);
                             EBISystem.builder().button("deleteProject", "Project").setEnabled(false);

@@ -83,8 +83,8 @@ public class EBICRMProblemSolutionView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.builder().table("prosolTableDocument", "Prosol").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedDocRow = EBISystem.builder().table("prosolTableDocument", "Prosol").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.builder().button("showprosolDoc", "Prosol").setEnabled(false);
@@ -128,9 +128,9 @@ public class EBICRMProblemSolutionView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
+                if (lsm.getLeadSelectionIndex() != -1) {
                     selectedProductRow = EBISystem.builder().table("tableprosolProduct", "Prosol")
-                            .convertRowIndexToModel(lsm.getMinSelectionIndex());
+                            .convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.builder().button("deleteprosolProduct", "Prosol").setEnabled(false);
@@ -157,10 +157,10 @@ public class EBICRMProblemSolutionView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
+                if (lsm.getLeadSelectionIndex() != -1) {
                     try {
                         selectedprosolRow = EBISystem.builder().table("prosolTable", "Prosol")
-                                .convertRowIndexToModel(lsm.getMinSelectionIndex());
+                                .convertRowIndexToModel(lsm.getLeadSelectionIndex());
                     } catch (final IndexOutOfBoundsException ex) {
                     }
                 }

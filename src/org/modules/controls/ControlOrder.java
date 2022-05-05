@@ -754,7 +754,7 @@ public class ControlOrder {
         final File fs = EBISystem.getInstance().getOpenDialog(JFileChooser.FILES_ONLY);
         if (fs != null) {
             final byte[] file = EBISystem.getInstance().readFileToByte(fs);
-            if (file != null) {
+            if (file != null && file.length < 10000000) {
                 final Companyorderdocs docs = new Companyorderdocs();
                 docs.setOrderdocid((compOrder.getCompanyorderdocses().size() + 1) * -1);
                 docs.setCompanyorder(compOrder);

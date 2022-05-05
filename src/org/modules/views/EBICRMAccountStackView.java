@@ -147,10 +147,10 @@ public class EBICRMAccountStackView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
+                if (lsm.getLeadSelectionIndex() != -1) {
                     selectedInvoiceRow
                             = EBISystem.builder().table("accountTable", "Account")
-                                    .convertRowIndexToModel(lsm.getMinSelectionIndex());
+                                    .convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -215,8 +215,8 @@ public class EBICRMAccountStackView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.builder().table("tableAccountDoc", "Account").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedDocRow = EBISystem.builder().table("tableAccountDoc", "Account").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -247,8 +247,8 @@ public class EBICRMAccountStackView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedCDRow = EBISystem.builder().table("debCreditTable", "Account").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedCDRow = EBISystem.builder().table("debCreditTable", "Account").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -556,8 +556,8 @@ public class EBICRMAccountStackView {
                     return;
                 }
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedCDDialogRow = EBISystem.builder().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedCDDialogRow = EBISystem.builder().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
             }
         });

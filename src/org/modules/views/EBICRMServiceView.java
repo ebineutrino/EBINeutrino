@@ -89,8 +89,8 @@ public class EBICRMServiceView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedDocRow = EBISystem.builder().table("tableServiceDocument", "Service").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedDocRow = EBISystem.builder().table("tableServiceDocument", "Service").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -117,8 +117,8 @@ public class EBICRMServiceView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedProductRow = EBISystem.builder().table("tableServiceProduct", "Service").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedProductRow = EBISystem.builder().table("tableServiceProduct", "Service").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -144,8 +144,8 @@ public class EBICRMServiceView {
 
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedProsolRow = EBISystem.builder().table("tableServiceProsol", "Service").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedProsolRow = EBISystem.builder().table("tableServiceProsol", "Service").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -171,9 +171,9 @@ public class EBICRMServiceView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
+                if (lsm.getLeadSelectionIndex() != -1) {
                     try {
-                        selectedServiceRow = EBISystem.builder().table("companyServiceTable", "Service").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                        selectedServiceRow = EBISystem.builder().table("companyServiceTable", "Service").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                     } catch (final IndexOutOfBoundsException ex) {
                     }
                 }

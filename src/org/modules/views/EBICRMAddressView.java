@@ -59,9 +59,9 @@ public class EBICRMAddressView {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
+                if (lsm.getLeadSelectionIndex() != -1) {
                     selectedRow = EBISystem.builder().table("companyAddess", "Address")
-                            .convertRowIndexToModel(lsm.getMinSelectionIndex());
+                            .convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (tabModel.data.length > selectedRow) {

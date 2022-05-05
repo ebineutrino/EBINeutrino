@@ -498,7 +498,7 @@ public class ControlService {
         final File selFile = EBISystem.getInstance().getOpenDialog(JFileChooser.FILES_ONLY);
         if (selFile != null) {
             final byte[] file = EBISystem.getInstance().readFileToByte(selFile);
-            if (file != null) {
+            if (file != null && file.length < 10000000) {
                 final Companyservicedocs docs = new Companyservicedocs();
                 docs.setServicedocid((compService.getCompanyservicedocses().size() + 1) * -1);
                 docs.setCompanyservice(compService);

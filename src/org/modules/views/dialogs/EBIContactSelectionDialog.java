@@ -86,14 +86,14 @@ public class EBIContactSelectionDialog {
                 }
 
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selRow = EBISystem.builder().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selRow = EBISystem.builder().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.builder().button("applyButton", "abstractSelectionDialog").setEnabled(false);
                     selRow = -1;
                 } else if (!"".equals(tabModel.getValueAt(0,0).toString())) {
-                    selRow = lsm.getMinSelectionIndex();
+                    selRow = lsm.getLeadSelectionIndex();
                     EBISystem.builder().button("applyButton", "abstractSelectionDialog").setEnabled(true);
                 }
             }

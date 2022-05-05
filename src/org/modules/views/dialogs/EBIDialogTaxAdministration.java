@@ -103,8 +103,8 @@ public class EBIDialogTaxAdministration {
                 }
 
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selRow = EBISystem.builder().table("taxValueTable", "taxAdminDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selRow = EBISystem.builder().table("taxValueTable", "taxAdminDialog").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.builder().button("editBnt", "taxAdminDialog").setEnabled(false);

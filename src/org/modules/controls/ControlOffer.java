@@ -850,7 +850,7 @@ public class ControlOffer {
         if (fs != null) {
 
             final byte[] file = EBISystem.getInstance().readFileToByte(fs);
-            if (file != null) {
+            if (file != null && file.length < 10000000) {
                 final Companyofferdocs docs = new Companyofferdocs();
                 docs.setOfferdocid((compOffer.getCompanyofferdocses().size() + 1) * -1);
                 docs.setCompanyoffer(compOffer);

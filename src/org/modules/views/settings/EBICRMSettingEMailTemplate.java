@@ -119,8 +119,8 @@ public class EBICRMSettingEMailTemplate {
 
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selRow = EBISystem.builder().table("taxValueTable", "emailTemplateDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selRow = EBISystem.builder().table("taxValueTable", "emailTemplateDialog").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {

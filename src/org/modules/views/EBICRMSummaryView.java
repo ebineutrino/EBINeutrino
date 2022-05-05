@@ -96,7 +96,7 @@ public class EBICRMSummaryView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
+                if (lsm.getLeadSelectionIndex() != -1) {
                     selectedSummaryRow = EBISystem.builder().table("companySummaryTable", "Summary")
                             .convertRowIndexToModel(EBISystem.builder()
                                     .table("companySummaryTable", "Summary").getSelectedRow());

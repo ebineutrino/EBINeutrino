@@ -157,9 +157,9 @@ system.builder.getTable("tableCashRegister","CashRegister").getSelectionModel().
     }
     ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-    if(lsm.getMinSelectionIndex() != -1){
+    if(lsm.getLeadSelectionIndex() != -1){
         try{
-            selectedCashRow = system.builder.getTable("tableCashRegister","CashRegister").convertRowIndexToModel(lsm.getMinSelectionIndex());
+            selectedCashRow = system.builder.getTable("tableCashRegister","CashRegister").convertRowIndexToModel(lsm.getLeadSelectionIndex());
         }catch(IndexOutOfBoundsException ex){}
 
     }

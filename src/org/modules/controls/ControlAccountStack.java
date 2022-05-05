@@ -372,7 +372,7 @@ public class ControlAccountStack {
         final File fs = EBISystem.getInstance().getOpenDialog(JFileChooser.FILES_ONLY);
         if (fs != null) {
             final byte[] file = EBISystem.getInstance().readFileToByte(fs);
-            if (file != null) {
+            if (file != null && file.length < 10000000) {
                 final Accountstackdocs docs = new Accountstackdocs();
                 docs.setAccountdocid((actStack.getAccountstackdocses().size() + 1) * -1);
                 docs.setAccountstack(actStack);

@@ -70,9 +70,9 @@ public class EBICRMContactView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() > -1) {
+                if (lsm.getLeadSelectionIndex() > -1) {
                     selectedContactRow = EBISystem.builder().
-                            table("companyContacts", "Contact").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                            table("companyContacts", "Contact").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.builder().button("editContact", "Contact").setEnabled(false);
@@ -135,9 +135,9 @@ public class EBICRMContactView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
+                if (lsm.getLeadSelectionIndex() != -1) {
                     selectedAddressRow = EBISystem.builder().table("contactTableAddress", "Contact")
-                            .convertRowIndexToModel(lsm.getMinSelectionIndex());
+                            .convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.builder().button("deleteContactAddress", "Contact").setEnabled(false);

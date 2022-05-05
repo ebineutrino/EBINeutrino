@@ -62,14 +62,14 @@ public class EBIOpportunitySelectionDialog {
                 }
 
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selRow = EBISystem.builder().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selRow = EBISystem.builder().table("abstractTable", "abstractSelectionDialog").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
                 if (lsm.isSelectionEmpty()) {
                     EBISystem.builder().button("applyButton", "abstractSelectionDialog").setEnabled(false);
                     selRow = -1;
                 } else if (!tabModel.getRow(0)[0].toString().equals(EBISystem.i18n("EBI_LANG_PLEASE_SELECT"))) {
-                    selRow = lsm.getMinSelectionIndex();
+                    selRow = lsm.getLeadSelectionIndex();
                     EBISystem.builder().button("applyButton", "abstractSelectionDialog").setEnabled(true);
                 }
             }

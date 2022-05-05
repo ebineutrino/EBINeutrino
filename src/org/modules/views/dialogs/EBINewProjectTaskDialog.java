@@ -235,8 +235,8 @@ public class EBINewProjectTaskDialog implements ChangeListener {
                 }
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedCost = EBISystem.builder().table("tableCost", "projectTaskDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedCost = EBISystem.builder().table("tableCost", "projectTaskDialog").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {
@@ -259,8 +259,8 @@ public class EBINewProjectTaskDialog implements ChangeListener {
                 }
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedProperties = EBISystem.builder().table("taskPropertiesTable", "projectTaskDialog").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedProperties = EBISystem.builder().table("taskPropertiesTable", "projectTaskDialog").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
 
                 if (lsm.isSelectionEmpty()) {

@@ -125,7 +125,7 @@ public class Crmproductdocs implements Serializable {
 
     @Override
     public String toString() {
-        return "ebiNeutrinoSDK.model.hibernate.Crmproductdocs[ productdocid=" + productdocid + " ]";
+        return "org.sdk.model.hibernate.Crmproductdocs[ productdocid=" + productdocid + " ]";
     }
     
 }

@@ -143,9 +143,9 @@ public class EBICRMInvoiceView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
+                if (lsm.getLeadSelectionIndex() != -1) {
                     selectedProductRow = EBISystem.builder().table("invoicePositionTable", "Invoice")
-                            .convertRowIndexToModel(lsm.getMinSelectionIndex());
+                            .convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
                 if (tabModProduct.data.length > 0) {
                     if (lsm.isSelectionEmpty()) {
@@ -164,8 +164,8 @@ public class EBICRMInvoiceView {
             public void selectionListenerEvent(ListSelectionEvent e) {
                 super.selectionListenerEvent(e);
                 final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-                if (lsm.getMinSelectionIndex() != -1) {
-                    selectedInvoiceRow = EBISystem.builder().table("tableTotalInvoice", "Invoice").convertRowIndexToModel(lsm.getMinSelectionIndex());
+                if (lsm.getLeadSelectionIndex() != -1) {
+                    selectedInvoiceRow = EBISystem.builder().table("tableTotalInvoice", "Invoice").convertRowIndexToModel(lsm.getLeadSelectionIndex());
                 }
                 try {
                     if (lsm.isSelectionEmpty()) {

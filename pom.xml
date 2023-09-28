@@ -11,7 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jfx-version>8</jfx-version>
         <jdk-version>8</jdk-version>
-        <tomcat.version>9.0.43</tomcat.version>
+        <tomcat.version>9.0.80</tomcat.version>
     </properties>
     <build>
         <sourceDirectory>src</sourceDirectory>
